@@ -1,0 +1,402 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AEA97BE016EF9C030046D464 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97BDF16EF9C030046D464 /* UIKit.framework */; };
+		AEA97BE116EF9C030046D464 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF1F32B16EF9AD700273462 /* Foundation.framework */; };
+		AEA97BE316EF9C030046D464 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97BE216EF9C030046D464 /* CoreGraphics.framework */; };
+		AEA97BE916EF9C030046D464 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AEA97BE716EF9C030046D464 /* InfoPlist.strings */; };
+		AEA97BEB16EF9C030046D464 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97BEA16EF9C030046D464 /* main.m */; };
+		AEA97BEE16EF9C030046D464 /* Cedar-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97BED16EF9C030046D464 /* Cedar-iOS.framework */; };
+		AEA97BF016EF9C030046D464 /* ExampleSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEA97BEF16EF9C030046D464 /* ExampleSpec.mm */; };
+		AEF1F32C16EF9AD700273462 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF1F32B16EF9AD700273462 /* Foundation.framework */; };
+		AEF1F33116EF9AD700273462 /* MoPubSDK.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = AEF1F33016EF9AD700273462 /* MoPubSDK.h */; };
+		AEF1F33316EF9AD700273462 /* MoPubSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF1F33216EF9AD700273462 /* MoPubSDK.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AEF1F32616EF9AD700273462 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+				AEF1F33116EF9AD700273462 /* MoPubSDK.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		AEA97BDE16EF9C030046D464 /* Specs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Specs.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AEA97BDF16EF9C030046D464 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		AEA97BE216EF9C030046D464 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		AEA97BE616EF9C030046D464 /* Specs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Specs-Info.plist"; sourceTree = "<group>"; };
+		AEA97BE816EF9C030046D464 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		AEA97BEA16EF9C030046D464 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		AEA97BEC16EF9C030046D464 /* Specs-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Specs-Prefix.pch"; sourceTree = "<group>"; };
+		AEA97BED16EF9C030046D464 /* Cedar-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Cedar-iOS.framework"; path = "Frameworks/Cedar-iOS.framework"; sourceTree = "<group>"; };
+		AEA97BEF16EF9C030046D464 /* ExampleSpec.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ExampleSpec.mm; sourceTree = "<group>"; };
+		AEF1F32816EF9AD700273462 /* libMoPubSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMoPubSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AEF1F32B16EF9AD700273462 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		AEF1F32F16EF9AD700273462 /* MoPubSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MoPubSDK-Prefix.pch"; sourceTree = "<group>"; };
+		AEF1F33016EF9AD700273462 /* MoPubSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoPubSDK.h; sourceTree = "<group>"; };
+		AEF1F33216EF9AD700273462 /* MoPubSDK.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoPubSDK.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AEA97BDB16EF9C030046D464 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AEA97BE016EF9C030046D464 /* UIKit.framework in Frameworks */,
+				AEA97BE116EF9C030046D464 /* Foundation.framework in Frameworks */,
+				AEA97BE316EF9C030046D464 /* CoreGraphics.framework in Frameworks */,
+				AEA97BEE16EF9C030046D464 /* Cedar-iOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AEF1F32516EF9AD700273462 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AEF1F32C16EF9AD700273462 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AEA97BE416EF9C030046D464 /* Specs */ = {
+			isa = PBXGroup;
+			children = (
+				AEA97BED16EF9C030046D464 /* Cedar-iOS.framework */,
+				AEA97BEF16EF9C030046D464 /* ExampleSpec.mm */,
+				AEA97BE516EF9C030046D464 /* Supporting Files */,
+			);
+			path = Specs;
+			sourceTree = "<group>";
+		};
+		AEA97BE516EF9C030046D464 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AEA97BE616EF9C030046D464 /* Specs-Info.plist */,
+				AEA97BE716EF9C030046D464 /* InfoPlist.strings */,
+				AEA97BEA16EF9C030046D464 /* main.m */,
+				AEA97BEC16EF9C030046D464 /* Specs-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AEF1F31F16EF9AD700273462 = {
+			isa = PBXGroup;
+			children = (
+				AEF1F32D16EF9AD700273462 /* MoPubSDK */,
+				AEA97BE416EF9C030046D464 /* Specs */,
+				AEF1F32A16EF9AD700273462 /* Frameworks */,
+				AEF1F32916EF9AD700273462 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AEF1F32916EF9AD700273462 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AEF1F32816EF9AD700273462 /* libMoPubSDK.a */,
+				AEA97BDE16EF9C030046D464 /* Specs.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AEF1F32A16EF9AD700273462 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AEF1F32B16EF9AD700273462 /* Foundation.framework */,
+				AEA97BDF16EF9C030046D464 /* UIKit.framework */,
+				AEA97BE216EF9C030046D464 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AEF1F32D16EF9AD700273462 /* MoPubSDK */ = {
+			isa = PBXGroup;
+			children = (
+				AEF1F33016EF9AD700273462 /* MoPubSDK.h */,
+				AEF1F33216EF9AD700273462 /* MoPubSDK.m */,
+				AEF1F32E16EF9AD700273462 /* Supporting Files */,
+			);
+			path = MoPubSDK;
+			sourceTree = "<group>";
+		};
+		AEF1F32E16EF9AD700273462 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AEF1F32F16EF9AD700273462 /* MoPubSDK-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AEA97BDD16EF9C030046D464 /* Specs */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AEA97BF316EF9C030046D464 /* Build configuration list for PBXNativeTarget "Specs" */;
+			buildPhases = (
+				AEA97BDA16EF9C030046D464 /* Sources */,
+				AEA97BDB16EF9C030046D464 /* Frameworks */,
+				AEA97BDC16EF9C030046D464 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Specs;
+			productName = Specs;
+			productReference = AEA97BDE16EF9C030046D464 /* Specs.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AEF1F32716EF9AD700273462 /* MoPubSDK */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AEF1F33616EF9AD700273462 /* Build configuration list for PBXNativeTarget "MoPubSDK" */;
+			buildPhases = (
+				AEF1F32416EF9AD700273462 /* Sources */,
+				AEF1F32516EF9AD700273462 /* Frameworks */,
+				AEF1F32616EF9AD700273462 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MoPubSDK;
+			productName = MoPubSDK;
+			productReference = AEF1F32816EF9AD700273462 /* libMoPubSDK.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AEF1F32016EF9AD700273462 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = MoPub;
+			};
+			buildConfigurationList = AEF1F32316EF9AD700273462 /* Build configuration list for PBXProject "MoPubSDK" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = AEF1F31F16EF9AD700273462;
+			productRefGroup = AEF1F32916EF9AD700273462 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AEF1F32716EF9AD700273462 /* MoPubSDK */,
+				AEA97BDD16EF9C030046D464 /* Specs */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AEA97BDC16EF9C030046D464 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AEA97BE916EF9C030046D464 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AEA97BDA16EF9C030046D464 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AEA97BEB16EF9C030046D464 /* main.m in Sources */,
+				AEA97BF016EF9C030046D464 /* ExampleSpec.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AEF1F32416EF9AD700273462 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AEF1F33316EF9AD700273462 /* MoPubSDK.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		AEA97BE716EF9C030046D464 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AEA97BE816EF9C030046D464 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AEA97BF116EF9C030046D464 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Specs/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Specs/Specs-Prefix.pch";
+				INFOPLIST_FILE = "Specs/Specs-Info.plist";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"-lstdc++",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		AEA97BF216EF9C030046D464 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Specs/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Specs/Specs-Prefix.pch";
+				INFOPLIST_FILE = "Specs/Specs-Info.plist";
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"-lstdc++",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		AEF1F33416EF9AD700273462 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		AEF1F33516EF9AD700273462 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AEF1F33716EF9AD700273462 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/MoPubSDK.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MoPubSDK/MoPubSDK-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		AEF1F33816EF9AD700273462 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/MoPubSDK.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MoPubSDK/MoPubSDK-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AEA97BF316EF9C030046D464 /* Build configuration list for PBXNativeTarget "Specs" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AEA97BF116EF9C030046D464 /* Debug */,
+				AEA97BF216EF9C030046D464 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		AEF1F32316EF9AD700273462 /* Build configuration list for PBXProject "MoPubSDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AEF1F33416EF9AD700273462 /* Debug */,
+				AEF1F33516EF9AD700273462 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AEF1F33616EF9AD700273462 /* Build configuration list for PBXNativeTarget "MoPubSDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AEF1F33716EF9AD700273462 /* Debug */,
+				AEF1F33816EF9AD700273462 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AEF1F32016EF9AD700273462 /* Project object */;
+}
