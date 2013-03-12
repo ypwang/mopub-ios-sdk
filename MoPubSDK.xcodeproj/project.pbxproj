@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE341F1B16EFB9460074C859 /* NSURLConnection+MPSpecs.m in Sources */ = {isa = PBXBuildFile; fileRef = AE341F1A16EFB9460074C859 /* NSURLConnection+MPSpecs.m */; };
+		AE341F3C16EFC7CB0074C859 /* libFoundation+PivotalSpecHelper-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE341F3216EFC7790074C859 /* libFoundation+PivotalSpecHelper-StaticLib.a */; };
 		AEA97BE016EF9C030046D464 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97BDF16EF9C030046D464 /* UIKit.framework */; };
 		AEA97BE116EF9C030046D464 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF1F32B16EF9AD700273462 /* Foundation.framework */; };
 		AEA97BE316EF9C030046D464 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97BE216EF9C030046D464 /* CoreGraphics.framework */; };
 		AEA97BE916EF9C030046D464 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AEA97BE716EF9C030046D464 /* InfoPlist.strings */; };
 		AEA97BEB16EF9C030046D464 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97BEA16EF9C030046D464 /* main.m */; };
 		AEA97BEE16EF9C030046D464 /* Cedar-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97BED16EF9C030046D464 /* Cedar-iOS.framework */; };
-		AEA97BF016EF9C030046D464 /* ExampleSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEA97BEF16EF9C030046D464 /* ExampleSpec.mm */; };
 		AEA97C4F16EF9DB00046D464 /* MPBannerAdapterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97BFC16EF9DB00046D464 /* MPBannerAdapterManager.m */; };
 		AEA97C5016EF9DB00046D464 /* MPBannerAdManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97BFF16EF9DB00046D464 /* MPBannerAdManager.m */; };
 		AEA97C5116EF9DB00046D464 /* MPBannerCustomEventAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C0116EF9DB00046D464 /* MPBannerCustomEventAdapter.m */; };
@@ -69,8 +70,65 @@
 		AEA97CAD16EF9E690046D464 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97CAC16EF9E690046D464 /* CoreLocation.framework */; };
 		AEA97CAF16EF9E980046D464 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97CAE16EF9E980046D464 /* StoreKit.framework */; };
 		AEA97CB116EF9E9F0046D464 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97CB016EF9E9F0046D464 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		AEA97CB416EFA8980046D464 /* MPURLResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97CB316EFA8980046D464 /* MPURLResolver.m */; };
+		AEA97CB516EFA89C0046D464 /* MPURLResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97CB316EFA8980046D464 /* MPURLResolver.m */; };
+		AEC9E56B16EFABD7007CA2BA /* MPURLResolverSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEC9E56A16EFABD7007CA2BA /* MPURLResolverSpec.mm */; };
+		AEC9E56F16EFACBB007CA2BA /* FakeMPURLResolverDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AEC9E56E16EFACBB007CA2BA /* FakeMPURLResolverDelegate.m */; };
+		AEC9E5A616EFB48F007CA2BA /* MPSpecHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = AEC9E5A516EFB48F007CA2BA /* MPSpecHelper.m */; };
 		AEF1F32C16EF9AD700273462 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF1F32B16EF9AD700273462 /* Foundation.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AE341F2B16EFC7790074C859 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AE341F2116EFC7790074C859 /* Foundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AEA96B49168B506500861DF1;
+			remoteInfo = "Foundation+PivotalCore";
+		};
+		AE341F2D16EFC7790074C859 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AE341F2116EFC7790074C859 /* Foundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AEA96C54168B636E00861DF1;
+			remoteInfo = "Foundation+PivotalCore-StaticLib";
+		};
+		AE341F2F16EFC7790074C859 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AE341F2116EFC7790074C859 /* Foundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AEA96B9E168B541900861DF1;
+			remoteInfo = "Foundation+PivotalSpecHelper";
+		};
+		AE341F3116EFC7790074C859 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AE341F2116EFC7790074C859 /* Foundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AEA96C64168B63BD00861DF1;
+			remoteInfo = "Foundation+PivotalSpecHelper-StaticLib";
+		};
+		AE341F3316EFC7790074C859 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AE341F2116EFC7790074C859 /* Foundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AEA96BD3168B561500861DF1;
+			remoteInfo = FoundationSpec;
+		};
+		AE341F3516EFC7790074C859 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AE341F2116EFC7790074C859 /* Foundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AEA96C74168B640B00861DF1;
+			remoteInfo = "Foundation-StaticLibSpec";
+		};
+		AE341F3A16EFC7C70074C859 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AE341F2116EFC7790074C859 /* Foundation.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = AEA96C63168B63BD00861DF1;
+			remoteInfo = "Foundation+PivotalSpecHelper-StaticLib";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		AEF1F32616EF9AD700273462 /* CopyFiles */ = {
@@ -85,6 +143,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AE341F1916EFB9460074C859 /* NSURLConnection+MPSpecs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLConnection+MPSpecs.h"; sourceTree = "<group>"; };
+		AE341F1A16EFB9460074C859 /* NSURLConnection+MPSpecs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLConnection+MPSpecs.m"; sourceTree = "<group>"; };
+		AE341F2116EFC7790074C859 /* Foundation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Foundation.xcodeproj; path = PivotalCoreKit/Foundation/Foundation.xcodeproj; sourceTree = "<group>"; };
 		AEA97BDE16EF9C030046D464 /* Specs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Specs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEA97BDF16EF9C030046D464 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AEA97BE216EF9C030046D464 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -93,7 +154,6 @@
 		AEA97BEA16EF9C030046D464 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AEA97BEC16EF9C030046D464 /* Specs-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Specs-Prefix.pch"; sourceTree = "<group>"; };
 		AEA97BED16EF9C030046D464 /* Cedar-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Cedar-iOS.framework"; path = "Frameworks/Cedar-iOS.framework"; sourceTree = "<group>"; };
-		AEA97BEF16EF9C030046D464 /* ExampleSpec.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ExampleSpec.mm; sourceTree = "<group>"; };
 		AEA97BF616EF9DA90046D464 /* MPCloseButtonX.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MPCloseButtonX.png; sourceTree = "<group>"; };
 		AEA97BF716EF9DA90046D464 /* MPCloseButtonX@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MPCloseButtonX@2x.png"; sourceTree = "<group>"; };
 		AEA97BF816EF9DA90046D464 /* MRAID.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MRAID.bundle; sourceTree = "<group>"; };
@@ -215,6 +275,13 @@
 		AEA97CAC16EF9E690046D464 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		AEA97CAE16EF9E980046D464 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		AEA97CB016EF9E9F0046D464 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		AEA97CB216EFA8980046D464 /* MPURLResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPURLResolver.h; sourceTree = "<group>"; };
+		AEA97CB316EFA8980046D464 /* MPURLResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPURLResolver.m; sourceTree = "<group>"; };
+		AEC9E56A16EFABD7007CA2BA /* MPURLResolverSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPURLResolverSpec.mm; sourceTree = "<group>"; };
+		AEC9E56D16EFACBB007CA2BA /* FakeMPURLResolverDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeMPURLResolverDelegate.h; sourceTree = "<group>"; };
+		AEC9E56E16EFACBB007CA2BA /* FakeMPURLResolverDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeMPURLResolverDelegate.m; sourceTree = "<group>"; };
+		AEC9E5A416EFB48F007CA2BA /* MPSpecHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSpecHelper.h; sourceTree = "<group>"; };
+		AEC9E5A516EFB48F007CA2BA /* MPSpecHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSpecHelper.m; sourceTree = "<group>"; };
 		AEF1F32816EF9AD700273462 /* libMoPubSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMoPubSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEF1F32B16EF9AD700273462 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AEF1F32F16EF9AD700273462 /* MoPubSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MoPubSDK-Prefix.pch"; sourceTree = "<group>"; };
@@ -225,6 +292,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE341F3C16EFC7CB0074C859 /* libFoundation+PivotalSpecHelper-StaticLib.a in Frameworks */,
 				AEA97CB116EF9E9F0046D464 /* AdSupport.framework in Frameworks */,
 				AEA97CAF16EF9E980046D464 /* StoreKit.framework in Frameworks */,
 				AEA97CAD16EF9E690046D464 /* CoreLocation.framework in Frameworks */,
@@ -246,12 +314,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AE341F1316EFB9290074C859 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				AE341F1916EFB9460074C859 /* NSURLConnection+MPSpecs.h */,
+				AE341F1A16EFB9460074C859 /* NSURLConnection+MPSpecs.m */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		AE341F2216EFC7790074C859 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AE341F2C16EFC7790074C859 /* Foundation+PivotalCore.framework */,
+				AE341F2E16EFC7790074C859 /* libFoundation+PivotalCore-StaticLib.a */,
+				AE341F3016EFC7790074C859 /* Foundation+PivotalSpecHelper.framework */,
+				AE341F3216EFC7790074C859 /* libFoundation+PivotalSpecHelper-StaticLib.a */,
+				AE341F3416EFC7790074C859 /* FoundationSpec */,
+				AE341F3616EFC7790074C859 /* Foundation-StaticLibSpec.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		AEA97BE416EF9C030046D464 /* Specs */ = {
 			isa = PBXGroup;
 			children = (
+				AE341F1316EFB9290074C859 /* Extensions */,
+				AEC9E56C16EFACA1007CA2BA /* Fakes */,
+				AEA97CB616EFAB810046D464 /* Internal */,
 				AEA97BED16EF9C030046D464 /* Cedar-iOS.framework */,
-				AEA97BEF16EF9C030046D464 /* ExampleSpec.mm */,
 				AEA97BE516EF9C030046D464 /* Supporting Files */,
+				AEC9E5A416EFB48F007CA2BA /* MPSpecHelper.h */,
+				AEC9E5A516EFB48F007CA2BA /* MPSpecHelper.m */,
 			);
 			path = Specs;
 			sourceTree = "<group>";
@@ -337,6 +431,8 @@
 				AEA97C1E16EF9DB00046D464 /* MPKeywordProvider.h */,
 				AEA97C1F16EF9DB00046D464 /* MPProgressOverlayView.h */,
 				AEA97C2016EF9DB00046D464 /* MPProgressOverlayView.m */,
+				AEA97CB216EFA8980046D464 /* MPURLResolver.h */,
+				AEA97CB316EFA8980046D464 /* MPURLResolver.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -414,6 +510,7 @@
 		AEA97C8616EF9E450046D464 /* Externals */ = {
 			isa = PBXGroup;
 			children = (
+				AE341F2116EFC7790074C859 /* Foundation.xcodeproj */,
 				AEA97C8716EF9E450046D464 /* TouchJSON */,
 			);
 			path = Externals;
@@ -471,6 +568,31 @@
 				AEA97C9F16EF9E450046D464 /* JSONRepresentation.h */,
 			);
 			path = JSON;
+			sourceTree = "<group>";
+		};
+		AEA97CB616EFAB810046D464 /* Internal */ = {
+			isa = PBXGroup;
+			children = (
+				AEA97CB716EFAB810046D464 /* Common */,
+			);
+			path = Internal;
+			sourceTree = "<group>";
+		};
+		AEA97CB716EFAB810046D464 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				AEC9E56A16EFABD7007CA2BA /* MPURLResolverSpec.mm */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		AEC9E56C16EFACA1007CA2BA /* Fakes */ = {
+			isa = PBXGroup;
+			children = (
+				AEC9E56D16EFACBB007CA2BA /* FakeMPURLResolverDelegate.h */,
+				AEC9E56E16EFACBB007CA2BA /* FakeMPURLResolverDelegate.m */,
+			);
+			path = Fakes;
 			sourceTree = "<group>";
 		};
 		AEF1F31F16EF9AD700273462 = {
@@ -543,6 +665,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				AE341F3B16EFC7C70074C859 /* PBXTargetDependency */,
 			);
 			name = Specs;
 			productName = Specs;
@@ -585,6 +708,12 @@
 			mainGroup = AEF1F31F16EF9AD700273462;
 			productRefGroup = AEF1F32916EF9AD700273462 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = AE341F2216EFC7790074C859 /* Products */;
+					ProjectRef = AE341F2116EFC7790074C859 /* Foundation.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				AEF1F32716EF9AD700273462 /* MoPubSDK */,
@@ -592,6 +721,51 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		AE341F2C16EFC7790074C859 /* Foundation+PivotalCore.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = "Foundation+PivotalCore.framework";
+			remoteRef = AE341F2B16EFC7790074C859 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AE341F2E16EFC7790074C859 /* libFoundation+PivotalCore-StaticLib.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libFoundation+PivotalCore-StaticLib.a";
+			remoteRef = AE341F2D16EFC7790074C859 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AE341F3016EFC7790074C859 /* Foundation+PivotalSpecHelper.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = "Foundation+PivotalSpecHelper.framework";
+			remoteRef = AE341F2F16EFC7790074C859 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AE341F3216EFC7790074C859 /* libFoundation+PivotalSpecHelper-StaticLib.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libFoundation+PivotalSpecHelper-StaticLib.a";
+			remoteRef = AE341F3116EFC7790074C859 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AE341F3416EFC7790074C859 /* FoundationSpec */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = FoundationSpec;
+			remoteRef = AE341F3316EFC7790074C859 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AE341F3616EFC7790074C859 /* Foundation-StaticLibSpec.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "Foundation-StaticLibSpec.app";
+			remoteRef = AE341F3516EFC7790074C859 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		AEA97BDC16EF9C030046D464 /* Resources */ = {
@@ -610,7 +784,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				AEA97BEB16EF9C030046D464 /* main.m in Sources */,
-				AEA97BF016EF9C030046D464 /* ExampleSpec.mm in Sources */,
+				AEA97CB516EFA89C0046D464 /* MPURLResolver.m in Sources */,
+				AEC9E56B16EFABD7007CA2BA /* MPURLResolverSpec.mm in Sources */,
+				AEC9E56F16EFACBB007CA2BA /* FakeMPURLResolverDelegate.m in Sources */,
+				AEC9E5A616EFB48F007CA2BA /* MPSpecHelper.m in Sources */,
+				AE341F1B16EFB9460074C859 /* NSURLConnection+MPSpecs.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -670,10 +848,19 @@
 				AEA97CA916EF9E450046D464 /* CJSONDeserializer.m in Sources */,
 				AEA97CAA16EF9E450046D464 /* CJSONScanner.m in Sources */,
 				AEA97CAB16EF9E450046D464 /* CJSONSerializer.m in Sources */,
+				AEA97CB416EFA8980046D464 /* MPURLResolver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AE341F3B16EFC7C70074C859 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Foundation+PivotalSpecHelper-StaticLib";
+			targetProxy = AE341F3A16EFC7C70074C859 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		AEA97BE716EF9C030046D464 /* InfoPlist.strings */ = {
@@ -695,11 +882,14 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Specs/Frameworks\"",
+					"\"$(SRCROOT)/Externals\"",
+					"\"$(SRCROOT)/Externals/PivotalCoreKit/Foundation/DerivedData/Foundation/Build/Products/Debug\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Specs/Specs-Prefix.pch";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Externals\"/**";
 				INFOPLIST_FILE = "Specs/Specs-Info.plist";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -719,11 +909,14 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Specs/Frameworks\"",
+					"\"$(SRCROOT)/Externals\"",
+					"\"$(SRCROOT)/Externals/PivotalCoreKit/Foundation/DerivedData/Foundation/Build/Products/Debug\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Specs/Specs-Prefix.pch";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Externals\"/**";
 				INFOPLIST_FILE = "Specs/Specs-Info.plist";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = (
