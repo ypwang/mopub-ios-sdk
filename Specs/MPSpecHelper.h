@@ -8,7 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "Foundation+PivotalSpecHelper.h"
+#import "UIKit+PivotalSpecHelper.h"
 #import "NSURLConnection+MPSpecs.h"
+#import "UIApplication+MPSpecs.h"
+#import "MPStoreKitProvider+MPSpecs.h"
 
 @interface MPSpecHelper : NSObject
 

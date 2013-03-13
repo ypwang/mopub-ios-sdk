@@ -14,8 +14,6 @@
 @property (nonatomic, retain) NSURLConnection *connection;
 @property (nonatomic, retain) NSMutableData *responseData;
 
-- (void)startResolving;
-
 @end
 
 @implementation MPURLResolver
@@ -23,13 +21,9 @@
 @synthesize URL = _URL;
 @synthesize delegate = _delegate;
 
-+ (MPURLResolver *)resolverWithURL:(NSURL *)URL delegate:(id<MPURLResolverDelegate>)delegate
++ (MPURLResolver *)resolver
 {
-    MPURLResolver *resolver = [[[MPURLResolver alloc] init] autorelease];
-    resolver.URL = URL;
-    resolver.delegate = delegate;
-    [resolver startResolving];
-    return resolver;
+    return [[[MPURLResolver alloc] init] autorelease];
 }
 
 - (void)dealloc
@@ -41,11 +35,20 @@
     [super dealloc];
 }
 
-- (void)startResolving
+- (void)startResolvingWithURL:(NSURL *)URL delegate:(id<MPURLResolverDelegate>)delegate
 {
+    self.URL = URL;
+    self.delegate = delegate;
+
     if (![self handleURL:self.URL]){
         self.connection = [NSURLConnection connectionWithRequest:[NSURLRequest requestWithURL:self.URL] delegate:self];
     }
+}
+
+- (void)cancel
+{
+    [self.connection cancel];
+    self.connection = nil;
 }
 
 #pragma mark - Handling Application/StoreKit URLs

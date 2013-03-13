@@ -15,7 +15,9 @@
 @interface MPURLResolver : NSObject
 #endif
 
-+ (MPURLResolver *)resolverWithURL:(NSURL *)URL delegate:(id<MPURLResolverDelegate>)delegate;
++ (MPURLResolver *)resolver;
+- (void)startResolvingWithURL:(NSURL *)URL delegate:(id<MPURLResolverDelegate>)delegate;
+- (void)cancel;
 
 @end
 

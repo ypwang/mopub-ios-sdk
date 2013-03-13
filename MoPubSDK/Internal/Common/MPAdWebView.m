@@ -284,11 +284,6 @@ textEncodingName:(NSString *)textEncodingName baseURL:(NSURL *)baseURL
 
 #pragma mark - <MPAdBrowserControllerDelegate>
 
-- (void)dismissBrowserController:(MPAdBrowserController *)browserController
-{
-    [self dismissBrowserController:browserController animated:YES];
-}
-
 - (void)dismissBrowserController:(MPAdBrowserController *)browserController animated:(BOOL)animated
 {
     UIViewController *presenter = [self.delegate viewControllerForPresentingModalView];

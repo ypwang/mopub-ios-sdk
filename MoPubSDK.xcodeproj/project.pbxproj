@@ -12,6 +12,30 @@
 		AE341F4016EFFA690074C859 /* MPAdDestinationDisplayAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = AE341F3F16EFFA690074C859 /* MPAdDestinationDisplayAgent.m */; };
 		AE341F4116EFFA690074C859 /* MPAdDestinationDisplayAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = AE341F3F16EFFA690074C859 /* MPAdDestinationDisplayAgent.m */; };
 		AE341F4316EFFA810074C859 /* MPAdDestinationDisplayAgentSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE341F4216EFFA810074C859 /* MPAdDestinationDisplayAgentSpec.mm */; };
+		AE341F4516F0E4920074C859 /* MPProgressOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C2016EF9DB00046D464 /* MPProgressOverlayView.m */; };
+		AE341F4616F0E49F0074C859 /* MPLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C4A16EF9DB00046D464 /* MPLogging.m */; };
+		AE341F4716F0E68D0074C859 /* MPGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C1D16EF9DB00046D464 /* MPGlobal.m */; };
+		AE341F4816F0E7060074C859 /* CDataScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C8916EF9E450046D464 /* CDataScanner.m */; };
+		AE341F4916F0E7060074C859 /* CFilteringJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C8C16EF9E450046D464 /* CFilteringJSONSerializer.m */; };
+		AE341F4A16F0E7060074C859 /* CJSONDeserializer_BlocksExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C8E16EF9E450046D464 /* CJSONDeserializer_BlocksExtensions.m */; };
+		AE341F4B16F0E7060074C859 /* CJSONSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C9016EF9E450046D464 /* CJSONSerialization.m */; };
+		AE341F4C16F0E7060074C859 /* CJSONSerializedData.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C9216EF9E450046D464 /* CJSONSerializedData.m */; };
+		AE341F4D16F0E7060074C859 /* CDataScanner_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C9516EF9E450046D464 /* CDataScanner_Extensions.m */; };
+		AE341F4E16F0E7060074C859 /* NSDictionary_JSONExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C9716EF9E450046D464 /* NSDictionary_JSONExtensions.m */; };
+		AE341F4F16F0E7060074C859 /* CJSONDeserializer.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C9A16EF9E450046D464 /* CJSONDeserializer.m */; };
+		AE341F5016F0E7060074C859 /* CJSONScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C9C16EF9E450046D464 /* CJSONScanner.m */; };
+		AE341F5116F0E7060074C859 /* CJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C9E16EF9E450046D464 /* CJSONSerializer.m */; };
+		AE341F6216F0E9C50074C859 /* libUIKit+PivotalSpecHelper-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE341F5D16F0E9AE0074C859 /* libUIKit+PivotalSpecHelper-StaticLib.a */; };
+		AE341F6316F0EABF0074C859 /* MPAdBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C0E16EF9DB00046D464 /* MPAdBrowserController.m */; };
+		AE341F6516F0EB320074C859 /* MPAdBrowserControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE341F6416F0EB320074C859 /* MPAdBrowserControllerSpec.mm */; };
+		AE341F6616F0EDC60074C859 /* MPAdBrowserController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AEA97C0F16EF9DB00046D464 /* MPAdBrowserController.xib */; };
+		AE341F6916F0F7260074C859 /* UIApplication+MPSpecs.m in Sources */ = {isa = PBXBuildFile; fileRef = AE341F6816F0F7260074C859 /* UIApplication+MPSpecs.m */; };
+		AE341F6A16F104CF0074C859 /* UIViewController+MPAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C4516EF9DB00046D464 /* UIViewController+MPAdditions.m */; };
+		AE341F6D16F11AC00074C859 /* MPStoreKitProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AE341F6C16F11AC00074C859 /* MPStoreKitProvider.m */; };
+		AE341F7316F11EC30074C859 /* MPStoreKitProvider+MPSpecs.m in Sources */ = {isa = PBXBuildFile; fileRef = AE341F7216F11EC30074C859 /* MPStoreKitProvider+MPSpecs.m */; };
+		AE341F7416F120E50074C859 /* MPStoreKitProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AE341F6C16F11AC00074C859 /* MPStoreKitProvider.m */; };
+		AE341F7A16F126D30074C859 /* FakeStoreProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE341F7916F126D30074C859 /* FakeStoreProductViewController.m */; };
+		AE341F7D16F1373A0074C859 /* FakeMPURLResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = AE341F7C16F1373A0074C859 /* FakeMPURLResolver.m */; };
 		AEA97BE016EF9C030046D464 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97BDF16EF9C030046D464 /* UIKit.framework */; };
 		AEA97BE116EF9C030046D464 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF1F32B16EF9AD700273462 /* Foundation.framework */; };
 		AEA97BE316EF9C030046D464 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97BE216EF9C030046D464 /* CoreGraphics.framework */; };
@@ -131,6 +155,34 @@
 			remoteGlobalIDString = AEA96C63168B63BD00861DF1;
 			remoteInfo = "Foundation+PivotalSpecHelper-StaticLib";
 		};
+		AE341F5A16F0E9AE0074C859 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AE341F5216F0E9AD0074C859 /* UIKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AEBCCC24168B999F0056EE83;
+			remoteInfo = "UIKit+PivotalCore-StaticLib";
+		};
+		AE341F5C16F0E9AE0074C859 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AE341F5216F0E9AD0074C859 /* UIKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AEBCCC64168B9AF10056EE83;
+			remoteInfo = "UIKit+PivotalSpecHelper-StaticLib";
+		};
+		AE341F5E16F0E9AE0074C859 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AE341F5216F0E9AD0074C859 /* UIKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AEBCCC34168B99ED0056EE83;
+			remoteInfo = "UIKit-StaticLibSpec";
+		};
+		AE341F6016F0E9BD0074C859 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AE341F5216F0E9AD0074C859 /* UIKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = AEBCCC63168B9AF10056EE83;
+			remoteInfo = "UIKit+PivotalSpecHelper-StaticLib";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -152,6 +204,19 @@
 		AE341F3E16EFFA690074C859 /* MPAdDestinationDisplayAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPAdDestinationDisplayAgent.h; sourceTree = "<group>"; };
 		AE341F3F16EFFA690074C859 /* MPAdDestinationDisplayAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPAdDestinationDisplayAgent.m; sourceTree = "<group>"; };
 		AE341F4216EFFA810074C859 /* MPAdDestinationDisplayAgentSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPAdDestinationDisplayAgentSpec.mm; sourceTree = "<group>"; };
+		AE341F4416F0E2720074C859 /* MPAdWebViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MPAdWebViewDelegate.h; sourceTree = "<group>"; };
+		AE341F5216F0E9AD0074C859 /* UIKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = UIKit.xcodeproj; path = PivotalCoreKit/UIKit/UIKit.xcodeproj; sourceTree = "<group>"; };
+		AE341F6416F0EB320074C859 /* MPAdBrowserControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPAdBrowserControllerSpec.mm; sourceTree = "<group>"; };
+		AE341F6716F0F7260074C859 /* UIApplication+MPSpecs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+MPSpecs.h"; sourceTree = "<group>"; };
+		AE341F6816F0F7260074C859 /* UIApplication+MPSpecs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+MPSpecs.m"; sourceTree = "<group>"; };
+		AE341F6B16F11AC00074C859 /* MPStoreKitProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPStoreKitProvider.h; sourceTree = "<group>"; };
+		AE341F6C16F11AC00074C859 /* MPStoreKitProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPStoreKitProvider.m; sourceTree = "<group>"; };
+		AE341F7116F11EC30074C859 /* MPStoreKitProvider+MPSpecs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MPStoreKitProvider+MPSpecs.h"; sourceTree = "<group>"; };
+		AE341F7216F11EC30074C859 /* MPStoreKitProvider+MPSpecs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MPStoreKitProvider+MPSpecs.m"; sourceTree = "<group>"; };
+		AE341F7816F126D30074C859 /* FakeStoreProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeStoreProductViewController.h; sourceTree = "<group>"; };
+		AE341F7916F126D30074C859 /* FakeStoreProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeStoreProductViewController.m; sourceTree = "<group>"; };
+		AE341F7B16F1373A0074C859 /* FakeMPURLResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeMPURLResolver.h; sourceTree = "<group>"; };
+		AE341F7C16F1373A0074C859 /* FakeMPURLResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeMPURLResolver.m; sourceTree = "<group>"; };
 		AEA97BDE16EF9C030046D464 /* Specs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Specs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEA97BDF16EF9C030046D464 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AEA97BE216EF9C030046D464 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -298,6 +363,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE341F6216F0E9C50074C859 /* libUIKit+PivotalSpecHelper-StaticLib.a in Frameworks */,
 				AE341F3C16EFC7CB0074C859 /* libFoundation+PivotalSpecHelper-StaticLib.a in Frameworks */,
 				AEA97CB116EF9E9F0046D464 /* AdSupport.framework in Frameworks */,
 				AEA97CAF16EF9E980046D464 /* StoreKit.framework in Frameworks */,
@@ -325,6 +391,10 @@
 			children = (
 				AE341F1916EFB9460074C859 /* NSURLConnection+MPSpecs.h */,
 				AE341F1A16EFB9460074C859 /* NSURLConnection+MPSpecs.m */,
+				AE341F6716F0F7260074C859 /* UIApplication+MPSpecs.h */,
+				AE341F6816F0F7260074C859 /* UIApplication+MPSpecs.m */,
+				AE341F7116F11EC30074C859 /* MPStoreKitProvider+MPSpecs.h */,
+				AE341F7216F11EC30074C859 /* MPStoreKitProvider+MPSpecs.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -338,6 +408,16 @@
 				AE341F3216EFC7790074C859 /* libFoundation+PivotalSpecHelper-StaticLib.a */,
 				AE341F3416EFC7790074C859 /* FoundationSpec */,
 				AE341F3616EFC7790074C859 /* Foundation-StaticLibSpec.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AE341F5316F0E9AD0074C859 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AE341F5B16F0E9AE0074C859 /* libUIKit+PivotalCore-StaticLib.a */,
+				AE341F5D16F0E9AE0074C859 /* libUIKit+PivotalSpecHelper-StaticLib.a */,
+				AE341F5F16F0E9AE0074C859 /* UIKit-StaticLibSpec.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -426,6 +506,7 @@
 				AEA97C1316EF9DB00046D464 /* MPAdServerCommunicator.m */,
 				AEA97C1416EF9DB00046D464 /* MPAdServerURLBuilder.h */,
 				AEA97C1516EF9DB00046D464 /* MPAdServerURLBuilder.m */,
+				AE341F4416F0E2720074C859 /* MPAdWebViewDelegate.h */,
 				AEA97C1616EF9DB00046D464 /* MPAdWebView.h */,
 				AEA97C1716EF9DB00046D464 /* MPAdWebView.m */,
 				AEA97C1816EF9DB00046D464 /* MPError.h */,
@@ -511,6 +592,8 @@
 				AEA97C4C16EF9DB00046D464 /* MPStore.m */,
 				AEA97C4D16EF9DB00046D464 /* MPTimer.h */,
 				AEA97C4E16EF9DB00046D464 /* MPTimer.m */,
+				AE341F6B16F11AC00074C859 /* MPStoreKitProvider.h */,
+				AE341F6C16F11AC00074C859 /* MPStoreKitProvider.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -518,6 +601,7 @@
 		AEA97C8616EF9E450046D464 /* Externals */ = {
 			isa = PBXGroup;
 			children = (
+				AE341F5216F0E9AD0074C859 /* UIKit.xcodeproj */,
 				AE341F2116EFC7790074C859 /* Foundation.xcodeproj */,
 				AEA97C8716EF9E450046D464 /* TouchJSON */,
 			);
@@ -591,6 +675,7 @@
 			children = (
 				AEC9E56A16EFABD7007CA2BA /* MPURLResolverSpec.mm */,
 				AE341F4216EFFA810074C859 /* MPAdDestinationDisplayAgentSpec.mm */,
+				AE341F6416F0EB320074C859 /* MPAdBrowserControllerSpec.mm */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -600,6 +685,10 @@
 			children = (
 				AEC9E56D16EFACBB007CA2BA /* FakeMPURLResolverDelegate.h */,
 				AEC9E56E16EFACBB007CA2BA /* FakeMPURLResolverDelegate.m */,
+				AE341F7816F126D30074C859 /* FakeStoreProductViewController.h */,
+				AE341F7916F126D30074C859 /* FakeStoreProductViewController.m */,
+				AE341F7B16F1373A0074C859 /* FakeMPURLResolver.h */,
+				AE341F7C16F1373A0074C859 /* FakeMPURLResolver.m */,
 			);
 			path = Fakes;
 			sourceTree = "<group>";
@@ -674,6 +763,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				AE341F6116F0E9BD0074C859 /* PBXTargetDependency */,
 				AE341F3B16EFC7C70074C859 /* PBXTargetDependency */,
 			);
 			name = Specs;
@@ -721,6 +811,10 @@
 				{
 					ProductGroup = AE341F2216EFC7790074C859 /* Products */;
 					ProjectRef = AE341F2116EFC7790074C859 /* Foundation.xcodeproj */;
+				},
+				{
+					ProductGroup = AE341F5316F0E9AD0074C859 /* Products */;
+					ProjectRef = AE341F5216F0E9AD0074C859 /* UIKit.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -774,6 +868,27 @@
 			remoteRef = AE341F3516EFC7790074C859 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		AE341F5B16F0E9AE0074C859 /* libUIKit+PivotalCore-StaticLib.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libUIKit+PivotalCore-StaticLib.a";
+			remoteRef = AE341F5A16F0E9AE0074C859 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AE341F5D16F0E9AE0074C859 /* libUIKit+PivotalSpecHelper-StaticLib.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libUIKit+PivotalSpecHelper-StaticLib.a";
+			remoteRef = AE341F5C16F0E9AE0074C859 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AE341F5F16F0E9AE0074C859 /* UIKit-StaticLibSpec.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "UIKit-StaticLibSpec.app";
+			remoteRef = AE341F5E16F0E9AE0074C859 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -782,6 +897,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AEA97BE916EF9C030046D464 /* InfoPlist.strings in Resources */,
+				AE341F6616F0EDC60074C859 /* MPAdBrowserController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -792,6 +908,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE341F4816F0E7060074C859 /* CDataScanner.m in Sources */,
+				AE341F4916F0E7060074C859 /* CFilteringJSONSerializer.m in Sources */,
+				AE341F4A16F0E7060074C859 /* CJSONDeserializer_BlocksExtensions.m in Sources */,
+				AE341F4B16F0E7060074C859 /* CJSONSerialization.m in Sources */,
+				AE341F4C16F0E7060074C859 /* CJSONSerializedData.m in Sources */,
+				AE341F4D16F0E7060074C859 /* CDataScanner_Extensions.m in Sources */,
+				AE341F4E16F0E7060074C859 /* NSDictionary_JSONExtensions.m in Sources */,
+				AE341F4F16F0E7060074C859 /* CJSONDeserializer.m in Sources */,
+				AE341F5016F0E7060074C859 /* CJSONScanner.m in Sources */,
+				AE341F5116F0E7060074C859 /* CJSONSerializer.m in Sources */,
 				AEA97BEB16EF9C030046D464 /* main.m in Sources */,
 				AEA97CB516EFA89C0046D464 /* MPURLResolver.m in Sources */,
 				AEC9E56B16EFABD7007CA2BA /* MPURLResolverSpec.mm in Sources */,
@@ -800,6 +926,17 @@
 				AE341F1B16EFB9460074C859 /* NSURLConnection+MPSpecs.m in Sources */,
 				AE341F4116EFFA690074C859 /* MPAdDestinationDisplayAgent.m in Sources */,
 				AE341F4316EFFA810074C859 /* MPAdDestinationDisplayAgentSpec.mm in Sources */,
+				AE341F4516F0E4920074C859 /* MPProgressOverlayView.m in Sources */,
+				AE341F4616F0E49F0074C859 /* MPLogging.m in Sources */,
+				AE341F4716F0E68D0074C859 /* MPGlobal.m in Sources */,
+				AE341F6316F0EABF0074C859 /* MPAdBrowserController.m in Sources */,
+				AE341F6516F0EB320074C859 /* MPAdBrowserControllerSpec.mm in Sources */,
+				AE341F6916F0F7260074C859 /* UIApplication+MPSpecs.m in Sources */,
+				AE341F6A16F104CF0074C859 /* UIViewController+MPAdditions.m in Sources */,
+				AE341F7316F11EC30074C859 /* MPStoreKitProvider+MPSpecs.m in Sources */,
+				AE341F7416F120E50074C859 /* MPStoreKitProvider.m in Sources */,
+				AE341F7A16F126D30074C859 /* FakeStoreProductViewController.m in Sources */,
+				AE341F7D16F1373A0074C859 /* FakeMPURLResolver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -861,6 +998,7 @@
 				AEA97CAB16EF9E450046D464 /* CJSONSerializer.m in Sources */,
 				AEA97CB416EFA8980046D464 /* MPURLResolver.m in Sources */,
 				AE341F4016EFFA690074C859 /* MPAdDestinationDisplayAgent.m in Sources */,
+				AE341F6D16F11AC00074C859 /* MPStoreKitProvider.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -871,6 +1009,11 @@
 			isa = PBXTargetDependency;
 			name = "Foundation+PivotalSpecHelper-StaticLib";
 			targetProxy = AE341F3A16EFC7C70074C859 /* PBXContainerItemProxy */;
+		};
+		AE341F6116F0E9BD0074C859 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "UIKit+PivotalSpecHelper-StaticLib";
+			targetProxy = AE341F6016F0E9BD0074C859 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -899,10 +1042,16 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Specs/Specs-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"MP_ANIMATED=0",
+				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Externals\"/**";
 				INFOPLIST_FILE = "Specs/Specs-Info.plist";
+				OTHER_CFLAGS = "-Wno-objc-protocol-method-implementation";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -927,7 +1076,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Specs/Specs-Prefix.pch";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Externals\"/**";
 				INFOPLIST_FILE = "Specs/Specs-Info.plist";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";

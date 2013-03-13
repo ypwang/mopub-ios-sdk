@@ -9,6 +9,7 @@
 
 #import "MPAdBrowserController.h"
 #import "MPProgressOverlayView.h"
+#import "MPAdWebViewDelegate.h"
 
 enum {
     MPAdWebViewEventAdDidAppear     = 0,
@@ -23,7 +24,6 @@ NSString * const kMoPubFailLoadHost;
 NSString * const kMoPubInAppPurchaseHost;
 NSString * const kMoPubCustomHost;
 
-@protocol MPAdWebViewDelegate;
 @class MPAdConfiguration;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -55,27 +55,5 @@ textEncodingName:(NSString *)textEncodingName baseURL:(NSURL *)baseURL;
 - (void)rotateToOrientation:(UIInterfaceOrientation)orientation;
 - (void)invokeJavaScriptForEvent:(MPAdWebViewEvent)event;
 - (void)forceRedraw;
-
-@end
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-@protocol MPAdWebViewDelegate <NSObject>
-
-@required
-- (UIViewController *)viewControllerForPresentingModalView;
-
-@optional
-- (void)adDidClose:(MPAdWebView *)ad;
-- (void)adDidFinishLoadingAd:(MPAdWebView *)ad;
-- (void)adDidFailToLoadAd:(MPAdWebView *)ad;
-- (void)adActionWillBegin:(MPAdWebView *)ad;
-- (void)adActionWillLeaveApplication:(MPAdWebView *)ad;
-- (void)adActionDidFinish:(MPAdWebView *)ad;
-- (void)ad:(MPAdWebView *)ad
-        didInitiatePurchaseForProductIdentifier:(NSString *)productID;
-- (void)ad:(MPAdWebView *)ad
-        didInitiatePurchaseForProductIdentifier:(NSString *)productID
-        quantity:(NSInteger)quantity;
 
 @end

@@ -8,12 +8,16 @@
 
 #import <Foundation/Foundation.h>
 #import "MPURLResolver.h"
+#import "MPAdWebViewDelegate.h"
+#import "MPProgressOverlayView.h"
+#import "MPAdBrowserController.h"
+#import "MPStoreKitProvider.h"
 
-@protocol MPAdWebViewDelegate;
+@interface MPAdDestinationDisplayAgent : NSObject <MPURLResolverDelegate, MPProgressOverlayViewDelegate, MPAdBrowserControllerDelegate, MPSKStoreProductViewControllerDelegate>
 
-@interface MPAdDestinationDisplayAgent : NSObject <MPURLResolverDelegate>
-
-+ (MPAdDestinationDisplayAgent *)agentWithDelegate:(id<MPAdWebViewDelegate>)delegate;
++ (MPAdDestinationDisplayAgent *)agentWithAdWebView:(MPAdWebView *)adWebView
+                                        URLResolver:(MPURLResolver *)resolver
+                                           delegate:(id<MPAdWebViewDelegate>)delegate;
 
 - (void)displayDestinationForURL:(NSURL *)URL;
 

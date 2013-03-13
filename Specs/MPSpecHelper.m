@@ -15,7 +15,7 @@ static BOOL didNap = NO;
 + (void)beforeEach
 {
     if (!didNap) {
-        usleep(200000); //0.2 seconds
+        usleep(200000);
         didNap = YES;
     }
 }

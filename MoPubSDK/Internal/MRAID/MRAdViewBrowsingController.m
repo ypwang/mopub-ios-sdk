@@ -36,10 +36,6 @@
 #pragma mark -
 #pragma mark MPAdBrowserControllerDelegate
 
-- (void)dismissBrowserController:(MPAdBrowserController *)browserController {
-    [self dismissBrowserController:browserController animated:YES];
-}
-
 - (void)dismissBrowserController:(MPAdBrowserController *)browserController 
                         animated:(BOOL)animated {
     [self.viewControllerForPresentingModalView dismissModalViewControllerAnimated:animated];

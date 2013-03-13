@@ -10,6 +10,10 @@
 #import <UIKit/UIKit.h>
 #import "CJSONDeserializer.h"
 
+#ifndef MP_ANIMATED
+#define MP_ANIMATED YES
+#endif
+
 #define MOPUB_DEPRECATED __attribute__((deprecated))
 
 UIInterfaceOrientation MPInterfaceOrientation(void);

@@ -1,6 +1,6 @@
 require 'tmpdir'
 
-CONFIGURATION = "Release"
+CONFIGURATION = "Debug"
 SDK_VERSION = "6.1"
 BUILD_DIR = File.join(File.dirname(__FILE__), "build")
 
