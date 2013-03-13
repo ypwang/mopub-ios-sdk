@@ -282,7 +282,7 @@ textEncodingName:(NSString *)textEncodingName baseURL:(NSURL *)baseURL
     [self showLoadingIndicatorAnimated:YES];
 }
 
-#pragma mark - MPAdBrowserControllerDelegate
+#pragma mark - <MPAdBrowserControllerDelegate>
 
 - (void)dismissBrowserController:(MPAdBrowserController *)browserController
 {

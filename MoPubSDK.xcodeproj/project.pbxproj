@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		AE341F1B16EFB9460074C859 /* NSURLConnection+MPSpecs.m in Sources */ = {isa = PBXBuildFile; fileRef = AE341F1A16EFB9460074C859 /* NSURLConnection+MPSpecs.m */; };
 		AE341F3C16EFC7CB0074C859 /* libFoundation+PivotalSpecHelper-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE341F3216EFC7790074C859 /* libFoundation+PivotalSpecHelper-StaticLib.a */; };
+		AE341F4016EFFA690074C859 /* MPAdDestinationDisplayAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = AE341F3F16EFFA690074C859 /* MPAdDestinationDisplayAgent.m */; };
+		AE341F4116EFFA690074C859 /* MPAdDestinationDisplayAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = AE341F3F16EFFA690074C859 /* MPAdDestinationDisplayAgent.m */; };
+		AE341F4316EFFA810074C859 /* MPAdDestinationDisplayAgentSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE341F4216EFFA810074C859 /* MPAdDestinationDisplayAgentSpec.mm */; };
 		AEA97BE016EF9C030046D464 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97BDF16EF9C030046D464 /* UIKit.framework */; };
 		AEA97BE116EF9C030046D464 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF1F32B16EF9AD700273462 /* Foundation.framework */; };
 		AEA97BE316EF9C030046D464 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97BE216EF9C030046D464 /* CoreGraphics.framework */; };
@@ -146,6 +149,9 @@
 		AE341F1916EFB9460074C859 /* NSURLConnection+MPSpecs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLConnection+MPSpecs.h"; sourceTree = "<group>"; };
 		AE341F1A16EFB9460074C859 /* NSURLConnection+MPSpecs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLConnection+MPSpecs.m"; sourceTree = "<group>"; };
 		AE341F2116EFC7790074C859 /* Foundation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Foundation.xcodeproj; path = PivotalCoreKit/Foundation/Foundation.xcodeproj; sourceTree = "<group>"; };
+		AE341F3E16EFFA690074C859 /* MPAdDestinationDisplayAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPAdDestinationDisplayAgent.h; sourceTree = "<group>"; };
+		AE341F3F16EFFA690074C859 /* MPAdDestinationDisplayAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPAdDestinationDisplayAgent.m; sourceTree = "<group>"; };
+		AE341F4216EFFA810074C859 /* MPAdDestinationDisplayAgentSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPAdDestinationDisplayAgentSpec.mm; sourceTree = "<group>"; };
 		AEA97BDE16EF9C030046D464 /* Specs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Specs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEA97BDF16EF9C030046D464 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AEA97BE216EF9C030046D464 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -433,6 +439,8 @@
 				AEA97C2016EF9DB00046D464 /* MPProgressOverlayView.m */,
 				AEA97CB216EFA8980046D464 /* MPURLResolver.h */,
 				AEA97CB316EFA8980046D464 /* MPURLResolver.m */,
+				AE341F3E16EFFA690074C859 /* MPAdDestinationDisplayAgent.h */,
+				AE341F3F16EFFA690074C859 /* MPAdDestinationDisplayAgent.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -582,6 +590,7 @@
 			isa = PBXGroup;
 			children = (
 				AEC9E56A16EFABD7007CA2BA /* MPURLResolverSpec.mm */,
+				AE341F4216EFFA810074C859 /* MPAdDestinationDisplayAgentSpec.mm */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -789,6 +798,8 @@
 				AEC9E56F16EFACBB007CA2BA /* FakeMPURLResolverDelegate.m in Sources */,
 				AEC9E5A616EFB48F007CA2BA /* MPSpecHelper.m in Sources */,
 				AE341F1B16EFB9460074C859 /* NSURLConnection+MPSpecs.m in Sources */,
+				AE341F4116EFFA690074C859 /* MPAdDestinationDisplayAgent.m in Sources */,
+				AE341F4316EFFA810074C859 /* MPAdDestinationDisplayAgentSpec.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -849,6 +860,7 @@
 				AEA97CAA16EF9E450046D464 /* CJSONScanner.m in Sources */,
 				AEA97CAB16EF9E450046D464 /* CJSONSerializer.m in Sources */,
 				AEA97CB416EFA8980046D464 /* MPURLResolver.m in Sources */,
+				AE341F4016EFFA690074C859 /* MPAdDestinationDisplayAgent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
