@@ -8,6 +8,7 @@
 
 #import "MPAdBrowserController.h"
 #import "MPLogging.h"
+#import "MPGlobal.h"
 
 @interface MPAdBrowserController ()
 
@@ -41,69 +42,69 @@
 
 - (id)initWithURL:(NSURL *)URL HTMLString:(NSString *)HTMLString delegate:(id<MPAdBrowserControllerDelegate>)delegate
 {
-	if (self = [super initWithNibName:@"MPAdBrowserController" bundle:nil])
-	{
-		self.delegate = delegate;
-		self.URL = URL;
+    if (self = [super initWithNibName:@"MPAdBrowserController" bundle:nil])
+    {
+        self.delegate = delegate;
+        self.URL = URL;
         self.HTMLString = HTMLString;
 
-		MPLogDebug(@"Ad browser (%p) initialized with URL: %@", self, self.URL);
+        MPLogDebug(@"Ad browser (%p) initialized with URL: %@", self, self.URL);
 
-		self.webView = [[[UIWebView alloc] initWithFrame:CGRectZero] autorelease];
-		self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth |
-		UIViewAutoresizingFlexibleHeight;
-		self.webView.delegate = self;
-		self.webView.scalesPageToFit = YES;
+        self.webView = [[[UIWebView alloc] initWithFrame:CGRectZero] autorelease];
+        self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth |
+        UIViewAutoresizingFlexibleHeight;
+        self.webView.delegate = self;
+        self.webView.scalesPageToFit = YES;
 
-		self.spinner = [[[UIActivityIndicatorView alloc] initWithFrame:CGRectZero] autorelease];
-		[self.spinner sizeToFit];
-		self.spinner.hidesWhenStopped = YES;
+        self.spinner = [[[UIActivityIndicatorView alloc] initWithFrame:CGRectZero] autorelease];
+        [self.spinner sizeToFit];
+        self.spinner.hidesWhenStopped = YES;
 
         self.webViewLoadCount = 0;
-	}
-	return self;
+    }
+    return self;
 }
 
 - (void)dealloc
 {
     self.HTMLString = nil;
-	self.delegate = nil;
-	self.webView.delegate = nil;
-	self.webView = nil;
-	self.URL = nil;
-	self.backButton = nil;
-	self.forwardButton = nil;
-	self.refreshButton = nil;
-	self.safariButton = nil;
-	self.doneButton = nil;
-	self.spinner = nil;
-	self.spinnerItem = nil;
-	self.actionSheet = nil;
-	[super dealloc];
+    self.delegate = nil;
+    self.webView.delegate = nil;
+    self.webView = nil;
+    self.URL = nil;
+    self.backButton = nil;
+    self.forwardButton = nil;
+    self.refreshButton = nil;
+    self.safariButton = nil;
+    self.doneButton = nil;
+    self.spinner = nil;
+    self.spinnerItem = nil;
+    self.actionSheet = nil;
+    [super dealloc];
 }
 
 - (void)viewDidLoad
 {
-	[super viewDidLoad];
+    [super viewDidLoad];
 
     // Set up toolbar buttons
-	self.backButton.image = [self backArrowImage];
-	self.backButton.title = nil;
-	self.forwardButton.image = [self forwardArrowImage];
-	self.forwardButton.title = nil;
-	self.spinnerItem.customView = self.spinner;
-	self.spinnerItem.title = nil;
+    self.backButton.image = [self backArrowImage];
+    self.backButton.title = nil;
+    self.forwardButton.image = [self forwardArrowImage];
+    self.forwardButton.title = nil;
+    self.spinnerItem.customView = self.spinner;
+    self.spinnerItem.title = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
 
-	// Set button enabled status.
-	self.backButton.enabled = self.webView.canGoBack;
-	self.forwardButton.enabled = self.webView.canGoForward;
-	self.refreshButton.enabled = NO;
-	self.safariButton.enabled = NO;
+    // Set button enabled status.
+    self.backButton.enabled = self.webView.canGoBack;
+    self.forwardButton.enabled = self.webView.canGoForward;
+    self.refreshButton.enabled = NO;
+    self.safariButton.enabled = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -123,57 +124,57 @@
 
 - (IBAction)refresh
 {
-	[self dismissActionSheet];
-	[self.webView reload];
+    [self dismissActionSheet];
+    [self.webView reload];
 }
 
 - (IBAction)done
 {
-	[self dismissActionSheet];
+    [self dismissActionSheet];
     [self.delegate dismissBrowserController:self animated:MP_ANIMATED];
 }
 
 - (IBAction)back
 {
-	[self dismissActionSheet];
-	[self.webView goBack];
-	self.backButton.enabled = self.webView.canGoBack;
-	self.forwardButton.enabled = self.webView.canGoForward;
+    [self dismissActionSheet];
+    [self.webView goBack];
+    self.backButton.enabled = self.webView.canGoBack;
+    self.forwardButton.enabled = self.webView.canGoForward;
 }
 
 - (IBAction)forward
 {
-	[self dismissActionSheet];
-	[self.webView goForward];
-	self.backButton.enabled = self.webView.canGoBack;
-	self.forwardButton.enabled = self.webView.canGoForward;
+    [self dismissActionSheet];
+    [self.webView goForward];
+    self.backButton.enabled = self.webView.canGoBack;
+    self.forwardButton.enabled = self.webView.canGoForward;
 }
 
 - (IBAction)safari
 {
-	if (self.actionSheet)
-	{
-		[self dismissActionSheet];
-	}
-	else
-	{
-		self.actionSheet = [[[UIActionSheet alloc] initWithTitle:nil
-													   delegate:self
-											  cancelButtonTitle:@"Cancel"
-										 destructiveButtonTitle:nil
-											  otherButtonTitles:@"Open in Safari", nil] autorelease];
+    if (self.actionSheet)
+    {
+        [self dismissActionSheet];
+    }
+    else
+    {
+        self.actionSheet = [[[UIActionSheet alloc] initWithTitle:nil
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                         destructiveButtonTitle:nil
+                                              otherButtonTitles:@"Open in Safari", nil] autorelease];
 
         if ([UIActionSheet instancesRespondToSelector:@selector(showFromBarButtonItem:animated:)]) {
             [self.actionSheet showFromBarButtonItem:self.safariButton animated:YES];
         } else {
             [self.actionSheet showInView:self.webView];
         }
-	}
+    }
 }
 
 - (void)dismissActionSheet
 {
-	[self.actionSheet dismissWithClickedButtonIndex:0 animated:YES];
+    [self.actionSheet dismissWithClickedButtonIndex:0 animated:YES];
 
 }
 
@@ -183,11 +184,11 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     self.actionSheet = nil;
-	if (buttonIndex == 0)
-	{
-		// Open in Safari.
-		[[UIApplication sharedApplication] openURL:self.URL];
-	}
+    if (buttonIndex == 0)
+    {
+        // Open in Safari.
+        [[UIApplication sharedApplication] openURL:self.URL];
+    }
 }
 
 #pragma mark -
@@ -196,16 +197,16 @@
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType
 {
-	MPLogDebug(@"Ad browser (%p) starting to load URL: %@", self, request.URL);
+    MPLogDebug(@"Ad browser (%p) starting to load URL: %@", self, request.URL);
     self.URL = request.URL;
     return YES;
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-	self.refreshButton.enabled = YES;
-	self.safariButton.enabled = YES;
-	[self.spinner startAnimating];
+    self.refreshButton.enabled = YES;
+    self.safariButton.enabled = YES;
+    [self.spinner startAnimating];
 
     self.webViewLoadCount++;
 }
@@ -213,24 +214,24 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     self.webViewLoadCount--;
-	if (self.webViewLoadCount > 0) return;
+    if (self.webViewLoadCount > 0) return;
 
-	self.refreshButton.enabled = YES;
-	self.safariButton.enabled = YES;
-	self.backButton.enabled = self.webView.canGoBack;
-	self.forwardButton.enabled = self.webView.canGoForward;
-	[self.spinner stopAnimating];
+    self.refreshButton.enabled = YES;
+    self.safariButton.enabled = YES;
+    self.backButton.enabled = self.webView.canGoBack;
+    self.forwardButton.enabled = self.webView.canGoForward;
+    [self.spinner stopAnimating];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     self.webViewLoadCount--;
-    
+
     self.refreshButton.enabled = YES;
-	self.safariButton.enabled = YES;
-	self.backButton.enabled = self.webView.canGoBack;
-	self.forwardButton.enabled = self.webView.canGoForward;
-	[self.spinner stopAnimating];
+    self.safariButton.enabled = YES;
+    self.backButton.enabled = self.webView.canGoBack;
+    self.forwardButton.enabled = self.webView.canGoForward;
+    [self.spinner stopAnimating];
 
     // Ignore NSURLErrorDomain error (-999).
     if (error.code == NSURLErrorCancelled) return;
@@ -238,7 +239,7 @@
     // Ignore "Frame Load Interrupted" errors after navigating to iTunes or the App Store.
     if (error.code == 102 && [error.domain isEqual:@"WebKitErrorDomain"]) return;
 
-	MPLogError(@"Ad browser (%p) experienced an error: %@.", self, [error localizedDescription]);
+    MPLogError(@"Ad browser (%p) experienced an error: %@.", self, [error localizedDescription]);
 }
 
 #pragma mark -
@@ -246,53 +247,53 @@
 
 - (CGContextRef)createContext
 {
-	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	CGContextRef context = CGBitmapContextCreate(nil,27,27,8,0,
-												 colorSpace,kCGImageAlphaPremultipliedLast);
-	CFRelease(colorSpace);
-	return context;
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = CGBitmapContextCreate(nil,27,27,8,0,
+                                                 colorSpace,kCGImageAlphaPremultipliedLast);
+    CFRelease(colorSpace);
+    return context;
 }
 
 - (UIImage *)backArrowImage
 {
-	CGContextRef context = [self createContext];
-	CGColorRef fillColor = [[UIColor blackColor] CGColor];
-	CGContextSetFillColor(context, CGColorGetComponents(fillColor));
+    CGContextRef context = [self createContext];
+    CGColorRef fillColor = [[UIColor blackColor] CGColor];
+    CGContextSetFillColor(context, CGColorGetComponents(fillColor));
 
-	CGContextBeginPath(context);
-	CGContextMoveToPoint(context, 8.0f, 13.0f);
-	CGContextAddLineToPoint(context, 24.0f, 4.0f);
-	CGContextAddLineToPoint(context, 24.0f, 22.0f);
-	CGContextClosePath(context);
-	CGContextFillPath(context);
+    CGContextBeginPath(context);
+    CGContextMoveToPoint(context, 8.0f, 13.0f);
+    CGContextAddLineToPoint(context, 24.0f, 4.0f);
+    CGContextAddLineToPoint(context, 24.0f, 22.0f);
+    CGContextClosePath(context);
+    CGContextFillPath(context);
 
-	CGImageRef imageRef = CGBitmapContextCreateImage(context);
-	CGContextRelease(context);
+    CGImageRef imageRef = CGBitmapContextCreateImage(context);
+    CGContextRelease(context);
 
-	UIImage *image = [[UIImage alloc] initWithCGImage:imageRef];
-	CGImageRelease(imageRef);
-	return [image autorelease];
+    UIImage *image = [[UIImage alloc] initWithCGImage:imageRef];
+    CGImageRelease(imageRef);
+    return [image autorelease];
 }
 
 - (UIImage *)forwardArrowImage
 {
-	CGContextRef context = [self createContext];
-	CGColorRef fillColor = [[UIColor blackColor] CGColor];
-	CGContextSetFillColor(context, CGColorGetComponents(fillColor));
+    CGContextRef context = [self createContext];
+    CGColorRef fillColor = [[UIColor blackColor] CGColor];
+    CGContextSetFillColor(context, CGColorGetComponents(fillColor));
 
-	CGContextBeginPath(context);
-	CGContextMoveToPoint(context, 24.0f, 13.0f);
-	CGContextAddLineToPoint(context, 8.0f, 4.0f);
-	CGContextAddLineToPoint(context, 8.0f, 22.0f);
-	CGContextClosePath(context);
-	CGContextFillPath(context);
+    CGContextBeginPath(context);
+    CGContextMoveToPoint(context, 24.0f, 13.0f);
+    CGContextAddLineToPoint(context, 8.0f, 4.0f);
+    CGContextAddLineToPoint(context, 8.0f, 22.0f);
+    CGContextClosePath(context);
+    CGContextFillPath(context);
 
-	CGImageRef imageRef = CGBitmapContextCreateImage(context);
-	CGContextRelease(context);
+    CGImageRef imageRef = CGBitmapContextCreateImage(context);
+    CGContextRelease(context);
 
-	UIImage *image = [[UIImage alloc] initWithCGImage:imageRef];
-	CGImageRelease(imageRef);
-	return [image autorelease];
+    UIImage *image = [[UIImage alloc] initWithCGImage:imageRef];
+    CGImageRelease(imageRef);
+    return [image autorelease];
 }
 
 #pragma mark -

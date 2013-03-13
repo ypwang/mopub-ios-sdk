@@ -62,12 +62,12 @@
 
 - (void)showWebViewWithHTMLString:(NSString *)HTMLString baseURL:(NSURL *)URL
 {
-    [MPProgressOverlayView dismissOverlayFromWindow:MPKeyWindow()
-                                           animated:MP_ANIMATED];
+    [self hideOverlay];
 
     MPAdBrowserController *browser = [[[MPAdBrowserController alloc] initWithURL:URL
                                                                       HTMLString:HTMLString
                                                                         delegate:self] autorelease];
+
     [[self.delegate viewControllerForPresentingModalView] mp_presentModalViewController:browser
                                                                                animated:MP_ANIMATED];
 }
@@ -83,9 +83,7 @@
 
 - (void)openURLInApplication:(NSURL *)URL
 {
-    [MPProgressOverlayView dismissOverlayFromWindow:MPKeyWindow()
-                                           animated:MP_ANIMATED];
-
+    [self hideOverlay];
     [self.delegate adActionWillLeaveApplication:self.adWebView];
 
     [[UIApplication sharedApplication] openURL:URL];
@@ -93,9 +91,7 @@
 
 - (void)failedToResolveURLWithError:(NSError *)error
 {
-    [MPProgressOverlayView dismissOverlayFromWindow:MPKeyWindow()
-                                           animated:MP_ANIMATED];
-
+    [self hideOverlay];
     [self.delegate adActionDidFinish:self.adWebView];
 }
 
@@ -111,8 +107,7 @@
         if (self.cancelled) return;
 
         if (success) {
-            [MPProgressOverlayView dismissOverlayFromWindow:MPKeyWindow()
-                                                   animated:MP_ANIMATED];
+            [self hideOverlay];
             [[self.delegate viewControllerForPresentingModalView] mp_presentModalViewController:controller
                                                                                        animated:MP_ANIMATED];
         } else {
@@ -123,28 +118,37 @@
 }
 
 #pragma mark - <MPSKStoreProductViewControllerDelegate>
-
 - (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController
+{
+    [self hideModalAndNotifyDelegate];
+}
+
+#pragma mark - <MPAdBrowserControllerDelegate>
+- (void)dismissBrowserController:(MPAdBrowserController *)browserController animated:(BOOL)animated
+{
+    [self hideModalAndNotifyDelegate];
+}
+
+#pragma mark - <MPProgressOverlayViewDelegate>
+- (void)overlayCancelButtonPressed
+{
+    self.cancelled = YES;
+    [self.resolver cancel];
+    [self hideOverlay];
+    [self.delegate adActionDidFinish:self.adWebView];
+}
+
+#pragma mark - Convenience Methods
+- (void)hideModalAndNotifyDelegate
 {
     [[self.delegate viewControllerForPresentingModalView] mp_dismissModalViewControllerAnimated:MP_ANIMATED];
     [self.delegate adActionDidFinish:self.adWebView];
 }
 
-#pragma mark - <MPAdBrowserControllerDelegate>
-
-- (void)dismissBrowserController:(MPAdBrowserController *)browserController animated:(BOOL)animated
+- (void)hideOverlay
 {
-    [[self.delegate viewControllerForPresentingModalView] mp_dismissModalViewControllerAnimated:animated];
-    [self.delegate adActionDidFinish:self.adWebView];
+    [MPProgressOverlayView dismissOverlayFromWindow:MPKeyWindow() animated:MP_ANIMATED];
 }
 
-#pragma mark - <MPProgressOverlayViewDelegate>
-
-- (void)overlayCancelButtonPressed
-{
-    self.cancelled = YES;
-    [self.resolver cancel];
-    [self.delegate adActionDidFinish:self.adWebView];
-}
 
 @end

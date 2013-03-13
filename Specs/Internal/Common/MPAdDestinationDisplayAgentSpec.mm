@@ -187,8 +187,9 @@ describe(@"MPAdDestinationDisplayAgent", ^{
                     [agent overlayCancelButtonPressed];
                 });
 
-                it(@"should tell the delegate", ^{
+                it(@"should tell the delegate and hide the overlay", ^{
                     delegate should have_received(@selector(adActionDidFinish:)).with(adWebViewPlaceholder);
+                    window.subviews.lastObject should be_nil;
                 });
 
                 context(@"and then the load succeeds", ^{
@@ -256,6 +257,10 @@ describe(@"MPAdDestinationDisplayAgent", ^{
 
         it(@"should tell the delegate that an adActionDidFinish", ^{
             delegate should have_received(@selector(adActionDidFinish:)).with(adWebViewPlaceholder);
+        });
+
+        it(@"should hide the overlay", ^{
+            window.subviews.lastObject should be_nil;
         });
     });
 
