@@ -161,41 +161,17 @@ describe(@"MPAdDestinationDisplayAgent", ^{
                 presentingViewController.presentedViewController should equal(store);
             });
 
-            context(@"when the load succeeds", ^{
+            context(@"when the person leaves the store", ^{
                 beforeEach(^{
-                    store.completionBlock(YES, nil);
+                    [store.delegate productViewControllerDidFinish:store];
                 });
 
-                context(@"when the person leaves the store", ^{
-                    beforeEach(^{
-                        [store.delegate productViewControllerDidFinish:store];
-                    });
-
-                    it(@"should dismiss the store", ^{
-                        presentingViewController.presentedViewController should be_nil;
-                    });
-
-                    it(@"should tell its delegate that an adActionDidFinish", ^{
-                        delegate should have_received(@selector(adActionDidFinish:)).with(adWebViewPlaceholder);
-                    });
-
-                    it(@"should allow subsequent displayDestinationForURL: calls", ^{
-                        verifyThatDisplayDestinationIsEnabled();
-                    });
-                });
-            });
-
-            context(@"when the load fails", ^{
-                beforeEach(^{
-                    store.completionBlock(NO, [[NSError alloc] init]);
-                });
-
-                it(@"should hide the store", ^{
+                it(@"should dismiss the store", ^{
                     presentingViewController.presentedViewController should be_nil;
                 });
 
-                it(@"should ask the application to load the URL", ^{
-                    verifyThatTheURLWasSentToApplication(URL);
+                it(@"should tell its delegate that an adActionDidFinish", ^{
+                    delegate should have_received(@selector(adActionDidFinish:)).with(adWebViewPlaceholder);
                 });
 
                 it(@"should allow subsequent displayDestinationForURL: calls", ^{

@@ -117,14 +117,8 @@ NSString * const kMoPubCustomHost = @"custom";
 textEncodingName:(NSString *)textEncodingName baseURL:(NSURL *)baseURL
 {
     //DONE
-
-    // TODO: Can't use this because PCK UIWebView extensions don't include this...
-    //[_webView loadData:data MIMEType:MIMEType textEncodingName:textEncodingName baseURL:baseURL];
-
-//    NSString *HTMLString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-    NSArray *links = @[@"itms://itunes.apple.com/us/app/pages/id361309726?mt=8&uo=4",];
-    [_webView loadHTMLString:[self htmlForLinks:links] baseURL:baseURL];
-    [self webView:_webView shouldStartLoadWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"mopub://finishLoad"]] navigationType:UIWebViewNavigationTypeOther];
+    NSString *HTMLString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+    [_webView loadHTMLString:HTMLString baseURL:baseURL];
 }
 
 - (void)invokeJavaScriptForEvent:(MPAdWebViewEvent)event

@@ -101,12 +101,7 @@
 
     NSDictionary *parameters = [NSDictionary dictionaryWithObject:identifier
                                                            forKey:SKStoreProductParameterITunesItemIdentifier];
-    [controller loadProductWithParameters:parameters completionBlock:^(BOOL success, NSError *error) {
-        if (error) {
-            [[self.delegate viewControllerForPresentingModalView] mp_dismissModalViewControllerAnimated:NO];
-            [self openURLInApplication:URL];
-        }
-    }];
+    [controller loadProductWithParameters:parameters completionBlock:nil];
 
     [self hideOverlay];
     [[self.delegate viewControllerForPresentingModalView] mp_presentModalViewController:controller
