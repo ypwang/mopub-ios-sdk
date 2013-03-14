@@ -13,6 +13,8 @@
 #import "UIApplication+MPSpecs.h"
 #import "MPStoreKitProvider+MPSpecs.h"
 
+typedef void (^NoArgBlock)();
+
 @interface MPSpecHelper : NSObject
 
 @end

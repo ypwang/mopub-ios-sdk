@@ -12,11 +12,9 @@
 
 @interface MPAdDestinationDisplayAgent ()
 
-@property (nonatomic, assign) MPAdWebView *adWebView;
 @property (nonatomic, assign) id<MPAdWebViewDelegate> delegate;
 @property (nonatomic, retain) MPURLResolver *resolver;
-@property (nonatomic, assign) BOOL used;
-@property (nonatomic, assign) BOOL cancelled;
+@property (nonatomic, assign) BOOL inUse;
 
 - (void)presentStoreKitControllerWithItemIdentifier:(NSString *)identifier fallbackURL:(NSURL *)URL;
 
@@ -28,12 +26,10 @@
 @synthesize delegate = _delegate;
 @synthesize resolver = _resolver;
 
-+ (MPAdDestinationDisplayAgent *)agentWithAdWebView:(MPAdWebView *)adWebView
-                                        URLResolver:(MPURLResolver *)resolver
-                                           delegate:(id<MPAdWebViewDelegate>)delegate
++ (MPAdDestinationDisplayAgent *)agentWithURLResolver:(MPURLResolver *)resolver
+                                             delegate:(id<MPAdWebViewDelegate>)delegate
 {
     MPAdDestinationDisplayAgent *agent = [[MPAdDestinationDisplayAgent alloc] init];
-    agent.adWebView = adWebView;
     agent.resolver = resolver;
     agent.delegate = delegate;
     return agent;
@@ -47,8 +43,8 @@
 
 - (void)displayDestinationForURL:(NSURL *)URL
 {
-    if (self.used) return;
-    self.used = YES;
+    if (self.inUse) return;
+    self.inUse = YES;
 
     [MPProgressOverlayView presentOverlayInWindow:MPKeyWindow()
                                          animated:MP_ANIMATED
@@ -67,7 +63,7 @@
     MPAdBrowserController *browser = [[[MPAdBrowserController alloc] initWithURL:URL
                                                                       HTMLString:HTMLString
                                                                         delegate:self] autorelease];
-
+    browser.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [[self.delegate viewControllerForPresentingModalView] mp_presentModalViewController:browser
                                                                                animated:MP_ANIMATED];
 }
@@ -87,12 +83,14 @@
     [self.delegate adActionWillLeaveApplication:self.adWebView];
 
     [[UIApplication sharedApplication] openURL:URL];
+    self.inUse = NO;
 }
 
 - (void)failedToResolveURLWithError:(NSError *)error
 {
     [self hideOverlay];
     [self.delegate adActionDidFinish:self.adWebView];
+    self.inUse = NO;
 }
 
 - (void)presentStoreKitControllerWithItemIdentifier:(NSString *)identifier fallbackURL:(NSURL *)URL
@@ -104,16 +102,15 @@
     NSDictionary *parameters = [NSDictionary dictionaryWithObject:identifier
                                                            forKey:SKStoreProductParameterITunesItemIdentifier];
     [controller loadProductWithParameters:parameters completionBlock:^(BOOL success, NSError *error) {
-        if (self.cancelled) return;
-
-        if (success) {
-            [self hideOverlay];
-            [[self.delegate viewControllerForPresentingModalView] mp_presentModalViewController:controller
-                                                                                       animated:MP_ANIMATED];
-        } else {
+        if (error) {
+            [[self.delegate viewControllerForPresentingModalView] mp_dismissModalViewControllerAnimated:NO];
             [self openURLInApplication:URL];
         }
     }];
+
+    [self hideOverlay];
+    [[self.delegate viewControllerForPresentingModalView] mp_presentModalViewController:controller
+                                                                               animated:MP_ANIMATED];
 #endif
 }
 
@@ -121,21 +118,23 @@
 - (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController
 {
     [self hideModalAndNotifyDelegate];
+    self.inUse = NO;
 }
 
 #pragma mark - <MPAdBrowserControllerDelegate>
 - (void)dismissBrowserController:(MPAdBrowserController *)browserController animated:(BOOL)animated
 {
     [self hideModalAndNotifyDelegate];
+    self.inUse = NO;
 }
 
 #pragma mark - <MPProgressOverlayViewDelegate>
 - (void)overlayCancelButtonPressed
 {
-    self.cancelled = YES;
     [self.resolver cancel];
     [self hideOverlay];
     [self.delegate adActionDidFinish:self.adWebView];
+    self.inUse = NO;
 }
 
 #pragma mark - Convenience Methods

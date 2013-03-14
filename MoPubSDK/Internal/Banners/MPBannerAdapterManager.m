@@ -45,15 +45,15 @@
 - (void)dealloc
 {
     _delegate = nil;
-    
+
     [_requestedAd release];
-    
+
     [_requestingAdapter unregisterDelegate];
     [_requestingAdapter release];
-    
+
     [_currentOnscreenAdapter unregisterDelegate];
     [_currentOnscreenAdapter release];
-    
+
     [super dealloc];
 }
 
@@ -63,27 +63,27 @@
 {
     [self.requestingAdapter unregisterDelegate];
     self.requestingAdapter = nil;
-    
+
     if ([[config networkType] isEqualToString:@"clear"]) {
         MPLogInfo(@"No inventory available for banner.");
         MPError *noInventoryError = [MPError errorWithCode:MPErrorNoInventory];
         [_delegate adapterManager:self didFailToLoadAdWithError:noInventoryError];
         return;
     }
-    
+
     MPLogInfo(@"Fetching banner ad network type: %@", [config networkType]);
-    
+
     Class adapterClass = [[MPAdapterMap sharedAdapterMap] bannerAdapterClassForNetworkType:
                           [config networkType]];
     MPBaseAdapter *adapter = [[[adapterClass alloc] initWithAdapterDelegate:self] autorelease];
-    
+
     if (!adapter) {
         MPLogInfo(@"Could not create adapter for banner network type: %@.", [config networkType]);
         MPError *adapterNotFoundError = [MPError errorWithCode:MPErrorAdapterNotFound];
         [_delegate adapterManager:self didFailToLoadAdWithError:adapterNotFoundError];
         return;
     }
-    
+
     self.requestingAdapter = adapter;
     [self requestBannerFromAdapter:self.requestingAdapter forConfiguration:config];
 }
@@ -93,7 +93,7 @@
 {
     BOOL adapterIsValid = NO;
     BOOL adapterIsLegacy = NO;
-    
+
     unsigned int adapterMethodCount = 0;
     Method *adapterMethodList = class_copyMethodList([adapter class], &adapterMethodCount);
     for (unsigned int i = 0; i < adapterMethodCount; i++) {
@@ -107,7 +107,7 @@
         }
     }
     free(adapterMethodList);
-    
+
     if (adapterIsValid && adapterIsLegacy) {
         [adapter setImpressionTrackingURL:[configuration impressionTrackingURL]];
         [adapter setClickTrackingURL:[configuration clickTrackingURL]];
@@ -127,7 +127,7 @@
     self.currentOnscreenAdapter = self.requestingAdapter;
     self.requestingAdapter = nil;
     self.requestedAd = nil;
-    
+
     [self.currentOnscreenAdapter trackImpression];
 }
 
@@ -161,13 +161,13 @@
     if (adapter != self.requestingAdapter && adapter != self.currentOnscreenAdapter) {
         return;
     }
-    
+
     if (adapter == self.requestingAdapter) {
         self.requestedAd = ad;
         [_delegate adapterManager:self didLoadAd:ad];
     } else if (adapter == self.currentOnscreenAdapter) {
         [_delegate adapterManager:self didRefreshAd:ad];
-        
+
         // XXX: Only used for iAd.
         if (shouldTrack) {
             [self.currentOnscreenAdapter trackImpression];
@@ -180,18 +180,18 @@
     if (adapter != self.requestingAdapter && adapter != self.currentOnscreenAdapter) {
         return;
     }
-    
+
     if (adapter == self.requestingAdapter) {
         MPLogError(@"Adapter (%p) failed to load ad. Error: %@", adapter, error);
         [self.requestingAdapter unregisterDelegate];
         self.requestingAdapter = nil;
-        
+
         MPError *adapterNoInventoryError = [MPError errorWithCode:MPErrorAdapterHasNoInventory];
         [_delegate adapterManager:self didFailToLoadAdWithError:adapterNoInventoryError];
     } else if (adapter == self.currentOnscreenAdapter) {
         [self.currentOnscreenAdapter unregisterDelegate];
         self.currentOnscreenAdapter = nil;
-        
+
         if (self.requestingAdapter) {
             // The current adapter has failed, but another adapter is already in the process of
             // trying to replace it. As an optimization, we'll choose not to fire off another retry.
@@ -209,9 +209,9 @@
         // Only handle "click" messages from adapters whose content is currently on-screen.
         return;
     }
-    
+
     [adapter trackClick];
-    
+
     [_delegate adapterManagerUserActionWillBegin:self];
 }
 
@@ -221,7 +221,7 @@
         // Only handle "dismiss" messages from adapters whose content is currently on-screen.
         return;
     }
-    
+
     [_delegate adapterManagerUserActionDidFinish:self];
 }
 
@@ -231,7 +231,7 @@
         // Only handle "leave app" messages from adapters whose content is currently on-screen.
         return;
     }
-    
+
     [_delegate adapterManagerUserWillLeaveApplication:self];
 }
 
@@ -266,7 +266,7 @@
                   @"progress.");
         return;
     }
-    
+
     [self requestedAdDidBecomeVisible];
 }
 
@@ -277,7 +277,7 @@
                   @"progress.");
         return;
     }
-       
+
     [self.requestingAdapter unregisterDelegate];
     self.requestingAdapter = nil;
 }
@@ -289,7 +289,7 @@
                   @"progress.");
         return;
     }
-    
+
     [self userActionWillBeginForAdapter:self.currentOnscreenAdapter];
 }
 
@@ -300,7 +300,7 @@
                   @"progress.");
         return;
     }
-    
+
     [self userActionDidFinishForAdapter:self.currentOnscreenAdapter];
 }
 

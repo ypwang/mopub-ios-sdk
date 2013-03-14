@@ -10,6 +10,7 @@
 #import "MPAdBrowserController.h"
 #import "MPProgressOverlayView.h"
 #import "MPAdWebViewDelegate.h"
+#import "UIWebView+MPAdditions.h"
 
 enum {
     MPAdWebViewEventAdDidAppear     = 0,
@@ -17,27 +18,19 @@ enum {
 };
 typedef NSUInteger MPAdWebViewEvent;
 
-NSString * const kMoPubURLScheme;
-NSString * const kMoPubCloseHost;
-NSString * const kMoPubFinishLoadHost;
-NSString * const kMoPubFailLoadHost;
-NSString * const kMoPubInAppPurchaseHost;
-NSString * const kMoPubCustomHost;
-
 @class MPAdConfiguration;
+@class MPAdDestinationDisplayAgent;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@interface MPAdWebView : UIView <UIWebViewDelegate, MPAdBrowserControllerDelegate,
-    MPProgressOverlayViewDelegate>
+@interface MPAdWebView : UIView <UIWebViewDelegate>
 {
     UIWebView *_webView;
     id<MPAdWebViewDelegate> _delegate;
     id _customMethodDelegate;
-    
+
     MPAdConfiguration *_configuration;
-    MPAdBrowserController *_browserController;
-    
+
     // Only used when the MPAdWebView is the backing view for an interstitial ad.
     BOOL _dismissed;
 }
@@ -48,8 +41,8 @@ NSString * const kMoPubCustomHost;
 @property (nonatomic, readonly, retain) MPAdBrowserController *browserController;
 @property (nonatomic, assign, getter=isDismissed) BOOL dismissed;
 
+- (id)initWithFrame:(CGRect)frame delegate:(id<MPAdWebViewDelegate>)delegate destinationDisplayAgent:(MPAdDestinationDisplayAgent *)agent;
 - (void)loadConfiguration:(MPAdConfiguration *)configuration;
-- (void)loadURL:(NSURL *)URL;
 - (void)loadData:(NSData *)data MIMEType:(NSString *)MIMEType
 textEncodingName:(NSString *)textEncodingName baseURL:(NSURL *)baseURL;
 - (void)rotateToOrientation:(UIInterfaceOrientation)orientation;

@@ -18,6 +18,7 @@ describe(@"MPAdDestinationDisplayAgent", ^{
     __block NSURL *URL;
     __block UIViewController *presentingViewController;
     __block URLVerificationBlock verifyThatTheURLWasSentToApplication;
+    __block NoArgBlock verifyThatDisplayDestinationIsEnabled;
     __block FakeMPURLResolver *resolver;
 
     beforeEach(^{
@@ -29,9 +30,9 @@ describe(@"MPAdDestinationDisplayAgent", ^{
         presentingViewController = [[[UIViewController alloc] init] autorelease];
         delegate stub_method("viewControllerForPresentingModalView").and_return(presentingViewController);
 
-        agent = [MPAdDestinationDisplayAgent agentWithAdWebView:adWebViewPlaceholder
-                                                    URLResolver:resolver
-                                                       delegate:delegate];
+        agent = [MPAdDestinationDisplayAgent agentWithURLResolver:resolver
+                                                         delegate:delegate];
+        agent.adWebView = adWebViewPlaceholder;
 
         window = [[[UIWindow alloc] init] autorelease];
         [window makeKeyAndVisible];
@@ -40,6 +41,12 @@ describe(@"MPAdDestinationDisplayAgent", ^{
             window.subviews.lastObject should be_nil;
             delegate should have_received(@selector(adActionWillLeaveApplication:)).with(adWebViewPlaceholder);
             [[UIApplication sharedApplication] lastOpenedURL] should equal(URL);
+        } copy];
+
+        verifyThatDisplayDestinationIsEnabled = [^{
+            [delegate reset_sent_messages];
+            [agent displayDestinationForURL:[NSURL URLWithString:@"http://www.google.com/"]];
+            delegate should have_received(@selector(adActionWillBegin:));
         } copy];
     });
 
@@ -65,7 +72,7 @@ describe(@"MPAdDestinationDisplayAgent", ^{
             resolver.URL should equal(URL);
         });
 
-        describe(@"when its told again", ^{
+        describe(@"when its told again (immediately)", ^{
             it(@"should ignore the second request", ^{
                 [delegate reset_sent_messages];
                 [agent displayDestinationForURL:URL];
@@ -110,6 +117,10 @@ describe(@"MPAdDestinationDisplayAgent", ^{
             it(@"should dismiss the browser modal", ^{
                 presentingViewController.presentedViewController should be_nil;
             });
+
+            it(@"should allow subsequent displayDestinationForURL: calls", ^{
+                verifyThatDisplayDestinationIsEnabled();
+            });
         });
     });
 
@@ -122,6 +133,10 @@ describe(@"MPAdDestinationDisplayAgent", ^{
 
         it(@"should hide the loading indicator, tell the delegate, and send the URL to the shared application", ^{
             verifyThatTheURLWasSentToApplication(URL);
+        });
+
+        it(@"should allow subsequent displayDestinationForURL: calls", ^{
+            verifyThatDisplayDestinationIsEnabled();
         });
     });
 
@@ -140,21 +155,15 @@ describe(@"MPAdDestinationDisplayAgent", ^{
                 store = [MPStoreKitProvider lastStore];
             });
 
-            it(@"should tell store kit to load the store item", ^{
+            it(@"should tell store kit to load the store item and present the view controller", ^{
                 store.storeItemIdentifier should equal(@"1234");
+                window.subviews.lastObject should be_nil;
+                presentingViewController.presentedViewController should equal(store);
             });
 
             context(@"when the load succeeds", ^{
                 beforeEach(^{
                     store.completionBlock(YES, nil);
-                });
-
-                it(@"should hide the loading indicator", ^{
-                    window.subviews.lastObject should be_nil;
-                });
-
-                it(@"should present the store", ^{
-                    presentingViewController.presentedViewController should equal(store);
                 });
 
                 context(@"when the person leaves the store", ^{
@@ -169,47 +178,28 @@ describe(@"MPAdDestinationDisplayAgent", ^{
                     it(@"should tell its delegate that an adActionDidFinish", ^{
                         delegate should have_received(@selector(adActionDidFinish:)).with(adWebViewPlaceholder);
                     });
+
+                    it(@"should allow subsequent displayDestinationForURL: calls", ^{
+                        verifyThatDisplayDestinationIsEnabled();
+                    });
                 });
             });
 
             context(@"when the load fails", ^{
                 beforeEach(^{
-                    store.completionBlock(NO, nil);
+                    store.completionBlock(NO, [[NSError alloc] init]);
+                });
+
+                it(@"should hide the store", ^{
+                    presentingViewController.presentedViewController should be_nil;
                 });
 
                 it(@"should ask the application to load the URL", ^{
                     verifyThatTheURLWasSentToApplication(URL);
                 });
-            });
 
-            context(@"when the user cancels", ^{
-                beforeEach(^{
-                    [agent overlayCancelButtonPressed];
-                });
-
-                it(@"should tell the delegate and hide the overlay", ^{
-                    delegate should have_received(@selector(adActionDidFinish:)).with(adWebViewPlaceholder);
-                    window.subviews.lastObject should be_nil;
-                });
-
-                context(@"and then the load succeeds", ^{
-                    beforeEach(^{
-                        store.completionBlock(YES, nil);
-                    });
-
-                    it(@"should not show the store and do the standard things", ^{
-                        presentingViewController.presentedViewController should be_nil;
-                    });
-                });
-
-                context(@"and then the load fails", ^{
-                    beforeEach(^{
-                        store.completionBlock(NO, nil);
-                    });
-
-                    it(@"should not open the URL in the application", ^{
-                        [[UIApplication sharedApplication] lastOpenedURL] should be_nil;
-                    });
+                it(@"should allow subsequent displayDestinationForURL: calls", ^{
+                    verifyThatDisplayDestinationIsEnabled();
                 });
             });
         });
@@ -241,6 +231,10 @@ describe(@"MPAdDestinationDisplayAgent", ^{
         it(@"should tell the delegate that an adActionDidFinish", ^{
             delegate should have_received(@selector(adActionDidFinish:)).with(adWebViewPlaceholder);
         });
+
+        it(@"should allow subsequent displayDestinationForURL: calls", ^{
+            verifyThatDisplayDestinationIsEnabled();
+        });
     });
 
     describe(@"when the user cancels by closing the loading indicator", ^{
@@ -262,13 +256,17 @@ describe(@"MPAdDestinationDisplayAgent", ^{
         it(@"should hide the overlay", ^{
             window.subviews.lastObject should be_nil;
         });
+
+        it(@"should allow subsequent displayDestinationForURL: calls", ^{
+            verifyThatDisplayDestinationIsEnabled();
+        });
     });
 
     describe(@"verifying that the resolver and display agent play nice", ^{
         beforeEach(^{
-            agent = [MPAdDestinationDisplayAgent agentWithAdWebView:adWebViewPlaceholder
-                                                        URLResolver:[MPURLResolver resolver]
-                                                           delegate:delegate];
+            agent = [MPAdDestinationDisplayAgent agentWithURLResolver:[MPURLResolver resolver]
+                                                             delegate:delegate];
+            agent.adWebView = adWebViewPlaceholder;
         });
 
         it(@"should use the resolver to determine what to do with the URL", ^{

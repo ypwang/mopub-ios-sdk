@@ -37,10 +37,13 @@
 
 - (void)startResolvingWithURL:(NSURL *)URL delegate:(id<MPURLResolverDelegate>)delegate
 {
+    [self.connection cancel];
+
     self.URL = URL;
     self.delegate = delegate;
+    self.responseData = [NSMutableData data];
 
-    if (![self handleURL:self.URL]){
+    if (![self handleURL:self.URL]) {
         self.connection = [NSURLConnection connectionWithRequest:[NSURLRequest requestWithURL:self.URL] delegate:self];
     }
 }
@@ -55,14 +58,14 @@
 
 - (BOOL)handleURL:(NSURL *)URL
 {
-    if ([self URLShouldOpenInApplication:URL]) {
+    if ([self storeItemIdentifierForURL:URL]) {
+        [self.delegate showStoreKitProductWithParameter:[self storeItemIdentifierForURL:URL] fallbackURL:URL];
+    } else if ([self URLShouldOpenInApplication:URL]) {
         if ([[UIApplication sharedApplication] canOpenURL:URL]) {
             [self.delegate openURLInApplication:URL];
         } else {
             [self.delegate failedToResolveURLWithError:[NSError errorWithDomain:@"com.mopub" code:-1 userInfo:nil]];
         }
-    } else if ([self storeItemIdentifierForURL:URL]) {
-        [self.delegate showStoreKitProductWithParameter:[self storeItemIdentifierForURL:URL] fallbackURL:URL];
     } else {
         return NO;
     }
@@ -93,14 +96,14 @@
 - (NSString *)storeItemIdentifierForURL:(NSURL *)URL
 {
     NSString *itemIdentifier = nil;
-    if ([URL.host isEqualToString:@"itunes.apple.com"]) {
+    if ([URL.host hasSuffix:@"itunes.apple.com"]) {
         NSString *lastPathComponent = [[URL path] lastPathComponent];
         if ([lastPathComponent hasPrefix:@"id"]) {
             itemIdentifier = [lastPathComponent substringFromIndex:2];
         } else {
             itemIdentifier = [self storeItemIdentifierFromQueryParamsOfURL:URL];
         }
-    } else if ([URL.host isEqualToString:@"phobos.apple.com"]) {
+    } else if ([URL.host hasSuffix:@"phobos.apple.com"]) {
         itemIdentifier = [self storeItemIdentifierFromQueryParamsOfURL:URL];
     }
 
@@ -128,12 +131,7 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    if (!self.responseData) {
-        self.responseData = [NSMutableData data];
-    }
-
     [self.responseData appendData:data];
-
 }
 
 - (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response

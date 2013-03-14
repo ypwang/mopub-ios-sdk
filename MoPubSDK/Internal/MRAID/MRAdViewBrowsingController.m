@@ -23,20 +23,21 @@
 
 - (void)openBrowserWithUrlString:(NSString *)urlString enableBack:(BOOL)back
                    enableForward:(BOOL)forward enableRefresh:(BOOL)refresh {
-    NSURL *url = [NSURL URLWithString:urlString];
-    MPAdBrowserController *controller = [[MPAdBrowserController alloc] initWithURL:url 
-                                                                          delegate:self];
-    
-    [_view adWillPresentModalView];
-    [self.viewControllerForPresentingModalView presentModalViewController:controller animated:YES];
-    [controller startLoading];
-    [controller release];
+    // TODO: Uncomment and test this.
+//    NSURL *url = [NSURL URLWithString:urlString];
+//    MPAdBrowserController *controller = [[MPAdBrowserController alloc] initWithURL:url
+//                                                                          delegate:self];
+//
+//    [_view adWillPresentModalView];
+//    [self.viewControllerForPresentingModalView presentModalViewController:controller animated:YES];
+//    [controller startLoading];
+//    [controller release];
 }
 
 #pragma mark -
 #pragma mark MPAdBrowserControllerDelegate
 
-- (void)dismissBrowserController:(MPAdBrowserController *)browserController 
+- (void)dismissBrowserController:(MPAdBrowserController *)browserController
                         animated:(BOOL)animated {
     [self.viewControllerForPresentingModalView dismissModalViewControllerAnimated:animated];
     //[_view adWillShow];

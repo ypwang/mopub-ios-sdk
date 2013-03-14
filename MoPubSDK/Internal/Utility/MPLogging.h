@@ -10,16 +10,16 @@
 #import "MPConstants.h"
 
 // Lower = finer-grained logs.
-typedef enum 
+typedef enum
 {
-	MPLogLevelAll		= 0,
-	MPLogLevelTrace		= 10,
-	MPLogLevelDebug		= 20,
-	MPLogLevelInfo		= 30,
-	MPLogLevelWarn		= 40,
-	MPLogLevelError		= 50,
-	MPLogLevelFatal		= 60,
-	MPLogLevelOff		= 70
+    MPLogLevelAll        = 0,
+    MPLogLevelTrace        = 10,
+    MPLogLevelDebug        = 20,
+    MPLogLevelInfo        = 30,
+    MPLogLevelWarn        = 40,
+    MPLogLevelError        = 50,
+    MPLogLevelFatal        = 60,
+    MPLogLevelOff        = 70
 } MPLogLevel;
 
 MPLogLevel MPLogGetLevel(void);
@@ -31,7 +31,7 @@ void _MPLogWarn(NSString *format, ...);
 void _MPLogError(NSString *format, ...);
 void _MPLogFatal(NSString *format, ...);
 
-#if MP_DEBUG_MODE
+#if MP_DEBUG_MODE && !SPECS
 
 #define MPLogTrace(...) _MPLogTrace(__VA_ARGS__)
 #define MPLogDebug(...) _MPLogDebug(__VA_ARGS__)
