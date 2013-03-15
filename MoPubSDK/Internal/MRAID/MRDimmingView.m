@@ -26,4 +26,10 @@
     self.alpha = (_dimmed) ? _dimmingOpacity : 0.0;
 }
 
+- (void)setDimmingOpacity:(CGFloat)dimmingOpacity
+{
+    _dimmingOpacity = dimmingOpacity;
+    [self setDimmed:self.dimmed];
+}
+
 @end

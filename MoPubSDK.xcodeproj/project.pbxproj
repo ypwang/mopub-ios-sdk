@@ -60,6 +60,15 @@
 		AE60D87A16F3CD5600A4B67F /* MPTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C4E16EF9DB00046D464 /* MPTimer.m */; };
 		AE60D87B16F3CD7800A4B67F /* MRCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C3E16EF9DB00046D464 /* MRCommand.m */; };
 		AE60D87C16F3CE4200A4B67F /* MRAID.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AEA97BF816EF9DA90046D464 /* MRAID.bundle */; };
+		AE60D8A816F3E5E800A4B67F /* MPProgressOverlayViewSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D8A716F3E5E800A4B67F /* MPProgressOverlayViewSpec.mm */; };
+		AE60D8B216F3E62400A4B67F /* MPGlobalSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D8B116F3E62400A4B67F /* MPGlobalSpec.mm */; };
+		AE60D8B516F3E6A300A4B67F /* MPInterstitialViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D8B416F3E6A300A4B67F /* MPInterstitialViewControllerSpec.mm */; };
+		AE60D8B716F3E6ED00A4B67F /* MPBaseAdapterSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D8B616F3E6ED00A4B67F /* MPBaseAdapterSpec.mm */; };
+		AE60D8B916F3E73700A4B67F /* MRAdViewDisplayControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D8B816F3E73600A4B67F /* MRAdViewDisplayControllerSpec.mm */; };
+		AE60D8BB16F3E75E00A4B67F /* MRDimmingViewSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D8BA16F3E75E00A4B67F /* MRDimmingViewSpec.mm */; };
+		AE60D8BF16F3E8D900A4B67F /* MPTimerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D8BE16F3E8D900A4B67F /* MPTimerSpec.mm */; };
+		AE60D8C116F3E8F200A4B67F /* MRPropertySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D8C016F3E8F200A4B67F /* MRPropertySpec.mm */; };
+		AE60D8C316F3E8FE00A4B67F /* MRCommandSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D8C216F3E8FE00A4B67F /* MRCommandSpec.mm */; };
 		AEA97BE016EF9C030046D464 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97BDF16EF9C030046D464 /* UIKit.framework */; };
 		AEA97BE116EF9C030046D464 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF1F32B16EF9AD700273462 /* Foundation.framework */; };
 		AEA97BE316EF9C030046D464 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97BE216EF9C030046D464 /* CoreGraphics.framework */; };
@@ -257,6 +266,15 @@
 		AE60D85716F3B11300A4B67F /* FakeMPInstanceProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeMPInstanceProvider.h; sourceTree = "<group>"; };
 		AE60D85816F3B11300A4B67F /* FakeMPInstanceProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeMPInstanceProvider.m; sourceTree = "<group>"; };
 		AE60D87316F3C87300A4B67F /* MRAdViewSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MRAdViewSpec.mm; sourceTree = "<group>"; };
+		AE60D8A716F3E5E800A4B67F /* MPProgressOverlayViewSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPProgressOverlayViewSpec.mm; sourceTree = "<group>"; };
+		AE60D8B116F3E62400A4B67F /* MPGlobalSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPGlobalSpec.mm; sourceTree = "<group>"; };
+		AE60D8B416F3E6A300A4B67F /* MPInterstitialViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPInterstitialViewControllerSpec.mm; sourceTree = "<group>"; };
+		AE60D8B616F3E6ED00A4B67F /* MPBaseAdapterSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPBaseAdapterSpec.mm; sourceTree = "<group>"; };
+		AE60D8B816F3E73600A4B67F /* MRAdViewDisplayControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MRAdViewDisplayControllerSpec.mm; sourceTree = "<group>"; };
+		AE60D8BA16F3E75E00A4B67F /* MRDimmingViewSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MRDimmingViewSpec.mm; sourceTree = "<group>"; };
+		AE60D8BE16F3E8D900A4B67F /* MPTimerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPTimerSpec.mm; sourceTree = "<group>"; };
+		AE60D8C016F3E8F200A4B67F /* MRPropertySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MRPropertySpec.mm; sourceTree = "<group>"; };
+		AE60D8C216F3E8FE00A4B67F /* MRCommandSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MRCommandSpec.mm; sourceTree = "<group>"; };
 		AEA97BDE16EF9C030046D464 /* Specs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Specs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEA97BDF16EF9C030046D464 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AEA97BE216EF9C030046D464 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -508,6 +526,7 @@
 			isa = PBXGroup;
 			children = (
 				AE60D82F16F39ADF00A4B67F /* MPHTMLBannerAdapterSpec.mm */,
+				AE60D8B616F3E6ED00A4B67F /* MPBaseAdapterSpec.mm */,
 			);
 			path = Banners;
 			sourceTree = "<group>";
@@ -516,8 +535,29 @@
 			isa = PBXGroup;
 			children = (
 				AE60D87316F3C87300A4B67F /* MRAdViewSpec.mm */,
+				AE60D8B816F3E73600A4B67F /* MRAdViewDisplayControllerSpec.mm */,
+				AE60D8BA16F3E75E00A4B67F /* MRDimmingViewSpec.mm */,
+				AE60D8C016F3E8F200A4B67F /* MRPropertySpec.mm */,
+				AE60D8C216F3E8FE00A4B67F /* MRCommandSpec.mm */,
 			);
 			path = MRAID;
+			sourceTree = "<group>";
+		};
+		AE60D8B316F3E69000A4B67F /* Interstitials */ = {
+			isa = PBXGroup;
+			children = (
+				AE60D7FD16F2A2BB00A4B67F /* MPHTMLInterstitialViewControllerSpec.mm */,
+				AE60D8B416F3E6A300A4B67F /* MPInterstitialViewControllerSpec.mm */,
+			);
+			path = Interstitials;
+			sourceTree = "<group>";
+		};
+		AE60D8BD16F3E8C000A4B67F /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				AE60D8BE16F3E8D900A4B67F /* MPTimerSpec.mm */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 		AEA97BE416EF9C030046D464 /* Specs */ = {
@@ -764,6 +804,8 @@
 		AEA97CB616EFAB810046D464 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				AE60D8BD16F3E8C000A4B67F /* Utility */,
+				AE60D8B316F3E69000A4B67F /* Interstitials */,
 				AE60D87216F3C86B00A4B67F /* MRAID */,
 				AE60D84F16F3A4D600A4B67F /* MPInstanceProviderSpec.mm */,
 				AE60D82E16F39ACD00A4B67F /* Banners */,
@@ -781,8 +823,9 @@
 				AE341F6416F0EB320074C859 /* MPAdBrowserControllerSpec.mm */,
 				AEC845DC16F1493B00943383 /* MPAdConfigurationSpec.mm */,
 				AEC845DE16F1496000943383 /* MPAdWebViewSpec.mm */,
-				AE60D7FD16F2A2BB00A4B67F /* MPHTMLInterstitialViewControllerSpec.mm */,
 				AE60D82916F38D1500A4B67F /* MPAdWebViewAgentSpec.mm */,
+				AE60D8A716F3E5E800A4B67F /* MPProgressOverlayViewSpec.mm */,
+				AE60D8B116F3E62400A4B67F /* MPGlobalSpec.mm */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1128,6 +1171,15 @@
 				AE60D87916F3CD5100A4B67F /* MRProperty.m in Sources */,
 				AE60D87A16F3CD5600A4B67F /* MPTimer.m in Sources */,
 				AE60D87B16F3CD7800A4B67F /* MRCommand.m in Sources */,
+				AE60D8A816F3E5E800A4B67F /* MPProgressOverlayViewSpec.mm in Sources */,
+				AE60D8B216F3E62400A4B67F /* MPGlobalSpec.mm in Sources */,
+				AE60D8B516F3E6A300A4B67F /* MPInterstitialViewControllerSpec.mm in Sources */,
+				AE60D8B716F3E6ED00A4B67F /* MPBaseAdapterSpec.mm in Sources */,
+				AE60D8B916F3E73700A4B67F /* MRAdViewDisplayControllerSpec.mm in Sources */,
+				AE60D8BB16F3E75E00A4B67F /* MRDimmingViewSpec.mm in Sources */,
+				AE60D8BF16F3E8D900A4B67F /* MPTimerSpec.mm in Sources */,
+				AE60D8C116F3E8F200A4B67F /* MRPropertySpec.mm in Sources */,
+				AE60D8C316F3E8FE00A4B67F /* MRCommandSpec.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
