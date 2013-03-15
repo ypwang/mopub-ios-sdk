@@ -25,9 +25,29 @@
             } mutableCopy];
 }
 
++ (NSMutableDictionary *)defaultInterstitialHeaders
+{
+    return [@{
+            kAdTypeHeaderKey: kAdTypeInterstitial,
+            kClickthroughHeaderKey: @"http://ads.mopub.com/m/clickThroughTracker?a=1",
+            kFailUrlHeaderKey: @"http://ads.mopub.com/m/failURL",
+            kImpressionTrackerHeaderKey: @"http://ads.mopub.com/m/impressionTracker",
+            kInterceptLinksHeaderKey: @"1",
+            kLaunchpageHeaderKey: @"http://publisher.com",
+            kInterstitialAdTypeHeaderKey: kAdTypeHtml,
+            kOrientationTypeHeaderKey: @"p"
+            } mutableCopy];
+}
+
 + (MPAdConfiguration *)defaultBannerConfiguration
 {
     return [self defaultBannerConfigurationWithHeaders:nil HTMLString:nil];
+}
+
++ (MPAdConfiguration *)defaultInterstitialConfiguration
+{
+    return [[[MPAdConfiguration alloc] initWithHeaders:[self defaultInterstitialHeaders]
+                                                  data:[@"Publisher's Interstitial" dataUsingEncoding:NSUTF8StringEncoding]] autorelease];
 }
 
 + (MPAdConfiguration *)defaultBannerConfigurationWithHeaders:(NSDictionary *)dictionary
@@ -41,5 +61,7 @@
     return [[[MPAdConfiguration alloc] initWithHeaders:headers
                                                   data:[HTMLString dataUsingEncoding:NSUTF8StringEncoding]] autorelease];
 }
+
+
 
 @end

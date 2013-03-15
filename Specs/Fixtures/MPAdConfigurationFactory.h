@@ -12,6 +12,7 @@
 @interface MPAdConfigurationFactory : NSObject
 
 + (MPAdConfiguration *)defaultBannerConfiguration;
++ (MPAdConfiguration *)defaultInterstitialConfiguration;
 + (MPAdConfiguration *)defaultBannerConfigurationWithHeaders:(NSDictionary *)dictionary
                                                   HTMLString:(NSString *)HTMLString;
 

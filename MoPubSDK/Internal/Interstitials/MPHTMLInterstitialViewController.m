@@ -6,8 +6,12 @@
 //
 
 #import "MPHTMLInterstitialViewController.h"
+#import "MPAdWebView.h"
+#import "MPAdDestinationDisplayAgent.h"
 
 @interface MPHTMLInterstitialViewController ()
+
+@property (nonatomic, retain) MPAdWebView *backingView;
 
 @end
 
@@ -17,21 +21,11 @@
 
 @synthesize delegate = _delegate;
 
-- (id)init//WithAdConfiguration:(MPAdConfiguration *)configuration
-{
-    self = [super init];
-    if (self) {
-        _interstitialView = [[MPAdWebView alloc] init];
-        _interstitialView.delegate = self;
-    }
-    return self;
-}
-
 - (void)dealloc
 {
-    _interstitialView.delegate = nil;
-    _interstitialView.customMethodDelegate = nil;
-    [_interstitialView release];
+    self.backingView.delegate = nil;
+    self.backingView.customMethodDelegate = nil;
+    self.backingView = nil;
     [super dealloc];
 }
 
@@ -41,74 +35,68 @@
 
     self.view.backgroundColor = [UIColor blackColor];
 
-    _interstitialView.frame = self.view.bounds;
-    _interstitialView.autoresizingMask = UIViewAutoresizingFlexibleWidth |
+    self.backingView = [[[MPAdWebView alloc] initWithFrame:self.view.bounds
+                                                  delegate:self
+                                   destinationDisplayAgent:[MPAdDestinationDisplayAgent agentWithURLResolver:[MPURLResolver resolver]
+                                                                                                    delegate:self]] autorelease];
+    self.backingView.autoresizingMask = UIViewAutoresizingFlexibleWidth |
         UIViewAutoresizingFlexibleHeight;
-    [self.view addSubview:_interstitialView];
+    [self.view addSubview:self.backingView];
 }
 
 #pragma mark - Public
 
 - (id)customMethodDelegate
 {
-    return [_interstitialView customMethodDelegate];
+    return [self.backingView customMethodDelegate];
 }
 
 - (void)setCustomMethodDelegate:(id)delegate
 {
-    [_interstitialView setCustomMethodDelegate:delegate];
+    [self.backingView setCustomMethodDelegate:delegate];
 }
 
 - (void)loadConfiguration:(MPAdConfiguration *)configuration
 {
     [self view];
-    [_interstitialView loadConfiguration:configuration];
+    [self.backingView loadConfiguration:configuration];
 }
 
 - (void)willPresentInterstitial
 {
-    _interstitialView.alpha = 0.0;
-
-    if ([self.delegate respondsToSelector:@selector(interstitialWillAppear:)]) {
-        [self.delegate interstitialWillAppear:self];
-    }
+    self.backingView.alpha = 0.0;
+    [self.delegate interstitialWillAppear:self];
 }
 
 - (void)didPresentInterstitial
 {
-    _interstitialView.dismissed = NO;
+    self.backingView.dismissed = NO;
 
-    [_interstitialView invokeJavaScriptForEvent:MPAdWebViewEventAdDidAppear];
+    [self.backingView invokeJavaScriptForEvent:MPAdWebViewEventAdDidAppear];
 
     // XXX: In certain cases, UIWebView's content appears off-center due to rotation / auto-
     // resizing while off-screen. -forceRedraw corrects this issue, but there is always a brief
     // instant when the old content is visible. We mask this using a short fade animation.
-    [_interstitialView forceRedraw];
+    [self.backingView forceRedraw];
 
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.3];
-    _interstitialView.alpha = 1.0;
+    self.backingView.alpha = 1.0;
     [UIView commitAnimations];
 
-    if ([self.delegate respondsToSelector:@selector(interstitialDidAppear:)]) {
-        [self.delegate interstitialDidAppear:self];
-    }
+    [self.delegate interstitialDidAppear:self];
 }
 
 - (void)willDismissInterstitial
 {
-    _interstitialView.dismissed = YES;
+    self.backingView.dismissed = YES;
 
-    if ([self.delegate respondsToSelector:@selector(interstitialWillDisappear:)]) {
-        [self.delegate interstitialWillDisappear:self];
-    }
+    [self.delegate interstitialWillDisappear:self];
 }
 
 - (void)didDismissInterstitial
 {
-    if ([self.delegate respondsToSelector:@selector(interstitialDidDisappear:)]) {
-        [self.delegate interstitialDidDisappear:self];
-    }
+    [self.delegate interstitialDidDisappear:self];
 }
 
 #pragma mark - Autorotation
@@ -117,7 +105,7 @@
 {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 
-    [_interstitialView rotateToOrientation:self.interfaceOrientation];
+    [self.backingView rotateToOrientation:self.interfaceOrientation];
 }
 
 #pragma mark - MPAdWebViewDelegate
@@ -129,42 +117,33 @@
 
 - (void)adDidFinishLoadingAd:(MPAdWebView *)ad
 {
-    if ([self.delegate respondsToSelector:@selector(interstitialDidLoadAd:)]) {
-        [self.delegate interstitialDidLoadAd:self];
-    }
+    [self.delegate interstitialDidLoadAd:self];
 }
 
 - (void)adDidFailToLoadAd:(MPAdWebView *)ad
 {
-    if ([self.delegate respondsToSelector:@selector(interstitialDidFailToLoadAd:)]) {
-        [self.delegate interstitialDidFailToLoadAd:self];
-    }
+    [self.delegate interstitialDidFailToLoadAd:self];
 }
 
 - (void)adActionWillBegin:(MPAdWebView *)ad
 {
-    if ([self.delegate respondsToSelector:@selector(interstitialWasTapped:)]) {
-        [self.delegate interstitialWasTapped:self];
-    }
+    [self.delegate interstitialWasTapped:self];
 }
 
 - (void)adActionWillLeaveApplication:(MPAdWebView *)ad
 {
-    if ([self.delegate respondsToSelector:@selector(interstitialWillLeaveApplication:)]) {
-        [self.delegate interstitialWillLeaveApplication:self];
-    }
-
+    [self.delegate interstitialWillLeaveApplication:self];
     [self dismissInterstitialAnimated:NO];
 }
 
 - (void)adActionDidFinish:(MPAdWebView *)ad
 {
-    // TODO: Signal to delegate.
+    //NOOP: the landing page is going away, but not the interstitial.
 }
 
 - (void)adDidClose:(MPAdWebView *)ad
 {
-    //TODO: Signal to delegate
+    //NOOP: the ad is going away, but not the interstitial.
 }
 
 @end

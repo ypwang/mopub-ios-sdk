@@ -39,6 +39,9 @@
 		AE60D7F916F2956700A4B67F /* NSURL+MPAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = AE60D7F816F2956700A4B67F /* NSURL+MPAdditions.m */; };
 		AE60D7FA16F2956700A4B67F /* NSURL+MPAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = AE60D7F816F2956700A4B67F /* NSURL+MPAdditions.m */; };
 		AE60D7FC16F2958C00A4B67F /* NSURL+MPAdditionsSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D7FB16F2958C00A4B67F /* NSURL+MPAdditionsSpec.mm */; };
+		AE60D7FE16F2A2BB00A4B67F /* MPHTMLInterstitialViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D7FD16F2A2BB00A4B67F /* MPHTMLInterstitialViewControllerSpec.mm */; };
+		AE60D7FF16F2A8D800A4B67F /* MPHTMLInterstitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C2716EF9DB00046D464 /* MPHTMLInterstitialViewController.m */; };
+		AE60D80016F2A8E000A4B67F /* MPInterstitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C2F16EF9DB00046D464 /* MPInterstitialViewController.m */; };
 		AEA97BE016EF9C030046D464 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97BDF16EF9C030046D464 /* UIKit.framework */; };
 		AEA97BE116EF9C030046D464 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF1F32B16EF9AD700273462 /* Foundation.framework */; };
 		AEA97BE316EF9C030046D464 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97BE216EF9C030046D464 /* CoreGraphics.framework */; };
@@ -228,6 +231,7 @@
 		AE60D7F716F2956700A4B67F /* NSURL+MPAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+MPAdditions.h"; sourceTree = "<group>"; };
 		AE60D7F816F2956700A4B67F /* NSURL+MPAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+MPAdditions.m"; sourceTree = "<group>"; };
 		AE60D7FB16F2958C00A4B67F /* NSURL+MPAdditionsSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSURL+MPAdditionsSpec.mm"; sourceTree = "<group>"; };
+		AE60D7FD16F2A2BB00A4B67F /* MPHTMLInterstitialViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPHTMLInterstitialViewControllerSpec.mm; sourceTree = "<group>"; };
 		AEA97BDE16EF9C030046D464 /* Specs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Specs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEA97BDF16EF9C030046D464 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AEA97BE216EF9C030046D464 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -733,6 +737,7 @@
 				AE341F6416F0EB320074C859 /* MPAdBrowserControllerSpec.mm */,
 				AEC845DC16F1493B00943383 /* MPAdConfigurationSpec.mm */,
 				AEC845DE16F1496000943383 /* MPAdWebViewSpec.mm */,
+				AE60D7FD16F2A2BB00A4B67F /* MPHTMLInterstitialViewControllerSpec.mm */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1059,6 +1064,9 @@
 				AEC8460216F241BB00943383 /* UIWebView+MPAdditions.m in Sources */,
 				AE60D7FA16F2956700A4B67F /* NSURL+MPAdditions.m in Sources */,
 				AE60D7FC16F2958C00A4B67F /* NSURL+MPAdditionsSpec.mm in Sources */,
+				AE60D7FE16F2A2BB00A4B67F /* MPHTMLInterstitialViewControllerSpec.mm in Sources */,
+				AE60D7FF16F2A8D800A4B67F /* MPHTMLInterstitialViewController.m in Sources */,
+				AE60D80016F2A8E000A4B67F /* MPInterstitialViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

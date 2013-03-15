@@ -29,7 +29,7 @@ NSString * const kScrollableHeaderKey = @"X-Scrollable";
 NSString * const kWidthHeaderKey = @"X-Width";
 
 NSString * const kInterstitialAdTypeHeaderKey = @"X-Fulladtype";
-NSString * const kOrientationHeaderKey = @"X-Orientation";
+NSString * const kOrientationTypeHeaderKey = @"X-Orientation";
 
 NSString * const kAdTypeHtml = @"html";
 NSString * const kAdTypeInterstitial = @"interstitial";
@@ -62,6 +62,7 @@ NSString * const kAdTypeMraid = @"mraid";
 @synthesize orientationType = _orientationType;
 @synthesize customEventClass = _customEventClass;
 @synthesize customEventClassData = _customEventClassData;
+@synthesize adSize = _adSize;
 
 - (id)init
 {
@@ -99,7 +100,7 @@ NSString * const kAdTypeMraid = @"mraid";
                                                      forKey:kNativeSDKParametersHeaderKey] retain];
         _customSelectorName = [[headers objectForKey:kCustomSelectorHeaderKey] copy];
 
-        NSString *orientationTemp = [headers objectForKey:kOrientationHeaderKey];
+        NSString *orientationTemp = [headers objectForKey:kOrientationTypeHeaderKey];
         if ([orientationTemp isEqualToString:@"p"]) {
             _orientationType = MPInterstitialOrientationTypePortrait;
         } else if ([orientationTemp isEqualToString:@"l"]) {
@@ -144,7 +145,7 @@ NSString * const kAdTypeMraid = @"mraid";
     if ([adTypeString isEqualToString:@"interstitial"]) {
         return MPAdTypeInterstitial;
     } else if ([adTypeString isEqualToString:@"mraid"] &&
-               [headers objectForKey:kOrientationHeaderKey]) {
+               [headers objectForKey:kOrientationTypeHeaderKey]) {
         return MPAdTypeInterstitial;
     } else if (adTypeString) {
         return MPAdTypeBanner;

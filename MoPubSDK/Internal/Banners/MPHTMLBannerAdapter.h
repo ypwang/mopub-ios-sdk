@@ -7,7 +7,7 @@
 
 #import "MPBaseAdapter.h"
 
-#import "MPAdWebView.h"
+#import "MPAdWebViewDelegate.h"
 
 @interface MPHTMLBannerAdapter : MPBaseAdapter <MPAdWebViewDelegate>
 {

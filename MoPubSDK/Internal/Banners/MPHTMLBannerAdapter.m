@@ -9,6 +9,7 @@
 
 #import "MPAdConfiguration.h"
 #import "MPAdDestinationDisplayAgent.h"
+#import "MPAdWebView.h"
 
 @implementation MPHTMLBannerAdapter
 

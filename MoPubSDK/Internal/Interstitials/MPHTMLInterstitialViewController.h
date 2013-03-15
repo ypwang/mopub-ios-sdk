@@ -7,7 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MPAdWebView.h"
+#import "MPAdWebViewDelegate.h"
 #import "MPInterstitialViewController.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -18,10 +18,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @interface MPHTMLInterstitialViewController : MPInterstitialViewController <MPAdWebViewDelegate>
-{
-    id<MPHTMLInterstitialViewControllerDelegate> _delegate;
-    MPAdWebView *_interstitialView;
-}
 
 @property (nonatomic, assign) id<MPHTMLInterstitialViewControllerDelegate> delegate;
 

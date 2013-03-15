@@ -65,6 +65,7 @@ extern NSString * const kAdTypeMraid;
 @property (nonatomic, retain) NSDictionary *headers;
 @property (nonatomic, assign) MPAdType adType;
 @property (nonatomic, copy) NSString *networkType;
+@property (nonatomic, assign) CGSize adSize;
 @property (nonatomic, assign) CGSize preferredSize;
 @property (nonatomic, retain) NSURL *clickTrackingURL;
 @property (nonatomic, retain) NSURL *impressionTrackingURL;
