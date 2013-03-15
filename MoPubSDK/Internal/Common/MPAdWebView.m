@@ -12,6 +12,8 @@
 #import "MPLogging.h"
 #import "CJSONDeserializer.h"
 #import "MPAdDestinationDisplayAgent.h"
+#import "NSURL+MPAdditions.h"
+#import "MPAdWebViewDelegate.h"
 
 NSString * const kMoPubURLScheme = @"mopub";
 NSString * const kMoPubCloseHost = @"close";
@@ -38,33 +40,18 @@ NSString * const kMoPubCustomHost = @"custom";
 
 - (id)initWithFrame:(CGRect)frame
 {
-    [self doesNotRecognizeSelector:_cmd];
+    MPLogFatal(@"NO, NO, NO.  Use initWithFrame:delegate:destinationDisplayAgent:");
     return nil;
 }
 
 - (id)initWithFrame:(CGRect)frame delegate:(id<MPAdWebViewDelegate>)delegate destinationDisplayAgent:(MPAdDestinationDisplayAgent *)agent
 {
-    //DONE
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         self.opaque = NO;
 
-        CGRect webViewFrame = CGRectMake(0, 0, frame.size.width, frame.size.height);
-        _webView = [[UIWebView alloc] initWithFrame:webViewFrame];
-        _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        _webView.backgroundColor = [UIColor clearColor];
-        _webView.delegate = self;
-        _webView.opaque = NO;
-
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= MP_IOS_4_0
-        if ([_webView respondsToSelector:@selector(allowsInlineMediaPlayback)]) {
-            [_webView setAllowsInlineMediaPlayback:YES];
-            [_webView setMediaPlaybackRequiresUserAction:NO];
-        }
-#endif
-
-        [self addSubview:_webView];
+        [self setUpWebViewWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
 
         self.delegate = delegate;
         self.destinationDisplayAgent = agent;
@@ -75,105 +62,65 @@ NSString * const kMoPubCustomHost = @"custom";
 
 - (void)dealloc
 {
-    //DONE
-    [_configuration release];
+    self.configuration = nil;
 
-    _webView.delegate = nil;
-    [_webView removeFromSuperview];
-    [_webView release];
+    self.webView.delegate = nil;
+    [self.webView removeFromSuperview];
+    self.webView = nil;
 
     self.destinationDisplayAgent = nil;
 
     [super dealloc];
 }
 
+- (void)setUpWebViewWithFrame:(CGRect)frame
+{
+    self.webView = [[[UIWebView alloc] initWithFrame:frame] autorelease];
+    self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.webView.backgroundColor = [UIColor clearColor];
+    self.webView.delegate = self;
+    self.webView.opaque = NO;
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= MP_IOS_4_0
+    if ([self.webView respondsToSelector:@selector(allowsInlineMediaPlayback)]) {
+        [self.webView setAllowsInlineMediaPlayback:YES];
+        [self.webView setMediaPlaybackRequiresUserAction:NO];
+    }
+#endif
+
+    [self addSubview:self.webView];
+}
+
 #pragma mark - Public
 
 - (void)loadConfiguration:(MPAdConfiguration *)configuration
 {
-    //DONE
     self.configuration = configuration;
 
     if ([configuration hasPreferredSize]) {
-        [self setFrameFromConfiguration:configuration];
+        CGRect frame = self.frame;
+        frame.size.width = configuration.preferredSize.width;
+        frame.size.height = configuration.preferredSize.height;
+        self.frame = frame;
     }
 
-    [_webView mp_setScrollable:configuration.scrollable];
-    [self loadData:configuration.adResponseData MIMEType:@"text/html" textEncodingName:@"utf-8"
-           baseURL:nil];
-}
-
-- (NSString *)htmlForLinks:(NSArray *)links
-{
-    NSString *output = @"<html><body>";
-    for (NSString *link in links) {
-        output = [output stringByAppendingFormat:@"<a href=\"%@\">%@</a><br>", link, link];
-    }
-    output = [output stringByAppendingString:@"</body></html>"];
-    return output;
-}
-
-- (void)loadData:(NSData *)data MIMEType:(NSString *)MIMEType
-textEncodingName:(NSString *)textEncodingName baseURL:(NSURL *)baseURL
-{
-    //DONE
-    NSString *HTMLString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-    [_webView loadHTMLString:HTMLString baseURL:baseURL];
+    [self.webView mp_setScrollable:configuration.scrollable];
+    [self.webView loadHTMLString:[configuration adResponseHTMLString]
+                         baseURL:nil];
 }
 
 - (void)invokeJavaScriptForEvent:(MPAdWebViewEvent)event
 {
-    //DONE
     switch (event) {
         case MPAdWebViewEventAdDidAppear:
-            [_webView stringByEvaluatingJavaScriptFromString:@"webviewDidAppear();"];
+            [self.webView stringByEvaluatingJavaScriptFromString:@"webviewDidAppear();"];
             break;
         case MPAdWebViewEventAdDidDisappear:
-            [_webView stringByEvaluatingJavaScriptFromString:@"webviewDidClose();"];
+            [self.webView stringByEvaluatingJavaScriptFromString:@"webviewDidClose();"];
             break;
         default:
             break;
     }
-}
-
-#pragma mark - Internal
-
-- (void)setFrameFromConfiguration:(MPAdConfiguration *)configuration
-{
-    //DONE
-    if (configuration.preferredSize.width <= 0 || configuration.preferredSize.height <= 0) {
-        return;
-    }
-
-    CGRect frame = self.frame;
-    frame.size.width = configuration.preferredSize.width;
-    frame.size.height = configuration.preferredSize.height;
-    self.frame = frame;
-}
-
-
-- (NSString *)clickDetectionURLPrefix
-{
-    //MOVE TO configuration
-    if ([self.configuration.interceptURLPrefix absoluteString]) {
-        return [self.configuration.interceptURLPrefix absoluteString];
-    } else {
-        return @"";
-    }
-}
-
-- (NSString *)clickTrackingURL
-{
-    //DONE
-    return [self.configuration.clickTrackingURL absoluteString];
-}
-
-#pragma mark - Rotation
-
-- (void)rotateToOrientation:(UIInterfaceOrientation)orientation
-{
-    //DONE
-    [self forceRedraw];
 }
 
 #pragma mark - UIWebViewDelegate
@@ -181,23 +128,16 @@ textEncodingName:(NSString *)textEncodingName baseURL:(NSURL *)baseURL
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType
 {
-    //DONE
     if (self.isDismissed) {
         return NO;
     }
 
     NSURL *URL = [request URL];
-
     if ([[URL scheme] isEqualToString:kMoPubURLScheme]) {
         [self performActionForMoPubSpecificURL:URL];
         return NO;
-    } else if ([self shouldShowClickBrowserForURL:URL navigationType:navigationType]) {
-        NSString *encodedURLString = [[URL absoluteString] URLEncodedString];
-        NSURL *redirectedURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@&r=%@",
-                                                     self.clickTrackingURL,
-                                                     encodedURLString]];
-
-        [self.destinationDisplayAgent displayDestinationForURL:redirectedURL];
+    } else if ([self shouldIntercept:URL navigationType:navigationType]) {
+        [self interceptURL:URL];
         return NO;
     } else {
         return YES;
@@ -205,20 +145,15 @@ textEncodingName:(NSString *)textEncodingName baseURL:(NSURL *)baseURL
 }
 
 #pragma mark - MoPub-specific URL handlers
-
 - (void)performActionForMoPubSpecificURL:(NSURL *)URL
 {
-    //DONE
     MPLogDebug(@"MPAdWebView - loading MoPub URL: %@", URL);
     NSString *host = [URL host];
-    if ([host isEqualToString:kMoPubCloseHost] &&
-        [self.delegate respondsToSelector:@selector(adDidClose:)]) {
+    if ([host isEqualToString:kMoPubCloseHost]) {
         [self.delegate adDidClose:self];
-    } else if ([host isEqualToString:kMoPubFinishLoadHost] &&
-               [self.delegate respondsToSelector:@selector(adDidFinishLoadingAd:)]) {
+    } else if ([host isEqualToString:kMoPubFinishLoadHost]) {
         [self.delegate adDidFinishLoadingAd:self];
-    } else if ([host isEqualToString:kMoPubFailLoadHost] &&
-               [self.delegate respondsToSelector:@selector(adDidFailToLoadAd:)]) {
+    } else if ([host isEqualToString:kMoPubFailLoadHost]) {
         [self.delegate adDidFailToLoadAd:self];
     } else if ([host isEqualToString:kMoPubCustomHost]) {
         [self handleMoPubCustomURL:URL];
@@ -229,65 +164,62 @@ textEncodingName:(NSString *)textEncodingName baseURL:(NSURL *)baseURL
 
 - (void)handleMoPubCustomURL:(NSURL *)URL
 {
-    //DONE
-    NSDictionary *queryParameters = [self dictionaryFromQueryString:[URL query]];
+    NSDictionary *queryParameters = [URL mp_queryAsDictionary];
     NSString *selectorName = [queryParameters objectForKey:@"fnc"];
-    NSString *dataString = [queryParameters objectForKey:@"data"];
-
-    CJSONDeserializer *deserializer = [CJSONDeserializer deserializerWithNullObject:NULL];
-    NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *error;
-    NSDictionary *dataDictionary = [deserializer deserializeAsDictionary:data error:&error];
-
     NSString *oneArgumentSelectorName = [selectorName stringByAppendingString:@":"];
-    SEL oneArgumentSelector = NSSelectorFromString(oneArgumentSelectorName);
     SEL zeroArgumentSelector = NSSelectorFromString(selectorName);
+    SEL oneArgumentSelector = NSSelectorFromString(oneArgumentSelectorName);
 
     if ([self.customMethodDelegate respondsToSelector:zeroArgumentSelector]) {
         [self.customMethodDelegate performSelector:zeroArgumentSelector];
     } else if ([self.customMethodDelegate respondsToSelector:oneArgumentSelector]) {
-        [self.customMethodDelegate performSelector:oneArgumentSelector withObject:dataDictionary];
+        CJSONDeserializer *deserializer = [CJSONDeserializer deserializerWithNullObject:NULL];
+        NSData *data = [[queryParameters objectForKey:@"data"] dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *dataDictionary = [deserializer deserializeAsDictionary:data error:NULL];
+
+        [self.customMethodDelegate performSelector:oneArgumentSelector
+                                        withObject:dataDictionary];
     } else {
         MPLogError(@"Custom method delegate does not implement custom selectors %@ or %@.",
                    selectorName, oneArgumentSelectorName);
     }
 }
 
-- (BOOL)shouldShowClickBrowserForURL:(NSURL *)URL
-                      navigationType:(UIWebViewNavigationType)navigationType
+#pragma mark - URL Interception
+- (BOOL)shouldIntercept:(NSURL *)URL navigationType:(UIWebViewNavigationType)navigationType
 {
-    //DONE
     if (!(self.configuration.shouldInterceptLinks)) {
         return NO;
     } else if (navigationType == UIWebViewNavigationTypeLinkClicked) {
         return YES;
     } else if (navigationType == UIWebViewNavigationTypeOther) {
-        return [[URL absoluteString] hasPrefix:[self clickDetectionURLPrefix]];
+        return [[URL absoluteString] hasPrefix:[self.configuration clickDetectionURLPrefix]];
     } else {
         return NO;
     }
 }
 
-#pragma mark - Utility
-
-- (NSDictionary *)dictionaryFromQueryString:(NSString *)query
+- (void)interceptURL:(NSURL *)URL
 {
-    //WILL MOVE
-    NSMutableDictionary *queryDict = [[NSMutableDictionary alloc] initWithCapacity:1];
-    NSArray *queryElements = [query componentsSeparatedByString:@"&"];
-    for (NSString *element in queryElements) {
-        NSArray *keyVal = [element componentsSeparatedByString:@"="];
-        NSString *key = [keyVal objectAtIndex:0];
-        NSString *value = [keyVal lastObject];
-        [queryDict setObject:[value stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
-                      forKey:key];
+    NSURL *redirectedURL = URL;
+    if (self.configuration.clickTrackingURL) {
+        NSString *path = [NSString stringWithFormat:@"%@&r=%@",
+                          self.configuration.clickTrackingURL.absoluteString,
+                          [[URL absoluteString] URLEncodedString]];
+        redirectedURL = [NSURL URLWithString:path];
     }
-    return [queryDict autorelease];
+
+    [self.destinationDisplayAgent displayDestinationForURL:redirectedURL];
+}
+
+#pragma mark - Utility
+- (void)rotateToOrientation:(UIInterfaceOrientation)orientation
+{
+    [self forceRedraw];
 }
 
 - (void)forceRedraw
 {
-    //DONE
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     int angle = -1;
     switch (orientation)
@@ -307,7 +239,7 @@ textEncodingName:(NSString *)textEncodingName baseURL:(NSURL *)baseURL
                                         @"(function(){ var evt = document.createEvent('Events');"
                                         @"evt.initEvent('orientationchange',true,true);window.dispatchEvent(evt);})();",
                                         angle];
-    [_webView stringByEvaluatingJavaScriptFromString:orientationEventScript];
+    [self.webView stringByEvaluatingJavaScriptFromString:orientationEventScript];
 
     // XXX: If the UIWebView is rotated off-screen (which may happen with interstitials), its
     // content may render off-center upon display. We compensate by setting the viewport meta tag's
@@ -316,7 +248,7 @@ textEncodingName:(NSString *)textEncodingName baseURL:(NSURL *)baseURL
                                       @"document.querySelector('meta[name=viewport]')"
                                       @".setAttribute('content', 'width=%f;', false);",
                                       _webView.frame.size.width];
-    [_webView stringByEvaluatingJavaScriptFromString:viewportUpdateScript];
+    [self.webView stringByEvaluatingJavaScriptFromString:viewportUpdateScript];
 }
 
 @end

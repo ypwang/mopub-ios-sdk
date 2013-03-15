@@ -24,40 +24,67 @@ describe(@"MPAdWebView", ^{
     beforeEach(^{
         delegate = nice_fake_for(@protocol(MPAdWebViewDelegate));
         destinationDisplayAgent = nice_fake_for([MPAdDestinationDisplayAgent class]);
-        view = [[[MPAdWebView alloc] initWithFrame:CGRectMake(0, 0, 50, 50) delegate:delegate destinationDisplayAgent:destinationDisplayAgent] autorelease];
+        view = [[[MPAdWebView alloc] initWithFrame:CGRectMake(0, 0, 30, 20)
+                                          delegate:delegate
+                           destinationDisplayAgent:destinationDisplayAgent] autorelease];
         configuration = [MPAdConfigurationFactory defaultBannerConfiguration];
     });
 
     describe(@"on init, setting up the webview", ^{
-        xit(@"should allow inline media playback without user action", ^{
-
+        it(@"should allow inline media playback without user action", ^{
+            view.webView.allowsInlineMediaPlayback should equal(YES);
+            view.webView.mediaPlaybackRequiresUserAction should equal(NO);
         });
     });
 
     describe(@"when the configuration is loaded", ^{
+        subjectAction(^{ [view loadConfiguration:configuration]; });
+
         describe(@"setting the frame", ^{
             context(@"when the frame sizes are valid", ^{
-                xit(@"should set its frame", ^{
-
+                it(@"should set its frame", ^{
+                    view.frame.size.width should equal(320);
+                    view.frame.size.height should equal(50);
                 });
             });
 
             context(@"when the frame sizes are invalid", ^{
-                it(@"should not set its frame", ^{
+                beforeEach(^{
+                    configuration.preferredSize = CGSizeMake(0, 0);
+                });
 
+                it(@"should not set its frame", ^{
+                    view.frame.size.width should equal(30);
+                    view.frame.size.height should equal(20);
                 });
             });
         });
 
         describe(@"setting scrollability", ^{
-            it(@"should set scrolling enabled when the configuration says so", ^{
+            context(@"when the configuration says no", ^{
+                beforeEach(^{
+                    configuration.scrollable = NO;
+                });
 
+                it(@"should disable scrolling", ^{
+                    view.webView.scrollView.scrollEnabled should equal(NO);
+                });
+            });
+
+            context(@"when the configuration says yes", ^{
+                beforeEach(^{
+                    configuration.scrollable = YES;
+                });
+
+                it(@"should enable scrolling", ^{
+                    view.webView.scrollView.scrollEnabled should equal(YES);
+                });
             });
         });
 
         describe(@"loading webview data", ^{
             it(@"should load the ad's HTML data into the webview", ^{
-
+                view.webView.loadedHTMLString should equal(@"Publisher's Ad");
             });
         });
     });
@@ -68,8 +95,11 @@ describe(@"MPAdWebView", ^{
         subjectAction(^{ [view loadConfiguration:configuration]; });
 
         context(@"when isDismissed", ^{
-            xit(@"should never load anything", ^{
-
+            it(@"should never load anything", ^{
+                view.dismissed = YES;
+                NSURL *URL = [NSURL URLWithString:@"mopub://close"];
+                [view webView:view.webView shouldStartLoadWithRequest:[NSURLRequest requestWithURL:URL] navigationType:UIWebViewNavigationTypeOther] should equal(NO);
+                delegate should_not have_received(@selector(adDidClose:)).with(view);
             });
         });
 
@@ -202,28 +232,45 @@ describe(@"MPAdWebView", ^{
                         destinationDisplayAgent should_not have_received(@selector(displayDestinationForURL:));
                     });
                 });
+
+                context(@"when the click tracker is missing", ^{
+                    beforeEach(^{
+                        configuration.clickTrackingURL = nil;
+                    });
+
+                    it(@"should ask an ad destination display agent to handle the URL, without prepending the click tracker", ^{
+                        [view webView:view.webView shouldStartLoadWithRequest:[NSURLRequest requestWithURL:URL] navigationType:UIWebViewNavigationTypeLinkClicked] should equal(NO);
+                        destinationDisplayAgent should have_received(@selector(displayDestinationForURL:)).with(URL);
+                    });
+                });
             });
         });
     });
 
     describe(@"when orientations change", ^{
-        xit(@"should tell the web view via javascript", ^{
-            /*
-             fake out the statusBarOrientation
-             call rotateToOrientation:
-             verify that the webview received some javascript that looks right-ish
-             also verify that webview.frame.size.width got passed in to javascript
-             */
+        subjectAction(^{ [view loadConfiguration:configuration]; });
+
+        it(@"should tell the web view via javascript", ^{
+            [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeRight];
+            [view rotateToOrientation:UIInterfaceOrientationLandscapeRight];
+            NSString *JS = [view.webView executedJavaScripts][0];
+            JS should contain(@"return 90");
+            JS = [view.webView executedJavaScripts][1];
+            JS should contain(@"width=320");
         });
     });
 
     describe(@"invoking JS", ^{
-        xit(@"should support MPAdWebViewEventAdDidAppear", ^{
+        subjectAction(^{ [view loadConfiguration:configuration]; });
 
+        it(@"should support MPAdWebViewEventAdDidAppear", ^{
+            [view invokeJavaScriptForEvent:MPAdWebViewEventAdDidAppear];
+            [view.webView executedJavaScripts][0] should equal(@"webviewDidAppear();");
         });
 
         it(@"should support MPAdWebViewEventAdDidDisappear", ^{
-
+            [view invokeJavaScriptForEvent:MPAdWebViewEventAdDidDisappear];
+            [view.webView executedJavaScripts][0] should equal(@"webviewDidClose();");
         });
     });
 });

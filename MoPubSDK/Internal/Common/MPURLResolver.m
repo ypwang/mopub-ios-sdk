@@ -6,6 +6,7 @@
 //
 
 #import "MPURLResolver.h"
+#import "NSURL+MPAdditions.h"
 
 @interface MPURLResolver ()
 
@@ -101,27 +102,15 @@
         if ([lastPathComponent hasPrefix:@"id"]) {
             itemIdentifier = [lastPathComponent substringFromIndex:2];
         } else {
-            itemIdentifier = [self storeItemIdentifierFromQueryParamsOfURL:URL];
+            itemIdentifier = [URL.mp_queryAsDictionary objectForKey:@"id"];
         }
     } else if ([URL.host hasSuffix:@"phobos.apple.com"]) {
-        itemIdentifier = [self storeItemIdentifierFromQueryParamsOfURL:URL];
+        itemIdentifier = [URL.mp_queryAsDictionary objectForKey:@"id"];
     }
 
     NSCharacterSet *nonIntegers = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
     if (itemIdentifier && itemIdentifier.length > 0 && [itemIdentifier rangeOfCharacterFromSet:nonIntegers].location == NSNotFound) {
         return itemIdentifier;
-    }
-
-    return nil;
-}
-
-- (NSString *)storeItemIdentifierFromQueryParamsOfURL:(NSURL *)URL
-{
-    for (NSString *queryParam in [URL.query componentsSeparatedByString:@"&"]) {
-        NSArray *keyValuePair = [queryParam componentsSeparatedByString:@"="];
-        if ([keyValuePair count] == 2 && [[keyValuePair objectAtIndex:0] isEqualToString:@"id"]) {
-            return [keyValuePair objectAtIndex:1];
-        }
     }
 
     return nil;

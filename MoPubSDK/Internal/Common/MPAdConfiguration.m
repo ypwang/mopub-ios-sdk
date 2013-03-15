@@ -48,7 +48,6 @@ NSString * const kAdTypeMraid = @"mraid";
 @synthesize headers = _headers;
 @synthesize adType = _adType;
 @synthesize networkType = _networkType;
-@synthesize adSize = _adSize;
 @synthesize preferredSize = _preferredSize;
 @synthesize clickTrackingURL = _clickTrackingURL;
 @synthesize impressionTrackingURL = _impressionTrackingURL;
@@ -82,7 +81,7 @@ NSString * const kAdTypeMraid = @"mraid";
     if (self) {
         _headers = [headers retain];
         _adType = [self adTypeFromHeaders:headers];
-        
+
         _networkType = [[self networkTypeFromHeaders:headers] copy];
         _preferredSize = CGSizeMake([[headers objectForKey:kWidthHeaderKey] floatValue],
                                     [[headers objectForKey:kHeightHeaderKey] floatValue]);
@@ -92,14 +91,14 @@ NSString * const kAdTypeMraid = @"mraid";
         _interceptURLPrefix = [[self URLFromHeaders:headers forKey:kLaunchpageHeaderKey] retain];
         _shouldInterceptLinks = [headers objectForKey:kInterceptLinksHeaderKey] ?
             [[headers objectForKey:kInterceptLinksHeaderKey] boolValue] : YES;
-        
+
         _scrollable = [[headers objectForKey:kScrollableHeaderKey] boolValue];
         _refreshInterval = [self refreshIntervalFromHeaders:headers];
         _adResponseData = [data copy];
         _nativeSDKParameters = [[self dictionaryFromHeaders:headers
                                                      forKey:kNativeSDKParametersHeaderKey] retain];
         _customSelectorName = [[headers objectForKey:kCustomSelectorHeaderKey] copy];
-        
+
         NSString *orientationTemp = [headers objectForKey:kOrientationHeaderKey];
         if ([orientationTemp isEqualToString:@"p"]) {
             _orientationType = MPInterstitialOrientationTypePortrait;
@@ -108,10 +107,10 @@ NSString * const kAdTypeMraid = @"mraid";
         } else {
             _orientationType = MPInterstitialOrientationTypeAll;
         }
-        
+
         NSString *className = [headers objectForKey:kCustomEventClassNameHeaderKey];
         _customEventClass = NSClassFromString(className);
-        
+
         NSString *customEventJSONString = [headers objectForKey:kCustomEventClassDataHeaderKey];
         NSData *customEventJSONData = [customEventJSONString dataUsingEncoding:NSUTF8StringEncoding];
         CJSONDeserializer *deserializer = [CJSONDeserializer deserializerWithNullObject:NULL];
@@ -134,14 +133,14 @@ NSString * const kAdTypeMraid = @"mraid";
     [_nativeSDKParameters release];
     [_customSelectorName release];
     [_customEventClassData release];
-    
+
     [super dealloc];
 }
 
 - (MPAdType)adTypeFromHeaders:(NSDictionary *)headers
 {
     NSString *adTypeString = [headers objectForKey:kAdTypeHeaderKey];
-    
+
     if ([adTypeString isEqualToString:@"interstitial"]) {
         return MPAdTypeInterstitial;
     } else if ([adTypeString isEqualToString:@"mraid"] &&
@@ -201,8 +200,13 @@ NSString * const kAdTypeMraid = @"mraid";
         _adResponseHTMLString = [[NSString alloc] initWithData:self.adResponseData
                                                       encoding:NSUTF8StringEncoding];
     }
-    
+
     return _adResponseHTMLString;
+}
+
+- (NSString *)clickDetectionURLPrefix
+{
+    return self.interceptURLPrefix.absoluteString ? self.interceptURLPrefix.absoluteString : @"";
 }
 
 @end

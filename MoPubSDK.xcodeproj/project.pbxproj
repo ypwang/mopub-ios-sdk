@@ -36,6 +36,9 @@
 		AE341F7A16F126D30074C859 /* FakeStoreProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE341F7916F126D30074C859 /* FakeStoreProductViewController.m */; };
 		AE341F7D16F1373A0074C859 /* FakeMPURLResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = AE341F7C16F1373A0074C859 /* FakeMPURLResolver.m */; };
 		AE341F8A16F146650074C859 /* MPAdWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C1716EF9DB00046D464 /* MPAdWebView.m */; };
+		AE60D7F916F2956700A4B67F /* NSURL+MPAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = AE60D7F816F2956700A4B67F /* NSURL+MPAdditions.m */; };
+		AE60D7FA16F2956700A4B67F /* NSURL+MPAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = AE60D7F816F2956700A4B67F /* NSURL+MPAdditions.m */; };
+		AE60D7FC16F2958C00A4B67F /* NSURL+MPAdditionsSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D7FB16F2958C00A4B67F /* NSURL+MPAdditionsSpec.mm */; };
 		AEA97BE016EF9C030046D464 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97BDF16EF9C030046D464 /* UIKit.framework */; };
 		AEA97BE116EF9C030046D464 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF1F32B16EF9AD700273462 /* Foundation.framework */; };
 		AEA97BE316EF9C030046D464 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97BE216EF9C030046D464 /* CoreGraphics.framework */; };
@@ -222,6 +225,9 @@
 		AE341F7916F126D30074C859 /* FakeStoreProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeStoreProductViewController.m; sourceTree = "<group>"; };
 		AE341F7B16F1373A0074C859 /* FakeMPURLResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeMPURLResolver.h; sourceTree = "<group>"; };
 		AE341F7C16F1373A0074C859 /* FakeMPURLResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeMPURLResolver.m; sourceTree = "<group>"; };
+		AE60D7F716F2956700A4B67F /* NSURL+MPAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+MPAdditions.h"; sourceTree = "<group>"; };
+		AE60D7F816F2956700A4B67F /* NSURL+MPAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+MPAdditions.m"; sourceTree = "<group>"; };
+		AE60D7FB16F2958C00A4B67F /* NSURL+MPAdditionsSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSURL+MPAdditionsSpec.mm"; sourceTree = "<group>"; };
 		AEA97BDE16EF9C030046D464 /* Specs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Specs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEA97BDF16EF9C030046D464 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AEA97BE216EF9C030046D464 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -453,6 +459,23 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		AE60D7ED16F2953C00A4B67F /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				AE60D7F716F2956700A4B67F /* NSURL+MPAdditions.h */,
+				AE60D7F816F2956700A4B67F /* NSURL+MPAdditions.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		AE60D7F616F2954C00A4B67F /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				AE60D7FB16F2958C00A4B67F /* NSURL+MPAdditionsSpec.mm */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
 		AEA97BE416EF9C030046D464 /* Specs */ = {
 			isa = PBXGroup;
 			children = (
@@ -492,6 +515,7 @@
 		AEA97BF916EF9DB00046D464 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				AE60D7ED16F2953C00A4B67F /* Categories */,
 				AEA97BFA16EF9DB00046D464 /* Banners */,
 				AEA97C0A16EF9DB00046D464 /* Common */,
 				AEA97C2116EF9DB00046D464 /* Interstitials */,
@@ -695,6 +719,7 @@
 		AEA97CB616EFAB810046D464 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				AE60D7F616F2954C00A4B67F /* Categories */,
 				AEA97CB716EFAB810046D464 /* Common */,
 			);
 			path = Internal;
@@ -1032,6 +1057,8 @@
 				AEC845DF16F1496000943383 /* MPAdWebViewSpec.mm in Sources */,
 				AEC845E316F2327B00943383 /* MPAdConfigurationFactory.m in Sources */,
 				AEC8460216F241BB00943383 /* UIWebView+MPAdditions.m in Sources */,
+				AE60D7FA16F2956700A4B67F /* NSURL+MPAdditions.m in Sources */,
+				AE60D7FC16F2958C00A4B67F /* NSURL+MPAdditionsSpec.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1093,6 +1120,7 @@
 				AEA97CB416EFA8980046D464 /* MPURLResolver.m in Sources */,
 				AE341F4016EFFA690074C859 /* MPAdDestinationDisplayAgent.m in Sources */,
 				AE341F6D16F11AC00074C859 /* MPStoreKitProvider.m in Sources */,
+				AE60D7F916F2956700A4B67F /* NSURL+MPAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

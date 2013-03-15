@@ -10,12 +10,14 @@
 #import "objc/runtime.h"
 
 static char LAST_OPENED_URL_KEY;
+static char STATUS_BAR_ORIENTATION;
 
 @implementation UIApplication (MPSpecs)
 
 + (void)beforeEach
 {
     [[UIApplication sharedApplication] setLastOpenedURL:nil];
+    [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait];
 }
 
 - (NSURL *)lastOpenedURL
@@ -31,6 +33,16 @@ static char LAST_OPENED_URL_KEY;
 - (void)openURL:(NSURL *)url
 {
     self.lastOpenedURL = url;
+}
+
+- (void)setStatusBarOrientation:(UIInterfaceOrientation)orientation
+{
+    objc_setAssociatedObject(self, &STATUS_BAR_ORIENTATION, [NSNumber numberWithInteger:orientation], OBJC_ASSOCIATION_RETAIN);
+}
+
+- (UIInterfaceOrientation)statusBarOrientation
+{
+    return [objc_getAssociatedObject(self, &STATUS_BAR_ORIENTATION) integerValue];
 }
 
 @end

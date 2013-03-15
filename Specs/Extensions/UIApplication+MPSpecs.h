@@ -11,5 +11,6 @@
 @interface UIApplication (MPSpecs)
 
 - (NSURL *)lastOpenedURL;
+- (void)setStatusBarOrientation:(UIInterfaceOrientation)orientation;
 
 @end
