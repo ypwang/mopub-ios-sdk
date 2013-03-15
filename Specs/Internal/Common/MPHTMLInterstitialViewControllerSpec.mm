@@ -7,7 +7,7 @@ using namespace Cedar::Doubles;
 
 SPEC_BEGIN(MPHTMLInterstitialViewControllerSpec)
 
-fdescribe(@"MPHTMLInterstitialViewController", ^{
+describe(@"MPHTMLInterstitialViewController", ^{
     __block MPHTMLInterstitialViewController *controller;
     __block MPAdWebView *backingView;
     __block MPAdConfiguration *configuration;
@@ -36,7 +36,7 @@ fdescribe(@"MPHTMLInterstitialViewController", ^{
         });
 
         it(@"should tell the backing view to load the configuration", ^{
-            backingView.webView.loadedHTMLString should equal(@"Publisher's Interstitial");
+            backingView.loadedHTMLString should equal(@"Publisher's Interstitial");
         });
     });
 
@@ -45,7 +45,7 @@ fdescribe(@"MPHTMLInterstitialViewController", ^{
             NSObject *delegate = [[[NSObject alloc] init] autorelease];
             [controller setCustomMethodDelegate:delegate];
             controller.customMethodDelegate should equal(delegate);
-            backingView.customMethodDelegate should equal(delegate);
+            controller.backingViewAgent.customMethodDelegate should equal(delegate);
         });
     });
 
@@ -68,8 +68,8 @@ fdescribe(@"MPHTMLInterstitialViewController", ^{
             });
 
             it(@"should tell the backing view that it was presented", ^{
-                backingView.dismissed should equal(NO);
-                backingView.webView.executedJavaScripts[0] should equal(@"webviewDidAppear();");
+                controller.backingViewAgent.dismissed should equal(NO);
+                backingView.executedJavaScripts[0] should equal(@"webviewDidAppear();");
                 backingView.alpha should equal(1);
             });
 
@@ -85,7 +85,7 @@ fdescribe(@"MPHTMLInterstitialViewController", ^{
         });
 
         it(@"should inform the backing view", ^{
-            backingView.dismissed should equal(YES);
+            controller.backingViewAgent.dismissed should equal(YES);
         });
 
         it(@"should tell its delegate interstitialWillDisappear:", ^{
@@ -103,7 +103,7 @@ fdescribe(@"MPHTMLInterstitialViewController", ^{
         });
     });
 
-    describe(@"MPAdWebViewDelegate methods", ^{
+    describe(@"MPAdWebViewAgentDelegate methods", ^{
         it(@"should be the presenting controller", ^{
             controller.viewControllerForPresentingModalView should equal(controller);
         });

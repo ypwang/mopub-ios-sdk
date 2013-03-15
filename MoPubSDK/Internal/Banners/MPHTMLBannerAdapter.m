@@ -11,37 +11,47 @@
 #import "MPAdDestinationDisplayAgent.h"
 #import "MPAdWebView.h"
 
+@interface MPHTMLBannerAdapter ()
+
+@property (nonatomic, retain) MPAdWebView *banner;
+
+@end
+
 @implementation MPHTMLBannerAdapter
+
+@synthesize bannerAgent = _bannerAgent;
+@synthesize banner = _banner;
 
 - (void)getAdWithConfiguration:(MPAdConfiguration *)configuration
 {
     MPLogTrace(@"Loading banner with HTML source: %@", [configuration adResponseHTMLString]);
 
-    // XXX: Passing CGRectZero as the frame can cause divide-by-zero.
-    _banner = [[MPAdWebView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)
-                                        delegate:self
-                         destinationDisplayAgent:[MPAdDestinationDisplayAgent
-                                                  agentWithURLResolver:[MPURLResolver resolver]
-                                                  delegate:self]];
-    _banner.customMethodDelegate = [self.delegate adViewDelegate];
-    [_banner loadConfiguration:configuration];
+    self.banner = [[[MPAdWebView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)] autorelease];
+
+    MPAdDestinationDisplayAgent *destinationDisplayAgent = [MPAdDestinationDisplayAgent
+                                                             agentWithURLResolver:[MPURLResolver resolver]];
+    self.bannerAgent = [[[MPAdWebViewAgent alloc] initWithAdWebView:self.banner
+                                                           delegate:self
+                                            destinationDisplayAgent:destinationDisplayAgent] autorelease];
+    destinationDisplayAgent.delegate = self.bannerAgent;
+    self.bannerAgent.customMethodDelegate = [self.delegate adViewDelegate];
+    [self.bannerAgent loadConfiguration:configuration];
 }
 
 - (void)dealloc
 {
-    _banner.delegate = nil;
-    _banner.customMethodDelegate = nil;
-    [_banner release];
+    self.bannerAgent = nil;
+    self.banner = nil;
 
     [super dealloc];
 }
 
 - (void)rotateToOrientation:(UIInterfaceOrientation)newOrientation
 {
-    [_banner rotateToOrientation:newOrientation];
+    [self.bannerAgent rotateToOrientation:newOrientation];
 }
 
-#pragma mark - MPAdWebViewDelegate
+#pragma mark - MPAdWebViewAgentDelegate
 
 - (UIViewController *)viewControllerForPresentingModalView
 {
@@ -50,7 +60,9 @@
 
 - (void)adDidFinishLoadingAd:(MPAdWebView *)ad
 {
-    [self.delegate adapter:self didFinishLoadingAd:ad shouldTrackImpression:NO];
+    [self.delegate adapter:self
+        didFinishLoadingAd:self.banner
+     shouldTrackImpression:NO];
 }
 
 - (void)adDidFailToLoadAd:(MPAdWebView *)ad

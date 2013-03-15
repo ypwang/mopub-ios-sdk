@@ -6,12 +6,10 @@
 //
 
 #import "MPBaseAdapter.h"
+#import "MPAdWebViewAgent.h"
 
-#import "MPAdWebViewDelegate.h"
+@interface MPHTMLBannerAdapter : MPBaseAdapter <MPAdWebViewAgentDelegate>
 
-@interface MPHTMLBannerAdapter : MPBaseAdapter <MPAdWebViewDelegate>
-{
-    MPAdWebView *_banner;
-}
+@property (nonatomic, retain) MPAdWebViewAgent *bannerAgent;
 
 @end

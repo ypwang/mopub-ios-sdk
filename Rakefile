@@ -50,7 +50,25 @@ def output_file(target)
   output_file
 end
 
-task :default => [:trim_whitespace, "all:spec"]
+def head(text)
+  puts "\n########### #{text} ###########"
+end
+
+def build(options)
+  target = options[:target]
+  configuration = options[:configuration] || CONFIGURATION
+  if options[:sdk]
+    sdk = options[:sdk]
+  elsif options[:sdk_version]
+    sdk = "iphonesimulator#{options[:sdk_version]}"
+  else
+    sdk = "iphonesimulator"
+  end
+  out_file = output_file("mopub_#{options[:target].downcase}_#{sdk}")
+  system_or_exit(%Q[xcodebuild -project MoPubSDK.xcodeproj -target #{target} -configuration #{configuration} ARCHS=i386 -sdk #{sdk} build SYMROOT=#{BUILD_DIR}], {}, out_file)
+end
+
+task :default => [:trim_whitespace, "mopub:build", "mopub:spec"]
 task :cruise => ["all:clean", "all:spec"]
 
 task :trim_whitespace do
@@ -59,9 +77,17 @@ end
 
 namespace :mopub do
   desc "Run MoPub Cedar Specs"
-  task :spec do
-    system_or_exit(%Q[xcodebuild -project MoPubSDK.xcodeproj -target Specs -configuration #{CONFIGURATION} ARCHS=i386 -sdk iphonesimulator build SYMROOT=#{BUILD_DIR}], {}, output_file("mopub_specs"))
 
+  task :build do
+    head "Building MoPubSDK"
+    build :target => "MoPubSDK"
+  end
+
+  task :spec do
+    head "Building Specs"
+    build :target => "Specs"
+
+    head "Running Specs"
     env_vars = {
       "CEDAR_REPORTER_CLASS" => "CDRColorizedReporter",
       "CFFIXED_USER_HOME" => Dir.tmpdir,

@@ -7,7 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MPAdWebViewDelegate.h"
+#import "MPAdWebViewAgent.h"
 #import "MPInterstitialViewController.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -17,9 +17,10 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@interface MPHTMLInterstitialViewController : MPInterstitialViewController <MPAdWebViewDelegate>
+@interface MPHTMLInterstitialViewController : MPInterstitialViewController <MPAdWebViewAgentDelegate>
 
 @property (nonatomic, assign) id<MPHTMLInterstitialViewControllerDelegate> delegate;
+@property (nonatomic, retain) MPAdWebViewAgent *backingViewAgent;
 
 - (id)customMethodDelegate;
 - (void)setCustomMethodDelegate:(id)delegate;

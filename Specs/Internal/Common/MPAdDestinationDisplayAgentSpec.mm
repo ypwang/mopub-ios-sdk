@@ -12,8 +12,7 @@ SPEC_BEGIN(MPAdDestinationDisplayAgentSpec)
 
 describe(@"MPAdDestinationDisplayAgent", ^{
     __block MPAdDestinationDisplayAgent *agent;
-    __block id adWebViewPlaceholder;
-    __block id<CedarDouble, MPAdWebViewDelegate> delegate;
+    __block id<CedarDouble, MPAdDestinationDisplayAgentDelegate> delegate;
     __block UIWindow *window;
     __block NSURL *URL;
     __block UIViewController *presentingViewController;
@@ -22,31 +21,28 @@ describe(@"MPAdDestinationDisplayAgent", ^{
     __block FakeMPURLResolver *resolver;
 
     beforeEach(^{
-        adWebViewPlaceholder = [[[NSObject alloc] init] autorelease];
-
         resolver = [[FakeMPURLResolver alloc] init];
 
-        delegate = nice_fake_for(@protocol(MPAdWebViewDelegate));
+        delegate = nice_fake_for(@protocol(MPAdDestinationDisplayAgentDelegate));
         presentingViewController = [[[UIViewController alloc] init] autorelease];
         delegate stub_method("viewControllerForPresentingModalView").and_return(presentingViewController);
 
-        agent = [MPAdDestinationDisplayAgent agentWithURLResolver:resolver
-                                                         delegate:delegate];
-        agent.adWebView = adWebViewPlaceholder;
+        agent = [MPAdDestinationDisplayAgent agentWithURLResolver:resolver];
+        agent.delegate = delegate;
 
         window = [[[UIWindow alloc] init] autorelease];
         [window makeKeyAndVisible];
 
         verifyThatTheURLWasSentToApplication = [^(NSURL *URL){
             window.subviews.lastObject should be_nil;
-            delegate should have_received(@selector(adActionWillLeaveApplication:)).with(adWebViewPlaceholder);
+            delegate should have_received(@selector(displayAgentWillLeaveApplication));
             [[UIApplication sharedApplication] lastOpenedURL] should equal(URL);
         } copy];
 
         verifyThatDisplayDestinationIsEnabled = [^{
             [delegate reset_sent_messages];
             [agent displayDestinationForURL:[NSURL URLWithString:@"http://www.google.com/"]];
-            delegate should have_received(@selector(adActionWillBegin:));
+            delegate should have_received(@selector(displayAgentWillPresentModal));
         } copy];
     });
 
@@ -64,8 +60,8 @@ describe(@"MPAdDestinationDisplayAgent", ^{
             window.subviews.lastObject should be_instance_of([MPProgressOverlayView class]);
         });
 
-        it(@"should tell its delegate that an adActionWillBegin", ^{
-            delegate should have_received(@selector(adActionWillBegin:)).with(adWebViewPlaceholder);
+        it(@"should tell its delegate that an displayAgentWillPresentModal", ^{
+            delegate should have_received(@selector(displayAgentWillPresentModal));
         });
 
         it(@"should tell the resolver to resolve the URL", ^{
@@ -76,7 +72,7 @@ describe(@"MPAdDestinationDisplayAgent", ^{
             it(@"should ignore the second request", ^{
                 [delegate reset_sent_messages];
                 [agent displayDestinationForURL:URL];
-                delegate should_not have_received(@selector(adActionWillBegin:));
+                delegate should_not have_received(@selector(displayAgentWillPresentModal));
             });
         });
     });
@@ -110,8 +106,8 @@ describe(@"MPAdDestinationDisplayAgent", ^{
                 [browser.doneButton tap];
             });
 
-            it(@"should tell its delegate that an adActionDidFinish", ^{
-                delegate should have_received(@selector(adActionDidFinish:)).with(adWebViewPlaceholder);
+            it(@"should tell its delegate that an displayAgentDidDismissModal", ^{
+                delegate should have_received(@selector(displayAgentDidDismissModal));
             });
 
             it(@"should dismiss the browser modal", ^{
@@ -170,8 +166,8 @@ describe(@"MPAdDestinationDisplayAgent", ^{
                     presentingViewController.presentedViewController should be_nil;
                 });
 
-                it(@"should tell its delegate that an adActionDidFinish", ^{
-                    delegate should have_received(@selector(adActionDidFinish:)).with(adWebViewPlaceholder);
+                it(@"should tell its delegate that an displayAgentDidDismissModal", ^{
+                    delegate should have_received(@selector(displayAgentDidDismissModal));
                 });
 
                 it(@"should allow subsequent displayDestinationForURL: calls", ^{
@@ -204,8 +200,8 @@ describe(@"MPAdDestinationDisplayAgent", ^{
             window.subviews.lastObject should be_nil;
         });
 
-        it(@"should tell the delegate that an adActionDidFinish", ^{
-            delegate should have_received(@selector(adActionDidFinish:)).with(adWebViewPlaceholder);
+        it(@"should tell the delegate that an displayAgentDidDismissModal", ^{
+            delegate should have_received(@selector(displayAgentDidDismissModal));
         });
 
         it(@"should allow subsequent displayDestinationForURL: calls", ^{
@@ -225,8 +221,8 @@ describe(@"MPAdDestinationDisplayAgent", ^{
             resolver.didCancel should equal(YES);
         });
 
-        it(@"should tell the delegate that an adActionDidFinish", ^{
-            delegate should have_received(@selector(adActionDidFinish:)).with(adWebViewPlaceholder);
+        it(@"should tell the delegate that an displayAgentDidDismissModal", ^{
+            delegate should have_received(@selector(displayAgentDidDismissModal));
         });
 
         it(@"should hide the overlay", ^{
@@ -240,9 +236,8 @@ describe(@"MPAdDestinationDisplayAgent", ^{
 
     describe(@"verifying that the resolver and display agent play nice", ^{
         beforeEach(^{
-            agent = [MPAdDestinationDisplayAgent agentWithURLResolver:[MPURLResolver resolver]
-                                                             delegate:delegate];
-            agent.adWebView = adWebViewPlaceholder;
+            agent = [MPAdDestinationDisplayAgent agentWithURLResolver:[MPURLResolver resolver]];
+            agent.delegate = delegate;
         });
 
         it(@"should use the resolver to determine what to do with the URL", ^{

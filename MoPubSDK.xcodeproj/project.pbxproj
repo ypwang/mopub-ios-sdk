@@ -42,6 +42,12 @@
 		AE60D7FE16F2A2BB00A4B67F /* MPHTMLInterstitialViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D7FD16F2A2BB00A4B67F /* MPHTMLInterstitialViewControllerSpec.mm */; };
 		AE60D7FF16F2A8D800A4B67F /* MPHTMLInterstitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C2716EF9DB00046D464 /* MPHTMLInterstitialViewController.m */; };
 		AE60D80016F2A8E000A4B67F /* MPInterstitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C2F16EF9DB00046D464 /* MPInterstitialViewController.m */; };
+		AE60D82016F38D0500A4B67F /* MPAdWebViewAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = AE60D81E16F38D0500A4B67F /* MPAdWebViewAgent.m */; };
+		AE60D82B16F38D1500A4B67F /* MPAdWebViewAgentSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D82916F38D1500A4B67F /* MPAdWebViewAgentSpec.mm */; };
+		AE60D82C16F39A6B00A4B67F /* MPHTMLBannerAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C0716EF9DB00046D464 /* MPHTMLBannerAdapter.m */; };
+		AE60D82D16F39A7800A4B67F /* MPBaseAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C0516EF9DB00046D464 /* MPBaseAdapter.m */; };
+		AE60D83016F39ADF00A4B67F /* MPHTMLBannerAdapterSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D82F16F39ADF00A4B67F /* MPHTMLBannerAdapterSpec.mm */; };
+		AE60D83616F3A3D400A4B67F /* MPAdWebViewAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = AE60D81E16F38D0500A4B67F /* MPAdWebViewAgent.m */; };
 		AEA97BE016EF9C030046D464 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97BDF16EF9C030046D464 /* UIKit.framework */; };
 		AEA97BE116EF9C030046D464 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF1F32B16EF9AD700273462 /* Foundation.framework */; };
 		AEA97BE316EF9C030046D464 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97BE216EF9C030046D464 /* CoreGraphics.framework */; };
@@ -215,7 +221,6 @@
 		AE341F3E16EFFA690074C859 /* MPAdDestinationDisplayAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPAdDestinationDisplayAgent.h; sourceTree = "<group>"; };
 		AE341F3F16EFFA690074C859 /* MPAdDestinationDisplayAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPAdDestinationDisplayAgent.m; sourceTree = "<group>"; };
 		AE341F4216EFFA810074C859 /* MPAdDestinationDisplayAgentSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPAdDestinationDisplayAgentSpec.mm; sourceTree = "<group>"; };
-		AE341F4416F0E2720074C859 /* MPAdWebViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MPAdWebViewDelegate.h; sourceTree = "<group>"; };
 		AE341F5216F0E9AD0074C859 /* UIKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = UIKit.xcodeproj; path = PivotalCoreKit/UIKit/UIKit.xcodeproj; sourceTree = "<group>"; };
 		AE341F6416F0EB320074C859 /* MPAdBrowserControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPAdBrowserControllerSpec.mm; sourceTree = "<group>"; };
 		AE341F6716F0F7260074C859 /* UIApplication+MPSpecs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+MPSpecs.h"; sourceTree = "<group>"; };
@@ -232,6 +237,10 @@
 		AE60D7F816F2956700A4B67F /* NSURL+MPAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+MPAdditions.m"; sourceTree = "<group>"; };
 		AE60D7FB16F2958C00A4B67F /* NSURL+MPAdditionsSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSURL+MPAdditionsSpec.mm"; sourceTree = "<group>"; };
 		AE60D7FD16F2A2BB00A4B67F /* MPHTMLInterstitialViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPHTMLInterstitialViewControllerSpec.mm; sourceTree = "<group>"; };
+		AE60D81D16F38D0500A4B67F /* MPAdWebViewAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPAdWebViewAgent.h; sourceTree = "<group>"; };
+		AE60D81E16F38D0500A4B67F /* MPAdWebViewAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPAdWebViewAgent.m; sourceTree = "<group>"; };
+		AE60D82916F38D1500A4B67F /* MPAdWebViewAgentSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPAdWebViewAgentSpec.mm; sourceTree = "<group>"; };
+		AE60D82F16F39ADF00A4B67F /* MPHTMLBannerAdapterSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPHTMLBannerAdapterSpec.mm; sourceTree = "<group>"; };
 		AEA97BDE16EF9C030046D464 /* Specs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Specs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEA97BDF16EF9C030046D464 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AEA97BE216EF9C030046D464 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -480,6 +489,14 @@
 			path = Categories;
 			sourceTree = "<group>";
 		};
+		AE60D82E16F39ACD00A4B67F /* Banners */ = {
+			isa = PBXGroup;
+			children = (
+				AE60D82F16F39ADF00A4B67F /* MPHTMLBannerAdapterSpec.mm */,
+			);
+			path = Banners;
+			sourceTree = "<group>";
+		};
 		AEA97BE416EF9C030046D464 /* Specs */ = {
 			isa = PBXGroup;
 			children = (
@@ -566,7 +583,6 @@
 				AEA97C1316EF9DB00046D464 /* MPAdServerCommunicator.m */,
 				AEA97C1416EF9DB00046D464 /* MPAdServerURLBuilder.h */,
 				AEA97C1516EF9DB00046D464 /* MPAdServerURLBuilder.m */,
-				AE341F4416F0E2720074C859 /* MPAdWebViewDelegate.h */,
 				AEA97C1616EF9DB00046D464 /* MPAdWebView.h */,
 				AEA97C1716EF9DB00046D464 /* MPAdWebView.m */,
 				AEA97C1816EF9DB00046D464 /* MPError.h */,
@@ -582,6 +598,8 @@
 				AEA97CB316EFA8980046D464 /* MPURLResolver.m */,
 				AE341F3E16EFFA690074C859 /* MPAdDestinationDisplayAgent.h */,
 				AE341F3F16EFFA690074C859 /* MPAdDestinationDisplayAgent.m */,
+				AE60D81D16F38D0500A4B67F /* MPAdWebViewAgent.h */,
+				AE60D81E16F38D0500A4B67F /* MPAdWebViewAgent.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -723,6 +741,7 @@
 		AEA97CB616EFAB810046D464 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				AE60D82E16F39ACD00A4B67F /* Banners */,
 				AE60D7F616F2954C00A4B67F /* Categories */,
 				AEA97CB716EFAB810046D464 /* Common */,
 			);
@@ -738,6 +757,7 @@
 				AEC845DC16F1493B00943383 /* MPAdConfigurationSpec.mm */,
 				AEC845DE16F1496000943383 /* MPAdWebViewSpec.mm */,
 				AE60D7FD16F2A2BB00A4B67F /* MPHTMLInterstitialViewControllerSpec.mm */,
+				AE60D82916F38D1500A4B67F /* MPAdWebViewAgentSpec.mm */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1067,6 +1087,11 @@
 				AE60D7FE16F2A2BB00A4B67F /* MPHTMLInterstitialViewControllerSpec.mm in Sources */,
 				AE60D7FF16F2A8D800A4B67F /* MPHTMLInterstitialViewController.m in Sources */,
 				AE60D80016F2A8E000A4B67F /* MPInterstitialViewController.m in Sources */,
+				AE60D82016F38D0500A4B67F /* MPAdWebViewAgent.m in Sources */,
+				AE60D82B16F38D1500A4B67F /* MPAdWebViewAgentSpec.mm in Sources */,
+				AE60D82C16F39A6B00A4B67F /* MPHTMLBannerAdapter.m in Sources */,
+				AE60D82D16F39A7800A4B67F /* MPBaseAdapter.m in Sources */,
+				AE60D83016F39ADF00A4B67F /* MPHTMLBannerAdapterSpec.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1129,6 +1154,7 @@
 				AE341F4016EFFA690074C859 /* MPAdDestinationDisplayAgent.m in Sources */,
 				AE341F6D16F11AC00074C859 /* MPStoreKitProvider.m in Sources */,
 				AE60D7F916F2956700A4B67F /* NSURL+MPAdditions.m in Sources */,
+				AE60D83616F3A3D400A4B67F /* MPAdWebViewAgent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

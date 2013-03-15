@@ -12,7 +12,6 @@
 
 @interface MPAdDestinationDisplayAgent ()
 
-@property (nonatomic, assign) id<MPAdWebViewDelegate> delegate;
 @property (nonatomic, retain) MPURLResolver *resolver;
 @property (nonatomic, assign) BOOL inUse;
 
@@ -22,16 +21,13 @@
 
 @implementation MPAdDestinationDisplayAgent
 
-@synthesize adWebView = _adWebView;
 @synthesize delegate = _delegate;
 @synthesize resolver = _resolver;
 
 + (MPAdDestinationDisplayAgent *)agentWithURLResolver:(MPURLResolver *)resolver
-                                             delegate:(id<MPAdWebViewDelegate>)delegate
 {
     MPAdDestinationDisplayAgent *agent = [[MPAdDestinationDisplayAgent alloc] init];
     agent.resolver = resolver;
-    agent.delegate = delegate;
     return agent;
 }
 
@@ -49,7 +45,7 @@
     [MPProgressOverlayView presentOverlayInWindow:MPKeyWindow()
                                          animated:MP_ANIMATED
                                          delegate:self];
-    [self.delegate adActionWillBegin:self.adWebView];
+    [self.delegate displayAgentWillPresentModal];
 
     [self.resolver startResolvingWithURL:URL delegate:self];
 }
@@ -80,7 +76,7 @@
 - (void)openURLInApplication:(NSURL *)URL
 {
     [self hideOverlay];
-    [self.delegate adActionWillLeaveApplication:self.adWebView];
+    [self.delegate displayAgentWillLeaveApplication];
 
     [[UIApplication sharedApplication] openURL:URL];
     self.inUse = NO;
@@ -89,7 +85,7 @@
 - (void)failedToResolveURLWithError:(NSError *)error
 {
     [self hideOverlay];
-    [self.delegate adActionDidFinish:self.adWebView];
+    [self.delegate displayAgentDidDismissModal];
     self.inUse = NO;
 }
 
@@ -128,7 +124,7 @@
 {
     [self.resolver cancel];
     [self hideOverlay];
-    [self.delegate adActionDidFinish:self.adWebView];
+    [self.delegate displayAgentDidDismissModal];
     self.inUse = NO;
 }
 
@@ -136,7 +132,7 @@
 - (void)hideModalAndNotifyDelegate
 {
     [[self.delegate viewControllerForPresentingModalView] mp_dismissModalViewControllerAnimated:MP_ANIMATED];
-    [self.delegate adActionDidFinish:self.adWebView];
+    [self.delegate displayAgentDidDismissModal];
 }
 
 - (void)hideOverlay

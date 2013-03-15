@@ -24,7 +24,6 @@
 - (void)dealloc
 {
     self.backingView.delegate = nil;
-    self.backingView.customMethodDelegate = nil;
     self.backingView = nil;
     [super dealloc];
 }
@@ -35,31 +34,36 @@
 
     self.view.backgroundColor = [UIColor blackColor];
 
-    self.backingView = [[[MPAdWebView alloc] initWithFrame:self.view.bounds
-                                                  delegate:self
-                                   destinationDisplayAgent:[MPAdDestinationDisplayAgent agentWithURLResolver:[MPURLResolver resolver]
-                                                                                                    delegate:self]] autorelease];
+    self.backingView = [[[MPAdWebView alloc] initWithFrame:self.view.bounds] autorelease];
     self.backingView.autoresizingMask = UIViewAutoresizingFlexibleWidth |
         UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:self.backingView];
+
+    MPAdDestinationDisplayAgent *destinationDisplayAgent = [MPAdDestinationDisplayAgent agentWithURLResolver:[MPURLResolver resolver]];
+
+    self.backingViewAgent = [[[MPAdWebViewAgent alloc] initWithAdWebView:self.backingView
+                                                                delegate:self
+                                                 destinationDisplayAgent:destinationDisplayAgent] autorelease];
+
+    destinationDisplayAgent.delegate = self.backingViewAgent;
 }
 
 #pragma mark - Public
 
 - (id)customMethodDelegate
 {
-    return [self.backingView customMethodDelegate];
+    return [self.backingViewAgent customMethodDelegate];
 }
 
 - (void)setCustomMethodDelegate:(id)delegate
 {
-    [self.backingView setCustomMethodDelegate:delegate];
+    [self.backingViewAgent setCustomMethodDelegate:delegate];
 }
 
 - (void)loadConfiguration:(MPAdConfiguration *)configuration
 {
     [self view];
-    [self.backingView loadConfiguration:configuration];
+    [self.backingViewAgent loadConfiguration:configuration];
 }
 
 - (void)willPresentInterstitial
@@ -70,14 +74,14 @@
 
 - (void)didPresentInterstitial
 {
-    self.backingView.dismissed = NO;
+    self.backingViewAgent.dismissed = NO;
 
-    [self.backingView invokeJavaScriptForEvent:MPAdWebViewEventAdDidAppear];
+    [self.backingViewAgent invokeJavaScriptForEvent:MPAdWebViewEventAdDidAppear];
 
     // XXX: In certain cases, UIWebView's content appears off-center due to rotation / auto-
     // resizing while off-screen. -forceRedraw corrects this issue, but there is always a brief
     // instant when the old content is visible. We mask this using a short fade animation.
-    [self.backingView forceRedraw];
+    [self.backingViewAgent forceRedraw];
 
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.3];
@@ -89,7 +93,7 @@
 
 - (void)willDismissInterstitial
 {
-    self.backingView.dismissed = YES;
+    self.backingViewAgent.dismissed = YES;
 
     [self.delegate interstitialWillDisappear:self];
 }
@@ -105,10 +109,10 @@
 {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 
-    [self.backingView rotateToOrientation:self.interfaceOrientation];
+    [self.backingViewAgent rotateToOrientation:self.interfaceOrientation];
 }
 
-#pragma mark - MPAdWebViewDelegate
+#pragma mark - MPAdWebViewAgentDelegate
 
 - (UIViewController *)viewControllerForPresentingModalView
 {
