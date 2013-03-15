@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@class MRAdViewBrowsingController, MRAdViewDisplayController, MRProperty;
+#import "MPAdDestinationDisplayAgent.h"
+
+@class MRAdViewDisplayController, MRProperty;
 @protocol MRAdViewDelegate;
 
 enum {
@@ -31,43 +33,40 @@ enum {
 };
 typedef NSUInteger MRAdViewCloseButtonStyle;
 
-@interface MRAdView : UIView <UIWebViewDelegate> {
+@interface MRAdView : UIView <UIWebViewDelegate, MPAdDestinationDisplayAgentDelegate> {
     // This view's delegate object.
     id<MRAdViewDelegate> _delegate;
-    
+
     // The underlying webview.
     UIWebView *_webView;
-    
+
     // The native close button, shown when this view is used as an interstitial ad, or when the ad
     // is expanded.
     UIButton *_closeButton;
-    
+
     // Stores the HTML payload of a creative, when loading a creative from an NSURL.
     NSMutableData *_data;
-    
-    // Performs in-app browser-related actions.
-    MRAdViewBrowsingController *_browsingController;
-    
+
     // Performs display-related actions, such as expanding and closing the ad.
     MRAdViewDisplayController *_displayController;
-    
+
     // Flag indicating whether this view is currently loading an ad.
     BOOL _isLoading;
-    
+
     // The number of modal views this ad has presented.
     NSInteger _modalViewCount;
-    
+
     // Flag indicating whether this view's ad content provides its own custom (non-native) close
     // button.
     BOOL _usesCustomCloseButton;
-    
+
     MRAdViewCloseButtonStyle _closeButtonStyle;
-    
+
     // Flag indicating whether ads presented in this view are allowed to use the expand() API.
     BOOL _allowsExpansion;
-    
+
     BOOL _expanded;
-    
+
     // Enum indicating whether this view is being used as an inline ad or an interstitial ad.
     MRAdViewPlacementType _placementType;
 }
@@ -77,13 +76,14 @@ typedef NSUInteger MRAdViewCloseButtonStyle;
 @property (nonatomic, assign) BOOL expanded;
 
 - (id)initWithFrame:(CGRect)frame;
-- (id)initWithFrame:(CGRect)frame allowsExpansion:(BOOL)expansion 
+- (id)initWithFrame:(CGRect)frame allowsExpansion:(BOOL)expansion
    closeButtonStyle:(MRAdViewCloseButtonStyle)style placementType:(MRAdViewPlacementType)type;
 - (void)loadCreativeFromURL:(NSURL *)url;
 - (void)loadCreativeWithHTMLString:(NSString *)html baseURL:(NSURL *)url;
 - (NSString *)executeJavascript:(NSString *)javascript, ...;
 - (BOOL)isViewable;
 - (void)rotateToOrientation:(UIInterfaceOrientation)newOrientation;
+- (void)handleMRAIDOpenCallForURL:(NSURL *)URL;
 
 @end
 
@@ -95,6 +95,12 @@ typedef NSUInteger MRAdViewCloseButtonStyle;
 
 // Retrieves the view controller from which modal views should be presented.
 - (UIViewController *)viewControllerForPresentingModalView;
+
+// Called when the ad is about to display modal content (thus taking over the screen).
+- (void)appShouldSuspendForAd:(MRAdView *)adView;
+
+// Called when the ad has dismissed any modal content (removing any on-screen takeovers).
+- (void)appShouldResumeFromAd:(MRAdView *)adView;
 
 @optional
 
@@ -118,11 +124,11 @@ typedef NSUInteger MRAdViewCloseButtonStyle;
 
 // Called just before the ad expands.
 - (void)willExpandAd:(MRAdView *)adView
-			 toFrame:(CGRect)frame;
+             toFrame:(CGRect)frame;
 
 // Called just after the ad has expanded.
 - (void)didExpandAd:(MRAdView *)adView
-			toFrame:(CGRect)frame;
+            toFrame:(CGRect)frame;
 
 // Called just before the ad closes.
 - (void)adWillClose:(MRAdView *)adView;
@@ -131,11 +137,5 @@ typedef NSUInteger MRAdViewCloseButtonStyle;
 - (void)adDidClose:(MRAdView *)adView;
 
 - (void)ad:(MRAdView *)adView didRequestCustomCloseEnabled:(BOOL)enabled;
-
-// Called when the ad is about to display modal content (thus taking over the screen).
-- (void)appShouldSuspendForAd:(MRAdView *)adView;
-
-// Called when the ad has dismissed any modal content (removing any on-screen takeovers).
-- (void)appShouldResumeFromAd:(MRAdView *)adView;
 
 @end

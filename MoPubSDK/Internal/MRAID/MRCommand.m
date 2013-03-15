@@ -8,7 +8,6 @@
 
 #import "MRCommand.h"
 #import "MRAdView.h"
-#import "MRAdViewBrowsingController.h"
 #import "MRAdViewDisplayController.h"
 #import "MPGlobal.h"
 #import "MPLogging.h"
@@ -80,11 +79,11 @@
 - (NSString *)stringFromParametersForKey:(NSString *)key {
     NSString *value = [self.parameters objectForKey:key];
     if (!value || [value isEqual:[NSNull null]]) return nil;
-    
+
     value = [value stringByTrimmingCharactersInSet:
              [NSCharacterSet whitespaceAndNewlineCharacterSet]];
     if (!value || [value isEqual:[NSNull null]] || value.length == 0) return nil;
-    
+
     return value;
 }
 
@@ -125,28 +124,28 @@
     CGRect applicationFrame = MPApplicationFrame();
     CGFloat afWidth = CGRectGetWidth(applicationFrame);
     CGFloat afHeight = CGRectGetHeight(applicationFrame);
-    
+
     // If the ad has expandProperties, we should use the width and height values specified there.
-	CGFloat w = [self floatFromParametersForKey:@"w" withDefault:afWidth];
-	CGFloat h = [self floatFromParametersForKey:@"h" withDefault:afHeight];
-    
+    CGFloat w = [self floatFromParametersForKey:@"w" withDefault:afWidth];
+    CGFloat h = [self floatFromParametersForKey:@"h" withDefault:afHeight];
+
     // Constrain the ad to the application frame size.
     if (w > afWidth) w = afWidth;
     if (h > afHeight) h = afHeight;
-    
+
     // Center the ad within the application frame.
     CGFloat x = applicationFrame.origin.x + floor((afWidth - w) / 2);
     CGFloat y = applicationFrame.origin.y + floor((afHeight - h) / 2);
-	
-	NSString *urlString = [self stringFromParametersForKey:@"url"];
-	NSURL *url = [NSURL URLWithString:urlString];
-    
-	MPLogDebug(@"Expanding to (%.1f, %.1f, %.1f, %.1f); displaying %@.", x, y, w, h, url);
-    
-	CGRect newFrame = CGRectMake(x, y, w, h);
-    
-    [self.view.displayController expandToFrame:newFrame 
-                           withURL:url 
+
+    NSString *urlString = [self stringFromParametersForKey:@"url"];
+    NSURL *url = [NSURL URLWithString:urlString];
+
+    MPLogDebug(@"Expanding to (%.1f, %.1f, %.1f, %.1f); displaying %@.", x, y, w, h, url);
+
+    CGRect newFrame = CGRectMake(x, y, w, h);
+
+    [self.view.displayController expandToFrame:newFrame
+                           withURL:url
                     useCustomClose:[self boolFromParametersForKey:@"shouldUseCustomClose"]
                            isModal:NO
              shouldLockOrientation:[self boolFromParametersForKey:@"lockOrientation"]];
@@ -189,10 +188,7 @@
 
 - (BOOL)execute {
     NSString *URLString = [self stringFromParametersForKey:@"url"];
-    [self.view.browsingController openBrowserWithUrlString:URLString
-                                                enableBack:YES
-                                             enableForward:YES
-                                             enableRefresh:YES];
+    [self.view handleMRAIDOpenCallForURL:[NSURL URLWithString:URLString]];
     return YES;
 }
 

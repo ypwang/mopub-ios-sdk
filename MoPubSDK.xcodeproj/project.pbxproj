@@ -52,6 +52,14 @@
 		AE60D85016F3A4D600A4B67F /* MPInstanceProviderSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D84F16F3A4D600A4B67F /* MPInstanceProviderSpec.mm */; };
 		AE60D85616F3ADBB00A4B67F /* MPInstanceProvider+Spec.m in Sources */ = {isa = PBXBuildFile; fileRef = AE60D85516F3ADBB00A4B67F /* MPInstanceProvider+Spec.m */; };
 		AE60D85916F3B11300A4B67F /* FakeMPInstanceProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AE60D85816F3B11300A4B67F /* FakeMPInstanceProvider.m */; };
+		AE60D87416F3C87300A4B67F /* MRAdViewSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D87316F3C87300A4B67F /* MRAdViewSpec.mm */; };
+		AE60D87516F3CD3300A4B67F /* MRAdView.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C3816EF9DB00046D464 /* MRAdView.m */; };
+		AE60D87716F3CD4200A4B67F /* MRAdViewDisplayController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C3C16EF9DB00046D464 /* MRAdViewDisplayController.m */; };
+		AE60D87816F3CD4A00A4B67F /* MRDimmingView.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C4016EF9DB00046D464 /* MRDimmingView.m */; };
+		AE60D87916F3CD5100A4B67F /* MRProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C4216EF9DB00046D464 /* MRProperty.m */; };
+		AE60D87A16F3CD5600A4B67F /* MPTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C4E16EF9DB00046D464 /* MPTimer.m */; };
+		AE60D87B16F3CD7800A4B67F /* MRCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C3E16EF9DB00046D464 /* MRCommand.m */; };
+		AE60D87C16F3CE4200A4B67F /* MRAID.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AEA97BF816EF9DA90046D464 /* MRAID.bundle */; };
 		AEA97BE016EF9C030046D464 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97BDF16EF9C030046D464 /* UIKit.framework */; };
 		AEA97BE116EF9C030046D464 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF1F32B16EF9AD700273462 /* Foundation.framework */; };
 		AEA97BE316EF9C030046D464 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97BE216EF9C030046D464 /* CoreGraphics.framework */; };
@@ -85,7 +93,6 @@
 		AEA97C6716EF9DB00046D464 /* MPMRAIDInterstitialAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C3116EF9DB00046D464 /* MPMRAIDInterstitialAdapter.m */; };
 		AEA97C6816EF9DB00046D464 /* MPMRAIDInterstitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C3316EF9DB00046D464 /* MPMRAIDInterstitialViewController.m */; };
 		AEA97C6916EF9DB00046D464 /* MRAdView.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C3816EF9DB00046D464 /* MRAdView.m */; };
-		AEA97C6A16EF9DB00046D464 /* MRAdViewBrowsingController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C3A16EF9DB00046D464 /* MRAdViewBrowsingController.m */; };
 		AEA97C6B16EF9DB00046D464 /* MRAdViewDisplayController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C3C16EF9DB00046D464 /* MRAdViewDisplayController.m */; };
 		AEA97C6C16EF9DB00046D464 /* MRCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C3E16EF9DB00046D464 /* MRCommand.m */; };
 		AEA97C6D16EF9DB00046D464 /* MRDimmingView.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C4016EF9DB00046D464 /* MRDimmingView.m */; };
@@ -249,6 +256,7 @@
 		AE60D85516F3ADBB00A4B67F /* MPInstanceProvider+Spec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MPInstanceProvider+Spec.m"; sourceTree = "<group>"; };
 		AE60D85716F3B11300A4B67F /* FakeMPInstanceProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeMPInstanceProvider.h; sourceTree = "<group>"; };
 		AE60D85816F3B11300A4B67F /* FakeMPInstanceProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeMPInstanceProvider.m; sourceTree = "<group>"; };
+		AE60D87316F3C87300A4B67F /* MRAdViewSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MRAdViewSpec.mm; sourceTree = "<group>"; };
 		AEA97BDE16EF9C030046D464 /* Specs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Specs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEA97BDF16EF9C030046D464 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AEA97BE216EF9C030046D464 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -319,8 +327,6 @@
 		AEA97C3616EF9DB00046D464 /* MRAdView+Controllers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MRAdView+Controllers.h"; sourceTree = "<group>"; };
 		AEA97C3716EF9DB00046D464 /* MRAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRAdView.h; sourceTree = "<group>"; };
 		AEA97C3816EF9DB00046D464 /* MRAdView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRAdView.m; sourceTree = "<group>"; };
-		AEA97C3916EF9DB00046D464 /* MRAdViewBrowsingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRAdViewBrowsingController.h; sourceTree = "<group>"; };
-		AEA97C3A16EF9DB00046D464 /* MRAdViewBrowsingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRAdViewBrowsingController.m; sourceTree = "<group>"; };
 		AEA97C3B16EF9DB00046D464 /* MRAdViewDisplayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRAdViewDisplayController.h; sourceTree = "<group>"; };
 		AEA97C3C16EF9DB00046D464 /* MRAdViewDisplayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRAdViewDisplayController.m; sourceTree = "<group>"; };
 		AEA97C3D16EF9DB00046D464 /* MRCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRCommand.h; sourceTree = "<group>"; };
@@ -506,6 +512,14 @@
 			path = Banners;
 			sourceTree = "<group>";
 		};
+		AE60D87216F3C86B00A4B67F /* MRAID */ = {
+			isa = PBXGroup;
+			children = (
+				AE60D87316F3C87300A4B67F /* MRAdViewSpec.mm */,
+			);
+			path = MRAID;
+			sourceTree = "<group>";
+		};
 		AEA97BE416EF9C030046D464 /* Specs */ = {
 			isa = PBXGroup;
 			children = (
@@ -647,8 +661,6 @@
 				AEA97C3616EF9DB00046D464 /* MRAdView+Controllers.h */,
 				AEA97C3716EF9DB00046D464 /* MRAdView.h */,
 				AEA97C3816EF9DB00046D464 /* MRAdView.m */,
-				AEA97C3916EF9DB00046D464 /* MRAdViewBrowsingController.h */,
-				AEA97C3A16EF9DB00046D464 /* MRAdViewBrowsingController.m */,
 				AEA97C3B16EF9DB00046D464 /* MRAdViewDisplayController.h */,
 				AEA97C3C16EF9DB00046D464 /* MRAdViewDisplayController.m */,
 				AEA97C3D16EF9DB00046D464 /* MRCommand.h */,
@@ -752,10 +764,11 @@
 		AEA97CB616EFAB810046D464 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				AE60D87216F3C86B00A4B67F /* MRAID */,
+				AE60D84F16F3A4D600A4B67F /* MPInstanceProviderSpec.mm */,
 				AE60D82E16F39ACD00A4B67F /* Banners */,
 				AE60D7F616F2954C00A4B67F /* Categories */,
 				AEA97CB716EFAB810046D464 /* Common */,
-				AE60D84F16F3A4D600A4B67F /* MPInstanceProviderSpec.mm */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -1049,6 +1062,7 @@
 			files = (
 				AEA97BE916EF9C030046D464 /* InfoPlist.strings in Resources */,
 				AE341F6616F0EDC60074C859 /* MPAdBrowserController.xib in Resources */,
+				AE60D87C16F3CE4200A4B67F /* MRAID.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1107,6 +1121,13 @@
 				AE60D85016F3A4D600A4B67F /* MPInstanceProviderSpec.mm in Sources */,
 				AE60D85616F3ADBB00A4B67F /* MPInstanceProvider+Spec.m in Sources */,
 				AE60D85916F3B11300A4B67F /* FakeMPInstanceProvider.m in Sources */,
+				AE60D87416F3C87300A4B67F /* MRAdViewSpec.mm in Sources */,
+				AE60D87516F3CD3300A4B67F /* MRAdView.m in Sources */,
+				AE60D87716F3CD4200A4B67F /* MRAdViewDisplayController.m in Sources */,
+				AE60D87816F3CD4A00A4B67F /* MRDimmingView.m in Sources */,
+				AE60D87916F3CD5100A4B67F /* MRProperty.m in Sources */,
+				AE60D87A16F3CD5600A4B67F /* MPTimer.m in Sources */,
+				AE60D87B16F3CD7800A4B67F /* MRCommand.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1141,7 +1162,6 @@
 				AEA97C6716EF9DB00046D464 /* MPMRAIDInterstitialAdapter.m in Sources */,
 				AEA97C6816EF9DB00046D464 /* MPMRAIDInterstitialViewController.m in Sources */,
 				AEA97C6916EF9DB00046D464 /* MRAdView.m in Sources */,
-				AEA97C6A16EF9DB00046D464 /* MRAdViewBrowsingController.m in Sources */,
 				AEA97C6B16EF9DB00046D464 /* MRAdViewDisplayController.m in Sources */,
 				AEA97C6C16EF9DB00046D464 /* MRCommand.m in Sources */,
 				AEA97C6D16EF9DB00046D464 /* MRDimmingView.m in Sources */,

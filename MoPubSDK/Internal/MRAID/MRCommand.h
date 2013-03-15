@@ -11,7 +11,6 @@
 
 @interface MRAdView (MRCommand)
 
-@property (nonatomic, retain, readonly) MRAdViewBrowsingController *browsingController;
 @property (nonatomic, retain, readonly) MRAdViewDisplayController *displayController;
 
 @end

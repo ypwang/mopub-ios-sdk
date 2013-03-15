@@ -49,7 +49,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     _interstitialView.frame = self.view.bounds;
     _interstitialView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:_interstitialView];
@@ -131,6 +131,16 @@
 {
     _advertisementHasCustomCloseButton = enabled;
     [self layoutCloseButton];
+}
+
+- (void)appShouldSuspendForAd:(MRAdView *)adView
+{
+
+}
+
+- (void)appShouldResumeFromAd:(MRAdView *)adView
+{
+
 }
 
 #pragma mark - Low-Memory Conditions
