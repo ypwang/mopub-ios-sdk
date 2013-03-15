@@ -12,8 +12,12 @@
 #import "NSURLConnection+MPSpecs.h"
 #import "UIApplication+MPSpecs.h"
 #import "MPStoreKitProvider+MPSpecs.h"
+#import "FakeMPInstanceProvider.h"
 
 typedef void (^NoArgBlock)();
+typedef id (^IDReturningBlock)();
+
+extern FakeMPInstanceProvider *fakeProvider;
 
 @interface MPSpecHelper : NSObject
 

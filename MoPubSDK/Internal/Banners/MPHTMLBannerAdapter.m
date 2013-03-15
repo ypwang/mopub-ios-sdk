@@ -10,30 +10,24 @@
 #import "MPAdConfiguration.h"
 #import "MPAdDestinationDisplayAgent.h"
 #import "MPAdWebView.h"
+#import "MPInstanceProvider.h"
 
 @interface MPHTMLBannerAdapter ()
 
-@property (nonatomic, retain) MPAdWebView *banner;
+@property (nonatomic, retain) MPAdWebViewAgent *bannerAgent;
 
 @end
 
 @implementation MPHTMLBannerAdapter
 
 @synthesize bannerAgent = _bannerAgent;
-@synthesize banner = _banner;
 
 - (void)getAdWithConfiguration:(MPAdConfiguration *)configuration
 {
     MPLogTrace(@"Loading banner with HTML source: %@", [configuration adResponseHTMLString]);
 
-    self.banner = [[[MPAdWebView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)] autorelease];
-
-    MPAdDestinationDisplayAgent *destinationDisplayAgent = [MPAdDestinationDisplayAgent
-                                                             agentWithURLResolver:[MPURLResolver resolver]];
-    self.bannerAgent = [[[MPAdWebViewAgent alloc] initWithAdWebView:self.banner
-                                                           delegate:self
-                                            destinationDisplayAgent:destinationDisplayAgent] autorelease];
-    destinationDisplayAgent.delegate = self.bannerAgent;
+    self.bannerAgent = [[MPInstanceProvider sharedProvider] buildMPAdWebViewAgentWithAdWebViewFrame:CGRectMake(0, 0, 1, 1)
+                                                                                           delegate:self];
     self.bannerAgent.customMethodDelegate = [self.delegate adViewDelegate];
     [self.bannerAgent loadConfiguration:configuration];
 }
@@ -41,7 +35,6 @@
 - (void)dealloc
 {
     self.bannerAgent = nil;
-    self.banner = nil;
 
     [super dealloc];
 }
@@ -61,7 +54,7 @@
 - (void)adDidFinishLoadingAd:(MPAdWebView *)ad
 {
     [self.delegate adapter:self
-        didFinishLoadingAd:self.banner
+        didFinishLoadingAd:self.bannerAgent.view
      shouldTrackImpression:NO];
 }
 

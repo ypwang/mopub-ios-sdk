@@ -1,7 +1,7 @@
 #import "MPAdDestinationDisplayAgent.h"
 #import "MPProgressOverlayView.h"
 #import "MPAdBrowserController.h"
-#import "FakeMPURLResolver.h"
+#import "MPURLResolver.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -13,22 +13,22 @@ SPEC_BEGIN(MPAdDestinationDisplayAgentSpec)
 describe(@"MPAdDestinationDisplayAgent", ^{
     __block MPAdDestinationDisplayAgent *agent;
     __block id<CedarDouble, MPAdDestinationDisplayAgentDelegate> delegate;
+    __block MPURLResolver<CedarDouble> *resolver;
     __block UIWindow *window;
     __block NSURL *URL;
     __block UIViewController *presentingViewController;
     __block URLVerificationBlock verifyThatTheURLWasSentToApplication;
     __block NoArgBlock verifyThatDisplayDestinationIsEnabled;
-    __block FakeMPURLResolver *resolver;
 
     beforeEach(^{
-        resolver = [[FakeMPURLResolver alloc] init];
+        resolver = nice_fake_for([MPURLResolver class]);
+        fakeProvider.fakeMPURLResolver = resolver;
 
         delegate = nice_fake_for(@protocol(MPAdDestinationDisplayAgentDelegate));
         presentingViewController = [[[UIViewController alloc] init] autorelease];
         delegate stub_method("viewControllerForPresentingModalView").and_return(presentingViewController);
 
-        agent = [MPAdDestinationDisplayAgent agentWithURLResolver:resolver];
-        agent.delegate = delegate;
+        agent = [MPAdDestinationDisplayAgent agentWithDelegate:delegate];
 
         window = [[[UIWindow alloc] init] autorelease];
         [window makeKeyAndVisible];
@@ -65,7 +65,7 @@ describe(@"MPAdDestinationDisplayAgent", ^{
         });
 
         it(@"should tell the resolver to resolve the URL", ^{
-            resolver.URL should equal(URL);
+            resolver should have_received(@selector(startResolvingWithURL:delegate:)).with(URL).and_with(agent);
         });
 
         describe(@"when its told again (immediately)", ^{
@@ -213,12 +213,11 @@ describe(@"MPAdDestinationDisplayAgent", ^{
         beforeEach(^{
             URL = [NSURL URLWithString:@"http://www.google.com"];
             [agent displayDestinationForURL:URL];
-            resolver.didCancel should equal(NO);
             [agent overlayCancelButtonPressed];
         });
 
         it(@"should cancel the resolver", ^{
-            resolver.didCancel should equal(YES);
+            resolver should have_received(@selector(cancel));
         });
 
         it(@"should tell the delegate that an displayAgentDidDismissModal", ^{
@@ -236,8 +235,8 @@ describe(@"MPAdDestinationDisplayAgent", ^{
 
     describe(@"verifying that the resolver and display agent play nice", ^{
         beforeEach(^{
-            agent = [MPAdDestinationDisplayAgent agentWithURLResolver:[MPURLResolver resolver]];
-            agent.delegate = delegate;
+            fakeProvider.fakeMPURLResolver = nil;
+            agent = [MPAdDestinationDisplayAgent agentWithDelegate:delegate];
         });
 
         it(@"should use the resolver to determine what to do with the URL", ^{

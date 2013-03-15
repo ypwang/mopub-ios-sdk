@@ -34,7 +34,6 @@
 		AE341F7316F11EC30074C859 /* MPStoreKitProvider+MPSpecs.m in Sources */ = {isa = PBXBuildFile; fileRef = AE341F7216F11EC30074C859 /* MPStoreKitProvider+MPSpecs.m */; };
 		AE341F7416F120E50074C859 /* MPStoreKitProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AE341F6C16F11AC00074C859 /* MPStoreKitProvider.m */; };
 		AE341F7A16F126D30074C859 /* FakeStoreProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE341F7916F126D30074C859 /* FakeStoreProductViewController.m */; };
-		AE341F7D16F1373A0074C859 /* FakeMPURLResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = AE341F7C16F1373A0074C859 /* FakeMPURLResolver.m */; };
 		AE341F8A16F146650074C859 /* MPAdWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C1716EF9DB00046D464 /* MPAdWebView.m */; };
 		AE60D7F916F2956700A4B67F /* NSURL+MPAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = AE60D7F816F2956700A4B67F /* NSURL+MPAdditions.m */; };
 		AE60D7FA16F2956700A4B67F /* NSURL+MPAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = AE60D7F816F2956700A4B67F /* NSURL+MPAdditions.m */; };
@@ -48,6 +47,11 @@
 		AE60D82D16F39A7800A4B67F /* MPBaseAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C0516EF9DB00046D464 /* MPBaseAdapter.m */; };
 		AE60D83016F39ADF00A4B67F /* MPHTMLBannerAdapterSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D82F16F39ADF00A4B67F /* MPHTMLBannerAdapterSpec.mm */; };
 		AE60D83616F3A3D400A4B67F /* MPAdWebViewAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = AE60D81E16F38D0500A4B67F /* MPAdWebViewAgent.m */; };
+		AE60D84516F3A4C200A4B67F /* MPInstanceProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AE60D84416F3A4C200A4B67F /* MPInstanceProvider.m */; };
+		AE60D84616F3A4C200A4B67F /* MPInstanceProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AE60D84416F3A4C200A4B67F /* MPInstanceProvider.m */; };
+		AE60D85016F3A4D600A4B67F /* MPInstanceProviderSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D84F16F3A4D600A4B67F /* MPInstanceProviderSpec.mm */; };
+		AE60D85616F3ADBB00A4B67F /* MPInstanceProvider+Spec.m in Sources */ = {isa = PBXBuildFile; fileRef = AE60D85516F3ADBB00A4B67F /* MPInstanceProvider+Spec.m */; };
+		AE60D85916F3B11300A4B67F /* FakeMPInstanceProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AE60D85816F3B11300A4B67F /* FakeMPInstanceProvider.m */; };
 		AEA97BE016EF9C030046D464 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97BDF16EF9C030046D464 /* UIKit.framework */; };
 		AEA97BE116EF9C030046D464 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF1F32B16EF9AD700273462 /* Foundation.framework */; };
 		AEA97BE316EF9C030046D464 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97BE216EF9C030046D464 /* CoreGraphics.framework */; };
@@ -231,8 +235,6 @@
 		AE341F7216F11EC30074C859 /* MPStoreKitProvider+MPSpecs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MPStoreKitProvider+MPSpecs.m"; sourceTree = "<group>"; };
 		AE341F7816F126D30074C859 /* FakeStoreProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeStoreProductViewController.h; sourceTree = "<group>"; };
 		AE341F7916F126D30074C859 /* FakeStoreProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeStoreProductViewController.m; sourceTree = "<group>"; };
-		AE341F7B16F1373A0074C859 /* FakeMPURLResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeMPURLResolver.h; sourceTree = "<group>"; };
-		AE341F7C16F1373A0074C859 /* FakeMPURLResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeMPURLResolver.m; sourceTree = "<group>"; };
 		AE60D7F716F2956700A4B67F /* NSURL+MPAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+MPAdditions.h"; sourceTree = "<group>"; };
 		AE60D7F816F2956700A4B67F /* NSURL+MPAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+MPAdditions.m"; sourceTree = "<group>"; };
 		AE60D7FB16F2958C00A4B67F /* NSURL+MPAdditionsSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSURL+MPAdditionsSpec.mm"; sourceTree = "<group>"; };
@@ -241,6 +243,12 @@
 		AE60D81E16F38D0500A4B67F /* MPAdWebViewAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPAdWebViewAgent.m; sourceTree = "<group>"; };
 		AE60D82916F38D1500A4B67F /* MPAdWebViewAgentSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPAdWebViewAgentSpec.mm; sourceTree = "<group>"; };
 		AE60D82F16F39ADF00A4B67F /* MPHTMLBannerAdapterSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPHTMLBannerAdapterSpec.mm; sourceTree = "<group>"; };
+		AE60D84316F3A4C200A4B67F /* MPInstanceProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPInstanceProvider.h; sourceTree = "<group>"; };
+		AE60D84416F3A4C200A4B67F /* MPInstanceProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPInstanceProvider.m; sourceTree = "<group>"; };
+		AE60D84F16F3A4D600A4B67F /* MPInstanceProviderSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPInstanceProviderSpec.mm; sourceTree = "<group>"; };
+		AE60D85516F3ADBB00A4B67F /* MPInstanceProvider+Spec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MPInstanceProvider+Spec.m"; sourceTree = "<group>"; };
+		AE60D85716F3B11300A4B67F /* FakeMPInstanceProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeMPInstanceProvider.h; sourceTree = "<group>"; };
+		AE60D85816F3B11300A4B67F /* FakeMPInstanceProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeMPInstanceProvider.m; sourceTree = "<group>"; };
 		AEA97BDE16EF9C030046D464 /* Specs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Specs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEA97BDF16EF9C030046D464 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AEA97BE216EF9C030046D464 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -445,6 +453,7 @@
 				AE341F6816F0F7260074C859 /* UIApplication+MPSpecs.m */,
 				AE341F7116F11EC30074C859 /* MPStoreKitProvider+MPSpecs.h */,
 				AE341F7216F11EC30074C859 /* MPStoreKitProvider+MPSpecs.m */,
+				AE60D85516F3ADBB00A4B67F /* MPInstanceProvider+Spec.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -543,6 +552,8 @@
 				AEA97C3416EF9DB00046D464 /* MRAID */,
 				AEA97C4316EF9DB00046D464 /* UIKit Categories */,
 				AEA97C4816EF9DB00046D464 /* Utility */,
+				AE60D84316F3A4C200A4B67F /* MPInstanceProvider.h */,
+				AE60D84416F3A4C200A4B67F /* MPInstanceProvider.m */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -744,6 +755,7 @@
 				AE60D82E16F39ACD00A4B67F /* Banners */,
 				AE60D7F616F2954C00A4B67F /* Categories */,
 				AEA97CB716EFAB810046D464 /* Common */,
+				AE60D84F16F3A4D600A4B67F /* MPInstanceProviderSpec.mm */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -825,8 +837,8 @@
 				AEC9E56E16EFACBB007CA2BA /* FakeMPURLResolverDelegate.m */,
 				AE341F7816F126D30074C859 /* FakeStoreProductViewController.h */,
 				AE341F7916F126D30074C859 /* FakeStoreProductViewController.m */,
-				AE341F7B16F1373A0074C859 /* FakeMPURLResolver.h */,
-				AE341F7C16F1373A0074C859 /* FakeMPURLResolver.m */,
+				AE60D85716F3B11300A4B67F /* FakeMPInstanceProvider.h */,
+				AE60D85816F3B11300A4B67F /* FakeMPInstanceProvider.m */,
 			);
 			path = Fakes;
 			sourceTree = "<group>";
@@ -1075,7 +1087,6 @@
 				AE341F7316F11EC30074C859 /* MPStoreKitProvider+MPSpecs.m in Sources */,
 				AE341F7416F120E50074C859 /* MPStoreKitProvider.m in Sources */,
 				AE341F7A16F126D30074C859 /* FakeStoreProductViewController.m in Sources */,
-				AE341F7D16F1373A0074C859 /* FakeMPURLResolver.m in Sources */,
 				AE341F8A16F146650074C859 /* MPAdWebView.m in Sources */,
 				AEC845DB16F1490500943383 /* MPAdConfiguration.m in Sources */,
 				AEC845DD16F1493B00943383 /* MPAdConfigurationSpec.mm in Sources */,
@@ -1092,6 +1103,10 @@
 				AE60D82C16F39A6B00A4B67F /* MPHTMLBannerAdapter.m in Sources */,
 				AE60D82D16F39A7800A4B67F /* MPBaseAdapter.m in Sources */,
 				AE60D83016F39ADF00A4B67F /* MPHTMLBannerAdapterSpec.mm in Sources */,
+				AE60D84616F3A4C200A4B67F /* MPInstanceProvider.m in Sources */,
+				AE60D85016F3A4D600A4B67F /* MPInstanceProviderSpec.mm in Sources */,
+				AE60D85616F3ADBB00A4B67F /* MPInstanceProvider+Spec.m in Sources */,
+				AE60D85916F3B11300A4B67F /* FakeMPInstanceProvider.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1155,6 +1170,7 @@
 				AE341F6D16F11AC00074C859 /* MPStoreKitProvider.m in Sources */,
 				AE60D7F916F2956700A4B67F /* NSURL+MPAdditions.m in Sources */,
 				AE60D83616F3A3D400A4B67F /* MPAdWebViewAgent.m in Sources */,
+				AE60D84516F3A4C200A4B67F /* MPInstanceProvider.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

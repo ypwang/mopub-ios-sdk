@@ -1,6 +1,7 @@
 #import "MPHTMLInterstitialViewController.h"
 #import "MPAdWebView.h"
 #import "MPAdConfigurationFactory.h"
+#import "MPInstanceProvider.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -13,15 +14,22 @@ describe(@"MPHTMLInterstitialViewController", ^{
     __block MPAdConfiguration *configuration;
     __block id<CedarDouble, MPHTMLInterstitialViewControllerDelegate> delegate;
     __block UIViewController *presentingViewController;
+    __block MPAdWebViewAgent *agent;
 
     beforeEach(^{
         presentingViewController = [[[UIViewController alloc] init] autorelease];
         configuration = [MPAdConfigurationFactory defaultInterstitialConfiguration];
         delegate = nice_fake_for(@protocol(MPHTMLInterstitialViewControllerDelegate));
+
+        backingView = [[MPInstanceProvider sharedProvider] buildMPAdWebViewWithFrame:CGRectMake(0, 0, 50, 100)
+                                                                            delegate:nil];
+        agent = nice_fake_for([MPAdWebViewAgent class]);
+        agent stub_method("view").and_return(backingView);
+        fakeProvider.fakeMPAdWebViewAgent = agent;
+
         controller = [[[MPHTMLInterstitialViewController alloc] init] autorelease];
         controller.delegate = delegate;
         [controller loadConfiguration:configuration];
-        backingView = (MPAdWebView *)controller.view.subviews.lastObject;
 
         [presentingViewController presentViewController:controller animated:NO completion:nil];
     });
@@ -31,12 +39,13 @@ describe(@"MPHTMLInterstitialViewController", ^{
             controller.view.backgroundColor should equal([UIColor blackColor]);
         });
 
-        it(@"should set its backing view", ^{
-            backingView should be_instance_of([MPAdWebView class]);
+        it(@"should add its backing view to the view hierarchy", ^{
+            controller.view.subviews.lastObject should equal(backingView);
+            backingView.autoresizingMask should equal(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
         });
 
-        it(@"should tell the backing view to load the configuration", ^{
-            backingView.loadedHTMLString should equal(@"Publisher's Interstitial");
+        it(@"should tell the agent to load the configuration", ^{
+            agent should have_received(@selector(loadConfiguration:)).with(configuration);
         });
     });
 
@@ -44,8 +53,13 @@ describe(@"MPHTMLInterstitialViewController", ^{
         it(@"should be able to set it", ^{
             NSObject *delegate = [[[NSObject alloc] init] autorelease];
             [controller setCustomMethodDelegate:delegate];
+            agent should have_received(@selector(setCustomMethodDelegate:)).with(delegate);
+        });
+
+        it(@"should be able to get it", ^{
+            NSObject *delegate = [[[NSObject alloc] init] autorelease];
+            agent stub_method("customMethodDelegate").and_return(delegate);
             controller.customMethodDelegate should equal(delegate);
-            controller.backingViewAgent.customMethodDelegate should equal(delegate);
         });
     });
 
@@ -68,8 +82,8 @@ describe(@"MPHTMLInterstitialViewController", ^{
             });
 
             it(@"should tell the backing view that it was presented", ^{
-                controller.backingViewAgent.dismissed should equal(NO);
-                backingView.executedJavaScripts[0] should equal(@"webviewDidAppear();");
+                agent should have_received(@selector(continueHandlingRequests));
+                agent should have_received(@selector(invokeJavaScriptForEvent:)).with(MPAdWebViewEventAdDidAppear);
                 backingView.alpha should equal(1);
             });
 
@@ -84,8 +98,8 @@ describe(@"MPHTMLInterstitialViewController", ^{
             [controller willDismissInterstitial];
         });
 
-        it(@"should inform the backing view", ^{
-            controller.backingViewAgent.dismissed should equal(YES);
+        it(@"should tell its backing view to stop handling requests", ^{
+            agent should have_received(@selector(stopHandlingRequests));
         });
 
         it(@"should tell its delegate interstitialWillDisappear:", ^{

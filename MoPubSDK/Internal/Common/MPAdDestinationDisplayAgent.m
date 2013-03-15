@@ -9,11 +9,13 @@
 #import "MPAdDestinationDisplayAgent.h"
 #import "MPGlobal.h"
 #import "UIViewController+MPAdditions.h"
+#import "MPInstanceProvider.h"
 
 @interface MPAdDestinationDisplayAgent ()
 
 @property (nonatomic, retain) MPURLResolver *resolver;
 @property (nonatomic, assign) BOOL inUse;
+@property (nonatomic, assign) id<MPAdDestinationDisplayAgentDelegate> delegate;
 
 - (void)presentStoreKitControllerWithItemIdentifier:(NSString *)identifier fallbackURL:(NSURL *)URL;
 
@@ -24,10 +26,11 @@
 @synthesize delegate = _delegate;
 @synthesize resolver = _resolver;
 
-+ (MPAdDestinationDisplayAgent *)agentWithURLResolver:(MPURLResolver *)resolver
++ (MPAdDestinationDisplayAgent *)agentWithDelegate:(id<MPAdDestinationDisplayAgentDelegate>)delegate
 {
-    MPAdDestinationDisplayAgent *agent = [[MPAdDestinationDisplayAgent alloc] init];
-    agent.resolver = resolver;
+    MPAdDestinationDisplayAgent *agent = [[[MPAdDestinationDisplayAgent alloc] init] autorelease];
+    agent.delegate = delegate;
+    agent.resolver = [[MPInstanceProvider sharedProvider] buildMPURLResolver];
     return agent;
 }
 

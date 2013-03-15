@@ -11,18 +11,19 @@ SPEC_BEGIN(MPHTMLBannerAdapterSpec)
 describe(@"MPHTMLBannerAdapter", ^{
     __block MPHTMLBannerAdapter *adapter;
     __block id<CedarDouble, MPAdapterDelegate> delegate;
-    __block MPAdWebViewAgent *bannerAgent;
+    __block MPAdWebViewAgent<CedarDouble> *bannerAgent;
     __block MPAdConfiguration *configuration;
 
     beforeEach(^{
         delegate = nice_fake_for(@protocol(MPAdapterDelegate));
+        bannerAgent = nice_fake_for([MPAdWebViewAgent class]);
+        fakeProvider.fakeMPAdWebViewAgent = bannerAgent;
         configuration = [MPAdConfigurationFactory defaultBannerConfiguration];
     });
 
     subjectAction(^{
         adapter = [[[MPHTMLBannerAdapter alloc] initWithAdapterDelegate:delegate] autorelease];
         [adapter getAdWithConfiguration:configuration];
-        bannerAgent = adapter.bannerAgent;
     });
 
     describe(@"setting up the bannerAgent", ^{
@@ -32,21 +33,19 @@ describe(@"MPHTMLBannerAdapter", ^{
             delegate stub_method(@selector(adViewDelegate)).and_return(customMethodDelegatePlaceholder);
         });
 
-        it(@"should set up the bannerAgent and banner with the ad configuration", ^{
-            bannerAgent.view.loadedHTMLString should equal(@"Publisher's Ad");
+        it(@"should set up the customMethodDelegate", ^{
+            bannerAgent should have_received(@selector(setCustomMethodDelegate:)).with(customMethodDelegatePlaceholder);
         });
 
-        it(@"should set up the customMethodDelegate", ^{
-            bannerAgent.customMethodDelegate should equal(customMethodDelegatePlaceholder);
+        it(@"should set up the bannerAgent and banner with the ad configuration", ^{
+            bannerAgent should have_received(@selector(loadConfiguration:)).with(configuration);
         });
     });
 
     describe(@"rotating", ^{
         it(@"should tell the banner agent", ^{
-            [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeLeft];
             [adapter rotateToOrientation:UIInterfaceOrientationLandscapeLeft];
-            NSString *JS = bannerAgent.view.executedJavaScripts[0];
-            JS should contain(@"return -90");
+            bannerAgent should have_received(@selector(rotateToOrientation:)).with(UIInterfaceOrientationLandscapeLeft);
         });
     });
 
@@ -61,8 +60,10 @@ describe(@"MPHTMLBannerAdapter", ^{
 
         context(@"when told that the ad did finish loading", ^{
             it(@"should forward the ad to its delegate", ^{
+                UIView *view = [[[UIView alloc] init] autorelease];
+                bannerAgent stub_method("view").and_return(view);
                 [adapter adDidFinishLoadingAd:nil];
-                delegate should have_received(@selector(adapter:didFinishLoadingAd:shouldTrackImpression:)).with(adapter).and_with(bannerAgent.view).and_with(NO);
+                delegate should have_received(@selector(adapter:didFinishLoadingAd:shouldTrackImpression:)).with(adapter).and_with(view).and_with(NO);
             });
         });
 

@@ -8,6 +8,7 @@
 #import "MPHTMLInterstitialViewController.h"
 #import "MPAdWebView.h"
 #import "MPAdDestinationDisplayAgent.h"
+#import "MPInstanceProvider.h"
 
 @interface MPHTMLInterstitialViewController ()
 
@@ -33,19 +34,12 @@
     [super viewDidLoad];
 
     self.view.backgroundColor = [UIColor blackColor];
-
-    self.backingView = [[[MPAdWebView alloc] initWithFrame:self.view.bounds] autorelease];
+    self.backingViewAgent = [[MPInstanceProvider sharedProvider] buildMPAdWebViewAgentWithAdWebViewFrame:self.view.bounds
+                                                                                                delegate:self];
+    self.backingView = self.backingViewAgent.view;
     self.backingView.autoresizingMask = UIViewAutoresizingFlexibleWidth |
         UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:self.backingView];
-
-    MPAdDestinationDisplayAgent *destinationDisplayAgent = [MPAdDestinationDisplayAgent agentWithURLResolver:[MPURLResolver resolver]];
-
-    self.backingViewAgent = [[[MPAdWebViewAgent alloc] initWithAdWebView:self.backingView
-                                                                delegate:self
-                                                 destinationDisplayAgent:destinationDisplayAgent] autorelease];
-
-    destinationDisplayAgent.delegate = self.backingViewAgent;
 }
 
 #pragma mark - Public
@@ -74,8 +68,7 @@
 
 - (void)didPresentInterstitial
 {
-    self.backingViewAgent.dismissed = NO;
-
+    [self.backingViewAgent continueHandlingRequests];
     [self.backingViewAgent invokeJavaScriptForEvent:MPAdWebViewEventAdDidAppear];
 
     // XXX: In certain cases, UIWebView's content appears off-center due to rotation / auto-
@@ -93,8 +86,7 @@
 
 - (void)willDismissInterstitial
 {
-    self.backingViewAgent.dismissed = YES;
-
+    [self.backingViewAgent stopHandlingRequests];
     [self.delegate interstitialWillDisappear:self];
 }
 

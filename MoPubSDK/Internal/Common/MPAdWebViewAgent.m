@@ -15,6 +15,7 @@
 #import "NSURL+MPAdditions.h"
 #import "UIWebView+MPAdditions.h"
 #import "MPAdWebView.h"
+#import "MPInstanceProvider.h"
 
 NSString * const kMoPubURLScheme = @"mopub";
 NSString * const kMoPubCloseHost = @"close";
@@ -27,6 +28,7 @@ NSString * const kMoPubCustomHost = @"custom";
 @property (nonatomic, retain) MPAdConfiguration *configuration;
 @property (nonatomic, assign) id<MPAdWebViewAgentDelegate> delegate;
 @property (nonatomic, retain) MPAdDestinationDisplayAgent *destinationDisplayAgent;
+@property (nonatomic, assign) BOOL shouldHandleRequests;
 
 @end
 
@@ -36,17 +38,16 @@ NSString * const kMoPubCustomHost = @"custom";
 @synthesize delegate = _delegate;
 @synthesize destinationDisplayAgent = _destinationDisplayAgent;
 @synthesize customMethodDelegate = _customMethodDelegate;
+@synthesize shouldHandleRequests = _shouldHandleRequests;
 
-- (id)initWithAdWebView:(MPAdWebView *)view
-               delegate:(id<MPAdWebViewAgentDelegate>)delegate
-destinationDisplayAgent:(MPAdDestinationDisplayAgent *)agent
+- (id)initWithAdWebViewFrame:(CGRect)frame delegate:(id<MPAdWebViewAgentDelegate>)delegate;
 {
     self = [super init];
     if (self) {
-        self.view = view;
-        self.view.delegate = self;
+        self.view = [[MPInstanceProvider sharedProvider] buildMPAdWebViewWithFrame:frame delegate:self];
+        self.destinationDisplayAgent = [[MPInstanceProvider sharedProvider] buildMPAdDestinationDisplayAgentWithDelegate:self];
         self.delegate = delegate;
-        self.destinationDisplayAgent = agent;
+        self.shouldHandleRequests = YES;
     }
     return self;
 }
@@ -65,14 +66,14 @@ destinationDisplayAgent:(MPAdDestinationDisplayAgent *)agent
 - (void)loadConfiguration:(MPAdConfiguration *)configuration
 {
     self.configuration = configuration;
-    
+
     if ([configuration hasPreferredSize]) {
         CGRect frame = self.view.frame;
         frame.size.width = configuration.preferredSize.width;
         frame.size.height = configuration.preferredSize.height;
         self.view.frame = frame;
     }
-    
+
     [self.view mp_setScrollable:configuration.scrollable];
     [self.view loadHTMLString:[configuration adResponseHTMLString]
                          baseURL:nil];
@@ -90,6 +91,16 @@ destinationDisplayAgent:(MPAdDestinationDisplayAgent *)agent
         default:
             break;
     }
+}
+
+- (void)stopHandlingRequests
+{
+    self.shouldHandleRequests = NO;
+}
+
+- (void)continueHandlingRequests
+{
+    self.shouldHandleRequests = YES;
 }
 
 #pragma mark - <MPAdDestinationDisplayAgentDelegate>
@@ -119,10 +130,10 @@ destinationDisplayAgent:(MPAdDestinationDisplayAgent *)agent
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType
 {
-    if (self.isDismissed) {
+    if (!self.shouldHandleRequests) {
         return NO;
     }
-    
+
     NSURL *URL = [request URL];
     if ([[URL scheme] isEqualToString:kMoPubURLScheme]) {
         [self performActionForMoPubSpecificURL:URL];
@@ -160,14 +171,14 @@ destinationDisplayAgent:(MPAdDestinationDisplayAgent *)agent
     NSString *oneArgumentSelectorName = [selectorName stringByAppendingString:@":"];
     SEL zeroArgumentSelector = NSSelectorFromString(selectorName);
     SEL oneArgumentSelector = NSSelectorFromString(oneArgumentSelectorName);
-    
+
     if ([self.customMethodDelegate respondsToSelector:zeroArgumentSelector]) {
         [self.customMethodDelegate performSelector:zeroArgumentSelector];
     } else if ([self.customMethodDelegate respondsToSelector:oneArgumentSelector]) {
         CJSONDeserializer *deserializer = [CJSONDeserializer deserializerWithNullObject:NULL];
         NSData *data = [[queryParameters objectForKey:@"data"] dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *dataDictionary = [deserializer deserializeAsDictionary:data error:NULL];
-        
+
         [self.customMethodDelegate performSelector:oneArgumentSelector
                                         withObject:dataDictionary];
     } else {
@@ -199,7 +210,7 @@ destinationDisplayAgent:(MPAdDestinationDisplayAgent *)agent
                           [[URL absoluteString] URLEncodedString]];
         redirectedURL = [NSURL URLWithString:path];
     }
-    
+
     [self.destinationDisplayAgent displayDestinationForURL:redirectedURL];
 }
 
@@ -221,9 +232,9 @@ destinationDisplayAgent:(MPAdDestinationDisplayAgent *)agent
         case UIDeviceOrientationPortraitUpsideDown: angle = 180; break;
         default: break;
     }
-    
+
     if (angle == -1) return;
-    
+
     // UIWebView doesn't seem to fire the 'orientationchange' event upon rotation, so we do it here.
     NSString *orientationEventScript = [NSString stringWithFormat:
                                         @"window.__defineGetter__('orientation',function(){return %d;});"
@@ -231,7 +242,7 @@ destinationDisplayAgent:(MPAdDestinationDisplayAgent *)agent
                                         @"evt.initEvent('orientationchange',true,true);window.dispatchEvent(evt);})();",
                                         angle];
     [self.view stringByEvaluatingJavaScriptFromString:orientationEventScript];
-    
+
     // XXX: If the UIWebView is rotated off-screen (which may happen with interstitials), its
     // content may render off-center upon display. We compensate by setting the viewport meta tag's
     // 'width' attribute to be the size of the webview.

@@ -10,6 +10,4 @@
 
 @interface MPHTMLBannerAdapter : MPBaseAdapter <MPAdWebViewAgentDelegate>
 
-@property (nonatomic, retain) MPAdWebViewAgent *bannerAgent;
-
 @end
