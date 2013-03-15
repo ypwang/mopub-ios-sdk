@@ -28,6 +28,10 @@ def system_or_exit(cmd, env_overrides = {}, stdout = nil)
 
   system(cmd) or begin
     puts "******** Build failed ********"
+    if stdout
+      puts "To review:"
+      puts "mate #{stdout}"
+    end
     exit(1)
   end
 
@@ -68,6 +72,15 @@ def build(options)
   system_or_exit(%Q[xcodebuild -project MoPubSDK.xcodeproj -target #{target} -configuration #{configuration} ARCHS=i386 -sdk #{sdk} build SYMROOT=#{BUILD_DIR}], {}, out_file)
 end
 
+def available_sdk_versions
+  available = []
+  `xcodebuild -showsdks | grep simulator`.split("\n").each do |line|
+    match = line.match(/simulator([\d\.]+)/)
+    available << match[1] if match
+  end
+  available
+end
+
 task :default => [:trim_whitespace, "mopub:build", "mopub:spec"]
 task :cruise => ["all:clean", "all:spec"]
 
@@ -79,8 +92,10 @@ namespace :mopub do
   desc "Run MoPub Cedar Specs"
 
   task :build do
-    head "Building MoPubSDK"
-    build :target => "MoPubSDK"
+    available_sdk_versions.each do |sdk_version|
+      head "Building MoPubSDK for #{sdk_version}"
+      build :target => "MoPubSDK", :sdk_version => sdk_version
+    end
   end
 
   task :spec do
