@@ -81,6 +81,8 @@ def available_sdk_versions
   available
 end
 
+desc "Build MoPubSDK on all SDKs
+ then run tests"
 task :default => [:trim_whitespace, "mopub:build", "mopub:spec"]
 task :cruise => ["all:clean", "all:spec"]
 
@@ -89,8 +91,7 @@ task :trim_whitespace do
 end
 
 namespace :mopub do
-  desc "Run MoPub Cedar Specs"
-
+  desc "Build MoPub SDK against all available SDK versions"
   task :build do
     available_sdk_versions.each do |sdk_version|
       head "Building MoPubSDK for #{sdk_version}"
@@ -98,6 +99,7 @@ namespace :mopub do
     end
   end
 
+  desc "Run MoPub Cedar Specs"
   task :spec do
     head "Building Specs"
     build :target => "Specs"
