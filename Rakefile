@@ -60,6 +60,7 @@ end
 
 def build(options)
   target = options[:target]
+  project = options[:project]
   configuration = options[:configuration] || CONFIGURATION
   if options[:sdk]
     sdk = options[:sdk]
@@ -69,7 +70,7 @@ def build(options)
     sdk = "iphonesimulator"
   end
   out_file = output_file("mopub_#{options[:target].downcase}_#{sdk}")
-  system_or_exit(%Q[xcodebuild -project MoPubSDK.xcodeproj -target #{target} -configuration #{configuration} ARCHS=i386 -sdk #{sdk} build SYMROOT=#{BUILD_DIR}], {}, out_file)
+  system_or_exit(%Q[xcodebuild -project #{project}.xcodeproj -target #{target} -configuration #{configuration} ARCHS=i386 -sdk #{sdk} build SYMROOT=#{BUILD_DIR}], {}, out_file)
 end
 
 def available_sdk_versions
@@ -83,26 +84,28 @@ end
 
 desc "Build MoPubSDK on all SDKs
  then run tests"
-task :default => [:trim_whitespace, "mopub:build", "mopub:spec"]
+task :default => [:trim_whitespace, :mopubsdk, :mopubsample]
+task :mopubsdk => ["mopubsdk:build", "mopubsdk:spec"]
+task :mopubsample => ["mopubsample:build", "mopubsample:spec"]
 task :cruise => ["all:clean", "all:spec"]
 
 task :trim_whitespace do
   system_or_exit(%Q[git status --short | awk '{if ($1 != "D" && $1 != "R") print $2}' | grep -e '.*\.[mh]$' | xargs sed -i '' -e 's/	/    /g;s/ *$//g;'])
 end
 
-namespace :mopub do
+namespace :mopubsdk do
   desc "Build MoPub SDK against all available SDK versions"
   task :build do
     available_sdk_versions.each do |sdk_version|
       head "Building MoPubSDK for #{sdk_version}"
-      build :target => "MoPubSDK", :sdk_version => sdk_version
+      build project: "MoPubSDK", target: "MoPubSDK", sdk_version: sdk_version
     end
   end
 
-  desc "Run MoPub Cedar Specs"
+  desc "Run MoPubSDK Cedar Specs"
   task :spec do
     head "Building Specs"
-    build :target => "Specs"
+    build project: "MoPubSDK", target: "Specs"
 
     head "Running Specs"
     env_vars = {
@@ -114,10 +117,36 @@ namespace :mopub do
   end
 
   task :clean do
-    system_or_exit(%Q[xcodebuild -project #{project_name}.xcodeproj -alltargets -configuration #{CONFIGURATION} clean SYMROOT=#{BUILD_DIR}], output_file("mopub_clean"))
+    system_or_exit(%Q[xcodebuild -project MoPubSDK.xcodeproj -alltargets -configuration #{CONFIGURATION} clean SYMROOT=#{BUILD_DIR}], output_file("mopub_clean"))
+  end
+end
+
+namespace :mopubsample do
+  desc "Build MoPub Sample App"
+  task :build do
+    head "Building MoPub Sample App"
+    build project: "MoPubSampleApp", target: "MoPubSampleApp"
   end
 
+  desc "Run MoPub Sample App Cedar Specs"
+  task :spec do
+    head "Building Specs"
+    build project: "MoPubSampleApp", target: "SampleAppSpecs"
+
+    head "Running Specs"
+    env_vars = {
+      "CEDAR_REPORTER_CLASS" => "CDRColorizedReporter",
+      "CFFIXED_USER_HOME" => Dir.tmpdir,
+      "CEDAR_HEADLESS_SPECS" => "1"
+    }
+    system_or_exit(%Q[./Scripts/waxsim #{File.join(build_dir("-iphonesimulator"), "SampleAppSpecs.app")} -f iphone -e CEDAR_REPORTER_CLASS=CDRColorizedReporter -e CFFIXED_USER_HOME=#{Dir.tmpdir} -e CEDAR_HEADLESS_SPECS=1 -s #{SDK_VERSION}], env_vars)
+  end
+
+  task :clean do
+    system_or_exit(%Q[xcodebuild -project MoPubSampleApp.xcodeproj -alltargets -configuration #{CONFIGURATION} clean SYMROOT=#{BUILD_DIR}], output_file("mopub_clean"))
+  end
 end
+
 
 namespace :all do
   desc "Run all Specs"

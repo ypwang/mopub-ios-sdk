@@ -139,6 +139,8 @@
 		AEC9E56B16EFABD7007CA2BA /* MPURLResolverSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEC9E56A16EFABD7007CA2BA /* MPURLResolverSpec.mm */; };
 		AEC9E56F16EFACBB007CA2BA /* FakeMPURLResolverDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AEC9E56E16EFACBB007CA2BA /* FakeMPURLResolverDelegate.m */; };
 		AEC9E5A616EFB48F007CA2BA /* MPSpecHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = AEC9E5A516EFB48F007CA2BA /* MPSpecHelper.m */; };
+		AED9E4B016F78FC600EA71A7 /* libFoundation+PivotalCore-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE341F2E16EFC7790074C859 /* libFoundation+PivotalCore-StaticLib.a */; };
+		AED9E4B216F78FCB00EA71A7 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AED9E4B116F78FCB00EA71A7 /* libxml2.2.dylib */; };
 		AEF1F32C16EF9AD700273462 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF1F32B16EF9AD700273462 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -219,6 +221,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = AEBCCC63168B9AF10056EE83;
 			remoteInfo = "UIKit+PivotalSpecHelper-StaticLib";
+		};
+		AED9E4A616F78FC200EA71A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AE341F2116EFC7790074C859 /* Foundation.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = AEA96C53168B636E00861DF1;
+			remoteInfo = "Foundation+PivotalCore-StaticLib";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -435,6 +444,7 @@
 		AEC9E56E16EFACBB007CA2BA /* FakeMPURLResolverDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeMPURLResolverDelegate.m; sourceTree = "<group>"; };
 		AEC9E5A416EFB48F007CA2BA /* MPSpecHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSpecHelper.h; sourceTree = "<group>"; };
 		AEC9E5A516EFB48F007CA2BA /* MPSpecHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSpecHelper.m; sourceTree = "<group>"; };
+		AED9E4B116F78FCB00EA71A7 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		AEF1F32816EF9AD700273462 /* libMoPubSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMoPubSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEF1F32B16EF9AD700273462 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AEF1F32F16EF9AD700273462 /* MoPubSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MoPubSDK-Prefix.pch"; sourceTree = "<group>"; };
@@ -445,6 +455,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AED9E4B216F78FCB00EA71A7 /* libxml2.2.dylib in Frameworks */,
+				AED9E4B016F78FC600EA71A7 /* libFoundation+PivotalCore-StaticLib.a in Frameworks */,
 				AEC8460116F23E5200943383 /* libUIKit+PivotalSpecHelper-StaticLib.a in Frameworks */,
 				AE341F3C16EFC7CB0074C859 /* libFoundation+PivotalSpecHelper-StaticLib.a in Frameworks */,
 				AEA97CB116EF9E9F0046D464 /* AdSupport.framework in Frameworks */,
@@ -902,6 +914,7 @@
 		AEF1F31F16EF9AD700273462 = {
 			isa = PBXGroup;
 			children = (
+				AED9E4B116F78FCB00EA71A7 /* libxml2.2.dylib */,
 				AEF1F32D16EF9AD700273462 /* MoPubSDK */,
 				AEC845E416F2371900943383 /* ThirdPartyIntegrations */,
 				AEA97BE416EF9C030046D464 /* Specs */,
@@ -970,6 +983,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				AED9E4A716F78FC200EA71A7 /* PBXTargetDependency */,
 				AEC8460016F23E4E00943383 /* PBXTargetDependency */,
 				AE341F3B16EFC7C70074C859 /* PBXTargetDependency */,
 			);
@@ -1258,6 +1272,11 @@
 			isa = PBXTargetDependency;
 			name = "UIKit+PivotalSpecHelper-StaticLib";
 			targetProxy = AEC845FF16F23E4E00943383 /* PBXContainerItemProxy */;
+		};
+		AED9E4A716F78FC200EA71A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Foundation+PivotalCore-StaticLib";
+			targetProxy = AED9E4A616F78FC200EA71A7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
