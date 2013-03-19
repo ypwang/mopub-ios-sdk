@@ -247,6 +247,7 @@
 		AE2323A416F78A17002C2082 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		AE2323A616F78A17002C2082 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		AE2323A816F78A17002C2082 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		AE5CEA8416F8E24100B466AA /* SampleAppKIF-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SampleAppKIF-Info.plist"; sourceTree = "<group>"; };
 		AED9E40C16F78ADD00EA71A7 /* MoPubSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = MoPubSDK.xcodeproj; sourceTree = "<group>"; };
 		AED9E41C16F78B1100EA71A7 /* MPCloseButtonX.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MPCloseButtonX.png; path = MoPubSDK/Resources/MPCloseButtonX.png; sourceTree = "<group>"; };
 		AED9E41E16F78B1500EA71A7 /* MPCloseButtonX@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "MPCloseButtonX@2x.png"; path = "MoPubSDK/Resources/MPCloseButtonX@2x.png"; sourceTree = "<group>"; };
@@ -285,7 +286,6 @@
 		AED9E4E516F7B21400EA71A7 /* MPSampleAppInstanceProvider+Spec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MPSampleAppInstanceProvider+Spec.m"; sourceTree = "<group>"; };
 		AED9E4E916F7B89400EA71A7 /* KIF.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KIF.xcodeproj; path = Externals/KIF/KIF.xcodeproj; sourceTree = "<group>"; };
 		AED9E50D16F7B8A600EA71A7 /* SampleAppKIF.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleAppKIF.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AED9E50E16F7B8A600EA71A7 /* MoPubSampleApp copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MoPubSampleApp copy-Info.plist"; path = "/Users/pivotal/workspace/mopub-ios/MoPubSampleApp copy-Info.plist"; sourceTree = "<absolute>"; };
 		AED9E51116F7B98100EA71A7 /* MPKIFTestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPKIFTestController.h; sourceTree = "<group>"; };
 		AED9E51216F7B98100EA71A7 /* MPKIFTestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPKIFTestController.m; sourceTree = "<group>"; };
 		AED9E51516F7BA0900EA71A7 /* KIFTestScenario+StoreKitScenario.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KIFTestScenario+StoreKitScenario.h"; sourceTree = "<group>"; };
@@ -374,7 +374,6 @@
 				AED9E42416F78B4200EA71A7 /* SDKResources */,
 				AED9E47816F78F0300EA71A7 /* Externals */,
 				AED9E40C16F78ADD00EA71A7 /* MoPubSDK.xcodeproj */,
-				AED9E50E16F7B8A600EA71A7 /* MoPubSampleApp copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -593,6 +592,7 @@
 		AED9E51016F7B93B00EA71A7 /* SampleAppKIF */ = {
 			isa = PBXGroup;
 			children = (
+				AE5CEA8416F8E24100B466AA /* SampleAppKIF-Info.plist */,
 				AE1175F016F7D62100363FCA /* Extensions */,
 				AE1175E616F7D60000363FCA /* Steps */,
 				AED9E51416F7B9E400EA71A7 /* Scenarios */,
@@ -1135,7 +1135,7 @@
 					"$(SRCROOT)/MoPubSDK/**",
 					"$(SRCROOT)/Externals/**",
 				);
-				INFOPLIST_FILE = "MoPubSampleApp copy-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/SampleAppKIF/SampleAppKIF-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/build/Release-iphoneos\"",
@@ -1159,7 +1159,7 @@
 					"$(SRCROOT)/MoPubSDK/**",
 					"$(SRCROOT)/Externals/**",
 				);
-				INFOPLIST_FILE = "MoPubSampleApp copy-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/SampleAppKIF/SampleAppKIF-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/build/Release-iphoneos\"",
