@@ -16,30 +16,6 @@ def build_dir(effective_platform_name)
   File.join(BUILD_DIR, CONFIGURATION + effective_platform_name)
 end
 
-def system_or_exit(cmd, env_overrides = {}, stdout = nil)
-  puts "Executing #{cmd}"
-  cmd += " >#{stdout}" if stdout
-
-  old_env = {}
-  env_overrides.each do |key, value|
-    old_env[key] = ENV[key]
-    ENV[key] = value
-  end
-
-  system(cmd) or begin
-    puts "******** Build failed ********"
-    if stdout
-      puts "To review:"
-      puts "mate #{stdout}"
-    end
-    exit(1)
-  end
-
-  env_overrides.each do |key, value|
-    ENV[key] = old_env[key]
-  end
-end
-
 def output_file(target)
   output_dir = if ENV['IS_CI_BOX']
     ENV['CC_BUILD_ARTIFACTS']
@@ -67,10 +43,63 @@ def build(options)
   elsif options[:sdk_version]
     sdk = "iphonesimulator#{options[:sdk_version]}"
   else
-    sdk = "iphonesimulator"
+    sdk = "iphonesimulator#{SDK_VERSION}"
   end
   out_file = output_file("mopub_#{options[:target].downcase}_#{sdk}")
   system_or_exit(%Q[xcodebuild -project #{project}.xcodeproj -target #{target} -configuration #{configuration} ARCHS=i386 -sdk #{sdk} build SYMROOT=#{BUILD_DIR}], {}, out_file)
+end
+
+def system_or_exit(cmd, env_overrides = {}, stdout = nil)
+  cmd += " > #{stdout}" if stdout
+  puts "Executing #{cmd}"
+
+  with_environment(env_overrides) do
+    system(cmd) or begin
+      puts "******** Build failed ********"
+      if stdout
+        puts "To review:"
+        puts "cat #{stdout}"
+      end
+      exit(1)
+    end
+  end
+end
+
+def run_in_simulator(options)
+  `osascript -e 'tell application "iPhone Simulator" to quit'`
+
+  app_name = "#{options[:target]}.app"
+  app_location = "#{File.join(build_dir("-iphonesimulator"), app_name)}"
+  platform = options[:platform] || 'iphone'
+  sdk = options[:sdk] || SDK_VERSION
+  out_file = output_file("#{options[:project]}_#{options[:target]}_#{platform}_#{sdk}")
+
+  cmd = %Q[script -q #{out_file} ./Scripts/waxsim #{app_location} -f #{platform} -s #{sdk}]
+
+  with_environment(options[:environment]) do
+    system(cmd)
+  end
+
+  success_condition = options[:success_condition]
+  system("grep -q \"#{success_condition}\" #{out_file}") or begin
+      puts "******** Build failed ********"
+      exit(1)
+  end
+end
+
+def with_environment(env)
+  env = env || {}
+  old_env = {}
+  env.each do |key, value|
+    old_env[key] = ENV[key]
+    ENV[key] = value
+  end
+
+  yield
+
+  env.each do |key, value|
+    ENV[key] = old_env[key]
+  end
 end
 
 def available_sdk_versions
@@ -80,6 +109,14 @@ def available_sdk_versions
     available << match[1] if match
   end
   available
+end
+
+def cedar_env
+  {
+    "CEDAR_REPORTER_CLASS" => "CDRColorizedReporter",
+    "CFFIXED_USER_HOME" => Dir.tmpdir,
+    "CEDAR_HEADLESS_SPECS" => "1"
+  }
 end
 
 desc "Build MoPubSDK on all SDKs
@@ -116,14 +153,8 @@ namespace :mopubsdk do
     head "Building Specs"
     build project: "MoPubSDK", target: "Specs"
 
-    `osascript -e 'tell application "iPhone Simulator" to quit'`
     head "Running Specs"
-    env_vars = {
-      "CEDAR_REPORTER_CLASS" => "CDRColorizedReporter",
-      "CFFIXED_USER_HOME" => Dir.tmpdir,
-      "CEDAR_HEADLESS_SPECS" => "1"
-    }
-    system_or_exit(%Q[./Scripts/waxsim #{File.join(build_dir("-iphonesimulator"), "Specs.app")} -f iphone -e CEDAR_REPORTER_CLASS=CDRColorizedReporter -e CFFIXED_USER_HOME=#{Dir.tmpdir} -e CEDAR_HEADLESS_SPECS=1 -s #{SDK_VERSION}], env_vars)
+    run_in_simulator(project: "MoPubSDK", target: "Specs", environment: cedar_env, success_condition: ", 0 failures")
   end
 
   task :clean do
@@ -140,17 +171,11 @@ namespace :mopubsample do
 
   desc "Run MoPub Sample App Cedar Specs"
   task :spec do
-    head "Building Specs"
+    head "Building Sample App Cedar Specs"
     build project: "MoPubSampleApp", target: "SampleAppSpecs"
 
-    `osascript -e 'tell application "iPhone Simulator" to quit'`
-    head "Running Specs"
-    env_vars = {
-      "CEDAR_REPORTER_CLASS" => "CDRColorizedReporter",
-      "CFFIXED_USER_HOME" => Dir.tmpdir,
-      "CEDAR_HEADLESS_SPECS" => "1"
-    }
-    system_or_exit(%Q[./Scripts/waxsim #{File.join(build_dir("-iphonesimulator"), "SampleAppSpecs.app")} -f iphone -e CEDAR_REPORTER_CLASS=CDRColorizedReporter -e CFFIXED_USER_HOME=#{Dir.tmpdir} -e CEDAR_HEADLESS_SPECS=1 -s #{SDK_VERSION}], env_vars)
+    head "Running Sample App Cedar Specs"
+    run_in_simulator(project: "MoPubSampleApp", target: "SampleAppSpecs", environment: cedar_env, success_condition: ", 0 failures")
   end
 
   desc "Run MoPub Sample App Integration Specs"
@@ -158,13 +183,12 @@ namespace :mopubsample do
     head "Building KIF Integration Suite"
     build project: "MoPubSampleApp", target: "SampleAppKIF"
 
-    `osascript -e 'tell application "iPhone Simulator" to quit'`
     head "Running KIF Integration Suite"
-    system_or_exit(%Q[./Scripts/waxsim #{File.join(build_dir("-iphonesimulator"), "SampleAppKIF.app")} -f iphone -s #{SDK_VERSION}])
+    run_in_simulator(project: "MoPubSampleApp", target: "SampleAppKIF", success_condition: "TESTING FINISHED: 0 failures")
   end
 
   task :clean do
-    system_or_exit(%Q[xcodebuild -project MoPubSampleApp.xcodeproj -alltargets -configuration #{CONFIGURATION} clean SYMROOT=#{BUILD_DIR}], output_file("mopub_clean"))
+    system_or_exit(%Q[xcodebuild -project MoPubSampleApp.xcodeproj -alltargets -configuration #{CONFIGURATION} clean SYMROOT=#{BUILD_DIR}], {}, output_file("mopub_clean"))
   end
 end
 
