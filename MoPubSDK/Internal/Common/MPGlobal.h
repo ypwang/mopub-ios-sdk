@@ -60,7 +60,7 @@ BOOL MPViewIsVisible(UIView *view);
 
 @interface NSString (MPAdditions)
 
-/* 
+/*
  * Returns string with reserved/unsafe characters encoded.
  */
 - (NSString *)URLEncodedString;

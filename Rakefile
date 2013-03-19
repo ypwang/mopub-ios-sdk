@@ -85,12 +85,21 @@ end
 desc "Build MoPubSDK on all SDKs
  then run tests"
 task :default => [:trim_whitespace, :mopubsdk, :mopubsample]
+task :spec => ["mopubsdk:spec", "mopubsample:spec", "mopubsample:kif"]
 task :mopubsdk => ["mopubsdk:build", "mopubsdk:spec"]
 task :mopubsample => ["mopubsample:build", "mopubsample:spec", "mopubsample:kif"]
 task :cruise => ["all:clean", "all:spec"]
 
+desc "Trim Whitespace"
 task :trim_whitespace do
   system_or_exit(%Q[git status --short | awk '{if ($1 != "D" && $1 != "R") print $2}' | grep -e '.*\.[mh]$' | xargs sed -i '' -e 's/	/    /g;s/ *$//g;'])
+end
+
+desc "Fix Up Copyright"
+task :fix_copyright do
+  `find . -name "*.[mh]" -exec sed -i '' 's/\\/\\/  MoPubSampleApp/\\/\\/  MoPub/g' {} \\;`
+  `find . -name "*.[mh]" -exec sed -i '' 's/\\/\\/  MoPubSDK/\\/\\/  MoPub/g' {} \\;`
+  `find . -name "*.[mh]" -exec sed -i '' '/\\/\\/  Created by pivotal/d' {} \\;`
 end
 
 namespace :mopubsdk do

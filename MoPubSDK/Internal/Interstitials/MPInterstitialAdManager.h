@@ -16,22 +16,22 @@
 {
     MPInterstitialAdController *_interstitialAdController;
     id<MPInterstitialAdManagerDelegate> _delegate;
-    
+
     MPAdServerCommunicator *_communicator;
     BOOL _loading;
-    
+
     NSURL *_failoverURL;
-    
+
     MPBaseInterstitialAdapter *_currentAdapter;
     MPBaseInterstitialAdapter *_nextAdapter;
-    
+
     MPAdConfiguration *_currentConfiguration;
     MPAdConfiguration *_nextConfiguration;
-    
+
     BOOL _isReady;
     BOOL _hasRecordedImpressionForCurrentInterstitial;
     BOOL _hasRecordedClickForCurrentInterstitial;
-    
+
     NSMutableURLRequest *_request;
 }
 

@@ -1,8 +1,7 @@
 //
 //  MPInstanceProvider.h
-//  MoPubSDK
+//  MoPub
 //
-//  Created by pivotal on 3/15/13.
 //  Copyright (c) 2013 MoPub. All rights reserved.
 //
 

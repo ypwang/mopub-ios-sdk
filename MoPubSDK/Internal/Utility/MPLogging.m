@@ -12,19 +12,19 @@ static MPLogLevel MPLOG_LEVEL = MPLogLevelInfo;
 
 MPLogLevel MPLogGetLevel()
 {
-	return MPLOG_LEVEL;
+    return MPLOG_LEVEL;
 }
 
 void MPLogSetLevel(MPLogLevel level)
 {
-	MPLOG_LEVEL = level;
+    MPLOG_LEVEL = level;
 }
 
 void _MPLogTrace(NSString *format, ...)
 {
-	if (MPLOG_LEVEL <= MPLogLevelTrace)
+    if (MPLOG_LEVEL <= MPLogLevelTrace)
     {
-		format = [NSString stringWithFormat:@"MOPUB: %@", format];
+        format = [NSString stringWithFormat:@"MOPUB: %@", format];
         va_list args;
         va_start(args, format);
         NSLogv(format, args);
@@ -34,9 +34,9 @@ void _MPLogTrace(NSString *format, ...)
 
 void _MPLogDebug(NSString *format, ...)
 {
-	if (MPLOG_LEVEL <= MPLogLevelDebug)
+    if (MPLOG_LEVEL <= MPLogLevelDebug)
     {
-		format = [NSString stringWithFormat:@"MOPUB: %@", format];
+        format = [NSString stringWithFormat:@"MOPUB: %@", format];
         va_list args;
         va_start(args, format);
         NSLogv(format, args);
@@ -46,9 +46,9 @@ void _MPLogDebug(NSString *format, ...)
 
 void _MPLogWarn(NSString *format, ...)
 {
-	if (MPLOG_LEVEL <= MPLogLevelWarn)
+    if (MPLOG_LEVEL <= MPLogLevelWarn)
     {
-		format = [NSString stringWithFormat:@"MOPUB: %@", format];
+        format = [NSString stringWithFormat:@"MOPUB: %@", format];
         va_list args;
         va_start(args, format);
         NSLogv(format, args);
@@ -58,9 +58,9 @@ void _MPLogWarn(NSString *format, ...)
 
 void _MPLogInfo(NSString *format, ...)
 {
-	if (MPLOG_LEVEL <= MPLogLevelInfo)
+    if (MPLOG_LEVEL <= MPLogLevelInfo)
     {
-		format = [NSString stringWithFormat:@"MOPUB: %@", format];
+        format = [NSString stringWithFormat:@"MOPUB: %@", format];
         va_list args;
         va_start(args, format);
         NSLogv(format, args);
@@ -70,9 +70,9 @@ void _MPLogInfo(NSString *format, ...)
 
 void _MPLogError(NSString *format, ...)
 {
-	if (MPLOG_LEVEL <= MPLogLevelError)
+    if (MPLOG_LEVEL <= MPLogLevelError)
     {
-		format = [NSString stringWithFormat:@"MOPUB: %@", format];
+        format = [NSString stringWithFormat:@"MOPUB: %@", format];
         va_list args;
         va_start(args, format);
         NSLogv(format, args);
@@ -82,9 +82,9 @@ void _MPLogError(NSString *format, ...)
 
 void _MPLogFatal(NSString *format, ...)
 {
-	if (MPLOG_LEVEL <= MPLogLevelFatal)
+    if (MPLOG_LEVEL <= MPLogLevelFatal)
     {
-		format = [NSString stringWithFormat:@"MOPUB: %@", format];
+        format = [NSString stringWithFormat:@"MOPUB: %@", format];
         va_list args;
         va_start(args, format);
         NSLogv(format, args);
