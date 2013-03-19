@@ -1,0 +1,12 @@
+//
+// Prefix header for all source files of the 'SampleAppKIF' target in the 'MoPubSampleApp' project
+//
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import "KIFHelper.h"
+    #import "KIFTestStep+ActivityIndicator.h"
+    #import "KIFTestStep+Navigation.h"
+    #import "KIFTestStep+WebView.h"
+#endif

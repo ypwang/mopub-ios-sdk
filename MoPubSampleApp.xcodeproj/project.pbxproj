@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE1175F316F7D67800363FCA /* KIFHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1175F216F7D67800363FCA /* KIFHelper.m */; };
+		AE1175F716F7D84D00363FCA /* MPSampleAppTestScenario.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1175F616F7D84D00363FCA /* MPSampleAppTestScenario.m */; };
+		AE1175FA16F7D94700363FCA /* KIFTestStep+ActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1175F916F7D94700363FCA /* KIFTestStep+ActivityIndicator.m */; };
+		AE1175FD16F7D9CF00363FCA /* KIFTestStep+Navigation.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1175FC16F7D9CF00363FCA /* KIFTestStep+Navigation.m */; };
+		AE11760016F7DAA200363FCA /* KIFTestStep+WebView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1175FF16F7DAA200363FCA /* KIFTestStep+WebView.m */; };
 		AE23239316F78A17002C2082 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE23239216F78A17002C2082 /* UIKit.framework */; };
 		AE23239516F78A17002C2082 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE23239416F78A17002C2082 /* Foundation.framework */; };
 		AE23239716F78A17002C2082 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE23239616F78A17002C2082 /* CoreGraphics.framework */; };
@@ -55,9 +60,40 @@
 		AED9E4E616F7B21400EA71A7 /* MPSampleAppInstanceProvider+Spec.m in Sources */ = {isa = PBXBuildFile; fileRef = AED9E4E516F7B21400EA71A7 /* MPSampleAppInstanceProvider+Spec.m */; };
 		AED9E4E716F7B3E400EA71A7 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AED9E47216F78DAD00EA71A7 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		AED9E4E816F7B3EE00EA71A7 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AED9E47016F78DA900EA71A7 /* StoreKit.framework */; };
+		AED9E4F316F7B8A600EA71A7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AE23239E16F78A17002C2082 /* main.m */; };
+		AED9E4F416F7B8A600EA71A7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AE2323A216F78A17002C2082 /* AppDelegate.m */; };
+		AED9E4F516F7B8A600EA71A7 /* MPBannerAdTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AED9E4BA16F7912900EA71A7 /* MPBannerAdTableViewController.m */; };
+		AED9E4F616F7B8A600EA71A7 /* MPBannerAdInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = AED9E4C416F7934900EA71A7 /* MPBannerAdInfo.m */; };
+		AED9E4F716F7B8A600EA71A7 /* MPBannerAdDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AED9E4CB16F7987F00EA71A7 /* MPBannerAdDetailViewController.m */; };
+		AED9E4F816F7B8A600EA71A7 /* MPSampleAppInstanceProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AED9E4DD16F7B00100EA71A7 /* MPSampleAppInstanceProvider.m */; };
+		AED9E4FA16F7B8A600EA71A7 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AED9E47016F78DA900EA71A7 /* StoreKit.framework */; };
+		AED9E4FB16F7B8A600EA71A7 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AED9E47216F78DAD00EA71A7 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		AED9E4FC16F7B8A600EA71A7 /* libMoPubSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AED9E41616F78ADE00EA71A7 /* libMoPubSDK.a */; };
+		AED9E4FD16F7B8A600EA71A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE23239216F78A17002C2082 /* UIKit.framework */; };
+		AED9E4FE16F7B8A600EA71A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE23239416F78A17002C2082 /* Foundation.framework */; };
+		AED9E4FF16F7B8A600EA71A7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE23239616F78A17002C2082 /* CoreGraphics.framework */; };
+		AED9E50116F7B8A600EA71A7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AE23239B16F78A17002C2082 /* InfoPlist.strings */; };
+		AED9E50216F7B8A600EA71A7 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = AE2323A416F78A17002C2082 /* Default.png */; };
+		AED9E50316F7B8A600EA71A7 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE2323A616F78A17002C2082 /* Default@2x.png */; };
+		AED9E50416F7B8A600EA71A7 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE2323A816F78A17002C2082 /* Default-568h@2x.png */; };
+		AED9E50516F7B8A600EA71A7 /* MPCloseButtonX.png in Resources */ = {isa = PBXBuildFile; fileRef = AED9E41C16F78B1100EA71A7 /* MPCloseButtonX.png */; };
+		AED9E50616F7B8A600EA71A7 /* MPCloseButtonX@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AED9E41E16F78B1500EA71A7 /* MPCloseButtonX@2x.png */; };
+		AED9E50716F7B8A600EA71A7 /* MRAID.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AED9E42016F78B1900EA71A7 /* MRAID.bundle */; };
+		AED9E50816F7B8A600EA71A7 /* MPAdBrowserController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AED9E42216F78B3000EA71A7 /* MPAdBrowserController.xib */; };
+		AED9E50916F7B8A600EA71A7 /* MPBannerAdDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AED9E4CE16F798AF00EA71A7 /* MPBannerAdDetailViewController.xib */; };
+		AED9E50F16F7B8CC00EA71A7 /* libKIF.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AED9E4EE16F7B89500EA71A7 /* libKIF.a */; };
+		AED9E51316F7B98100EA71A7 /* MPKIFTestController.m in Sources */ = {isa = PBXBuildFile; fileRef = AED9E51216F7B98100EA71A7 /* MPKIFTestController.m */; };
+		AED9E51716F7BA0900EA71A7 /* KIFTestScenario+StoreKitScenario.m in Sources */ = {isa = PBXBuildFile; fileRef = AED9E51616F7BA0900EA71A7 /* KIFTestScenario+StoreKitScenario.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		AE11760116F7E12D00363FCA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AED9E4E916F7B89400EA71A7 /* KIF.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = AAB07267139719AC008AF393;
+			remoteInfo = KIF;
+		};
 		AED9E41516F78ADE00EA71A7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AED9E40C16F78ADD00EA71A7 /* MoPubSDK.xcodeproj */;
@@ -170,9 +206,34 @@
 			remoteGlobalIDString = AEA96C53168B636E00861DF1;
 			remoteInfo = "Foundation+PivotalCore-StaticLib";
 		};
+		AED9E4ED16F7B89500EA71A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AED9E4E916F7B89400EA71A7 /* KIF.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AAB07268139719AC008AF393;
+			remoteInfo = KIF;
+		};
+		AED9E4F116F7B8A600EA71A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AED9E40C16F78ADD00EA71A7 /* MoPubSDK.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = AEF1F32716EF9AD700273462;
+			remoteInfo = MoPubSDK;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AE1175F116F7D67800363FCA /* KIFHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KIFHelper.h; sourceTree = "<group>"; };
+		AE1175F216F7D67800363FCA /* KIFHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KIFHelper.m; sourceTree = "<group>"; };
+		AE1175F416F7D71E00363FCA /* SampleAppKIF-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SampleAppKIF-Prefix.pch"; sourceTree = "<group>"; };
+		AE1175F516F7D84D00363FCA /* MPSampleAppTestScenario.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSampleAppTestScenario.h; sourceTree = "<group>"; };
+		AE1175F616F7D84D00363FCA /* MPSampleAppTestScenario.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSampleAppTestScenario.m; sourceTree = "<group>"; };
+		AE1175F816F7D94700363FCA /* KIFTestStep+ActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KIFTestStep+ActivityIndicator.h"; sourceTree = "<group>"; };
+		AE1175F916F7D94700363FCA /* KIFTestStep+ActivityIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KIFTestStep+ActivityIndicator.m"; sourceTree = "<group>"; };
+		AE1175FB16F7D9CF00363FCA /* KIFTestStep+Navigation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KIFTestStep+Navigation.h"; sourceTree = "<group>"; };
+		AE1175FC16F7D9CF00363FCA /* KIFTestStep+Navigation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KIFTestStep+Navigation.m"; sourceTree = "<group>"; };
+		AE1175FE16F7DAA200363FCA /* KIFTestStep+WebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KIFTestStep+WebView.h"; sourceTree = "<group>"; };
+		AE1175FF16F7DAA200363FCA /* KIFTestStep+WebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KIFTestStep+WebView.m"; sourceTree = "<group>"; };
 		AE23238F16F78A17002C2082 /* MoPubSampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoPubSampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE23239216F78A17002C2082 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AE23239416F78A17002C2082 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -187,10 +248,10 @@
 		AE2323A616F78A17002C2082 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		AE2323A816F78A17002C2082 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		AED9E40C16F78ADD00EA71A7 /* MoPubSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = MoPubSDK.xcodeproj; sourceTree = "<group>"; };
-		AED9E41C16F78B1100EA71A7 /* MPCloseButtonX.png */ = {isa = PBXFileReference; lastKnownFileType = file; name = MPCloseButtonX.png; path = MoPubSDK/Resources/MPCloseButtonX.png; sourceTree = "<group>"; };
-		AED9E41E16F78B1500EA71A7 /* MPCloseButtonX@2x.png */ = {isa = PBXFileReference; lastKnownFileType = file; name = "MPCloseButtonX@2x.png"; path = "MoPubSDK/Resources/MPCloseButtonX@2x.png"; sourceTree = "<group>"; };
-		AED9E42016F78B1900EA71A7 /* MRAID.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = MRAID.bundle; path = MoPubSDK/Resources/MRAID.bundle; sourceTree = "<group>"; };
-		AED9E42216F78B3000EA71A7 /* MPAdBrowserController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; name = MPAdBrowserController.xib; path = MoPubSDK/Internal/Common/MPAdBrowserController.xib; sourceTree = "<group>"; };
+		AED9E41C16F78B1100EA71A7 /* MPCloseButtonX.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MPCloseButtonX.png; path = MoPubSDK/Resources/MPCloseButtonX.png; sourceTree = "<group>"; };
+		AED9E41E16F78B1500EA71A7 /* MPCloseButtonX@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "MPCloseButtonX@2x.png"; path = "MoPubSDK/Resources/MPCloseButtonX@2x.png"; sourceTree = "<group>"; };
+		AED9E42016F78B1900EA71A7 /* MRAID.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = MRAID.bundle; path = MoPubSDK/Resources/MRAID.bundle; sourceTree = "<group>"; };
+		AED9E42216F78B3000EA71A7 /* MPAdBrowserController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MPAdBrowserController.xib; path = MoPubSDK/Internal/Common/MPAdBrowserController.xib; sourceTree = "<group>"; };
 		AED9E45916F78D7300EA71A7 /* SampleAppSpecs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleAppSpecs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AED9E45F16F78D7300EA71A7 /* SampleAppSpecs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SampleAppSpecs-Info.plist"; sourceTree = "<group>"; };
 		AED9E46116F78D7300EA71A7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -222,6 +283,13 @@
 		AED9E4E016F7B01E00EA71A7 /* FakeMPSampleAppInstanceProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeMPSampleAppInstanceProvider.h; sourceTree = "<group>"; };
 		AED9E4E116F7B01E00EA71A7 /* FakeMPSampleAppInstanceProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeMPSampleAppInstanceProvider.m; sourceTree = "<group>"; };
 		AED9E4E516F7B21400EA71A7 /* MPSampleAppInstanceProvider+Spec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MPSampleAppInstanceProvider+Spec.m"; sourceTree = "<group>"; };
+		AED9E4E916F7B89400EA71A7 /* KIF.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KIF.xcodeproj; path = Externals/KIF/KIF.xcodeproj; sourceTree = "<group>"; };
+		AED9E50D16F7B8A600EA71A7 /* SampleAppKIF.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleAppKIF.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AED9E50E16F7B8A600EA71A7 /* MoPubSampleApp copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MoPubSampleApp copy-Info.plist"; path = "/Users/pivotal/workspace/mopub-ios/MoPubSampleApp copy-Info.plist"; sourceTree = "<absolute>"; };
+		AED9E51116F7B98100EA71A7 /* MPKIFTestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPKIFTestController.h; sourceTree = "<group>"; };
+		AED9E51216F7B98100EA71A7 /* MPKIFTestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPKIFTestController.m; sourceTree = "<group>"; };
+		AED9E51516F7BA0900EA71A7 /* KIFTestScenario+StoreKitScenario.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KIFTestScenario+StoreKitScenario.h"; sourceTree = "<group>"; };
+		AED9E51616F7BA0900EA71A7 /* KIFTestScenario+StoreKitScenario.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KIFTestScenario+StoreKitScenario.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,12 +324,49 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AED9E4F916F7B8A600EA71A7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AED9E50F16F7B8CC00EA71A7 /* libKIF.a in Frameworks */,
+				AED9E4FA16F7B8A600EA71A7 /* StoreKit.framework in Frameworks */,
+				AED9E4FB16F7B8A600EA71A7 /* AdSupport.framework in Frameworks */,
+				AED9E4FC16F7B8A600EA71A7 /* libMoPubSDK.a in Frameworks */,
+				AED9E4FD16F7B8A600EA71A7 /* UIKit.framework in Frameworks */,
+				AED9E4FE16F7B8A600EA71A7 /* Foundation.framework in Frameworks */,
+				AED9E4FF16F7B8A600EA71A7 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AE1175E616F7D60000363FCA /* Steps */ = {
+			isa = PBXGroup;
+			children = (
+				AE1175F816F7D94700363FCA /* KIFTestStep+ActivityIndicator.h */,
+				AE1175F916F7D94700363FCA /* KIFTestStep+ActivityIndicator.m */,
+				AE1175FB16F7D9CF00363FCA /* KIFTestStep+Navigation.h */,
+				AE1175FC16F7D9CF00363FCA /* KIFTestStep+Navigation.m */,
+				AE1175FE16F7DAA200363FCA /* KIFTestStep+WebView.h */,
+				AE1175FF16F7DAA200363FCA /* KIFTestStep+WebView.m */,
+			);
+			path = Steps;
+			sourceTree = "<group>";
+		};
+		AE1175F016F7D62100363FCA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				AE1175F116F7D67800363FCA /* KIFHelper.h */,
+				AE1175F216F7D67800363FCA /* KIFHelper.m */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		AE23238616F78A17002C2082 = {
 			isa = PBXGroup;
 			children = (
+				AED9E51016F7B93B00EA71A7 /* SampleAppKIF */,
 				AE23239816F78A17002C2082 /* MoPubSampleApp */,
 				AED9E45D16F78D7300EA71A7 /* SampleAppSpecs */,
 				AE23239116F78A17002C2082 /* Frameworks */,
@@ -269,6 +374,7 @@
 				AED9E42416F78B4200EA71A7 /* SDKResources */,
 				AED9E47816F78F0300EA71A7 /* Externals */,
 				AED9E40C16F78ADD00EA71A7 /* MoPubSDK.xcodeproj */,
+				AED9E50E16F7B8A600EA71A7 /* MoPubSampleApp copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -277,6 +383,7 @@
 			children = (
 				AE23238F16F78A17002C2082 /* MoPubSampleApp.app */,
 				AED9E45916F78D7300EA71A7 /* SampleAppSpecs.app */,
+				AED9E50D16F7B8A600EA71A7 /* SampleAppKIF.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -409,6 +516,7 @@
 		AED9E47816F78F0300EA71A7 /* Externals */ = {
 			isa = PBXGroup;
 			children = (
+				AED9E4E916F7B89400EA71A7 /* KIF.xcodeproj */,
 				AED9E48E16F78F2E00EA71A7 /* UIKit.xcodeproj */,
 				AED9E47916F78F2100EA71A7 /* Foundation.xcodeproj */,
 			);
@@ -474,6 +582,38 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		AED9E4EA16F7B89400EA71A7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AED9E4EE16F7B89500EA71A7 /* libKIF.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AED9E51016F7B93B00EA71A7 /* SampleAppKIF */ = {
+			isa = PBXGroup;
+			children = (
+				AE1175F016F7D62100363FCA /* Extensions */,
+				AE1175E616F7D60000363FCA /* Steps */,
+				AED9E51416F7B9E400EA71A7 /* Scenarios */,
+				AED9E51116F7B98100EA71A7 /* MPKIFTestController.h */,
+				AED9E51216F7B98100EA71A7 /* MPKIFTestController.m */,
+				AE1175F416F7D71E00363FCA /* SampleAppKIF-Prefix.pch */,
+			);
+			path = SampleAppKIF;
+			sourceTree = "<group>";
+		};
+		AED9E51416F7B9E400EA71A7 /* Scenarios */ = {
+			isa = PBXGroup;
+			children = (
+				AED9E51516F7BA0900EA71A7 /* KIFTestScenario+StoreKitScenario.h */,
+				AED9E51616F7BA0900EA71A7 /* KIFTestScenario+StoreKitScenario.m */,
+				AE1175F516F7D84D00363FCA /* MPSampleAppTestScenario.h */,
+				AE1175F616F7D84D00363FCA /* MPSampleAppTestScenario.m */,
+			);
+			path = Scenarios;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -516,6 +656,25 @@
 			productReference = AED9E45916F78D7300EA71A7 /* SampleAppSpecs.app */;
 			productType = "com.apple.product-type.application";
 		};
+		AED9E4EF16F7B8A600EA71A7 /* SampleAppKIF */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AED9E50A16F7B8A600EA71A7 /* Build configuration list for PBXNativeTarget "SampleAppKIF" */;
+			buildPhases = (
+				AED9E4F216F7B8A600EA71A7 /* Sources */,
+				AED9E4F916F7B8A600EA71A7 /* Frameworks */,
+				AED9E50016F7B8A600EA71A7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AE11760216F7E12D00363FCA /* PBXTargetDependency */,
+				AED9E4F016F7B8A600EA71A7 /* PBXTargetDependency */,
+			);
+			name = SampleAppKIF;
+			productName = MoPubSampleApp;
+			productReference = AED9E50D16F7B8A600EA71A7 /* SampleAppKIF.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -541,6 +700,10 @@
 					ProjectRef = AED9E47916F78F2100EA71A7 /* Foundation.xcodeproj */;
 				},
 				{
+					ProductGroup = AED9E4EA16F7B89400EA71A7 /* Products */;
+					ProjectRef = AED9E4E916F7B89400EA71A7 /* KIF.xcodeproj */;
+				},
+				{
 					ProductGroup = AED9E40D16F78ADD00EA71A7 /* Products */;
 					ProjectRef = AED9E40C16F78ADD00EA71A7 /* MoPubSDK.xcodeproj */;
 				},
@@ -553,6 +716,7 @@
 			targets = (
 				AE23238E16F78A17002C2082 /* MoPubSampleApp */,
 				AED9E45816F78D7300EA71A7 /* SampleAppSpecs */,
+				AED9E4EF16F7B8A600EA71A7 /* SampleAppKIF */,
 			);
 		};
 /* End PBXProject section */
@@ -635,6 +799,13 @@
 			remoteRef = AED9E49916F78F2E00EA71A7 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		AED9E4EE16F7B89500EA71A7 /* libKIF.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libKIF.a;
+			remoteRef = AED9E4ED16F7B89500EA71A7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -660,6 +831,22 @@
 			files = (
 				AED9E46216F78D7300EA71A7 /* InfoPlist.strings in Resources */,
 				AED9E4D016F798AF00EA71A7 /* MPBannerAdDetailViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AED9E50016F7B8A600EA71A7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AED9E50116F7B8A600EA71A7 /* InfoPlist.strings in Resources */,
+				AED9E50216F7B8A600EA71A7 /* Default.png in Resources */,
+				AED9E50316F7B8A600EA71A7 /* Default@2x.png in Resources */,
+				AED9E50416F7B8A600EA71A7 /* Default-568h@2x.png in Resources */,
+				AED9E50516F7B8A600EA71A7 /* MPCloseButtonX.png in Resources */,
+				AED9E50616F7B8A600EA71A7 /* MPCloseButtonX@2x.png in Resources */,
+				AED9E50716F7B8A600EA71A7 /* MRAID.bundle in Resources */,
+				AED9E50816F7B8A600EA71A7 /* MPAdBrowserController.xib in Resources */,
+				AED9E50916F7B8A600EA71A7 /* MPBannerAdDetailViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -700,9 +887,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AED9E4F216F7B8A600EA71A7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AED9E4F316F7B8A600EA71A7 /* main.m in Sources */,
+				AED9E4F416F7B8A600EA71A7 /* AppDelegate.m in Sources */,
+				AED9E4F516F7B8A600EA71A7 /* MPBannerAdTableViewController.m in Sources */,
+				AED9E4F616F7B8A600EA71A7 /* MPBannerAdInfo.m in Sources */,
+				AED9E4F716F7B8A600EA71A7 /* MPBannerAdDetailViewController.m in Sources */,
+				AED9E4F816F7B8A600EA71A7 /* MPSampleAppInstanceProvider.m in Sources */,
+				AED9E51316F7B98100EA71A7 /* MPKIFTestController.m in Sources */,
+				AED9E51716F7BA0900EA71A7 /* KIFTestScenario+StoreKitScenario.m in Sources */,
+				AE1175F316F7D67800363FCA /* KIFHelper.m in Sources */,
+				AE1175F716F7D84D00363FCA /* MPSampleAppTestScenario.m in Sources */,
+				AE1175FA16F7D94700363FCA /* KIFTestStep+ActivityIndicator.m in Sources */,
+				AE1175FD16F7D9CF00363FCA /* KIFTestStep+Navigation.m in Sources */,
+				AE11760016F7DAA200363FCA /* KIFTestStep+WebView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		AE11760216F7E12D00363FCA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = KIF;
+			targetProxy = AE11760116F7E12D00363FCA /* PBXContainerItemProxy */;
+		};
 		AED9E41A16F78AF400EA71A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = MoPubSDK;
@@ -727,6 +939,11 @@
 			isa = PBXTargetDependency;
 			name = "Foundation+PivotalCore-StaticLib";
 			targetProxy = AED9E4B316F78FEB00EA71A7 /* PBXContainerItemProxy */;
+		};
+		AED9E4F016F7B8A600EA71A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MoPubSDK;
+			targetProxy = AED9E4F116F7B8A600EA71A7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -904,6 +1121,59 @@
 			};
 			name = Release;
 		};
+		AED9E50B16F7B8A600EA71A7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SampleAppKIF/SampleAppKIF-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"RUN_KIF_TESTS=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/MoPubSDK/**",
+					"$(SRCROOT)/Externals/**",
+				);
+				INFOPLIST_FILE = "MoPubSampleApp copy-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/build/Release-iphoneos\"",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = SampleAppKIF;
+				USER_HEADER_SEARCH_PATHS = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		AED9E50C16F7B8A600EA71A7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SampleAppKIF/SampleAppKIF-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/MoPubSDK/**",
+					"$(SRCROOT)/Externals/**",
+				);
+				INFOPLIST_FILE = "MoPubSampleApp copy-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/build/Release-iphoneos\"",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = SampleAppKIF;
+				USER_HEADER_SEARCH_PATHS = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -932,6 +1202,16 @@
 				AED9E46C16F78D7400EA71A7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AED9E50A16F7B8A600EA71A7 /* Build configuration list for PBXNativeTarget "SampleAppKIF" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AED9E50B16F7B8A600EA71A7 /* Debug */,
+				AED9E50C16F7B8A600EA71A7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

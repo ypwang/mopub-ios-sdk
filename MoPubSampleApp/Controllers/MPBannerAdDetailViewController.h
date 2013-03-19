@@ -16,6 +16,7 @@
 @property (assign, nonatomic) IBOutlet UILabel *titleLabel;
 @property (assign, nonatomic) IBOutlet UILabel *IDLabel;
 @property (assign, nonatomic) IBOutlet UIView *adViewContainer;
+@property (assign, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 - (id)initWithBannerAdInfo:(MPBannerAdInfo *)info;
 

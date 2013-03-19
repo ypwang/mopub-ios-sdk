@@ -51,6 +51,20 @@ describe(@"MPBannerAdDetailViewController", ^{
         it(@"should tell the ad view to load", ^{
             adView.wasLoaded should equal(YES);
         });
+
+        it(@"should have a spinner", ^{
+            controller.spinner.isAnimating should equal(YES);
+        });
+
+        context(@"when the ad arrives", ^{
+            beforeEach(^{
+                [adView.delegate adViewDidLoadAd:adView];
+            });
+
+            it(@"should hide the spinner", ^{
+                controller.spinner.isAnimating should equal(NO);
+            });
+        });
     });
 });
 

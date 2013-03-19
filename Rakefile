@@ -86,7 +86,7 @@ desc "Build MoPubSDK on all SDKs
  then run tests"
 task :default => [:trim_whitespace, :mopubsdk, :mopubsample]
 task :mopubsdk => ["mopubsdk:build", "mopubsdk:spec"]
-task :mopubsample => ["mopubsample:build", "mopubsample:spec"]
+task :mopubsample => ["mopubsample:build", "mopubsample:spec", "mopubsample:kif"]
 task :cruise => ["all:clean", "all:spec"]
 
 task :trim_whitespace do
@@ -107,6 +107,7 @@ namespace :mopubsdk do
     head "Building Specs"
     build project: "MoPubSDK", target: "Specs"
 
+    `osascript -e 'tell application "iPhone Simulator" to quit'`
     head "Running Specs"
     env_vars = {
       "CEDAR_REPORTER_CLASS" => "CDRColorizedReporter",
@@ -133,6 +134,7 @@ namespace :mopubsample do
     head "Building Specs"
     build project: "MoPubSampleApp", target: "SampleAppSpecs"
 
+    `osascript -e 'tell application "iPhone Simulator" to quit'`
     head "Running Specs"
     env_vars = {
       "CEDAR_REPORTER_CLASS" => "CDRColorizedReporter",
@@ -140,6 +142,16 @@ namespace :mopubsample do
       "CEDAR_HEADLESS_SPECS" => "1"
     }
     system_or_exit(%Q[./Scripts/waxsim #{File.join(build_dir("-iphonesimulator"), "SampleAppSpecs.app")} -f iphone -e CEDAR_REPORTER_CLASS=CDRColorizedReporter -e CFFIXED_USER_HOME=#{Dir.tmpdir} -e CEDAR_HEADLESS_SPECS=1 -s #{SDK_VERSION}], env_vars)
+  end
+
+  desc "Run MoPub Sample App Integration Specs"
+  task :kif do
+    head "Building KIF Integration Suite"
+    build project: "MoPubSampleApp", target: "SampleAppKIF"
+
+    `osascript -e 'tell application "iPhone Simulator" to quit'`
+    head "Running KIF Integration Suite"
+    system_or_exit(%Q[./Scripts/waxsim #{File.join(build_dir("-iphonesimulator"), "SampleAppKIF.app")} -f iphone -s #{SDK_VERSION}])
   end
 
   task :clean do

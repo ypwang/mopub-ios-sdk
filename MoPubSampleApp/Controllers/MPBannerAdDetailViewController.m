@@ -40,12 +40,15 @@
                                                                                      size:MOPUB_BANNER_SIZE];
     self.adView.delegate = self;
     [self.adViewContainer addSubview:self.adView];
+
+    [self.spinner startAnimating];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
 
+    [self.spinner startAnimating];
     [self.adView loadAd];
 }
 
@@ -54,6 +57,11 @@
 - (UIViewController *)viewControllerForPresentingModalView
 {
     return self;
+}
+
+- (void)adViewDidLoadAd:(MPAdView *)view
+{
+    [self.spinner stopAnimating];
 }
 
 @end

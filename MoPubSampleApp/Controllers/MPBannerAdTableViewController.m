@@ -41,6 +41,7 @@
 - (void)viewDidLoad
 {
     self.title = @"Banners";
+    self.tableView.accessibilityLabel = @"Banner Ad Table View";
     [self.tableView reloadData];
     [super viewDidLoad];
 }

@@ -10,6 +10,10 @@
 #import "MPBannerAdTableViewController.h"
 #import "MPBannerAdInfo.h"
 
+#if RUN_KIF_TESTS
+#import "MPKIFTestController.h"
+#endif
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -18,6 +22,13 @@
     self.window.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[MPBannerAdTableViewController alloc] initWithBannerAds:[MPBannerAdInfo bannerAds]]];
     [self.window makeKeyAndVisible];
+
+#if RUN_KIF_TESTS
+    [[MPKIFTestController sharedInstance] startTestingWithCompletionBlock:^{
+        // Exit after the tests complete so that CI knows we're done
+        exit([[MPKIFTestController sharedInstance] failureCount]);
+    }];
+#endif
 
     return YES;
 }
