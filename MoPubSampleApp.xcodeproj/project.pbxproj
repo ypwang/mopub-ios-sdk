@@ -463,7 +463,8 @@
 				AED9E4BD16F791CC00EA71A7 /* MPSampleAppSpecHelper.h */,
 				AED9E4BE16F791CC00EA71A7 /* MPSampleAppSpecHelper.m */,
 			);
-			path = SampleAppSpecs;
+			name = SampleAppSpecs;
+			path = MoPubSampleAppSpecs/SampleAppSpecs;
 			sourceTree = "<group>";
 		};
 		AED9E45E16F78D7300EA71A7 /* Supporting Files */ = {
@@ -600,7 +601,8 @@
 				AED9E51216F7B98100EA71A7 /* MPKIFTestController.m */,
 				AE1175F416F7D71E00363FCA /* SampleAppKIF-Prefix.pch */,
 			);
-			path = SampleAppKIF;
+			name = SampleAppKIF;
+			path = MoPubSampleAppSpecs/SampleAppKIF;
 			sourceTree = "<group>";
 		};
 		AED9E51416F7B9E400EA71A7 /* Scenarios */ = {
@@ -1074,15 +1076,15 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/SampleAppSpecs/Frameworks\"",
+					"\"$(SRCROOT)/MoPubSampleAppSpecs/SampleAppSpecs/Frameworks\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "SampleAppSpecs/SampleAppSpecs-Prefix.pch";
+				GCC_PREFIX_HEADER = "MoPubSampleAppSpecs/SampleAppSpecs/SampleAppSpecs-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/Externals\"/**",
 					"$(SRCROOT)/MoPubSDK/**",
 				);
-				INFOPLIST_FILE = "SampleAppSpecs/SampleAppSpecs-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/MoPubSampleAppSpecs/SampleAppSpecs/SampleAppSpecs-Info.plist";
 				OTHER_CFLAGS = "-Wno-objc-protocol-method-implementation";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1101,15 +1103,15 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/SampleAppSpecs/Frameworks\"",
+					"\"$(SRCROOT)/MoPubSampleAppSpecs/SampleAppSpecs/Frameworks\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "SampleAppSpecs/SampleAppSpecs-Prefix.pch";
+				GCC_PREFIX_HEADER = "MoPubSampleAppSpecs/SampleAppSpecs/SampleAppSpecs-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/Externals\"/**",
 					"$(SRCROOT)/MoPubSDK/**",
 				);
-				INFOPLIST_FILE = "SampleAppSpecs/SampleAppSpecs-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/MoPubSampleAppSpecs/SampleAppSpecs/SampleAppSpecs-Info.plist";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1125,7 +1127,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "SampleAppKIF/SampleAppKIF-Prefix.pch";
+				GCC_PREFIX_HEADER = "MoPubSampleAppSpecs/SampleAppKIF/SampleAppKIF-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1135,7 +1137,7 @@
 					"$(SRCROOT)/MoPubSDK/**",
 					"$(SRCROOT)/Externals/**",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/SampleAppKIF/SampleAppKIF-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/MoPubSampleAppSpecs/SampleAppKIF/SampleAppKIF-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/build/Release-iphoneos\"",
@@ -1154,12 +1156,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "SampleAppKIF/SampleAppKIF-Prefix.pch";
+				GCC_PREFIX_HEADER = "MoPubSampleAppSpecs/SampleAppKIF/SampleAppKIF-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/MoPubSDK/**",
 					"$(SRCROOT)/Externals/**",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/SampleAppKIF/SampleAppKIF-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/MoPubSampleAppSpecs/SampleAppKIF/SampleAppKIF-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/build/Release-iphoneos\"",

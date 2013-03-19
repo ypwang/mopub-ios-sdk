@@ -572,7 +572,7 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
-		AEA97BE416EF9C030046D464 /* Specs */ = {
+		AEA97BE416EF9C030046D464 /* MoPubSDKSpecs */ = {
 			isa = PBXGroup;
 			children = (
 				AEC845E016F2325100943383 /* Fixtures */,
@@ -584,7 +584,7 @@
 				AEC9E5A416EFB48F007CA2BA /* MPSpecHelper.h */,
 				AEC9E5A516EFB48F007CA2BA /* MPSpecHelper.m */,
 			);
-			path = Specs;
+			path = MoPubSDKSpecs;
 			sourceTree = "<group>";
 		};
 		AEA97BE516EF9C030046D464 /* Supporting Files */ = {
@@ -917,7 +917,7 @@
 				AED9E4B116F78FCB00EA71A7 /* libxml2.2.dylib */,
 				AEF1F32D16EF9AD700273462 /* MoPubSDK */,
 				AEC845E416F2371900943383 /* ThirdPartyIntegrations */,
-				AEA97BE416EF9C030046D464 /* Specs */,
+				AEA97BE416EF9C030046D464 /* MoPubSDKSpecs */,
 				AEF1F32A16EF9AD700273462 /* Frameworks */,
 				AEF1F32916EF9AD700273462 /* Products */,
 				AEA97C8616EF9E450046D464 /* Externals */,
@@ -1299,12 +1299,12 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Specs/Frameworks\"",
+					"\"$(SRCROOT)/MoPubSDKSpecs/Frameworks\"",
 					"\"$(SRCROOT)/Externals\"",
 					"\"$(SRCROOT)/Externals/PivotalCoreKit/Foundation/DerivedData/Foundation/Build/Products/Debug\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Specs/Specs-Prefix.pch";
+				GCC_PREFIX_HEADER = "MoPubSDKSpecs/Specs-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1314,7 +1314,7 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Externals\"/**";
-				INFOPLIST_FILE = "Specs/Specs-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/MoPubSDKSpecs/Specs-Info.plist";
 				OTHER_CFLAGS = "-Wno-objc-protocol-method-implementation";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1333,17 +1333,18 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Specs/Frameworks\"",
+					"\"$(SRCROOT)/MoPubSDKSpecs/Frameworks\"",
 					"\"$(SRCROOT)/Externals\"",
 					"\"$(SRCROOT)/Externals/PivotalCoreKit/Foundation/DerivedData/Foundation/Build/Products/Debug\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Specs/Specs-Prefix.pch";
+				GCC_PREFIX_HEADER = "MoPubSDKSpecs/Specs-Prefix.pch";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Externals\"/**";
-				INFOPLIST_FILE = "Specs/Specs-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/MoPubSDKSpecs/Specs-Info.plist";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				"OTHER_CFLAGS[arch=*]" = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
