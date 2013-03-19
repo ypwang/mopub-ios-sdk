@@ -12,7 +12,8 @@
 + (NSArray *)bannerAds
 {
     return @[
-             [MPBannerAdInfo infoWithTitle:@"Valid StoreKit Link" ID:@"b086a37c8fe911e295fa123138070049"]
+             [MPBannerAdInfo infoWithTitle:@"Valid StoreKit Link" ID:@"b086a37c8fe911e295fa123138070049"],
+             [MPBannerAdInfo infoWithTitle:@"Invalid StoreKit Link" ID:@"4ebfdd8a90ba11e295fa123138070049"]
              ];
 }
 

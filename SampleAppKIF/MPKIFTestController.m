@@ -12,7 +12,13 @@
 
 - (void)initializeScenarios
 {
+    [self addStoreKitScenarios];
+}
+
+- (void)addStoreKitScenarios
+{
     [self addScenario:[KIFTestScenario scenarioForBannerAdWithStoreKitLink]];
+    [self addScenario:[KIFTestScenario scenarioForBannerAdWithInvalidStoreKitLink]];
 }
 
 @end

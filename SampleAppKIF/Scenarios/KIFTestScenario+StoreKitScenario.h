@@ -10,5 +10,6 @@
 @interface KIFTestScenario (StoreKitScenario)
 
 + (id)scenarioForBannerAdWithStoreKitLink;
++ (id)scenarioForBannerAdWithInvalidStoreKitLink;
 
 @end
