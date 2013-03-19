@@ -192,6 +192,14 @@ namespace :mopubsample do
   end
 end
 
+desc "Copy SDK to Public/Private repo"
+task :copy do
+  head "Copying SDK to Public/Private repo"
+  path_to_development_sdk = File.absolute_path(File.join(File.dirname(__FILE__), 'MoPubSDK'))
+  path_to_repo_sdk = File.absolute_path(File.join(File.dirname(__FILE__), '../mopub-client/MoPubiOS/MoPubSDK'))
+  `rm -rf #{path_to_repo_sdk}`
+  `cp -r #{path_to_development_sdk} #{path_to_repo_sdk}`
+end
 
 namespace :all do
   desc "Run all Specs"
