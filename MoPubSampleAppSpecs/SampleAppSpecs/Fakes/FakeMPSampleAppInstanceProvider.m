@@ -7,6 +7,7 @@
 
 #import "FakeMPSampleAppInstanceProvider.h"
 #import "FakeMPAdView.h"
+#import "FakeMPInterstitialAdController.h"
 
 @implementation FakeMPSampleAppInstanceProvider
 
@@ -14,6 +15,12 @@
 {
     self.lastFakeAdView = [[FakeMPAdView alloc] initWithAdUnitId:ID size:size];
     return self.lastFakeAdView;
+}
+
+- (MPInterstitialAdController *)buildMPInterstitialAdControllerWithAdUnitID:(NSString *)ID
+{
+    self.lastFakeInterstitialAdController = [[FakeMPInterstitialAdController alloc] initWithAdUnitId:ID];
+    return self.lastFakeInterstitialAdController;
 }
 
 @end

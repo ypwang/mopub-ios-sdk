@@ -19,6 +19,7 @@
 {
     [self addScenario:[KIFTestScenario scenarioForBannerAdWithStoreKitLink]];
     [self addScenario:[KIFTestScenario scenarioForBannerAdWithInvalidStoreKitLink]];
+    [self addScenario:[KIFTestScenario scenarioForInterstitialAdWithStoreKitLink]];
 }
 
 @end

@@ -1,5 +1,5 @@
 #import "AppDelegate.h"
-#import "MPBannerAdTableViewController.h"
+#import "MPAdTableViewController.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -16,7 +16,7 @@ describe(@"AppDelegate", ^{
 
     it(@"should have a window with a root view controller", ^{
         delegate.window.rootViewController should be_instance_of([UINavigationController class]);
-        [(UINavigationController *)delegate.window.rootViewController visibleViewController] should be_instance_of([MPBannerAdTableViewController class]);
+        [(UINavigationController *)delegate.window.rootViewController visibleViewController] should be_instance_of([MPAdTableViewController class]);
     });
 });
 

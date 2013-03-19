@@ -8,15 +8,15 @@
 #import <UIKit/UIKit.h>
 #import "MPAdView.h"
 
-@class MPBannerAdInfo;
+@class MPAdInfo;
 
 @interface MPBannerAdDetailViewController : UIViewController <MPAdViewDelegate>
 
-@property (assign, nonatomic) IBOutlet UILabel *titleLabel;
-@property (assign, nonatomic) IBOutlet UILabel *IDLabel;
-@property (assign, nonatomic) IBOutlet UIView *adViewContainer;
-@property (assign, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *IDLabel;
+@property (weak, nonatomic) IBOutlet UIView *adViewContainer;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
-- (id)initWithBannerAdInfo:(MPBannerAdInfo *)info;
+- (id)initWithAdInfo:(MPAdInfo *)info;
 
 @end

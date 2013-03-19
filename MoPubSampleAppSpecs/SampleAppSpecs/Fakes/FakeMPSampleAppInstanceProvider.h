@@ -7,10 +7,11 @@
 
 #import "MPSampleAppInstanceProvider.h"
 
-@class FakeMPAdView;
+@class FakeMPAdView, FakeMPInterstitialAdController;
 
 @interface FakeMPSampleAppInstanceProvider : MPSampleAppInstanceProvider
 
-@property (nonatomic, assign) FakeMPAdView *lastFakeAdView;
+@property (nonatomic, strong) FakeMPAdView *lastFakeAdView;
+@property (nonatomic, strong) FakeMPInterstitialAdController *lastFakeInterstitialAdController;
 
 @end

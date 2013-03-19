@@ -1,5 +1,5 @@
 #import "MPBannerAdDetailViewController.h"
-#import "MPBannerAdInfo.h"
+#import "MPAdInfo.h"
 #import "FakeMPAdView.h"
 
 using namespace Cedar::Matchers;
@@ -9,12 +9,12 @@ SPEC_BEGIN(MPBannerAdDetailViewControllerSpec)
 
 describe(@"MPBannerAdDetailViewController", ^{
     __block MPBannerAdDetailViewController *controller;
-    __block MPBannerAdInfo *bannerAdInfo;
+    __block MPAdInfo *bannerAdInfo;
     __block FakeMPAdView *adView;
 
     beforeEach(^{
-        bannerAdInfo = [MPBannerAdInfo infoWithTitle:@"foo" ID:@"bar"];
-        controller = [[[MPBannerAdDetailViewController alloc] initWithBannerAdInfo:bannerAdInfo] autorelease];
+        bannerAdInfo = [MPAdInfo infoWithTitle:@"foo" ID:@"bar" type:MPAdInfoBanner];
+        controller = [[[MPBannerAdDetailViewController alloc] initWithAdInfo:bannerAdInfo] autorelease];
         controller.view should_not be_nil;
 
         adView = fakeProvider.lastFakeAdView;

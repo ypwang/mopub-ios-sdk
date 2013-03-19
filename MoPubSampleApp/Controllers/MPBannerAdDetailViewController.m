@@ -6,19 +6,19 @@
 //
 
 #import "MPBannerAdDetailViewController.h"
-#import "MPBannerAdInfo.h"
+#import "MPAdInfo.h"
 #import "MPSampleAppInstanceProvider.h"
 
 @interface MPBannerAdDetailViewController ()
 
-@property (nonatomic, strong) MPBannerAdInfo *info;
+@property (nonatomic, strong) MPAdInfo *info;
 @property (nonatomic, strong) MPAdView *adView;
 
 @end
 
 @implementation MPBannerAdDetailViewController
 
-- (id)initWithBannerAdInfo:(MPBannerAdInfo *)info
+- (id)initWithAdInfo:(MPAdInfo *)info
 {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {

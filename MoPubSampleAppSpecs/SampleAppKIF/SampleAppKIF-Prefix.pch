@@ -6,7 +6,5 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import "KIFHelper.h"
-    #import "KIFTestStep+ActivityIndicator.h"
-    #import "KIFTestStep+Navigation.h"
-    #import "KIFTestStep+WebView.h"
+    #import "KIFTestStep+MoPubSampleApp.h"
 #endif

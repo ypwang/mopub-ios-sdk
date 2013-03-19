@@ -6,8 +6,8 @@
 //
 
 #import "AppDelegate.h"
-#import "MPBannerAdTableViewController.h"
-#import "MPBannerAdInfo.h"
+#import "MPAdTableViewController.h"
+#import "MPAdSection.h"
 
 #if RUN_KIF_TESTS
 #import "MPKIFTestController.h"
@@ -19,7 +19,7 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[MPBannerAdTableViewController alloc] initWithBannerAds:[MPBannerAdInfo bannerAds]]];
+    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[MPAdTableViewController alloc] initWithAdSections:[MPAdSection adSections]]];
     [self.window makeKeyAndVisible];
 
 #if RUN_KIF_TESTS

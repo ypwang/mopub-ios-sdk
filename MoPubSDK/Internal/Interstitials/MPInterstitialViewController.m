@@ -44,15 +44,15 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     self.view.backgroundColor = [UIColor blackColor];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-	if (!_isOnViewControllerStack) {
+
+    if (!_isOnViewControllerStack) {
         _isOnViewControllerStack = YES;
     }
 }
@@ -60,12 +60,12 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    
-    // When the interstitial is dismissed, we want to 
+
+    // When the interstitial is dismissed, we want to
     // -viewDidDisappear: is called 1) when the interstitial is dismissed and 2) when a modal view
-	// controller is presented atop the interstitial (e.g. the ad browser).
-    
-	if (![self mp_presentedViewController]) {
+    // controller is presented atop the interstitial (e.g. the ad browser).
+
+    if (![self mp_presentedViewController]) {
         _isOnViewControllerStack = NO;
         //self.view.alpha = 0.0;
     }
@@ -79,36 +79,36 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
         MPLogWarn(@"Cannot present an interstitial that is already on-screen.");
         return;
     }
-    
+
     [self willPresentInterstitial];
-    
+
     _applicationHasStatusBar = !([UIApplication sharedApplication].isStatusBarHidden);
     [self setApplicationStatusBarHidden:YES];
-    
+
     [self layoutCloseButton];
     [controller mp_presentModalViewController:self animated:YES];
-    
+
     [self didPresentInterstitial];
 }
 
 - (void)willPresentInterstitial
 {
-    
+
 }
 
 - (void)didPresentInterstitial
 {
-    
+
 }
 
 - (void)willDismissInterstitial
 {
-    
+
 }
 
 - (void)didDismissInterstitial
 {
-    
+
 }
 
 - (BOOL)shouldDisplayCloseButton
@@ -124,16 +124,17 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
         _closeButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
         _closeButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin |
         UIViewAutoresizingFlexibleBottomMargin;
-        
+
         UIImage *closeButtonImage = [UIImage imageNamed:kCloseButtonXImageName];
         [_closeButton setImage:closeButtonImage forState:UIControlStateNormal];
         [_closeButton sizeToFit];
-        
+
         [_closeButton addTarget:self
                          action:@selector(closeButtonPressed)
                forControlEvents:UIControlEventTouchUpInside];
+        _closeButton.accessibilityLabel = @"Close Interstitial Ad";
     }
-    
+
     _closeButton.hidden = ![self shouldDisplayCloseButton];
     return _closeButton;
 }
@@ -184,15 +185,15 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 - (void)dismissInterstitialAnimated:(BOOL)animated
 {
     [self setApplicationStatusBarHidden:!_applicationHasStatusBar];
-    
+
     [self willDismissInterstitial];
-    
+
     UIViewController *presentingViewController = [self mp_presentingViewController];
     // TODO: Is this check necessary?
     if ([presentingViewController mp_presentedViewController] == self) {
         [presentingViewController mp_dismissModalViewControllerAnimated:YES];
     }
-    
+
     [self didDismissInterstitial];
 }
 
@@ -208,7 +209,7 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
         return;
     }
 #endif
-    
+
     [[UIApplication sharedApplication] setStatusBarHidden:hidden];
 }
 
@@ -231,9 +232,9 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
     [[UIApplication sharedApplication] supportedInterfaceOrientationsForWindow:MPKeyWindow()];
     NSUInteger interstitialSupportedOrientations = applicationSupportedOrientations;
     NSString *orientationDescription = @"any";
-    
+
     // Using the _orientationType, narrow down the supported interface orientations.
-    
+
     if (_orientationType == MPInterstitialOrientationTypePortrait) {
         interstitialSupportedOrientations &=
         (UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown);
@@ -243,10 +244,10 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
         interstitialSupportedOrientations &= UIInterfaceOrientationMaskLandscape;
         orientationDescription = @"landscape";
     }
-    
+
     // If the application does not support any of the orientations given by _orientationType,
     // just return the application's supported orientations.
-    
+
     if (!interstitialSupportedOrientations) {
         MPLogError(@"Your application does not support this interstitial's desired orientation "
                    @"(%@).", orientationDescription);
@@ -262,10 +263,10 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
     NSUInteger supportedInterfaceOrientations = [self supportedInterfaceOrientations];
     UIInterfaceOrientation currentInterfaceOrientation = MPInterfaceOrientation();
     NSUInteger currentInterfaceOrientationMask = (1 << currentInterfaceOrientation);
-    
+
     // First, try to display the interstitial using the current interface orientation. If the
     // current interface orientation is unsupported, just use any of the supported orientations.
-    
+
     if (supportedInterfaceOrientations & currentInterfaceOrientationMask) {
         return currentInterfaceOrientation;
     }
@@ -288,13 +289,13 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	if (_orientationType == MPInterstitialOrientationTypePortrait)
-		return (interfaceOrientation == UIInterfaceOrientationPortrait ||
-				interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown);
-	else if (_orientationType == MPInterstitialOrientationTypeLandscape)
-		return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
-				interfaceOrientation == UIInterfaceOrientationLandscapeRight);
-	else return YES;
+    if (_orientationType == MPInterstitialOrientationTypePortrait)
+        return (interfaceOrientation == UIInterfaceOrientationPortrait ||
+                interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown);
+    else if (_orientationType == MPInterstitialOrientationTypeLandscape)
+        return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
+                interfaceOrientation == UIInterfaceOrientationLandscapeRight);
+    else return YES;
 }
 
 #pragma mark - Low-Memory Conditions
@@ -307,7 +308,7 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    
+
     self.closeButton = nil;
 }
 

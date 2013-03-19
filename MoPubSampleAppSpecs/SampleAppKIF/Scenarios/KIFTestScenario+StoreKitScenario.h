@@ -11,5 +11,6 @@
 
 + (id)scenarioForBannerAdWithStoreKitLink;
 + (id)scenarioForBannerAdWithInvalidStoreKitLink;
++ (id)scenarioForInterstitialAdWithStoreKitLink;
 
 @end
