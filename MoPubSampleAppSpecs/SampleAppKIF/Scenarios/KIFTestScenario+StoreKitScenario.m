@@ -6,7 +6,6 @@
 //
 
 #import "KIFTestScenario+StoreKitScenario.h"
-#import "MPSampleAppTestScenario.h"
 #import "KIFTestStep.h"
 #import <StoreKit/StoreKit.h>
 
@@ -31,8 +30,9 @@
 + (id)scenarioForBannerAdWithStoreKitLink
 {
     KIFTestScenario *scenario = [MPSampleAppTestScenario scenarioWithDescription:@"Test that a banner ad with a StoreKit link works."];
+    NSIndexPath *indexPath = [MPAdSection indexPathForAd:@"Valid StoreKit Link" inSection:@"Banner Ads"];
     [scenario addStep:[KIFTestStep stepToTapRowInTableViewWithAccessibilityLabel:@"Ad Table View"
-                                                                     atIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]];
+                                                                     atIndexPath:indexPath]];
 
     [scenario addStep:[KIFTestStep stepToWaitUntilActivityIndicatorIsNotAnimating]];
     [scenario addStep:[KIFTestStep stepToTapLink:@"LinkMaker"]];
@@ -46,8 +46,9 @@
 + (id)scenarioForBannerAdWithInvalidStoreKitLink
 {
     KIFTestScenario *scenario = [MPSampleAppTestScenario scenarioWithDescription:@"Test that a banner ad with a StoreKit link to an invalid item does not explode."];
+    NSIndexPath *indexPath = [MPAdSection indexPathForAd:@"Invalid StoreKit Link" inSection:@"Banner Ads"];
     [scenario addStep:[KIFTestStep stepToTapRowInTableViewWithAccessibilityLabel:@"Ad Table View"
-                                                                     atIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]]];
+                                                                     atIndexPath:indexPath]];
     [scenario addStep:[KIFTestStep stepToWaitUntilActivityIndicatorIsNotAnimating]];
     [scenario addStep:[KIFTestStep stepToTapLink:@"Invalid iTunes Item"]];
     [scenario addStep:[KIFTestStep stepToVerifyPresentationOfViewControllerClass:[SKStoreProductViewController class]]];
@@ -61,8 +62,9 @@
 + (id)scenarioForInterstitialAdWithStoreKitLink
 {
     KIFTestScenario *scenario = [MPSampleAppTestScenario scenarioWithDescription:@"Test that an interstitial ad with a StoreKit link works."];
+    NSIndexPath *indexPath = [MPAdSection indexPathForAd:@"Valid StoreKit Link" inSection:@"Interstitial Ads"];
     [scenario addStep:[KIFTestStep stepToTapRowInTableViewWithAccessibilityLabel:@"Ad Table View"
-                                                                     atIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]]];
+                                                                     atIndexPath:indexPath]];
 
     [scenario addStep:[KIFTestStep stepToTapViewWithAccessibilityLabel:@"Load"]];
     [scenario addStep:[KIFTestStep stepToWaitUntilActivityIndicatorIsNotAnimating]];

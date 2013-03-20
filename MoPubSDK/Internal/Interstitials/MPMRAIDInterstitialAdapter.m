@@ -9,32 +9,38 @@
 #import "MPMraidInterstitialAdapter.h"
 
 #import "MPAdConfiguration.h"
+#import "MPInstanceProvider.h"
 #import "MPInterstitialAdController.h"
 #import "MPInterstitialAdManager.h"
 #import "MPLogging.h"
+
+@interface MPMRAIDInterstitialAdapter ()
+
+@property (nonatomic, retain) MPMRAIDInterstitialViewController *interstitial;
+
+@end
 
 @implementation MPMRAIDInterstitialAdapter
 
 - (void)getAdWithConfiguration:(MPAdConfiguration *)configuration
 {
-    _interstitial = [[MPMRAIDInterstitialViewController alloc]
-                     initWithAdConfiguration:configuration];
-    _interstitial.delegate = self;
-    [_interstitial setCloseButtonStyle:MPInterstitialCloseButtonStyleAdControlled];
-    [_interstitial startLoading];
+    self.interstitial = [[MPInstanceProvider sharedProvider] buildMPMRAIDInterstitialViewControllerWithDelegate:self
+                                                                                                  configuration:configuration];
+    [self.interstitial setCloseButtonStyle:MPInterstitialCloseButtonStyleAdControlled];
+    [self.interstitial startLoading];
 }
 
 - (void)dealloc
 {
-    _interstitial.delegate = nil;
-    [_interstitial release];
+    self.interstitial.delegate = nil;
+    self.interstitial = nil;
 
     [super dealloc];
 }
 
 - (void)showInterstitialFromViewController:(UIViewController *)controller
 {
-    [_interstitial presentInterstitialFromViewController:controller];
+    [self.interstitial presentInterstitialFromViewController:controller];
 }
 
 #pragma mark - MPMRAIDInterstitialViewControllerDelegate
@@ -68,7 +74,5 @@
 {
     [self.delegate interstitialDidDisappearForAdapter:self];
 }
-
-// TODO: Tapped callback.
 
 @end

@@ -11,8 +11,5 @@
 #import "GSAdDelegate.h"
 
 @interface GreystripeInterstitialCustomEvent : MPInterstitialCustomEvent <GSAdDelegate>
-{
-    GSFullscreenAd *_greystripeFullscreenAd;
-}
 
 @end

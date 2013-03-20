@@ -9,43 +9,27 @@
 #import "MPBaseInterstitialAdapter.h"
 
 @class MPInterstitialAdController;
+@class CLLocation;
 @protocol MPInterstitialAdManagerDelegate;
 
 @interface MPInterstitialAdManager : NSObject <MPAdServerCommunicatorDelegate,
     MPBaseInterstitialAdapterDelegate>
-{
-    MPInterstitialAdController *_interstitialAdController;
-    id<MPInterstitialAdManagerDelegate> _delegate;
 
-    MPAdServerCommunicator *_communicator;
-    BOOL _loading;
-
-    NSURL *_failoverURL;
-
-    MPBaseInterstitialAdapter *_currentAdapter;
-    MPBaseInterstitialAdapter *_nextAdapter;
-
-    MPAdConfiguration *_currentConfiguration;
-    MPAdConfiguration *_nextConfiguration;
-
-    BOOL _isReady;
-    BOOL _hasRecordedImpressionForCurrentInterstitial;
-    BOOL _hasRecordedClickForCurrentInterstitial;
-
-    NSMutableURLRequest *_request;
-}
-
-@property (nonatomic, assign, getter=isLoading) BOOL loading;
-@property (nonatomic, assign) MPInterstitialAdController *interstitialAdController;
 @property (nonatomic, assign) id<MPInterstitialAdManagerDelegate> delegate;
-@property (nonatomic, readonly, copy) NSURL *failoverURL;
+@property (nonatomic, assign, readonly) BOOL ready;
 
-- (void)loadAdWithURL:(NSURL *)URL;
-- (void)loadInterstitial;
+- (id)initWithDelegate:(id<MPInterstitialAdManagerDelegate>)delegate;
+
+- (void)loadInterstitialWithAdUnitID:(NSString *)ID
+                            keywords:(NSString *)keywords
+                            location:(CLLocation *)location
+                             testing:(BOOL)testing;
 - (void)presentInterstitialFromViewController:(UIViewController *)controller;
-- (BOOL)isHandlingCustomEvent;
-- (void)reportClickForCurrentInterstitial;
-- (void)reportImpressionForCurrentInterstitial;
+
+// Deprecated
+- (void)customEventDidLoadAd;
+- (void)customEventDidFailToLoadAd;
+- (void)customEventActionWillBegin;
 
 @end
 
@@ -53,7 +37,8 @@
 
 @protocol MPInterstitialAdManagerDelegate <NSObject>
 
-- (NSString *)adUnitId;
+- (MPInterstitialAdController *)interstitialAdController;
+- (id)interstitialDelegate;
 - (void)managerDidLoadInterstitial:(MPInterstitialAdManager *)manager;
 - (void)manager:(MPInterstitialAdManager *)manager
         didFailToLoadInterstitialWithError:(NSError *)error;
@@ -62,6 +47,5 @@
 - (void)managerWillDismissInterstitial:(MPInterstitialAdManager *)manager;
 - (void)managerDidDismissInterstitial:(MPInterstitialAdManager *)manager;
 - (void)managerDidExpireInterstitial:(MPInterstitialAdManager *)manager;
-- (void)managerDidReceiveTapEventForInterstitial:(MPInterstitialAdManager *)manager;
 
 @end

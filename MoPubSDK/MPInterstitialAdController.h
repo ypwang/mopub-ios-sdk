@@ -14,23 +14,7 @@
 
 @protocol MPInterstitialAdControllerDelegate;
 
-@interface MPInterstitialAdController : UIViewController <MPInterstitialAdManagerDelegate,
-    MPBaseInterstitialAdapterDelegate>
-{
-    id<MPInterstitialAdControllerDelegate> _delegate;
-    MPInterstitialAdManager *_manager;
-    BOOL _ready;
-    
-    NSString *_adUnitId;
-    NSString *_keywords;
-    CLLocation *_location;
-    BOOL _locationEnabled;
-    NSUInteger _locationPrecision;
-    BOOL _testing;
-    
-    // DEPRECATED:
-    UIViewController<MPInterstitialAdControllerDelegate> *_parent;
-}
+@interface MPInterstitialAdController : UIViewController <MPInterstitialAdManagerDelegate>
 
 @property (nonatomic, assign) id<MPInterstitialAdControllerDelegate> delegate;
 @property (nonatomic, assign, readonly) BOOL ready;
@@ -59,7 +43,7 @@
 
 /*
  * Begins loading ad content for this interstitial. You should implement the -interstitialDidLoadAd
- * and -interstitialDidFailToLoadAd methods on your delegate object if you would like to be notified 
+ * and -interstitialDidFailToLoadAd methods on your delegate object if you would like to be notified
  * as the loading succeeds or fails.
  */
 - (void)loadAd;
@@ -70,41 +54,6 @@
 - (void)showFromViewController:(UIViewController *)controller;
 
 #pragma mark - Deprecated
-
-/*
- * Returns the view controller that is presenting this interstitial.
- *
- * DEPRECATED:
- */ 
-@property (nonatomic, assign) UIViewController<MPInterstitialAdControllerDelegate> *parent
-    MOPUB_DEPRECATED;
-
-/*
- * A Boolean value indicating whether the interstitial should display a dismissal button for HTML
- * ads -- that is, ads which do not originate from a third-party SDK. If YES, a dismissal button is
- * displayed in the top-right corner of the ad; otherwise, no button is displayed.
- *
- * The default value of this property is YES.
- *
- * DEPRECATED in v2.0: The dismissal button of HTML ads is no longer managed by the interstitial
- * object.
- */
-@property (nonatomic, assign) BOOL adWantsNativeCloseButton MOPUB_DEPRECATED;
-
-/*
- * Displays this interstitial modally from the view controller that is referenced by this
- * interstitial's `parent` property.
- *
- * DEPRECATED: Use -showFromViewController: instead.
- */
-- (void)show MOPUB_DEPRECATED;
-
-/*
- * Returns the result of -locationDescriptionPair on the embedded ad view.
- *
- * DEPRECATED:
- */
-- (NSArray *)locationDescriptionPair;
 
 /*
  * Notifies MoPub that a custom event has successfully loaded an interstitial.

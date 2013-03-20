@@ -42,10 +42,12 @@
 
 - (IBAction)didTapLoadButton:(id)sender
 {
-    [self.interstitial loadAd];
     [self.spinner startAnimating];
     self.showButton.hidden = YES;
     self.loadButton.enabled = NO;
+    self.expireLabel.hidden = YES;
+    self.failLabel.hidden = YES;
+    [self.interstitial loadAd];
 }
 
 - (IBAction)didTapShowButton:(id)sender
@@ -60,6 +62,26 @@
     [self.spinner stopAnimating];
     self.showButton.hidden = NO;
     self.loadButton.enabled = YES;
+}
+
+- (void)interstitialDidFailToLoadAd:(MPInterstitialAdController *)interstitial
+{
+    self.failLabel.hidden = NO;
+    self.loadButton.enabled = YES;
+    [self.spinner stopAnimating];
+}
+
+- (void)interstitialDidExpire:(MPInterstitialAdController *)interstitial
+{
+    self.expireLabel.hidden = NO;
+    self.loadButton.enabled = YES;
+    self.showButton.hidden = YES;
+    [self.spinner stopAnimating];
+}
+
+- (void)interstitialDidDisappear:(MPInterstitialAdController *)interstitial
+{
+    self.showButton.hidden = YES;
 }
 
 @end

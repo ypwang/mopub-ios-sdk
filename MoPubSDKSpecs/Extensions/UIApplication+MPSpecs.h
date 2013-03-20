@@ -11,5 +11,7 @@
 
 - (NSURL *)lastOpenedURL;
 - (void)setStatusBarOrientation:(UIInterfaceOrientation)orientation;
+- (void)setSupportedInterfaceOrientations:(UIInterfaceOrientationMask)orientationMask;
+- (NSUInteger)supportedInterfaceOrientationsForWindow:(UIWindow *)window;
 
 @end

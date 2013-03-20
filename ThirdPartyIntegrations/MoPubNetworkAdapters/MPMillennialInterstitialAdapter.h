@@ -15,8 +15,5 @@
  */
 
 @interface MPMillennialInterstitialAdapter : MPBaseInterstitialAdapter <MMAdDelegate>
-{
-	MMAdView *_mmInterstitialAdView;
-}
 
 @end

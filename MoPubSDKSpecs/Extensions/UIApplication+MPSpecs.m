@@ -10,6 +10,7 @@
 
 static char LAST_OPENED_URL_KEY;
 static char STATUS_BAR_ORIENTATION;
+static char SUPPORTED_INTERFACE_ORIENTATIONS;
 
 @implementation UIApplication (MPSpecs)
 
@@ -42,6 +43,16 @@ static char STATUS_BAR_ORIENTATION;
 - (UIInterfaceOrientation)statusBarOrientation
 {
     return [objc_getAssociatedObject(self, &STATUS_BAR_ORIENTATION) integerValue];
+}
+
+- (void)setSupportedInterfaceOrientations:(UIInterfaceOrientationMask)orientationMask
+{
+    objc_setAssociatedObject(self, &SUPPORTED_INTERFACE_ORIENTATIONS, [NSNumber numberWithUnsignedInteger:orientationMask], OBJC_ASSOCIATION_RETAIN);
+}
+
+- (NSUInteger)supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    return [objc_getAssociatedObject(self, &SUPPORTED_INTERFACE_ORIENTATIONS) unsignedIntegerValue];
 }
 
 @end

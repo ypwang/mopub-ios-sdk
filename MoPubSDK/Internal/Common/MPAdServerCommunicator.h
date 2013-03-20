@@ -19,25 +19,14 @@
 #else
 @interface MPAdServerCommunicator : NSObject
 #endif
-{
-    id<MPAdServerCommunicatorDelegate> _delegate;
-    NSURL *_URL;
-    NSURLConnection *_connection;
-    NSMutableData *_responseData;
-    NSDictionary *_responseHeaders;
-}
 
 @property (nonatomic, assign) id<MPAdServerCommunicatorDelegate> delegate;
-@property (nonatomic, copy) NSURL *URL;
-@property (nonatomic, retain) NSURLConnection *connection;
-@property (nonatomic, retain) NSMutableData *responseData;
-@property (nonatomic, retain) NSDictionary *responseHeaders;
+@property (nonatomic, assign, readonly) BOOL loading;
+
+- (id)initWithDelegate:(id<MPAdServerCommunicatorDelegate>)delegate;
 
 - (void)loadURL:(NSURL *)URL;
 - (void)cancel;
-
-- (NSError *)errorForStatusCode:(NSInteger)statusCode;
-- (NSURLRequest *)adRequestForURL:(NSURL *)URL;
 
 @end
 

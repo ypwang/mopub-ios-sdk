@@ -35,7 +35,8 @@
 
     self.view.backgroundColor = [UIColor blackColor];
     self.backingViewAgent = [[MPInstanceProvider sharedProvider] buildMPAdWebViewAgentWithAdWebViewFrame:self.view.bounds
-                                                                                                delegate:self];
+                                                                                                delegate:self
+                                                                                    customMethodDelegate:self.customMethodDelegate];
     self.backingView = self.backingViewAgent.view;
     self.backingView.autoresizingMask = UIViewAutoresizingFlexibleWidth |
         UIViewAutoresizingFlexibleHeight;
@@ -43,16 +44,6 @@
 }
 
 #pragma mark - Public
-
-- (id)customMethodDelegate
-{
-    return [self.backingViewAgent customMethodDelegate];
-}
-
-- (void)setCustomMethodDelegate:(id)delegate
-{
-    [self.backingViewAgent setCustomMethodDelegate:delegate];
-}
 
 - (void)loadConfiguration:(MPAdConfiguration *)configuration
 {
@@ -123,7 +114,7 @@
 
 - (void)adActionWillBegin:(MPAdWebView *)ad
 {
-    [self.delegate interstitialWasTapped:self];
+    // No need to tell anyone.
 }
 
 - (void)adActionWillLeaveApplication:(MPAdWebView *)ad

@@ -11,9 +11,4 @@
 #import <iAd/iAd.h>
 
 @interface MPIAdInterstitialAdapter : MPBaseInterstitialAdapter <ADInterstitialAdDelegate>
-{
-    ADInterstitialAd *_iAdInterstitial;
-    BOOL _isOnscreen;
-}
-
 @end

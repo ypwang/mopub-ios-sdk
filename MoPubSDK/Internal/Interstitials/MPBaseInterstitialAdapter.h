@@ -27,14 +27,6 @@
  */
 - (void)unregisterDelegate;
 
-/*
- * -getAdWithParams: needs to be implemented by adapter subclasses that want to load native ads.
- * -getAd simply calls -getAdWithParams: with a nil dictionary.
- */
-- (void)getAd;
-- (void)getAdWithParams:(NSDictionary *)params;
-- (void)_getAdWithParams:(NSDictionary *)params;
-
 - (void)getAdWithConfiguration:(MPAdConfiguration *)configuration;
 - (void)_getAdWithConfiguration:(MPAdConfiguration *)configuration;
 
@@ -42,6 +34,13 @@
  * Presents the interstitial from the specified view controller.
  */
 - (void)showInterstitialFromViewController:(UIViewController *)controller;
+
+@end
+
+@interface MPBaseInterstitialAdapter (ProtectedMethods)
+
+- (void)trackImpression;
+- (void)trackClick;
 
 @end
 
@@ -61,7 +60,6 @@
 - (void)interstitialDidAppearForAdapter:(MPBaseInterstitialAdapter *)adapter;
 - (void)interstitialWillDisappearForAdapter:(MPBaseInterstitialAdapter *)adapter;
 - (void)interstitialDidDisappearForAdapter:(MPBaseInterstitialAdapter *)adapter;
-- (void)interstitialWasTappedForAdapter:(MPBaseInterstitialAdapter *)adapter;
 - (void)interstitialDidExpireForAdapter:(MPBaseInterstitialAdapter *)adapter;
 - (void)interstitialWillLeaveApplicationForAdapter:(MPBaseInterstitialAdapter *)adapter;
 

@@ -11,6 +11,28 @@
 #import "MPInterstitialAdManager.h"
 #import "MPInterstitialAdController.h"
 #import "MPLogging.h"
+#import "MPInstanceProvider.h"
+
+@interface MPInstanceProvider (CustomEventInterstitials)
+
+- (MPInterstitialCustomEvent *)buildInterstitialCustomEventFromCustomClass:(Class)customClass
+                                                                  delegate:(id<MPInterstitialCustomEventDelegate>)delegate;
+
+@end
+
+@implementation MPInstanceProvider (CustomEventInterstitials)
+
+- (MPInterstitialCustomEvent *)buildInterstitialCustomEventFromCustomClass:customClass
+                                                                  delegate:(id<MPInterstitialCustomEventDelegate>)delegate
+{
+    MPInterstitialCustomEvent *customEvent = [[[customClass alloc] init] autorelease];
+    customEvent.delegate = delegate;
+    return customEvent;
+}
+
+@end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @interface MPInterstitialCustomEventAdapter ()
 
@@ -42,35 +64,15 @@
         return;
     }
 
-    MPLogInfo(@"Looking for custom event selector named %@.", configuration.customSelectorName);
-
-    SEL customEventSelector = NSSelectorFromString(configuration.customSelectorName);
-    if ([self.delegate.interstitialDelegate respondsToSelector:customEventSelector]) {
-        [self.delegate.interstitialDelegate performSelector:customEventSelector];
-        return;
-    }
-
-    NSString *oneArgumentSelectorName = [configuration.customSelectorName
-                                         stringByAppendingString:@":"];
-
-    MPLogInfo(@"Looking for custom event selector named %@.", oneArgumentSelectorName);
-
-    SEL customEventOneArgumentSelector = NSSelectorFromString(oneArgumentSelectorName);
-    if ([self.delegate.interstitialDelegate respondsToSelector:customEventOneArgumentSelector]) {
-        [self.delegate.interstitialDelegate performSelector:customEventOneArgumentSelector
-                                                 withObject:self.delegate.interstitialAdController];
-        return;
-    }
-
     MPLogInfo(@"Could not handle custom event request.");
 
     [self.delegate adapter:self didFailToLoadAdWithError:nil];
 }
 
+
 - (void)loadAdFromCustomClass:(Class)customClass configuration:(MPAdConfiguration *)configuration
 {
-    self.interstitialCustomEvent = [[[customClass alloc] init] autorelease];
-    self.interstitialCustomEvent.delegate = self;
+    self.interstitialCustomEvent = [[MPInstanceProvider sharedProvider] buildInterstitialCustomEventFromCustomClass:customClass delegate:self];
     [self.interstitialCustomEvent requestInterstitialWithCustomEventInfo:configuration.customEventClassData];
 }
 
@@ -95,6 +97,7 @@
 
 - (void)interstitialCustomEventWillAppear:(MPInterstitialCustomEvent *)customEvent
 {
+    [self trackImpression];
     [self.delegate interstitialWillAppearForAdapter:self];
     [self.delegate interstitialDidAppearForAdapter:self];
 }

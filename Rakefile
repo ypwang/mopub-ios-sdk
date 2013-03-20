@@ -3,6 +3,9 @@ require 'tmpdir'
 CONFIGURATION = "Debug"
 SDK_VERSION = "6.1"
 BUILD_DIR = File.join(File.dirname(__FILE__), "build")
+SCRIPTS_DIR = File.join(File.dirname(__FILE__), "Scripts")
+
+EXPECTED_KIF_IMPRESSIONS = 6
 
 def xcode_developer_dir
   `xcode-select -print-path`.strip
@@ -129,7 +132,7 @@ task :cruise => ["all:clean", "all:spec"]
 
 desc "Trim Whitespace"
 task :trim_whitespace do
-  system_or_exit(%Q[git status --short | awk '{if ($1 != "D" && $1 != "R") print $2}' | grep -e '.*\.[mh]$' | xargs sed -i '' -e 's/	/    /g;s/ *$//g;'])
+  system_or_exit(%Q[git status --short | awk '{if ($1 != "D" && $1 != "R") for (i=2; i<=NF; i++) printf("%s%s", $i, i<NF ? " " : ""); print ""}' | grep -e '.*.[mh]"*$' | xargs sed -i '' -e 's/	/    /g;s/ *$//g;'])
 end
 
 desc "Fix Up Copyright"
@@ -162,6 +165,23 @@ namespace :mopubsdk do
   end
 end
 
+def run_with_proxy
+  network = ENV['IS_CI_BOX'] ? "Ethernet" : "Wi-Fi"
+
+  pid = fork do
+    exec "#{SCRIPTS_DIR}/proxy.rb #{network}"
+  end
+
+  begin
+    yield
+  rescue SystemExit => e
+    exit(1)
+  ensure
+    Process.kill 'INT', pid
+    Process.wait pid
+  end
+end
+
 namespace :mopubsample do
   desc "Build MoPub Sample App"
   task :build do
@@ -184,7 +204,17 @@ namespace :mopubsample do
     build project: "MoPubSampleApp", target: "SampleAppKIF"
 
     head "Running KIF Integration Suite"
-    run_in_simulator(project: "MoPubSampleApp", target: "SampleAppKIF", success_condition: "TESTING FINISHED: 0 failures")
+
+    run_with_proxy do
+      run_in_simulator(project: "MoPubSampleApp", target: "SampleAppKIF", success_condition: "TESTING FINISHED: 0 failures")
+    end
+
+    number_of_impressions = File.readlines("#{SCRIPTS_DIR}/proxy.log").length
+    unless number_of_impressions == EXPECTED_KIF_IMPRESSIONS
+      puts "******** KIF Test Impression Count Failed ********"
+      puts "Expected #{EXPECTED_KIF_IMPRESSIONS} impressions, got #{number_of_impressions}"
+      exit(1)
+    end
   end
 
   task :clean do

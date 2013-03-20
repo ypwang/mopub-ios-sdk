@@ -11,8 +11,5 @@
 
 @interface MPHTMLInterstitialAdapter : MPBaseInterstitialAdapter
     <MPHTMLInterstitialViewControllerDelegate>
-{
-    MPHTMLInterstitialViewController *_interstitial;
-}
 
 @end

@@ -12,5 +12,7 @@
 #import "KIFTestStep+Navigation.h"
 #import "KIFTestStep+WebView.h"
 #import "KIFTestStep+ViewController.h"
+#import "KIFTestStep+Hacks.h"
+#import "KIFTestStep+View.h"
 
 #endif

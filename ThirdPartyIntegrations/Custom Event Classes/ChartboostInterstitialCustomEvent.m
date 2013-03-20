@@ -6,56 +6,86 @@
 //
 
 #import "ChartboostInterstitialCustomEvent.h"
+#import "MPInstanceProvider.h"
+#import "MPLogging.h"
 
-#define kChartboostAppID        @"YOUR_CHARTBOOST_APP_ID"
-#define kChartboostAppSignature @"YOUR_CHARTBOOST_APP_SIGNATURE"
+@interface MPInstanceProvider (ChartboostInterstitials)
+
+- (Chartboost *)buildChartboost;
+
+@end
+
+@implementation MPInstanceProvider (ChartboostInterstitials)
+
+- (Chartboost *)buildChartboost
+{
+    return [Chartboost sharedChartboost];
+}
+
+@end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@interface ChartboostInterstitialCustomEvent ()
+
+@property (nonatomic, retain) Chartboost *chartboost;
+
+@end
 
 @implementation ChartboostInterstitialCustomEvent
+
+@synthesize chartboost = _chartboost;
 
 #pragma mark - MPInterstitialCustomEvent Subclass Methods
 
 - (void)requestInterstitialWithCustomEventInfo:(NSDictionary *)info
 {
-    NSLog(@"Requesting Chartboost interstitial.");
+    MPLogInfo(@"Requesting Chartboost interstitial.");
     
-    Chartboost *cb = [Chartboost sharedChartboost];
-    cb.appId = kChartboostAppID;
-    cb.appSignature = kChartboostAppSignature;
-    cb.delegate = self;
+    NSString *appId = [info objectForKey:@"appId"];
+    NSString *appSignature = [info objectForKey:@"appSignature"];
     
-    [cb startSession];
-    [cb cacheInterstitial];
+    if ([appId length] > 0 && [appSignature length] > 0) {
+        self.chartboost = [[MPInstanceProvider sharedProvider] buildChartboost];
+        self.chartboost.appId = [info objectForKey:@"appId"];
+        self.chartboost.appSignature = [info objectForKey:@"appSignature"];
+        self.chartboost.delegate = self;
+        
+        [self.chartboost startSession];
+        [self.chartboost cacheInterstitial];
+    } else {
+        MPLogInfo(@"Failed to load Chartboost interstitial: missing either appId or appSignature.");
+        [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:nil];
+    }
 }
 
 - (void)showInterstitialFromRootViewController:(UIViewController *)rootViewController
 {
-    Chartboost *cb = [Chartboost sharedChartboost];
-    
-    if ([cb hasCachedInterstitial]) {
-        NSLog(@"Chartboost interstitial will be shown.");
+    if ([self.chartboost hasCachedInterstitial]) {
+        MPLogInfo(@"Chartboost interstitial will be shown.");
         
         // Normally, we would call this method when a callback notifies us that an ad is about to be
         // presented. Chartboost doesn't seem to have such a callback, so we'll call this method
         // right before we show the ad.
         [self.delegate interstitialCustomEventWillAppear:self];
         
-        [cb showInterstitial];
+        [self.chartboost showInterstitial];
     } else {
-        NSLog(@"Failed to show Chartboost interstitial.");
+        MPLogInfo(@"Failed to show Chartboost interstitial.");
         [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:nil];
     }
 }
 
 - (void)dealloc
 {
-    Chartboost *cb = [Chartboost sharedChartboost];
-
     // Don't set the delegate to nil unless we are the delegate, because another instance of
     // this custom class could be active (which would make it the active delegate instead). Note:
     // this check is only necessary because the Chartboost object is a shared instance.
-    if (cb.delegate == self) {
-        cb.delegate = nil;
+    if (self.chartboost.delegate == self) {
+        self.chartboost.delegate = nil;
     }
+    
+    self.chartboost = nil;
     
     [super dealloc];
 }
@@ -64,21 +94,21 @@
 
 - (void)didCacheInterstitial:(NSString *)location
 {
-    NSLog(@"Successfully loaded Chartboost interstitial.");
+    MPLogInfo(@"Successfully loaded Chartboost interstitial.");
     
-    [self.delegate interstitialCustomEvent:self didLoadAd:[Chartboost sharedChartboost]];
+    [self.delegate interstitialCustomEvent:self didLoadAd:self.chartboost];
 }
 
 - (void)didFailToLoadInterstitial:(NSString *)location
 {
-    NSLog(@"Failed to load Chartboost interstitial.");
+    MPLogInfo(@"Failed to load Chartboost interstitial.");
     
     [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:nil];
 }
 
 - (void)didDismissInterstitial:(NSString *)location
 {
-    NSLog(@"Chartboost interstitial was dismissed.");
+    MPLogInfo(@"Chartboost interstitial was dismissed.");
     
     [self.delegate interstitialCustomEventDidDisappear:self];
 }

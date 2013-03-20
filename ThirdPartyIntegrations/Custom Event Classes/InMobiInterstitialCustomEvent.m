@@ -6,8 +6,37 @@
 //
 
 #import "InMobiInterstitialCustomEvent.h"
+#import "MPInstanceProvider.h"
+#import "MPLogging.h"
+
+@interface MPInstanceProvider (InMobiInterstitials)
+
+- (IMAdInterstitial *)buildIMAdInterstitialWithDelegate:(id<IMAdInterstitialDelegate>)delegate appId:(NSString *)appId;
+
+@end
+
+@implementation MPInstanceProvider (InMobiInterstitials)
+
+- (IMAdInterstitial *)buildIMAdInterstitialWithDelegate:(id<IMAdInterstitialDelegate>)delegate appId:(NSString *)appId;
+{
+    IMAdInterstitial *inMobiInterstitial = [[[IMAdInterstitial alloc] init] autorelease];
+    inMobiInterstitial.delegate = delegate;
+    inMobiInterstitial.imAppId = appId;
+    return inMobiInterstitial;
+}
+
+@end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 #define kInMobiAppID    @"YOUR_INMOBI_APP_ID"
+
+@interface InMobiInterstitialCustomEvent ()
+
+@property (nonatomic, retain) IMAdInterstitial *inMobiInterstitial;
+
+@end
 
 @implementation InMobiInterstitialCustomEvent
 
@@ -15,26 +44,25 @@
 
 - (void)requestInterstitialWithCustomEventInfo:(NSDictionary *)info
 {
-    NSLog(@"Requesting InMobi interstitial.");
-    
-    _inmobiInterstitial = [[IMAdInterstitial alloc] init];
-    _inmobiInterstitial.delegate = self;
-    _inmobiInterstitial.imAppId = kInMobiAppID;
-    
+    MPLogInfo(@"Requesting InMobi interstitial.");
+
+    self.inMobiInterstitial = [[MPInstanceProvider sharedProvider] buildIMAdInterstitialWithDelegate:self
+                                                                                               appId:kInMobiAppID];
+
     IMAdRequest *request = [IMAdRequest request];
-    [_inmobiInterstitial loadRequest:request];
+    [self.inMobiInterstitial loadRequest:request];
 }
 
 - (void)showInterstitialFromRootViewController:(UIViewController *)rootViewController
 {
-    [_inmobiInterstitial presentFromRootViewController:rootViewController animated:YES];
+    [self.inMobiInterstitial presentFromRootViewController:rootViewController animated:YES];
 }
 
 - (void)dealloc
 {
-    [_inmobiInterstitial setDelegate:nil];
-    [_inmobiInterstitial release];
-    
+    [self.inMobiInterstitial setDelegate:nil];
+    self.inMobiInterstitial = nil;
+
     [super dealloc];
 }
 
@@ -42,22 +70,22 @@
 
 - (void)interstitialDidFinishRequest:(IMAdInterstitial *)ad
 {
-    NSLog(@"Successfully loaded InMobi interstitial.");
-    
+    MPLogInfo(@"Successfully loaded InMobi interstitial.");
+
     [self.delegate interstitialCustomEvent:self didLoadAd:ad];
 }
 
 - (void)interstitial:(IMAdInterstitial *)ad didFailToReceiveAdWithError:(IMAdError *)error
 {
-    NSLog(@"Failed to load InMobi interstitial.");
-    
+    MPLogInfo(@"Failed to load InMobi interstitial.");
+
     [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:nil];
 }
 
 - (void)interstitialWillPresentScreen:(IMAdInterstitial *)ad
 {
-    NSLog(@"InMobi interstitial will be shown.");
-    
+    MPLogInfo(@"InMobi interstitial will be shown.");
+
     [self.delegate interstitialCustomEventWillAppear:self];
 }
 
@@ -68,8 +96,8 @@
 
 - (void)interstitialDidDismissScreen:(IMAdInterstitial *)ad
 {
-    NSLog(@"InMobi interstitial was dismissed.");
-    
+    MPLogInfo(@"InMobi interstitial was dismissed.");
+
     [self.delegate interstitialCustomEventDidDisappear:self];
 }
 

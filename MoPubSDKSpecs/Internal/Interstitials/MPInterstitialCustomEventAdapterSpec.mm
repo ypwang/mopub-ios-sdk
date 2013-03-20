@@ -8,153 +8,109 @@ using namespace Cedar::Doubles;
 //TODO: when MPInterstitialAdController makes it to Specs, replace this with an import
 @class MPInterstitialAdController;
 
-@protocol BobTheBuilderProtocol <NSObject>
-- (void)buildGuy:(MPInterstitialAdController *)controller;
-@end
-
-@protocol VerilyBobTheBuilderProtocol <BobTheBuilderProtocol>
-- (void)buildGuy;
-@end
-
 SPEC_BEGIN(MPInterstitialCustomEventAdapterSpec)
 
 describe(@"MPInterstitialCustomEventAdapter", ^{
     __block MPInterstitialCustomEventAdapter *adapter;
     __block id<CedarDouble, MPBaseInterstitialAdapterDelegate> delegate;
     __block MPAdConfiguration *configuration;
+    __block FakeInterstitialCustomEvent *event;
 
     beforeEach(^{
         delegate = nice_fake_for(@protocol(MPBaseInterstitialAdapterDelegate));
         adapter = [[MPInterstitialCustomEventAdapter alloc] initWithDelegate:delegate];
-        configuration = [MPAdConfigurationFactory defaultInterstitialConfiguration];
+        configuration = [MPAdConfigurationFactory defaultInterstitialConfigurationWithCustomEventClassName:@"FakeInterstitialCustomEvent"];
+        event = [[[FakeInterstitialCustomEvent alloc] init] autorelease];
+        fakeProvider.fakeInterstitialCustomEvent = event;
     });
 
     context(@"when asked to get an ad for a configuration", ^{
-        context(@"when the configuration has a custom event class", ^{
-            context(@"when the requested custom event class does not exist", ^{
-                beforeEach(^{
-                    configuration = [MPAdConfigurationFactory defaultInterstitialConfigurationWithCustomEventClassName:@"NSMonkeyToastEndocrineParadigmBean"];
-                });
-
-                it(@"should tell the delegate that it failed", ^{
-                    [adapter getAdWithConfiguration:configuration];
-                    delegate should have_received(@selector(adapter:didFailToLoadAdWithError:)).with(adapter).and_with(nil);
-                });
+        context(@"when the requested custom event class exists", ^{
+            beforeEach(^{
+                configuration.customEventClassData = @{@"Zoology":@"Is for zoologists"};
+                [adapter _getAdWithConfiguration:configuration];
             });
 
-            context(@"when the requested custom event class exists", ^{
-                beforeEach(^{
-                    configuration = [MPAdConfigurationFactory defaultInterstitialConfigurationWithCustomEventClassName:@"FakeInterstitialCustomEvent"];
-                    configuration.customEventClassData = @{@"Zoology":@"Is for zoologists"};
-                });
-
-                it(@"should create a new instance of the class and request the interstitial", ^{
-                    [adapter getAdWithConfiguration:configuration];
-                    FakeInterstitialCustomEvent *event = [FakeInterstitialCustomEvent lastInterstitialCustomEvent];
-                    event.delegate should equal(adapter);
-                    event.customEventInfo should equal(configuration.customEventClassData);
-                });
+            it(@"should create a new instance of the class and request the interstitial", ^{
+                event.delegate should equal(adapter);
+                event.customEventInfo should equal(configuration.customEventClassData);
             });
         });
 
-        context(@"when the configuration has no custom event class", ^{
+        context(@"when the requested custom event class does not exist", ^{
             beforeEach(^{
-                configuration.customEventClass = nil;
+                configuration = [MPAdConfigurationFactory defaultInterstitialConfigurationWithCustomEventClassName:@"NonExistentCustomEvent"];
+                [adapter _getAdWithConfiguration:configuration];
             });
 
-            context(@"when the configuration has a custom event selector", ^{
-                beforeEach(^{
-                    configuration.customSelectorName = @"buildGuy";
-                });
-
-                context(@"when the interstitial delegate implements the zero-argument selector", ^{
-                    it(@"should perform the selector on the interstitial delegate", ^{
-                        id<CedarDouble, VerilyBobTheBuilderProtocol> bob = nice_fake_for(@protocol(VerilyBobTheBuilderProtocol));
-                        delegate stub_method("interstitialDelegate").and_return(bob);
-                        [adapter getAdWithConfiguration:configuration];
-                        bob should have_received(@selector(buildGuy));
-                    });
-                });
-
-                context(@"when the interstitial delegate implements the one-argument selector", ^{
-                    it(@"should perform the selector on the interstitial delegate", ^{
-                        id<CedarDouble, BobTheBuilderProtocol> bob = nice_fake_for(@protocol(BobTheBuilderProtocol));
-                        NSObject *controllerProxy = [[[NSObject alloc] init] autorelease];
-
-                        delegate stub_method("interstitialDelegate").and_return(bob);
-                        delegate stub_method("interstitialAdController").and_return(controllerProxy);
-
-                        [adapter getAdWithConfiguration:configuration];
-
-                        bob should have_received(@selector(buildGuy:)).with(controllerProxy);
-                    });
-                });
-
-                context(@"when the interstitial delegate does not implement the selector", ^{
-                    it(@"should tell the delegate that it failed", ^{
-                        NSObject *cake = [[[NSObject alloc] init] autorelease];
-
-                        delegate stub_method("interstitialDelegate").and_return(cake);
-                        [adapter getAdWithConfiguration:configuration];
-                        delegate should have_received(@selector(adapter:didFailToLoadAdWithError:)).with(adapter).and_with(nil);
-                    });
-                });
-            });
-
-            context(@"when the configuration also does not have a custom event selector", ^{
-                beforeEach(^{
-                    configuration.customSelectorName = nil;
-                });
-
-                it(@"should tell the delegate that it failed", ^{
-                    [adapter getAdWithConfiguration:configuration];
-                    delegate should have_received(@selector(adapter:didFailToLoadAdWithError:)).with(adapter).and_with(nil);
-                });
+            it(@"should not create an instance, and should tell its delegate that it failed to load", ^{
+                event.delegate should be_nil;
+                delegate should have_received(@selector(adapter:didFailToLoadAdWithError:)).with(adapter).and_with(nil);
             });
         });
     });
 
     context(@"when asked to show the interstitial", ^{
-        __block FakeInterstitialCustomEvent *event;
         __block UIViewController *controller;
 
         beforeEach(^{
-            configuration = [MPAdConfigurationFactory defaultInterstitialConfigurationWithCustomEventClassName:@"FakeInterstitialCustomEvent"];
-            [adapter getAdWithConfiguration:configuration];
-            event = [FakeInterstitialCustomEvent lastInterstitialCustomEvent];
+            [adapter _getAdWithConfiguration:configuration];
             controller = [[[UIViewController alloc] init] autorelease];
             [adapter showInterstitialFromViewController:controller];
         });
 
         it(@"should ask the custom event class", ^{
-            event.rootViewController should equal(controller);
+            event.presentingViewController should equal(controller);
         });
     });
 
     describe(@"MPInterstitialCustomEventDelegate methods", ^{
+        beforeEach(^{
+            configuration.customEventClassData = @{@"Zoology":@"Is for zoologists"};
+            [adapter _getAdWithConfiguration:configuration];
+        });
+
         describe(@"when the custom event loads an ad", ^{
-            it(@"should tell its delegate", ^{
+            beforeEach(^{
                 [adapter interstitialCustomEvent:nil didLoadAd:nil];
+            });
+
+            it(@"should tell its delegate", ^{
                 delegate should have_received(@selector(adapterDidFinishLoadingAd:)).with(adapter);
             });
         });
 
         describe(@"when the custom event fails to load an ad", ^{
-            it(@"should tell its delegate", ^{
-                NSError *error = [[[NSError alloc] init] autorelease];
+            __block NSError *error;
+
+            beforeEach(^{
+                error = [NSErrorFactory genericError];
                 [adapter interstitialCustomEvent:nil didFailToLoadAdWithError:error];
+            });
+
+            it(@"should tell its delegate", ^{
                 delegate should have_received(@selector(adapter:didFailToLoadAdWithError:)).with(adapter).and_with(error);
             });
         });
 
         describe(@"when the custom event is about to show an ad", ^{
-            it(@"should tell its delegate", ^{
+            beforeEach(^{
                 [adapter interstitialCustomEventWillAppear:nil];
+            });
+
+            it(@"should tell its delegate", ^{
                 delegate should have_received(@selector(interstitialWillAppearForAdapter:)).with(adapter);
                 delegate should have_received(@selector(interstitialDidAppearForAdapter:)).with(adapter);
 
                 [delegate.sent_messages[0] selector] should equal(@selector(interstitialWillAppearForAdapter:));
                 [delegate.sent_messages[1] selector] should equal(@selector(interstitialDidAppearForAdapter:));
+            });
+
+            it(@"should log an impression (only once)", ^{
+                fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations should contain(configuration);
+
+                [adapter interstitialCustomEventWillAppear:nil];
+                fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
             });
         });
 

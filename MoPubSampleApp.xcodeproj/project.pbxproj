@@ -7,6 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE109198170103BD00812E6E /* KIFTestScenario+Chartboost.m in Sources */ = {isa = PBXBuildFile; fileRef = AE109197170103BD00812E6E /* KIFTestScenario+Chartboost.m */; };
+		AE1091A3170108AA00812E6E /* KIFTestStep+View.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1091A2170108AA00812E6E /* KIFTestStep+View.m */; };
+		AE1091F517011EF400812E6E /* KIFTestScenario+Greystripe.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1091F417011EF300812E6E /* KIFTestScenario+Greystripe.m */; };
+		AE10920E170120E700812E6E /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE10920A170120E700812E6E /* CoreTelephony.framework */; };
+		AE10920F170120E700812E6E /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE10920A170120E700812E6E /* CoreTelephony.framework */; };
+		AE109210170120E700812E6E /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE10920A170120E700812E6E /* CoreTelephony.framework */; };
+		AE109211170120E700812E6E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE10920B170120E700812E6E /* Security.framework */; };
+		AE109212170120E700812E6E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE10920B170120E700812E6E /* Security.framework */; };
+		AE109213170120E700812E6E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE10920B170120E700812E6E /* Security.framework */; };
+		AE109214170120E700812E6E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AE10920C170120E700812E6E /* libz.dylib */; };
+		AE109215170120E700812E6E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AE10920C170120E700812E6E /* libz.dylib */; };
+		AE109216170120E700812E6E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AE10920C170120E700812E6E /* libz.dylib */; };
+		AE109217170120E700812E6E /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AE10920D170120E700812E6E /* libsqlite3.dylib */; };
+		AE109218170120E700812E6E /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AE10920D170120E700812E6E /* libsqlite3.dylib */; };
+		AE109219170120E700812E6E /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AE10920D170120E700812E6E /* libsqlite3.dylib */; };
 		AE1175F316F7D67800363FCA /* KIFHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1175F216F7D67800363FCA /* KIFHelper.m */; };
 		AE1175F716F7D84D00363FCA /* MPSampleAppTestScenario.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1175F616F7D84D00363FCA /* MPSampleAppTestScenario.m */; };
 		AE1175FA16F7D94700363FCA /* KIFTestStep+ActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1175F916F7D94700363FCA /* KIFTestStep+ActivityIndicator.m */; };
@@ -34,6 +49,13 @@
 		AE43414E16F9074A00B73710 /* MPInterstitialAdDetailViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE43414D16F9074A00B73710 /* MPInterstitialAdDetailViewControllerSpec.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		AE43415116F9094C00B73710 /* FakeMPInterstitialAdController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE43415016F9094C00B73710 /* FakeMPInterstitialAdController.m */; };
 		AE43415716F916FC00B73710 /* KIFTestStep+ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE43415616F916FC00B73710 /* KIFTestStep+ViewController.m */; };
+		AE867A6A170215DB007E9D8C /* KIFMPInstanceProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AE867A69170215DB007E9D8C /* KIFMPInstanceProvider.m */; };
+		AE867A7517021852007E9D8C /* KIFTestScenario+InMobi.m in Sources */ = {isa = PBXBuildFile; fileRef = AE867A7417021851007E9D8C /* KIFTestScenario+InMobi.m */; };
+		AED1B2BF16FCE336000F5C39 /* MPAdSection+KIF.m in Sources */ = {isa = PBXBuildFile; fileRef = AED1B2BE16FCE336000F5C39 /* MPAdSection+KIF.m */; };
+		AED1B2D016FD024D000F5C39 /* KIFTestScenario+Millennial.m in Sources */ = {isa = PBXBuildFile; fileRef = AED1B2CF16FD024D000F5C39 /* KIFTestScenario+Millennial.m */; };
+		AED1B2D316FD060F000F5C39 /* UIWebView+KIF.m in Sources */ = {isa = PBXBuildFile; fileRef = AED1B2D216FD060F000F5C39 /* UIWebView+KIF.m */; };
+		AED1B2EE16FD1333000F5C39 /* KIFTestScenario+GAD.m in Sources */ = {isa = PBXBuildFile; fileRef = AED1B2ED16FD1333000F5C39 /* KIFTestScenario+GAD.m */; };
+		AED1B2F916FD1368000F5C39 /* KIFTestStep+Hacks.m in Sources */ = {isa = PBXBuildFile; fileRef = AED1B2F816FD1368000F5C39 /* KIFTestStep+Hacks.m */; };
 		AED9E41B16F78AFA00EA71A7 /* libMoPubSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AED9E41616F78ADE00EA71A7 /* libMoPubSDK.a */; };
 		AED9E41D16F78B1100EA71A7 /* MPCloseButtonX.png in Resources */ = {isa = PBXBuildFile; fileRef = AED9E41C16F78B1100EA71A7 /* MPCloseButtonX.png */; };
 		AED9E41F16F78B1500EA71A7 /* MPCloseButtonX@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AED9E41E16F78B1500EA71A7 /* MPCloseButtonX@2x.png */; };
@@ -266,6 +288,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AE109196170103BD00812E6E /* KIFTestScenario+Chartboost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KIFTestScenario+Chartboost.h"; sourceTree = "<group>"; };
+		AE109197170103BD00812E6E /* KIFTestScenario+Chartboost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KIFTestScenario+Chartboost.m"; sourceTree = "<group>"; };
+		AE1091A1170108AA00812E6E /* KIFTestStep+View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KIFTestStep+View.h"; sourceTree = "<group>"; };
+		AE1091A2170108AA00812E6E /* KIFTestStep+View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KIFTestStep+View.m"; sourceTree = "<group>"; };
+		AE1091F317011EF300812E6E /* KIFTestScenario+Greystripe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KIFTestScenario+Greystripe.h"; sourceTree = "<group>"; };
+		AE1091F417011EF300812E6E /* KIFTestScenario+Greystripe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KIFTestScenario+Greystripe.m"; sourceTree = "<group>"; };
+		AE10920A170120E700812E6E /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		AE10920B170120E700812E6E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		AE10920C170120E700812E6E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		AE10920D170120E700812E6E /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		AE1175F116F7D67800363FCA /* KIFHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KIFHelper.h; sourceTree = "<group>"; };
 		AE1175F216F7D67800363FCA /* KIFHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KIFHelper.m; sourceTree = "<group>"; };
 		AE1175F416F7D71E00363FCA /* SampleAppKIF-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SampleAppKIF-Prefix.pch"; sourceTree = "<group>"; };
@@ -303,6 +335,20 @@
 		AE43415616F916FC00B73710 /* KIFTestStep+ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KIFTestStep+ViewController.m"; sourceTree = "<group>"; };
 		AE43415816F9173700B73710 /* KIFTestStep+MoPubSampleApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KIFTestStep+MoPubSampleApp.h"; sourceTree = "<group>"; };
 		AE5CEA8416F8E24100B466AA /* SampleAppKIF-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SampleAppKIF-Info.plist"; sourceTree = "<group>"; };
+		AE867A68170215DB007E9D8C /* KIFMPInstanceProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KIFMPInstanceProvider.h; sourceTree = "<group>"; };
+		AE867A69170215DB007E9D8C /* KIFMPInstanceProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KIFMPInstanceProvider.m; sourceTree = "<group>"; };
+		AE867A7317021851007E9D8C /* KIFTestScenario+InMobi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KIFTestScenario+InMobi.h"; sourceTree = "<group>"; };
+		AE867A7417021851007E9D8C /* KIFTestScenario+InMobi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KIFTestScenario+InMobi.m"; sourceTree = "<group>"; };
+		AED1B2BD16FCE336000F5C39 /* MPAdSection+KIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MPAdSection+KIF.h"; sourceTree = "<group>"; };
+		AED1B2BE16FCE336000F5C39 /* MPAdSection+KIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MPAdSection+KIF.m"; sourceTree = "<group>"; };
+		AED1B2CE16FD024D000F5C39 /* KIFTestScenario+Millennial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KIFTestScenario+Millennial.h"; sourceTree = "<group>"; };
+		AED1B2CF16FD024D000F5C39 /* KIFTestScenario+Millennial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KIFTestScenario+Millennial.m"; sourceTree = "<group>"; };
+		AED1B2D116FD060F000F5C39 /* UIWebView+KIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+KIF.h"; sourceTree = "<group>"; };
+		AED1B2D216FD060F000F5C39 /* UIWebView+KIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+KIF.m"; sourceTree = "<group>"; };
+		AED1B2EC16FD1333000F5C39 /* KIFTestScenario+GAD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KIFTestScenario+GAD.h"; sourceTree = "<group>"; };
+		AED1B2ED16FD1333000F5C39 /* KIFTestScenario+GAD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KIFTestScenario+GAD.m"; sourceTree = "<group>"; };
+		AED1B2F716FD1368000F5C39 /* KIFTestStep+Hacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KIFTestStep+Hacks.h"; sourceTree = "<group>"; };
+		AED1B2F816FD1368000F5C39 /* KIFTestStep+Hacks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KIFTestStep+Hacks.m"; sourceTree = "<group>"; };
 		AED9E40C16F78ADD00EA71A7 /* MoPubSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = MoPubSDK.xcodeproj; sourceTree = "<group>"; };
 		AED9E41C16F78B1100EA71A7 /* MPCloseButtonX.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MPCloseButtonX.png; path = MoPubSDK/Resources/MPCloseButtonX.png; sourceTree = "<group>"; };
 		AED9E41E16F78B1500EA71A7 /* MPCloseButtonX@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "MPCloseButtonX@2x.png"; path = "MoPubSDK/Resources/MPCloseButtonX@2x.png"; sourceTree = "<group>"; };
@@ -353,8 +399,8 @@
 		AEEA5E4F16F940EC003D48F4 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/MessageUI.framework; sourceTree = "<absolute>"; };
 		AEEA5E5016F940EC003D48F4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
 		AEEA5E5116F940EC003D48F4 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/iAd.framework; sourceTree = "<absolute>"; };
-		AEEA5E7116F94102003D48F4 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libGoogleAdMobAds.a; path = Externals/ThirdPartyNetworks/AdMob_6.3.0/libGoogleAdMobAds.a; sourceTree = "<group>"; };
-		AEEA5E7216F94102003D48F4 /* libMMSDK_4.6.2.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libMMSDK_4.6.2.a; path = Externals/ThirdPartyNetworks/Millennial_4.6.2/libMMSDK_4.6.2.a; sourceTree = "<group>"; };
+		AEEA5E7116F94102003D48F4 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAdMobAds.a; path = Externals/ThirdPartyNetworks/AdMob_6.3.0/libGoogleAdMobAds.a; sourceTree = "<group>"; };
+		AEEA5E7216F94102003D48F4 /* libMMSDK_4.6.2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMMSDK_4.6.2.a; path = Externals/ThirdPartyNetworks/Millennial_4.6.2/libMMSDK_4.6.2.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -376,6 +422,10 @@
 				AEEA5E6116F940EC003D48F4 /* MessageUI.framework in Frameworks */,
 				AEEA5E6416F940EC003D48F4 /* AudioToolbox.framework in Frameworks */,
 				AEEA5E6716F940EC003D48F4 /* iAd.framework in Frameworks */,
+				AE10920E170120E700812E6E /* CoreTelephony.framework in Frameworks */,
+				AE109211170120E700812E6E /* Security.framework in Frameworks */,
+				AE109214170120E700812E6E /* libz.dylib in Frameworks */,
+				AE109217170120E700812E6E /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +452,10 @@
 				AEEA5E6216F940EC003D48F4 /* MessageUI.framework in Frameworks */,
 				AEEA5E6516F940EC003D48F4 /* AudioToolbox.framework in Frameworks */,
 				AEEA5E6816F940EC003D48F4 /* iAd.framework in Frameworks */,
+				AE10920F170120E700812E6E /* CoreTelephony.framework in Frameworks */,
+				AE109212170120E700812E6E /* Security.framework in Frameworks */,
+				AE109215170120E700812E6E /* libz.dylib in Frameworks */,
+				AE109218170120E700812E6E /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,6 +478,10 @@
 				AEEA5E6316F940EC003D48F4 /* MessageUI.framework in Frameworks */,
 				AEEA5E6616F940EC003D48F4 /* AudioToolbox.framework in Frameworks */,
 				AEEA5E6916F940EC003D48F4 /* iAd.framework in Frameworks */,
+				AE109210170120E700812E6E /* CoreTelephony.framework in Frameworks */,
+				AE109213170120E700812E6E /* Security.framework in Frameworks */,
+				AE109216170120E700812E6E /* libz.dylib in Frameworks */,
+				AE109219170120E700812E6E /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,6 +500,10 @@
 				AE43415516F916FC00B73710 /* KIFTestStep+ViewController.h */,
 				AE43415616F916FC00B73710 /* KIFTestStep+ViewController.m */,
 				AE43415816F9173700B73710 /* KIFTestStep+MoPubSampleApp.h */,
+				AED1B2F716FD1368000F5C39 /* KIFTestStep+Hacks.h */,
+				AED1B2F816FD1368000F5C39 /* KIFTestStep+Hacks.m */,
+				AE1091A1170108AA00812E6E /* KIFTestStep+View.h */,
+				AE1091A2170108AA00812E6E /* KIFTestStep+View.m */,
 			);
 			path = Steps;
 			sourceTree = "<group>";
@@ -451,6 +513,12 @@
 			children = (
 				AE1175F116F7D67800363FCA /* KIFHelper.h */,
 				AE1175F216F7D67800363FCA /* KIFHelper.m */,
+				AED1B2BD16FCE336000F5C39 /* MPAdSection+KIF.h */,
+				AED1B2BE16FCE336000F5C39 /* MPAdSection+KIF.m */,
+				AED1B2D116FD060F000F5C39 /* UIWebView+KIF.h */,
+				AED1B2D216FD060F000F5C39 /* UIWebView+KIF.m */,
+				AE867A68170215DB007E9D8C /* KIFMPInstanceProvider.h */,
+				AE867A69170215DB007E9D8C /* KIFMPInstanceProvider.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -458,9 +526,9 @@
 		AE23238616F78A17002C2082 = {
 			isa = PBXGroup;
 			children = (
-				AED9E51016F7B93B00EA71A7 /* SampleAppKIF */,
 				AE23239816F78A17002C2082 /* MoPubSampleApp */,
 				AED9E45D16F78D7300EA71A7 /* SampleAppSpecs */,
+				AED9E51016F7B93B00EA71A7 /* SampleAppKIF */,
 				AE23239116F78A17002C2082 /* Frameworks */,
 				AE23239016F78A17002C2082 /* Products */,
 				AED9E42416F78B4200EA71A7 /* SDKResources */,
@@ -482,6 +550,10 @@
 		AE23239116F78A17002C2082 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AE10920A170120E700812E6E /* CoreTelephony.framework */,
+				AE10920B170120E700812E6E /* Security.framework */,
+				AE10920C170120E700812E6E /* libz.dylib */,
+				AE10920D170120E700812E6E /* libsqlite3.dylib */,
 				AEEA5E7116F94102003D48F4 /* libGoogleAdMobAds.a */,
 				AEEA5E7216F94102003D48F4 /* libMMSDK_4.6.2.a */,
 				AEEA5E4A16F940EC003D48F4 /* AVFoundation.framework */,
@@ -723,6 +795,16 @@
 				AED9E51616F7BA0900EA71A7 /* KIFTestScenario+StoreKitScenario.m */,
 				AE1175F516F7D84D00363FCA /* MPSampleAppTestScenario.h */,
 				AE1175F616F7D84D00363FCA /* MPSampleAppTestScenario.m */,
+				AED1B2CE16FD024D000F5C39 /* KIFTestScenario+Millennial.h */,
+				AED1B2CF16FD024D000F5C39 /* KIFTestScenario+Millennial.m */,
+				AED1B2EC16FD1333000F5C39 /* KIFTestScenario+GAD.h */,
+				AED1B2ED16FD1333000F5C39 /* KIFTestScenario+GAD.m */,
+				AE109196170103BD00812E6E /* KIFTestScenario+Chartboost.h */,
+				AE109197170103BD00812E6E /* KIFTestScenario+Chartboost.m */,
+				AE1091F317011EF300812E6E /* KIFTestScenario+Greystripe.h */,
+				AE1091F417011EF300812E6E /* KIFTestScenario+Greystripe.m */,
+				AE867A7317021851007E9D8C /* KIFTestScenario+InMobi.h */,
+				AE867A7417021851007E9D8C /* KIFTestScenario+InMobi.m */,
 			);
 			path = Scenarios;
 			sourceTree = "<group>";
@@ -1036,6 +1118,16 @@
 				AE43413F16F8EEC500B73710 /* MPAdSection.m in Sources */,
 				AE43414916F9068000B73710 /* MPInterstitialAdDetailViewController.m in Sources */,
 				AE43415716F916FC00B73710 /* KIFTestStep+ViewController.m in Sources */,
+				AED1B2BF16FCE336000F5C39 /* MPAdSection+KIF.m in Sources */,
+				AED1B2D016FD024D000F5C39 /* KIFTestScenario+Millennial.m in Sources */,
+				AED1B2D316FD060F000F5C39 /* UIWebView+KIF.m in Sources */,
+				AED1B2EE16FD1333000F5C39 /* KIFTestScenario+GAD.m in Sources */,
+				AED1B2F916FD1368000F5C39 /* KIFTestStep+Hacks.m in Sources */,
+				AE109198170103BD00812E6E /* KIFTestScenario+Chartboost.m in Sources */,
+				AE1091A3170108AA00812E6E /* KIFTestStep+View.m in Sources */,
+				AE1091F517011EF400812E6E /* KIFTestScenario+Greystripe.m in Sources */,
+				AE867A6A170215DB007E9D8C /* KIFMPInstanceProvider.m in Sources */,
+				AE867A7517021852007E9D8C /* KIFTestScenario+InMobi.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1146,6 +1238,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -1272,6 +1365,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/build/Release-iphoneos\"",
 				);
+				OTHER_CFLAGS = "-Wno-objc-protocol-method-implementation";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",

@@ -11,8 +11,5 @@
 #import "IMAdInterstitialDelegate.h"
 
 @interface InMobiInterstitialCustomEvent : MPInterstitialCustomEvent <IMAdInterstitialDelegate>
-{
-    IMAdInterstitial *_inmobiInterstitial;
-}
 
 @end

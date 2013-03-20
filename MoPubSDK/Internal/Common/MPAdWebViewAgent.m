@@ -39,13 +39,14 @@ NSString * const kMoPubCustomHost = @"custom";
 @synthesize customMethodDelegate = _customMethodDelegate;
 @synthesize shouldHandleRequests = _shouldHandleRequests;
 
-- (id)initWithAdWebViewFrame:(CGRect)frame delegate:(id<MPAdWebViewAgentDelegate>)delegate;
+- (id)initWithAdWebViewFrame:(CGRect)frame delegate:(id<MPAdWebViewAgentDelegate>)delegate customMethodDelegate:(id)customMethodDelegate;
 {
     self = [super init];
     if (self) {
         self.view = [[MPInstanceProvider sharedProvider] buildMPAdWebViewWithFrame:frame delegate:self];
         self.destinationDisplayAgent = [[MPInstanceProvider sharedProvider] buildMPAdDestinationDisplayAgentWithDelegate:self];
         self.delegate = delegate;
+        self.customMethodDelegate = customMethodDelegate;
         self.shouldHandleRequests = YES;
     }
     return self;

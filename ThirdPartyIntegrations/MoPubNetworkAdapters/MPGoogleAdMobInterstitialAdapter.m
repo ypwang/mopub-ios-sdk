@@ -10,22 +10,53 @@
 #import "CJSONDeserializer.h"
 #import "MPInterstitialAdController.h"
 #import "MPLogging.h"
+#import "MPAdConfiguration.h"
+#import "MPInstanceProvider.h"
 
 #define kLocationAccuracyMeters 100
 
+////// Add AdMob support to the shared instance provider
+
+@interface MPInstanceProvider (AdMobInterstitials)
+
+- (GADInterstitial *)buildGADInterstitialAd;
+
+@end
+
+@implementation MPInstanceProvider (AdMobInterstitials)
+
+- (GADInterstitial *)buildGADInterstitialAd
+{
+    return [[[GADInterstitial alloc] init] autorelease];
+}
+
+@end
+
+////// MPGoogleAdMobInterstitialAdapter
+
+@interface MPGoogleAdMobInterstitialAdapter ()
+
+@property (nonatomic, retain) GADInterstitial *interstitial;
+
+@end
+
 @implementation MPGoogleAdMobInterstitialAdapter
 
-- (void)getAdWithParams:(NSDictionary *)params
+@synthesize interstitial = _interstitial;
+
+- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration
 {
+    self.interstitial = [[MPInstanceProvider sharedProvider] buildGADInterstitialAd];
+
+    NSDictionary *params = configuration.headers;
     CJSONDeserializer *deserializer = [CJSONDeserializer deserializerWithNullObject:NULL];
 
     NSData *hdrData = [(NSString *)[params objectForKey:@"X-Nativeparams"]
                        dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *hdrParams = [deserializer deserializeAsDictionary:hdrData error:NULL];
 
-    _gAdInterstitial = [[GADInterstitial alloc] init];
-    _gAdInterstitial.adUnitID = [hdrParams objectForKey:@"adUnitID"];
-    _gAdInterstitial.delegate = self;
+    self.interstitial.adUnitID = [hdrParams objectForKey:@"adUnitID"];
+    self.interstitial.delegate = self;
 
     GADRequest *request = [GADRequest request];
 
@@ -43,7 +74,7 @@
                            // more UDIDs here,
                            nil];
 
-    [_gAdInterstitial loadRequest:request];
+    [self.interstitial loadRequest:request];
 }
 
 - (void)interstitialDidReceiveAd:(GADInterstitial *)interstitial
@@ -59,11 +90,12 @@
 
 - (void)showInterstitialFromViewController:(UIViewController *)controller
 {
-    [_gAdInterstitial presentFromRootViewController:controller];
+    [self.interstitial presentFromRootViewController:controller];
 }
 
 - (void)interstitialWillPresentScreen:(GADInterstitial *)interstitial
 {
+    [self trackImpression];
     [self.delegate interstitialWillAppearForAdapter:self];
     [self.delegate interstitialDidAppearForAdapter:self];
 }
@@ -82,13 +114,13 @@
 
 - (void)interstitialWillLeaveApplication:(GADInterstitial *)ad
 {
-    [self.delegate interstitialWasTappedForAdapter:self];
+    [self trackClick];
 }
 
 - (void)dealloc
 {
-    _gAdInterstitial.delegate = nil;
-    [_gAdInterstitial release];
+    self.interstitial.delegate = nil;
+    self.interstitial = nil;
     [super dealloc];
 }
 

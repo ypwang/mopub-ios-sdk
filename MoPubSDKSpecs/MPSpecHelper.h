@@ -12,9 +12,15 @@
 #import "UIApplication+MPSpecs.h"
 #import "MPStoreKitProvider+MPSpecs.h"
 #import "FakeMPInstanceProvider.h"
+#import "NSErrorFactory.h"
+#import "InterstitialIntegrationSharedBehaviors.h"
+
+@protocol CedarDouble;
 
 typedef void (^NoArgBlock)();
 typedef id (^IDReturningBlock)();
+
+void verify_fake_received_selectors(id<CedarDouble> fake, NSArray *selectors);
 
 extern FakeMPInstanceProvider *fakeProvider;
 

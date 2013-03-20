@@ -16,14 +16,14 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 
 @interface MPInterstitialViewController ()
 
-@property (nonatomic, retain) UIButton *closeButton;
+@property (nonatomic, assign) BOOL applicationHasStatusBar;
+@property (nonatomic, assign) BOOL isOnViewControllerStack;
 
 - (void)setCloseButtonImageWithImageNamed:(NSString *)imageName;
 - (void)setCloseButtonStyle:(MPInterstitialCloseButtonStyle)style;
 - (void)closeButtonPressed;
 - (void)dismissInterstitialAnimated:(BOOL)animated;
 - (void)setApplicationStatusBarHidden:(BOOL)hidden;
-- (void)setNavigationBarHidden:(BOOL)hidden forViewController:(UIViewController *)controller;
 
 @end
 
@@ -34,10 +34,12 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 @synthesize closeButton = _closeButton;
 @synthesize closeButtonStyle = _closeButtonStyle;
 @synthesize orientationType = _orientationType;
+@synthesize applicationHasStatusBar = _applicationHasStatusBar;
+@synthesize isOnViewControllerStack = _isOnViewControllerStack;
 
 - (void)dealloc
 {
-    [_closeButton release];
+    self.closeButton = nil;
     [super dealloc];
 }
 
@@ -52,8 +54,8 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 {
     [super viewDidAppear:animated];
 
-    if (!_isOnViewControllerStack) {
-        _isOnViewControllerStack = YES;
+    if (!self.isOnViewControllerStack) {
+        self.isOnViewControllerStack = YES;
     }
 }
 
@@ -66,7 +68,7 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
     // controller is presented atop the interstitial (e.g. the ad browser).
 
     if (![self mp_presentedViewController]) {
-        _isOnViewControllerStack = NO;
+        self.isOnViewControllerStack = NO;
         //self.view.alpha = 0.0;
     }
 }
@@ -82,11 +84,11 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 
     [self willPresentInterstitial];
 
-    _applicationHasStatusBar = !([UIApplication sharedApplication].isStatusBarHidden);
+    self.applicationHasStatusBar = !([UIApplication sharedApplication].isStatusBarHidden);
     [self setApplicationStatusBarHidden:YES];
 
     [self layoutCloseButton];
-    [controller mp_presentModalViewController:self animated:YES];
+    [controller mp_presentModalViewController:self animated:MP_ANIMATED];
 
     [self didPresentInterstitial];
 }
@@ -135,7 +137,6 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
         _closeButton.accessibilityLabel = @"Close Interstitial Ad";
     }
 
-    _closeButton.hidden = ![self shouldDisplayCloseButton];
     return _closeButton;
 }
 
@@ -147,7 +148,7 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
                                         kCloseButtonPadding,
                                         self.closeButton.bounds.size.width,
                                         self.closeButton.bounds.size.height);
-    [self setCloseButtonStyle:_closeButtonStyle];
+    [self setCloseButtonStyle:self.closeButtonStyle];
     [self.view addSubview:self.closeButton];
     [self.view bringSubviewToFront:self.closeButton];
 }
@@ -161,6 +162,7 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 
 - (void)setCloseButtonStyle:(MPInterstitialCloseButtonStyle)style
 {
+    _closeButtonStyle = style;
     switch (style) {
         case MPInterstitialCloseButtonStyleAlwaysVisible:
             self.closeButton.hidden = NO;
@@ -169,7 +171,7 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
             self.closeButton.hidden = YES;
             break;
         case MPInterstitialCloseButtonStyleAdControlled:
-            self.closeButton.hidden = [self shouldDisplayCloseButton];
+            self.closeButton.hidden = ![self shouldDisplayCloseButton];
             break;
         default:
             self.closeButton.hidden = NO;
@@ -184,14 +186,14 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 
 - (void)dismissInterstitialAnimated:(BOOL)animated
 {
-    [self setApplicationStatusBarHidden:!_applicationHasStatusBar];
+    [self setApplicationStatusBarHidden:!self.applicationHasStatusBar];
 
     [self willDismissInterstitial];
 
     UIViewController *presentingViewController = [self mp_presentingViewController];
     // TODO: Is this check necessary?
     if ([presentingViewController mp_presentedViewController] == self) {
-        [presentingViewController mp_dismissModalViewControllerAnimated:YES];
+        [presentingViewController mp_dismissModalViewControllerAnimated:MP_ANIMATED];
     }
 
     [self didDismissInterstitial];
@@ -211,11 +213,6 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 #endif
 
     [[UIApplication sharedApplication] setStatusBarHidden:hidden];
-}
-
-- (void)setNavigationBarHidden:(BOOL)hidden forViewController:(UIViewController *)controller
-{
-    [controller.navigationController setNavigationBarHidden:hidden animated:YES];
 }
 
 #pragma mark - Autorotation (iOS 6.0 and above)
@@ -296,20 +293,6 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
         return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
                 interfaceOrientation == UIInterfaceOrientationLandscapeRight);
     else return YES;
-}
-
-#pragma mark - Low-Memory Conditions
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-
-    self.closeButton = nil;
 }
 
 @end

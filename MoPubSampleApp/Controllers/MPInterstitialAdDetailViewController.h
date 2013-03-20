@@ -17,6 +17,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *showButton;
 @property (weak, nonatomic) IBOutlet UIButton *loadButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+@property (weak, nonatomic) IBOutlet UILabel *failLabel;
+@property (weak, nonatomic) IBOutlet UILabel *expireLabel;
 
 - (id)initWithAdInfo:(MPAdInfo *)adInfo;
 

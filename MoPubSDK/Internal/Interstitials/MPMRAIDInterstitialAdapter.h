@@ -12,8 +12,5 @@
 
 @interface MPMRAIDInterstitialAdapter : MPBaseInterstitialAdapter
     <MPMRAIDInterstitialViewControllerDelegate>
-{
-    MPMRAIDInterstitialViewController *_interstitial;
-}
 
 @end

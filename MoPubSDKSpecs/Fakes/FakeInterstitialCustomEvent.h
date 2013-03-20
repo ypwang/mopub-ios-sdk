@@ -1,18 +1,20 @@
 //
 //  FakeInterstitialCustomEvent.h
-//  MoPubSDK
+//  MoPub
 //
-//  Created by pivotal on 3/19/13.
 //  Copyright (c) 2013 MoPub. All rights reserved.
 //
 
 #import "MPInterstitialCustomEvent.h"
 
-@interface FakeInterstitialCustomEvent : MPInterstitialCustomEvent
+@interface FakeInterstitialCustomEvent : MPInterstitialCustomEvent <FakeInterstitialAd>
 
 @property (nonatomic, assign) NSDictionary *customEventInfo;
-@property (nonatomic, assign) UIViewController *rootViewController;
+@property (nonatomic, assign) UIViewController *presentingViewController;
 
-+ (FakeInterstitialCustomEvent *)lastInterstitialCustomEvent;
+- (void)simulateLoadingAd;
+- (void)simulateFailingToLoad;
+- (void)simulateUserInteraction;
+- (void)simulateUserDismissingAd;
 
 @end

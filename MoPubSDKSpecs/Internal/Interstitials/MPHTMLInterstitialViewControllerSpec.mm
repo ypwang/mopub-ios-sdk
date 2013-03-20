@@ -49,20 +49,6 @@ describe(@"MPHTMLInterstitialViewController", ^{
         });
     });
 
-    describe(@"custom method delegate", ^{
-        it(@"should be able to set it", ^{
-            NSObject *delegate = [[[NSObject alloc] init] autorelease];
-            [controller setCustomMethodDelegate:delegate];
-            agent should have_received(@selector(setCustomMethodDelegate:)).with(delegate);
-        });
-
-        it(@"should be able to get it", ^{
-            NSObject *delegate = [[[NSObject alloc] init] autorelease];
-            agent stub_method("customMethodDelegate").and_return(delegate);
-            controller.customMethodDelegate should equal(delegate);
-        });
-    });
-
     describe(@"when it will be presented", ^{
         beforeEach(^{
             [controller willPresentInterstitial];
@@ -130,11 +116,6 @@ describe(@"MPHTMLInterstitialViewController", ^{
         it(@"should forward adDidFailToLoadAd:", ^{
             [controller adDidFailToLoadAd:backingView];
             delegate should have_received(@selector(interstitialDidFailToLoadAd:)).with(controller);
-        });
-
-        it(@"should forward adActionWillBegin:", ^{
-            [controller adActionWillBegin:backingView];
-            delegate should have_received(@selector(interstitialWasTapped:)).with(controller);
         });
 
         it(@"should forward adActionWillLeaveApplication: and dismiss itself", ^{

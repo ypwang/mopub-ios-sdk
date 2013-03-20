@@ -17,6 +17,12 @@ NSString * const kHTTPHeaderFieldUserAgent = @"User-Agent";
 
 @interface MPAdServerCommunicator ()
 
+@property (nonatomic, assign, readwrite) BOOL loading;
+@property (nonatomic, copy) NSURL *URL;
+@property (nonatomic, retain) NSURLConnection *connection;
+@property (nonatomic, retain) NSMutableData *responseData;
+@property (nonatomic, retain) NSDictionary *responseHeaders;
+
 - (NSError *)errorForStatusCode:(NSInteger)statusCode;
 - (NSURLRequest *)adRequestForURL:(NSURL *)URL;
 
@@ -31,23 +37,25 @@ NSString * const kHTTPHeaderFieldUserAgent = @"User-Agent";
 @synthesize connection = _connection;
 @synthesize responseData = _responseData;
 @synthesize responseHeaders = _responseHeaders;
+@synthesize loading = _loading;
 
 - (id)initWithDelegate:(id<MPAdServerCommunicatorDelegate>)delegate
 {
     self = [super init];
     if (self) {
-        _delegate = delegate;
+        self.delegate = delegate;
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [_URL release];
-    [_connection cancel];
-    [_connection release];
-    [_responseData release];
-    [_responseHeaders release];
+    self.URL = nil;
+    [self.connection cancel];
+    self.connection = nil;
+    self.responseData = nil;
+    self.responseHeaders = nil;
+
     [super dealloc];
 }
 
@@ -59,10 +67,12 @@ NSString * const kHTTPHeaderFieldUserAgent = @"User-Agent";
     self.URL = URL;
     self.connection = [NSURLConnection connectionWithRequest:[self adRequestForURL:URL]
                                                     delegate:self];
+    self.loading = YES;
 }
 
 - (void)cancel
 {
+    self.loading = NO;
     [self.connection cancel];
     self.connection = nil;
     self.responseData = nil;
@@ -77,6 +87,7 @@ NSString * const kHTTPHeaderFieldUserAgent = @"User-Agent";
         int statusCode = [(NSHTTPURLResponse *)response statusCode];
         if (statusCode >= 400) {
             [connection cancel];
+            self.loading = NO;
             [self.delegate communicatorDidFailWithError:[self errorForStatusCode:statusCode]];
             return;
         }
@@ -93,6 +104,7 @@ NSString * const kHTTPHeaderFieldUserAgent = @"User-Agent";
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
+    self.loading = NO;
     [self.delegate communicatorDidFailWithError:error];
 }
 
@@ -101,6 +113,7 @@ NSString * const kHTTPHeaderFieldUserAgent = @"User-Agent";
     MPAdConfiguration *configuration = [[[MPAdConfiguration alloc]
                                          initWithHeaders:self.responseHeaders
                                          data:self.responseData] autorelease];
+    self.loading = NO;
     [self.delegate communicatorDidReceiveAdConfiguration:configuration];
 }
 
@@ -119,7 +132,7 @@ NSString * const kHTTPHeaderFieldUserAgent = @"User-Agent";
 
 - (NSURLRequest *)adRequestForURL:(NSURL *)URL
 {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:self.URL
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL
         cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:kRequestTimeoutInterval];
     [request setValue:MPUserAgentString() forHTTPHeaderField:kHTTPHeaderFieldUserAgent];
     return request;

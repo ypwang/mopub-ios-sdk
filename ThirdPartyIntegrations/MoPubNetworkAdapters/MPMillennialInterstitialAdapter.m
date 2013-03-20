@@ -11,23 +11,23 @@
 #import "MMAdView.h"
 #import "MPLogging.h"
 #import "CJSONDeserializer.h"
+#import "MPAdConfiguration.h"
+#import "MPInstanceProvider.h"
 
-@interface MPMillennialInterstitialAdapter ()
+static NSMutableDictionary *sharedMMAdViews = nil;
 
-+ (MMAdView *)sharedMMAdViewForAPID:(NSString *)apid delegate:(id<MMAdDelegate>)delegate;
-- (void)releaseMMAdViewSafely;
+////// Add Millennial support to the shared instance provider
+
+@interface MPInstanceProvider (MillennialInterstitials)
+
+- (MMAdView *)buildMMInterstitialAdWithAPID:(NSString *)apid delegate:(MPMillennialInterstitialAdapter *)delegate;
 
 @end
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+@implementation MPInstanceProvider (MillennialInterstitials)
 
-@implementation MPMillennialInterstitialAdapter
-
-+ (MMAdView *)sharedMMAdViewForAPID:(NSString *)apid
-                           delegate:(MPMillennialInterstitialAdapter *)delegate
+- (MMAdView *)buildMMInterstitialAdWithAPID:(NSString *)apid delegate:(MPMillennialInterstitialAdapter *)delegate;
 {
-    static NSMutableDictionary *sharedMMAdViews;
-
     if ([apid length] == 0)
     {
         MPLogWarn(@"Failed to create a Millennial interstitial. Have you set a Millennial "
@@ -35,27 +35,40 @@
         return nil;
     }
 
-    @synchronized(self)
-    {
-        if (!sharedMMAdViews) sharedMMAdViews = [[NSMutableDictionary dictionary] retain];
-
-        MMAdView *adView = [sharedMMAdViews objectForKey:apid];
-        if (!adView)
-        {
-            adView = [MMAdView interstitialWithType:MMFullScreenAdTransition
-                                               apid:apid
-                                           delegate:delegate
-                                             loadAd:NO];
-            [sharedMMAdViews setObject:adView forKey:apid];
-        }
-
-        [adView setDelegate:delegate];
-        return adView;
+    if (!sharedMMAdViews) {
+        sharedMMAdViews = [[NSMutableDictionary dictionary] retain];
     }
+
+    MMAdView *interstitial = [sharedMMAdViews objectForKey:apid];
+    if (!interstitial) {
+        interstitial = [MMAdView interstitialWithType:MMFullScreenAdTransition
+                                                 apid:apid
+                                             delegate:delegate
+                                               loadAd:NO];
+        [sharedMMAdViews setObject:interstitial forKey:apid];
+    }
+
+    interstitial.delegate = delegate;
+    return interstitial;
 }
 
-- (void)getAdWithParams:(NSDictionary *)params
+@end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@interface MPMillennialInterstitialAdapter ()
+
+@property (nonatomic, retain) MMAdView *interstitial;
+
+@end
+
+@implementation MPMillennialInterstitialAdapter
+
+@synthesize interstitial = _interstitial;
+
+- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration
 {
+    NSDictionary *params = configuration.headers;
     CJSONDeserializer *deserializer = [CJSONDeserializer deserializerWithNullObject:NULL];
 
     NSData *hdrData = [(NSString *)[params objectForKey:@"X-Nativeparams"]
@@ -63,41 +76,36 @@
     NSDictionary *hdrParams = [deserializer deserializeAsDictionary:hdrData error:NULL];
     NSString *apid = [hdrParams objectForKey:@"adUnitID"];
 
-    _mmInterstitialAdView = [[[self class] sharedMMAdViewForAPID:apid delegate:self] retain];
+    self.interstitial = [[MPInstanceProvider sharedProvider] buildMMInterstitialAdWithAPID:apid delegate:self];
 
-    if (!_mmInterstitialAdView) {
+    if (!self.interstitial) {
         [self.delegate adapter:self didFailToLoadAdWithError:nil];
         return;
     }
 
     // If a Millennial interstitial has already been cached, we don't need to fetch another one.
-    if ([_mmInterstitialAdView checkForCachedAd]) {
+    if ([self.interstitial checkForCachedAd]) {
         MPLogInfo(@"Previous Millennial interstitial ad was found in the cache.");
         [self.delegate adapterDidFinishLoadingAd:self];
         return;
     }
 
-    [_mmInterstitialAdView fetchAdToCache];
+    [self.interstitial fetchAdToCache];
 }
 
 - (void)dealloc
 {
-    [self releaseMMAdViewSafely];
+    self.interstitial.delegate = nil;
+    self.interstitial = nil;
     [super dealloc];
-}
-
-- (void)releaseMMAdViewSafely
-{
-    if (_mmInterstitialAdView.delegate == self) _mmInterstitialAdView.delegate = nil;
-    [_mmInterstitialAdView release]; _mmInterstitialAdView = nil;
 }
 
 - (void)showInterstitialFromViewController:(UIViewController *)controller
 {
-    if ([_mmInterstitialAdView checkForCachedAd])
+    if ([self.interstitial checkForCachedAd])
     {
-        _mmInterstitialAdView.rootViewController = controller;
-        if (![_mmInterstitialAdView displayCachedAd])
+        self.interstitial.rootViewController = controller;
+        if (![self.interstitial displayCachedAd])
         {
             MPLogInfo(@"Millennial interstitial ad could not be displayed.");
             [self.delegate interstitialDidExpireForAdapter:self];
@@ -128,6 +136,7 @@
 }
 
 - (void)adRequestFailed:(MMAdView *)adView {
+
 }
 
 - (void)adRequestIsCaching:(MMAdView *)adView {
@@ -152,6 +161,7 @@
 - (void)adModalDidAppear
 {
     [self.delegate interstitialDidAppearForAdapter:self];
+    [self trackImpression];
 }
 
 - (void)adModalWasDismissed

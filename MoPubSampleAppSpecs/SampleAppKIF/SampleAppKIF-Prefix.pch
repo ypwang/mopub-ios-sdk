@@ -3,8 +3,12 @@
 //
 
 #ifdef __OBJC__
-    #import <UIKit/UIKit.h>
-    #import <Foundation/Foundation.h>
-    #import "KIFHelper.h"
-    #import "KIFTestStep+MoPubSampleApp.h"
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "KIFHelper.h"
+#import "KIFTestStep+MoPubSampleApp.h"
+#import "MPAdSection+KIF.h"
+#import "MPSampleAppTestScenario.h"
+#import "UIWebView+KIF.h"
+
 #endif

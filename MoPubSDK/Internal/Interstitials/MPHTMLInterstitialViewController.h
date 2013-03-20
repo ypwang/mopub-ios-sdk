@@ -21,9 +21,8 @@
 
 @property (nonatomic, assign) id<MPHTMLInterstitialViewControllerDelegate> delegate;
 @property (nonatomic, retain) MPAdWebViewAgent *backingViewAgent;
+@property (nonatomic, assign) id customMethodDelegate;
 
-- (id)customMethodDelegate;
-- (void)setCustomMethodDelegate:(id)delegate;
 - (void)loadConfiguration:(MPAdConfiguration *)configuration;
 
 @end
@@ -38,7 +37,6 @@
 - (void)interstitialDidAppear:(MPHTMLInterstitialViewController *)interstitial;
 - (void)interstitialWillDisappear:(MPHTMLInterstitialViewController *)interstitial;
 - (void)interstitialDidDisappear:(MPHTMLInterstitialViewController *)interstitial;
-- (void)interstitialWasTapped:(MPHTMLInterstitialViewController *)interstitial;
 - (void)interstitialWillLeaveApplication:(MPHTMLInterstitialViewController *)interstitial;
 
 @end

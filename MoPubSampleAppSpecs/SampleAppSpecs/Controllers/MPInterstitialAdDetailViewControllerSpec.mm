@@ -74,6 +74,80 @@ describe(@"MPInterstitialAdDetailViewController", ^{
                 it(@"should present the interstitial", ^{
                     interstitial.presenter should equal(controller);
                 });
+                
+                context(@"when the interstitial is dismissed", ^{
+                    beforeEach(^{
+                        [interstitial.delegate interstitialDidDisappear:interstitial];
+                    });
+                    
+                    it(@"should hide the show button", ^{
+                        controller.showButton.hidden should equal(YES);
+                    });
+                });
+            });
+            
+            context(@"when the interstitial expires", ^{
+                beforeEach(^{
+                    [interstitial.delegate interstitialDidExpire:interstitial];
+                });
+
+                it(@"should hide the show button and show the expired label", ^{
+                    controller.showButton.hidden should equal(YES);
+                    controller.expireLabel.hidden should equal(NO);
+                });
+            });
+
+        });
+
+        context(@"when the interstitial expires", ^{
+            beforeEach(^{
+                [interstitial.delegate interstitialDidExpire:interstitial];
+            });
+
+            it(@"should hide the spinner and show the expired label", ^{
+                controller.spinner.isAnimating should equal(NO);
+                controller.expireLabel.hidden should equal(NO);
+            });
+
+            it(@"should reenable the load button", ^{
+                controller.loadButton.enabled should equal(YES);
+            });
+
+            context(@"when the user taps load again", ^{
+                beforeEach(^{
+                    interstitial.wasLoaded = NO;
+                    [controller.loadButton tap];
+                });
+
+                it(@"should hide the expired label", ^{
+                    controller.expireLabel.hidden should equal(YES);
+                });
+            });
+        });
+
+        context(@"when the interstitial fails to arrive", ^{
+            beforeEach(^{
+                [interstitial.delegate interstitialDidFailToLoadAd:interstitial];
+            });
+
+            it(@"should hide the spinner and show the fail label", ^{
+                controller.spinner.isAnimating should equal(NO);
+                controller.failLabel.hidden should equal(NO);
+            });
+
+            it(@"should reenable the load button", ^{
+                controller.loadButton.enabled should equal(YES);
+            });
+
+            context(@"when the user taps load again", ^{
+                beforeEach(^{
+                    interstitial.wasLoaded = NO;
+                    [controller.loadButton tap];
+                });
+
+                it(@"should hide the fail label", ^{
+                    controller.failLabel.hidden should equal(YES);
+                });
             });
         });
     });

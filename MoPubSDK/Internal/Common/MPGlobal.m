@@ -79,9 +79,10 @@ NSString *MPUserAgentString()
 	
     if (!userAgent) {
         UIWebView *webview = [[UIWebView alloc] init];
-        userAgent = [[webview stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"] copy];  
+        userAgent = [[webview stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"] copy];
         [webview release];
     }
+    
     return userAgent;
 }
 

@@ -6,37 +6,63 @@
 //
 
 #import "GreystripeInterstitialCustomEvent.h"
+#import "MPInstanceProvider.h"
+#import "MPLogging.h"
 
+@interface MPInstanceProvider (GreystripeInterstitials)
+
+- (GSFullscreenAd *)buildGSFullscreenAdWithDelegate:(id<GSAdDelegate>)delegate GUID:(NSString *)GUID;
+
+@end
+
+@implementation MPInstanceProvider (GreystripeInterstitials)
+
+- (GSFullscreenAd *)buildGSFullscreenAdWithDelegate:(id<GSAdDelegate>)delegate GUID:(NSString *)GUID
+{
+    return [[[GSFullscreenAd alloc] initWithDelegate:delegate GUID:GUID] autorelease];
+}
+
+@end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//This is a sample Greystripe GUID.  You will need to replace it with your Greystripe GUID.
 #define kGreystripeGUID @"YOUR_GREYSTRIPE_GUID"
 
+@interface GreystripeInterstitialCustomEvent ()
+
+@property (nonatomic, retain) GSFullscreenAd *greystripeFullscreenAd;
+
+@end
+
 @implementation GreystripeInterstitialCustomEvent
+
+@synthesize greystripeFullscreenAd = _greystripeFullscreenAd;
 
 #pragma mark - MPInterstitialCustomEvent Subclass Methods
 
 - (void)requestInterstitialWithCustomEventInfo:(NSDictionary *)info
 {
-    NSLog(@"Requesting Greystripe interstitial.");
-    
-    _greystripeFullscreenAd = [[GSFullscreenAd alloc] initWithDelegate:self
-                                                                  GUID:kGreystripeGUID];
-    [_greystripeFullscreenAd fetch];
+    MPLogInfo(@"Requesting Greystripe interstitial.");
+    self.greystripeFullscreenAd = [[MPInstanceProvider sharedProvider] buildGSFullscreenAdWithDelegate:self GUID:kGreystripeGUID];
+    [self.greystripeFullscreenAd fetch];
 }
 
 - (void)showInterstitialFromRootViewController:(UIViewController *)rootViewController
 {
-    if ([_greystripeFullscreenAd isAdReady]) {
-        [_greystripeFullscreenAd displayFromViewController:rootViewController];
+    if ([self.greystripeFullscreenAd isAdReady]) {
+        [self.greystripeFullscreenAd displayFromViewController:rootViewController];
     } else {
-        NSLog(@"Failed to show Chartboost interstitial.");
+        MPLogInfo(@"Failed to show Chartboost interstitial.");
         [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:nil];
     }
 }
 
 - (void)dealloc
 {
-    [_greystripeFullscreenAd setDelegate:nil];
-    [_greystripeFullscreenAd release];
-    
+    [self.greystripeFullscreenAd setDelegate:nil];
+    self.greystripeFullscreenAd = nil;
+
     [super dealloc];
 }
 
@@ -44,29 +70,29 @@
 
 - (void)greystripeAdFetchSucceeded:(id<GSAd>)a_ad
 {
-    NSLog(@"Successfully loaded Greystripe interstitial.");
-    
+    MPLogInfo(@"Successfully loaded Greystripe interstitial.");
+
     [self.delegate interstitialCustomEvent:self didLoadAd:a_ad];
 }
 
 - (void)greystripeAdFetchFailed:(id<GSAd>)a_ad withError:(GSAdError)a_error
 {
-    NSLog(@"Failed to load Greystripe interstitial.");
-    
+    MPLogInfo(@"Failed to load Greystripe interstitial.");
+
     [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:nil];
 }
 
 - (void)greystripeWillPresentModalViewController
 {
-    NSLog(@"Greystripe interstitial will be shown.");
-    
+    MPLogInfo(@"Greystripe interstitial will be shown.");
+
     [self.delegate interstitialCustomEventWillAppear:self];
 }
 
 - (void)greystripeDidDismissModalViewController
 {
-    NSLog(@"Greystripe interstitial was dismissed.");
-    
+    MPLogInfo(@"Greystripe interstitial was dismissed.");
+
     [self.delegate interstitialCustomEventDidDisappear:self];
 }
 

@@ -30,7 +30,8 @@ describe(@"MPAdWebViewAgent", ^{
         fakeProvider.fakeMPAdDestinationDisplayAgent = destinationDisplayAgent;
 
         agent = [[[MPAdWebViewAgent alloc] initWithAdWebViewFrame:CGRectMake(0,0,30,20)
-                                                         delegate:delegate] autorelease];
+                                                         delegate:delegate
+                                             customMethodDelegate:nil] autorelease];
         webView = agent.view;
         configuration = [MPAdConfigurationFactory defaultBannerConfiguration];
     });

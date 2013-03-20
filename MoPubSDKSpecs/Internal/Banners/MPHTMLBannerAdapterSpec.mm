@@ -33,10 +33,6 @@ describe(@"MPHTMLBannerAdapter", ^{
             delegate stub_method(@selector(adViewDelegate)).and_return(customMethodDelegatePlaceholder);
         });
 
-        it(@"should set up the customMethodDelegate", ^{
-            bannerAgent should have_received(@selector(setCustomMethodDelegate:)).with(customMethodDelegatePlaceholder);
-        });
-
         it(@"should set up the bannerAgent and banner with the ad configuration", ^{
             bannerAgent should have_received(@selector(loadConfiguration:)).with(configuration);
         });

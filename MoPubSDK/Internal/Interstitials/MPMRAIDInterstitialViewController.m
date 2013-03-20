@@ -32,7 +32,7 @@
                                               placementType:MRAdViewPlacementTypeInterstitial];
         _interstitialView.delegate = self;
         _configuration = [configuration retain];
-        _orientationType = [_configuration orientationType];
+        self.orientationType = [_configuration orientationType];
         _advertisementHasCustomCloseButton = NO;
     }
     return self;
@@ -141,14 +141,6 @@
 - (void)appShouldResumeFromAd:(MRAdView *)adView
 {
 
-}
-
-#pragma mark - Low-Memory Conditions
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

@@ -9,6 +9,8 @@
 
 @implementation MPAdConfigurationFactory
 
+#pragma mark - Banners
+
 + (NSMutableDictionary *)defaultBannerHeaders
 {
     return [@{
@@ -24,6 +26,25 @@
             } mutableCopy];
 }
 
++ (MPAdConfiguration *)defaultBannerConfiguration
+{
+    return [self defaultBannerConfigurationWithHeaders:nil HTMLString:nil];
+}
+
++ (MPAdConfiguration *)defaultBannerConfigurationWithHeaders:(NSDictionary *)dictionary
+                                                  HTMLString:(NSString *)HTMLString
+{
+    NSMutableDictionary *headers = [self defaultBannerHeaders];
+    [headers addEntriesFromDictionary:dictionary];
+
+    HTMLString = HTMLString ? HTMLString : @"Publisher's Ad";
+
+    return [[[MPAdConfiguration alloc] initWithHeaders:headers
+                                                  data:[HTMLString dataUsingEncoding:NSUTF8StringEncoding]] autorelease];
+}
+
+#pragma mark - Interstitials
+
 + (NSMutableDictionary *)defaultInterstitialHeaders
 {
     return [@{
@@ -38,32 +59,39 @@
             } mutableCopy];
 }
 
-+ (MPAdConfiguration *)defaultBannerConfiguration
-{
-    return [self defaultBannerConfigurationWithHeaders:nil HTMLString:nil];
-}
-
 + (MPAdConfiguration *)defaultInterstitialConfiguration
 {
     return [self defaultInterstitialConfigurationWithHeaders:nil HTMLString:nil];
 }
 
-+ (MPAdConfiguration *)defaultInterstitialConfigurationWithCustomEventClassName:(NSString *)eventClassName
++ (MPAdConfiguration *)defaultMRAIDInterstitialConfiguration
 {
-    return [MPAdConfigurationFactory defaultInterstitialConfigurationWithHeaders:@{kCustomEventClassNameHeaderKey: eventClassName}
-                                                                      HTMLString:nil];
+    NSDictionary *headers = @{
+                              kAdTypeHeaderKey: @"mraid",
+                              kOrientationTypeHeaderKey: @"p"
+                              };
+
+    return [self defaultInterstitialConfigurationWithHeaders:headers
+                                                  HTMLString:nil];
 }
 
-+ (MPAdConfiguration *)defaultBannerConfigurationWithHeaders:(NSDictionary *)dictionary
-                                                  HTMLString:(NSString *)HTMLString
++ (MPAdConfiguration *)defaultFakeInterstitialConfiguration
 {
-    NSMutableDictionary *headers = [self defaultBannerHeaders];
-    [headers addEntriesFromDictionary:dictionary];
+    return [self defaultInterstitialConfigurationWithNetworkType:@"fake"];
+}
 
-    HTMLString = HTMLString ? HTMLString : @"Publisher's Ad";
++ (MPAdConfiguration *)defaultInterstitialConfigurationWithNetworkType:(NSString *)type
+{
+    return [self defaultInterstitialConfigurationWithHeaders:@{kInterstitialAdTypeHeaderKey: type}
+                                                  HTMLString:nil];
+}
 
-    return [[[MPAdConfiguration alloc] initWithHeaders:headers
-                                                  data:[HTMLString dataUsingEncoding:NSUTF8StringEncoding]] autorelease];
++ (MPAdConfiguration *)defaultInterstitialConfigurationWithCustomEventClassName:(NSString *)eventClassName
+{
+    return [MPAdConfigurationFactory defaultInterstitialConfigurationWithHeaders:@{
+                                                  kCustomEventClassNameHeaderKey: eventClassName,
+                                                    kInterstitialAdTypeHeaderKey: @"custom"}
+                                                                      HTMLString:nil];
 }
 
 + (MPAdConfiguration *)defaultInterstitialConfigurationWithHeaders:(NSDictionary *)dictionary

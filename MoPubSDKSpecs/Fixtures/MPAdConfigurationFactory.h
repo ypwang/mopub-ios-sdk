@@ -10,12 +10,18 @@
 
 @interface MPAdConfigurationFactory : NSObject
 
++ (NSMutableDictionary *)defaultBannerHeaders;
 + (MPAdConfiguration *)defaultBannerConfiguration;
-+ (MPAdConfiguration *)defaultInterstitialConfiguration;
 + (MPAdConfiguration *)defaultBannerConfigurationWithHeaders:(NSDictionary *)dictionary
                                                   HTMLString:(NSString *)HTMLString;
+
++ (NSMutableDictionary *)defaultInterstitialHeaders;
++ (MPAdConfiguration *)defaultInterstitialConfiguration;
++ (MPAdConfiguration *)defaultMRAIDInterstitialConfiguration;
++ (MPAdConfiguration *)defaultFakeInterstitialConfiguration;
++ (MPAdConfiguration *)defaultInterstitialConfigurationWithNetworkType:(NSString *)type;
++ (MPAdConfiguration *)defaultInterstitialConfigurationWithCustomEventClassName:(NSString *)eventClassName;
 + (MPAdConfiguration *)defaultInterstitialConfigurationWithHeaders:(NSDictionary *)dictionary
                                                         HTMLString:(NSString *)HTMLString;
-+ (MPAdConfiguration *)defaultInterstitialConfigurationWithCustomEventClassName:(NSString *)eventClassName;
 
 @end

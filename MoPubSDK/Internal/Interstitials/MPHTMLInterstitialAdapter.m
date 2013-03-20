@@ -10,31 +10,39 @@
 #import "MPAdConfiguration.h"
 #import "MPInterstitialAdController.h"
 #import "MPLogging.h"
+#import "MPInstanceProvider.h"
+
+@interface MPHTMLInterstitialAdapter ()
+
+@property (nonatomic, retain) MPHTMLInterstitialViewController *interstitial;
+
+@end
 
 @implementation MPHTMLInterstitialAdapter
+
+@synthesize interstitial = _interstitial;
 
 - (void)getAdWithConfiguration:(MPAdConfiguration *)configuration
 {
     MPLogTrace(@"Loading HTML interstitial with source: %@", [configuration adResponseHTMLString]);
 
-    _interstitial = [[MPHTMLInterstitialViewController alloc] init];
-    _interstitial.delegate = self;
-    _interstitial.orientationType = configuration.orientationType;
-    [_interstitial setCustomMethodDelegate:[self.delegate interstitialDelegate]];
-    [_interstitial loadConfiguration:configuration];
+    self.interstitial = [[MPInstanceProvider sharedProvider] buildMPHTMLInterstitialViewControllerWithDelegate:self
+                                                                                               orientationType:configuration.orientationType
+                                                                                          customMethodDelegate:[self.delegate interstitialDelegate]];
+    [self.interstitial loadConfiguration:configuration];
 }
 
 - (void)dealloc
 {
-    [_interstitial setDelegate:nil];
-    [_interstitial setCustomMethodDelegate:nil];
-    [_interstitial release];
+    [self.interstitial setDelegate:nil];
+    [self.interstitial setCustomMethodDelegate:nil];
+    self.interstitial = nil;
     [super dealloc];
 }
 
 - (void)showInterstitialFromViewController:(UIViewController *)controller
 {
-    [_interstitial presentInterstitialFromViewController:controller];
+    [self.interstitial presentInterstitialFromViewController:controller];
 }
 
 #pragma mark - MPHTMLInterstitialViewControllerDelegate
@@ -67,11 +75,6 @@
 - (void)interstitialDidDisappear:(MPHTMLInterstitialViewController *)interstitial
 {
     [self.delegate interstitialDidDisappearForAdapter:self];
-}
-
-- (void)interstitialWasTapped:(MPHTMLInterstitialViewController *)interstitial
-{
-    [self.delegate interstitialWasTappedForAdapter:self];
 }
 
 - (void)interstitialWillLeaveApplication:(MPHTMLInterstitialViewController *)interstitial

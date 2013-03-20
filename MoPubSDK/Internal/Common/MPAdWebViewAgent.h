@@ -24,7 +24,7 @@ typedef NSUInteger MPAdWebViewEvent;
 @property (nonatomic, assign) id customMethodDelegate;
 @property (nonatomic, retain) MPAdWebView *view;
 
-- (id)initWithAdWebViewFrame:(CGRect)frame delegate:(id<MPAdWebViewAgentDelegate>)delegate;
+- (id)initWithAdWebViewFrame:(CGRect)frame delegate:(id<MPAdWebViewAgentDelegate>)delegate customMethodDelegate:(id)customMethodDelegate;
 - (void)loadConfiguration:(MPAdConfiguration *)configuration;
 - (void)rotateToOrientation:(UIInterfaceOrientation)orientation;
 - (void)invokeJavaScriptForEvent:(MPAdWebViewEvent)event;
