@@ -10,40 +10,39 @@
 
 @implementation MPBaseInterstitialAdapter
 
-@synthesize interstitialAdController = _interstitialAdController;
+@synthesize delegate = _delegate;
 
-- (id)initWithInterstitialAdController:(MPInterstitialAdController *)interstitialAdController
+- (id)initWithDelegate:(id<MPBaseInterstitialAdapterDelegate>)delegate
 {
-	if (self = [super init])
-	{
-		_interstitialAdController = interstitialAdController;
-	}
-	return self;
+    self = [super init];
+    if (self) {
+        self.delegate = delegate;
+    }
+    return self;
 }
 
 - (void)dealloc
 {
-	[self unregisterDelegate];
-	[super dealloc];
+    [self unregisterDelegate];
+    [super dealloc];
 }
 
 - (void)unregisterDelegate
 {
-	_interstitialAdController = nil;
-    _manager = nil;
+    self.delegate = nil;
 }
 
 - (void)getAd
 {
-	[self getAdWithParams:nil];
+    [self getAdWithParams:nil];
 }
 
 - (void)getAdWithParams:(NSDictionary *)params
 {
-	[self doesNotRecognizeSelector:_cmd];
+    [self doesNotRecognizeSelector:_cmd];
 }
 
-- (void)_getAdWithParams:(NSDictionary *)params 
+- (void)_getAdWithParams:(NSDictionary *)params
 {
   [self retain];
   [self getAdWithParams:params];
@@ -65,7 +64,7 @@
 
 - (void)showInterstitialFromViewController:(UIViewController *)controller
 {
-	[self doesNotRecognizeSelector:_cmd];
+    [self doesNotRecognizeSelector:_cmd];
 }
 
 @end

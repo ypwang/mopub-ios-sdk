@@ -33,11 +33,11 @@
 {
     if (self = [super init]) {
         _manager = [[MPInterstitialAdManager alloc] init];
-        
+
         // TODO: Consolidate these references.
         _manager.interstitialAdController = self;
         _manager.delegate = self;
-        
+
         _adUnitId = [adUnitId copy];
     }
     return self;
@@ -47,15 +47,15 @@
 {
     _delegate = nil;
     _parent = nil;
-    
+
     [_manager setInterstitialAdController:nil];
     [_manager setDelegate:nil];
     [_manager release];
-    
+
     [_adUnitId release];
     [_keywords release];
     [_location release];
-    
+
     [super dealloc];
 }
 
@@ -74,13 +74,13 @@
                 break;
             }
         }
-        
+
         // Create a new ad controller for this ad unit ID if one doesn't already exist.
         if (!interstitial) {
             interstitial = [[[[self class] alloc] initWithAdUnitId:adUnitId] autorelease];
             [interstitials addObject:interstitial];
         }
-        
+
         return interstitial;
     }
 }
@@ -96,13 +96,13 @@
         MPLogWarn(@"The `parent` property of MPInterstitialAdController is deprecated. "
                   @"Use the `delegate` property instead.");
     }
-    
+
     if (!controller) {
         MPLogWarn(@"The interstitial could not be shown: "
                   @"a nil view controller was passed to -showFromViewController:.");
         return;
     }
-    
+
     [_manager presentInterstitialFromViewController:controller];
 }
 
@@ -111,13 +111,13 @@
 + (NSMutableArray *)sharedInterstitials
 {
     static NSMutableArray *sharedInterstitials;
-    
+
     @synchronized(self) {
         if (!sharedInterstitials) {
             sharedInterstitials = [[NSMutableArray array] retain];
         }
     }
-    
+
     return sharedInterstitials;
 }
 
@@ -126,7 +126,7 @@
 - (void)managerDidLoadInterstitial:(MPInterstitialAdManager *)manager
 {
     _ready = YES;
-    
+
     if ([self.delegate respondsToSelector:@selector(interstitialDidLoadAd:)]) {
         [self.delegate interstitialDidLoadAd:self];
     }
@@ -136,7 +136,7 @@
         didFailToLoadInterstitialWithError:(NSError *)error
 {
     _ready = NO;
-    
+
     if ([self.delegate respondsToSelector:@selector(interstitialDidFailToLoadAd:)]) {
         [self.delegate interstitialDidFailToLoadAd:self];
     }
@@ -166,7 +166,7 @@
 - (void)managerDidDismissInterstitial:(MPInterstitialAdManager *)manager
 {
     _ready = NO;
-    
+
     if ([self.delegate respondsToSelector:@selector(interstitialDidDisappear:)]) {
         [self.delegate interstitialDidDisappear:self];
     }
@@ -175,7 +175,7 @@
 - (void)managerDidExpireInterstitial:(MPInterstitialAdManager *)manager
 {
     _ready = NO;
-    
+
     if ([self.delegate respondsToSelector:@selector(interstitialDidExpire:)]) {
         [self.delegate interstitialDidExpire:self];
     }
@@ -202,19 +202,19 @@
 {
     MPLogWarn(@"-[MPInterstitialAdController show] is deprecated. "
               @"Use -showFromViewController: instead.");
-    
+
     if (_parent && !self.delegate) {
         MPLogError(@"Interstitial could not be shown. Call -showFromViewController: instead of"
                    @"-show when using the `delegate` property.");
         return;
     }
-    
+
     if (_parent && self.delegate) {
         MPLogError(@"Interstitial could not be shown: "
                    @"the `delegate` and `parent` properties should not be both set.");
         return;
     }
-    
+
     [_manager presentInterstitialFromViewController:_parent];
 }
 
@@ -245,6 +245,16 @@
 }
 
 #pragma mark - Deprecated MPBaseInterstitialAdapterDelegate (for compatibility w/ adapters)
+
+- (MPInterstitialAdController *)interstitialAdController
+{
+    return [_manager interstitialAdController];
+}
+
+- (id)interstitialDelegate
+{
+    return [_manager interstitialDelegate];
+}
 
 - (void)adapterDidFinishLoadingAd:(MPBaseInterstitialAdapter *)adapter
 {

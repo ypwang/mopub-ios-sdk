@@ -28,7 +28,7 @@
 {
     _interstitial.delegate = nil;
     [_interstitial release];
-    
+
     [super dealloc];
 }
 
@@ -41,32 +41,32 @@
 
 - (void)interstitialDidLoadAd:(MPMRAIDInterstitialViewController *)interstitial
 {
-    [self.manager adapterDidFinishLoadingAd:self];
+    [self.delegate adapterDidFinishLoadingAd:self];
 }
 
 - (void)interstitialDidFailToLoadAd:(MPMRAIDInterstitialViewController *)interstitial
 {
-    [self.manager adapter:self didFailToLoadAdWithError:nil];
+    [self.delegate adapter:self didFailToLoadAdWithError:nil];
 }
 
 - (void)interstitialWillAppear:(MPMRAIDInterstitialViewController *)interstitial
 {
-    [self.manager interstitialWillAppearForAdapter:self];
+    [self.delegate interstitialWillAppearForAdapter:self];
 }
 
 - (void)interstitialDidAppear:(MPMRAIDInterstitialViewController *)interstitial
 {
-    [self.manager interstitialDidAppearForAdapter:self];
+    [self.delegate interstitialDidAppearForAdapter:self];
 }
 
 - (void)interstitialWillDisappear:(MPMRAIDInterstitialViewController *)interstitial
 {
-    [self.manager interstitialWillDisappearForAdapter:self];
+    [self.delegate interstitialWillDisappearForAdapter:self];
 }
 
 - (void)interstitialDidDisappear:(MPMRAIDInterstitialViewController *)interstitial
 {
-    [self.manager interstitialDidDisappearForAdapter:self];
+    [self.delegate interstitialDidDisappearForAdapter:self];
 }
 
 // TODO: Tapped callback.

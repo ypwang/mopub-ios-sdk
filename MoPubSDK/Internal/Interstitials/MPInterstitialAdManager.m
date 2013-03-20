@@ -44,7 +44,7 @@
         _request = [[NSMutableURLRequest alloc] init];
         [_request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
         [_request setValue:MPUserAgentString() forHTTPHeaderField:@"User-Agent"];
-        
+
         _communicator = [[MPAdServerCommunicator alloc] init];
         _communicator.delegate = self;
     }
@@ -54,16 +54,16 @@
 - (void)dealloc
 {
     [_request release];
-    
+
     [_communicator cancel];
     [_communicator setDelegate:nil];
     [_communicator release];
-    
+
     [_currentAdapter unregisterDelegate];
     [_currentAdapter release];
     [_nextAdapter unregisterDelegate];
     [_nextAdapter release];
-    
+
     [super dealloc];
 }
 
@@ -76,14 +76,14 @@
                   @"Wait for previous load to finish.");
         return;
     }
-    
+
     URL = (URL) ? URL : [MPAdServerURLBuilder URLWithAdUnitID:[self adUnitID]
                                                      keywords:[self keywords]
                                                      location:[self location]
                                                       testing:[self isTesting]];
-    
+
     MPLogInfo(@"Interstitial controller is loading ad with MoPub server URL: %@", URL);
-    
+
     [_communicator loadURL:URL];
     _loading = YES;
 }
@@ -113,7 +113,7 @@
 {
     if (!_hasRecordedClickForCurrentInterstitial) {
         _hasRecordedClickForCurrentInterstitial = YES;
-        
+
         NSLog(@"Tracking click: %@", [_currentConfiguration clickTrackingURL]);
         [_request setURL:[_currentConfiguration clickTrackingURL]];
         [NSURLConnection connectionWithRequest:_request delegate:nil];
@@ -126,7 +126,7 @@
 {
     if (!_hasRecordedImpressionForCurrentInterstitial) {
         _hasRecordedImpressionForCurrentInterstitial = YES;
-        
+
         NSLog(@"Tracking impression: %@", [_currentConfiguration impressionTrackingURL]);
         [_request setURL:[_currentConfiguration impressionTrackingURL]];
         [NSURLConnection connectionWithRequest:_request delegate:nil];
@@ -135,19 +135,14 @@
     }
 }
 
-- (BOOL)interstitialDelegateRespondsToSelector:(SEL)selector
+- (NSArray *)locationDescriptionPair
 {
-    return [_interstitialAdController.delegate respondsToSelector:selector];
+    return [self.interstitialAdController locationDescriptionPair];
 }
 
-- (void)performSelectorOnInterstitialDelegate:(SEL)selector
+- (id)interstitialDelegate
 {
-    [_interstitialAdController.delegate performSelector:selector];
-}
-
-- (void)performSelector:(SEL)selector onInterstitialDelegateWithObject:(id)arg
-{
-    [_interstitialAdController.delegate performSelector:selector withObject:arg];
+    return [self.interstitialAdController delegate];
 }
 
 #pragma mark - Request data
@@ -177,30 +172,28 @@
 - (void)communicatorDidReceiveAdConfiguration:(MPAdConfiguration *)configuration
 {
     self.failoverURL = [configuration failoverURL];
-    
+
     _nextConfiguration = [configuration retain];
-    
+
     MPLogInfo(@"Ad view is fetching ad network type: %@", configuration.networkType);
-    
+
     if ([_nextConfiguration.networkType isEqualToString:@"clear"]) {
         MPLogInfo(@"Ad server response indicated no ad available.");
         _loading = NO;
         [_interstitialAdController.delegate interstitialDidFailToLoadAd:_interstitialAdController];
         return;
     }
-    
+
     Class adapterClass = [[MPAdapterMap sharedAdapterMap] interstitialAdapterClassForNetworkType:
                           _nextConfiguration.networkType];
-    MPBaseInterstitialAdapter *adapter = [[[adapterClass alloc] initWithInterstitialAdController:
-                                           _interstitialAdController] autorelease];
-    
+    MPBaseInterstitialAdapter *adapter = [[[adapterClass alloc] initWithDelegate:self] autorelease];
+
     if (!adapter) {
         [self adapter:nil didFailToLoadAdWithError:nil];
         return;
     }
-    
+
     _nextAdapter = [adapter retain];
-    _nextAdapter.manager = self;
     [self requestInterstitialFromAdapter:_nextAdapter forConfiguration:_nextConfiguration];
 }
 
@@ -208,7 +201,7 @@
 {
     _isReady = NO;
     _loading = NO;
-    
+
     if ([self.interstitialAdController.delegate respondsToSelector:@selector(interstitialDidFailToLoadAd:)]) {
         [self.interstitialAdController.delegate interstitialDidFailToLoadAd:self.interstitialAdController];
     }
@@ -219,7 +212,7 @@
 {
     BOOL adapterIsValid = NO;
     BOOL adapterIsLegacy = NO;
-    
+
     unsigned int adapterMethodCount = 0;
     Method *adapterMethodList = class_copyMethodList([adapter class], &adapterMethodCount);
     for (unsigned int i = 0; i < adapterMethodCount; i++) {
@@ -232,7 +225,7 @@
         }
     }
     free(adapterMethodList);
-    
+
     if (adapterIsValid && adapterIsLegacy) {
         [adapter _getAdWithParams:[configuration headers]];
     } else if (adapterIsValid) {
@@ -250,15 +243,15 @@
     _loading = NO;
     _hasRecordedImpressionForCurrentInterstitial = NO;
     _hasRecordedClickForCurrentInterstitial = NO;
-    
+
     [_currentAdapter unregisterDelegate];
     [_currentAdapter release];
     _currentAdapter = _nextAdapter;
     _nextAdapter = nil;
-    
+
     _currentConfiguration = _nextConfiguration;
     _nextConfiguration = nil;
-    
+
     [self.delegate managerDidLoadInterstitial:self];
 }
 
@@ -266,7 +259,7 @@
 {
     _isReady = NO;
     _loading = NO;
-    
+
     if (adapter == _nextAdapter) {
         [_nextAdapter unregisterDelegate];
         [_nextAdapter release];

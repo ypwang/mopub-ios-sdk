@@ -10,10 +10,6 @@
 #import "MPInterstitialCustomEvent.h"
 #import "MPInterstitialCustomEventDelegate.h"
 
-@interface MPInterstitialCustomEventAdapter : MPBaseInterstitialAdapter
-    <MPInterstitialCustomEventDelegate>
-{
-    MPInterstitialCustomEvent *_interstitialCustomEvent;
-}
+@interface MPInterstitialCustomEventAdapter : MPBaseInterstitialAdapter <MPInterstitialCustomEventDelegate>
 
 @end

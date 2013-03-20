@@ -20,7 +20,7 @@
     _interstitial = [[MPHTMLInterstitialViewController alloc] init];
     _interstitial.delegate = self;
     _interstitial.orientationType = configuration.orientationType;
-    [_interstitial setCustomMethodDelegate:[self.interstitialAdController delegate]];
+    [_interstitial setCustomMethodDelegate:[self.delegate interstitialDelegate]];
     [_interstitial loadConfiguration:configuration];
 }
 
@@ -41,42 +41,42 @@
 
 - (void)interstitialDidLoadAd:(MPHTMLInterstitialViewController *)interstitial
 {
-    [self.manager adapterDidFinishLoadingAd:self];
+    [self.delegate adapterDidFinishLoadingAd:self];
 }
 
 - (void)interstitialDidFailToLoadAd:(MPHTMLInterstitialViewController *)interstitial
 {
-    [self.manager adapter:self didFailToLoadAdWithError:nil];
+    [self.delegate adapter:self didFailToLoadAdWithError:nil];
 }
 
 - (void)interstitialWillAppear:(MPHTMLInterstitialViewController *)interstitial
 {
-    [self.manager interstitialWillAppearForAdapter:self];
+    [self.delegate interstitialWillAppearForAdapter:self];
 }
 
 - (void)interstitialDidAppear:(MPHTMLInterstitialViewController *)interstitial
 {
-    [self.manager interstitialDidAppearForAdapter:self];
+    [self.delegate interstitialDidAppearForAdapter:self];
 }
 
 - (void)interstitialWillDisappear:(MPHTMLInterstitialViewController *)interstitial
 {
-    [self.manager interstitialWillDisappearForAdapter:self];
+    [self.delegate interstitialWillDisappearForAdapter:self];
 }
 
 - (void)interstitialDidDisappear:(MPHTMLInterstitialViewController *)interstitial
 {
-    [self.manager interstitialDidDisappearForAdapter:self];
+    [self.delegate interstitialDidDisappearForAdapter:self];
 }
 
 - (void)interstitialWasTapped:(MPHTMLInterstitialViewController *)interstitial
 {
-    [self.manager interstitialWasTappedForAdapter:self];
+    [self.delegate interstitialWasTappedForAdapter:self];
 }
 
 - (void)interstitialWillLeaveApplication:(MPHTMLInterstitialViewController *)interstitial
 {
-    [self.manager interstitialWillLeaveApplicationForAdapter:self];
+    [self.delegate interstitialWillLeaveApplicationForAdapter:self];
 }
 
 @end

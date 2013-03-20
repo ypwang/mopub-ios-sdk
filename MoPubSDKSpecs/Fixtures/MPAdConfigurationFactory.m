@@ -45,8 +45,13 @@
 
 + (MPAdConfiguration *)defaultInterstitialConfiguration
 {
-    return [[[MPAdConfiguration alloc] initWithHeaders:[self defaultInterstitialHeaders]
-                                                  data:[@"Publisher's Interstitial" dataUsingEncoding:NSUTF8StringEncoding]] autorelease];
+    return [self defaultInterstitialConfigurationWithHeaders:nil HTMLString:nil];
+}
+
++ (MPAdConfiguration *)defaultInterstitialConfigurationWithCustomEventClassName:(NSString *)eventClassName
+{
+    return [MPAdConfigurationFactory defaultInterstitialConfigurationWithHeaders:@{kCustomEventClassNameHeaderKey: eventClassName}
+                                                                      HTMLString:nil];
 }
 
 + (MPAdConfiguration *)defaultBannerConfigurationWithHeaders:(NSDictionary *)dictionary
@@ -56,6 +61,18 @@
     [headers addEntriesFromDictionary:dictionary];
 
     HTMLString = HTMLString ? HTMLString : @"Publisher's Ad";
+
+    return [[[MPAdConfiguration alloc] initWithHeaders:headers
+                                                  data:[HTMLString dataUsingEncoding:NSUTF8StringEncoding]] autorelease];
+}
+
++ (MPAdConfiguration *)defaultInterstitialConfigurationWithHeaders:(NSDictionary *)dictionary
+                                                        HTMLString:(NSString *)HTMLString
+{
+    NSMutableDictionary *headers = [self defaultInterstitialHeaders];
+    [headers addEntriesFromDictionary:dictionary];
+
+    HTMLString = HTMLString ? HTMLString : @"Publisher's Interstitial";
 
     return [[[MPAdConfiguration alloc] initWithHeaders:headers
                                                   data:[HTMLString dataUsingEncoding:NSUTF8StringEncoding]] autorelease];

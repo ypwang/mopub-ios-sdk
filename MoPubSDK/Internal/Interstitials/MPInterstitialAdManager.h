@@ -47,10 +47,6 @@
 - (void)reportClickForCurrentInterstitial;
 - (void)reportImpressionForCurrentInterstitial;
 
-- (BOOL)interstitialDelegateRespondsToSelector:(SEL)selector;
-- (void)performSelectorOnInterstitialDelegate:(SEL)selector;
-- (void)performSelector:(SEL)selector onInterstitialDelegateWithObject:(id)arg;
-
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -97,6 +97,36 @@
 		AED9E50F16F7B8CC00EA71A7 /* libKIF.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AED9E4EE16F7B89500EA71A7 /* libKIF.a */; };
 		AED9E51316F7B98100EA71A7 /* MPKIFTestController.m in Sources */ = {isa = PBXBuildFile; fileRef = AED9E51216F7B98100EA71A7 /* MPKIFTestController.m */; };
 		AED9E51716F7BA0900EA71A7 /* KIFTestScenario+StoreKitScenario.m in Sources */ = {isa = PBXBuildFile; fileRef = AED9E51616F7BA0900EA71A7 /* KIFTestScenario+StoreKitScenario.m */; };
+		AEEA5E5216F940EC003D48F4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E4A16F940EC003D48F4 /* AVFoundation.framework */; };
+		AEEA5E5316F940EC003D48F4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E4A16F940EC003D48F4 /* AVFoundation.framework */; };
+		AEEA5E5416F940EC003D48F4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E4A16F940EC003D48F4 /* AVFoundation.framework */; };
+		AEEA5E5516F940EC003D48F4 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E4B16F940EC003D48F4 /* MobileCoreServices.framework */; };
+		AEEA5E5616F940EC003D48F4 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E4B16F940EC003D48F4 /* MobileCoreServices.framework */; };
+		AEEA5E5716F940EC003D48F4 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E4B16F940EC003D48F4 /* MobileCoreServices.framework */; };
+		AEEA5E5816F940EC003D48F4 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E4C16F940EC003D48F4 /* MediaPlayer.framework */; };
+		AEEA5E5916F940EC003D48F4 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E4C16F940EC003D48F4 /* MediaPlayer.framework */; };
+		AEEA5E5A16F940EC003D48F4 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E4C16F940EC003D48F4 /* MediaPlayer.framework */; };
+		AEEA5E5B16F940EC003D48F4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E4D16F940EC003D48F4 /* QuartzCore.framework */; };
+		AEEA5E5C16F940EC003D48F4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E4D16F940EC003D48F4 /* QuartzCore.framework */; };
+		AEEA5E5D16F940EC003D48F4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E4D16F940EC003D48F4 /* QuartzCore.framework */; };
+		AEEA5E5E16F940EC003D48F4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E4E16F940EC003D48F4 /* SystemConfiguration.framework */; };
+		AEEA5E5F16F940EC003D48F4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E4E16F940EC003D48F4 /* SystemConfiguration.framework */; };
+		AEEA5E6016F940EC003D48F4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E4E16F940EC003D48F4 /* SystemConfiguration.framework */; };
+		AEEA5E6116F940EC003D48F4 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E4F16F940EC003D48F4 /* MessageUI.framework */; };
+		AEEA5E6216F940EC003D48F4 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E4F16F940EC003D48F4 /* MessageUI.framework */; };
+		AEEA5E6316F940EC003D48F4 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E4F16F940EC003D48F4 /* MessageUI.framework */; };
+		AEEA5E6416F940EC003D48F4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E5016F940EC003D48F4 /* AudioToolbox.framework */; };
+		AEEA5E6516F940EC003D48F4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E5016F940EC003D48F4 /* AudioToolbox.framework */; };
+		AEEA5E6616F940EC003D48F4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E5016F940EC003D48F4 /* AudioToolbox.framework */; };
+		AEEA5E6716F940EC003D48F4 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E5116F940EC003D48F4 /* iAd.framework */; };
+		AEEA5E6816F940EC003D48F4 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E5116F940EC003D48F4 /* iAd.framework */; };
+		AEEA5E6916F940EC003D48F4 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E5116F940EC003D48F4 /* iAd.framework */; };
+		AEEA5E7316F94102003D48F4 /* libGoogleAdMobAds.a in Resources */ = {isa = PBXBuildFile; fileRef = AEEA5E7116F94102003D48F4 /* libGoogleAdMobAds.a */; };
+		AEEA5E7416F94102003D48F4 /* libGoogleAdMobAds.a in Resources */ = {isa = PBXBuildFile; fileRef = AEEA5E7116F94102003D48F4 /* libGoogleAdMobAds.a */; };
+		AEEA5E7516F94102003D48F4 /* libGoogleAdMobAds.a in Resources */ = {isa = PBXBuildFile; fileRef = AEEA5E7116F94102003D48F4 /* libGoogleAdMobAds.a */; };
+		AEEA5E7616F94102003D48F4 /* libMMSDK_4.6.2.a in Resources */ = {isa = PBXBuildFile; fileRef = AEEA5E7216F94102003D48F4 /* libMMSDK_4.6.2.a */; };
+		AEEA5E7716F94102003D48F4 /* libMMSDK_4.6.2.a in Resources */ = {isa = PBXBuildFile; fileRef = AEEA5E7216F94102003D48F4 /* libMMSDK_4.6.2.a */; };
+		AEEA5E7816F94102003D48F4 /* libMMSDK_4.6.2.a in Resources */ = {isa = PBXBuildFile; fileRef = AEEA5E7216F94102003D48F4 /* libMMSDK_4.6.2.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -315,6 +345,16 @@
 		AED9E51216F7B98100EA71A7 /* MPKIFTestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPKIFTestController.m; sourceTree = "<group>"; };
 		AED9E51516F7BA0900EA71A7 /* KIFTestScenario+StoreKitScenario.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KIFTestScenario+StoreKitScenario.h"; sourceTree = "<group>"; };
 		AED9E51616F7BA0900EA71A7 /* KIFTestScenario+StoreKitScenario.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KIFTestScenario+StoreKitScenario.m"; sourceTree = "<group>"; };
+		AEEA5E4A16F940EC003D48F4 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = "<absolute>"; };
+		AEEA5E4B16F940EC003D48F4 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/MobileCoreServices.framework; sourceTree = "<absolute>"; };
+		AEEA5E4C16F940EC003D48F4 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = "<absolute>"; };
+		AEEA5E4D16F940EC003D48F4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
+		AEEA5E4E16F940EC003D48F4 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
+		AEEA5E4F16F940EC003D48F4 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/MessageUI.framework; sourceTree = "<absolute>"; };
+		AEEA5E5016F940EC003D48F4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
+		AEEA5E5116F940EC003D48F4 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/iAd.framework; sourceTree = "<absolute>"; };
+		AEEA5E7116F94102003D48F4 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libGoogleAdMobAds.a; path = Externals/ThirdPartyNetworks/AdMob_6.3.0/libGoogleAdMobAds.a; sourceTree = "<group>"; };
+		AEEA5E7216F94102003D48F4 /* libMMSDK_4.6.2.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libMMSDK_4.6.2.a; path = Externals/ThirdPartyNetworks/Millennial_4.6.2/libMMSDK_4.6.2.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -328,6 +368,14 @@
 				AE23239316F78A17002C2082 /* UIKit.framework in Frameworks */,
 				AE23239516F78A17002C2082 /* Foundation.framework in Frameworks */,
 				AE23239716F78A17002C2082 /* CoreGraphics.framework in Frameworks */,
+				AEEA5E5216F940EC003D48F4 /* AVFoundation.framework in Frameworks */,
+				AEEA5E5516F940EC003D48F4 /* MobileCoreServices.framework in Frameworks */,
+				AEEA5E5816F940EC003D48F4 /* MediaPlayer.framework in Frameworks */,
+				AEEA5E5B16F940EC003D48F4 /* QuartzCore.framework in Frameworks */,
+				AEEA5E5E16F940EC003D48F4 /* SystemConfiguration.framework in Frameworks */,
+				AEEA5E6116F940EC003D48F4 /* MessageUI.framework in Frameworks */,
+				AEEA5E6416F940EC003D48F4 /* AudioToolbox.framework in Frameworks */,
+				AEEA5E6716F940EC003D48F4 /* iAd.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,6 +394,14 @@
 				AED9E45B16F78D7300EA71A7 /* Foundation.framework in Frameworks */,
 				AED9E45C16F78D7300EA71A7 /* CoreGraphics.framework in Frameworks */,
 				AED9E46716F78D7300EA71A7 /* Cedar-iOS.framework in Frameworks */,
+				AEEA5E5316F940EC003D48F4 /* AVFoundation.framework in Frameworks */,
+				AEEA5E5616F940EC003D48F4 /* MobileCoreServices.framework in Frameworks */,
+				AEEA5E5916F940EC003D48F4 /* MediaPlayer.framework in Frameworks */,
+				AEEA5E5C16F940EC003D48F4 /* QuartzCore.framework in Frameworks */,
+				AEEA5E5F16F940EC003D48F4 /* SystemConfiguration.framework in Frameworks */,
+				AEEA5E6216F940EC003D48F4 /* MessageUI.framework in Frameworks */,
+				AEEA5E6516F940EC003D48F4 /* AudioToolbox.framework in Frameworks */,
+				AEEA5E6816F940EC003D48F4 /* iAd.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,6 +416,14 @@
 				AED9E4FD16F7B8A600EA71A7 /* UIKit.framework in Frameworks */,
 				AED9E4FE16F7B8A600EA71A7 /* Foundation.framework in Frameworks */,
 				AED9E4FF16F7B8A600EA71A7 /* CoreGraphics.framework in Frameworks */,
+				AEEA5E5416F940EC003D48F4 /* AVFoundation.framework in Frameworks */,
+				AEEA5E5716F940EC003D48F4 /* MobileCoreServices.framework in Frameworks */,
+				AEEA5E5A16F940EC003D48F4 /* MediaPlayer.framework in Frameworks */,
+				AEEA5E5D16F940EC003D48F4 /* QuartzCore.framework in Frameworks */,
+				AEEA5E6016F940EC003D48F4 /* SystemConfiguration.framework in Frameworks */,
+				AEEA5E6316F940EC003D48F4 /* MessageUI.framework in Frameworks */,
+				AEEA5E6616F940EC003D48F4 /* AudioToolbox.framework in Frameworks */,
+				AEEA5E6916F940EC003D48F4 /* iAd.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,6 +482,16 @@
 		AE23239116F78A17002C2082 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AEEA5E7116F94102003D48F4 /* libGoogleAdMobAds.a */,
+				AEEA5E7216F94102003D48F4 /* libMMSDK_4.6.2.a */,
+				AEEA5E4A16F940EC003D48F4 /* AVFoundation.framework */,
+				AEEA5E4B16F940EC003D48F4 /* MobileCoreServices.framework */,
+				AEEA5E4C16F940EC003D48F4 /* MediaPlayer.framework */,
+				AEEA5E4D16F940EC003D48F4 /* QuartzCore.framework */,
+				AEEA5E4E16F940EC003D48F4 /* SystemConfiguration.framework */,
+				AEEA5E4F16F940EC003D48F4 /* MessageUI.framework */,
+				AEEA5E5016F940EC003D48F4 /* AudioToolbox.framework */,
+				AEEA5E5116F940EC003D48F4 /* iAd.framework */,
 				AED9E47216F78DAD00EA71A7 /* AdSupport.framework */,
 				AED9E47016F78DA900EA71A7 /* StoreKit.framework */,
 				AE23239216F78A17002C2082 /* UIKit.framework */,
@@ -862,6 +936,8 @@
 				AED9E42316F78B3000EA71A7 /* MPAdBrowserController.xib in Resources */,
 				AED9E4CF16F798AF00EA71A7 /* MPBannerAdDetailViewController.xib in Resources */,
 				AE43414A16F9068000B73710 /* MPInterstitialAdDetailViewController.xib in Resources */,
+				AEEA5E7316F94102003D48F4 /* libGoogleAdMobAds.a in Resources */,
+				AEEA5E7616F94102003D48F4 /* libMMSDK_4.6.2.a in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -872,6 +948,8 @@
 				AED9E46216F78D7300EA71A7 /* InfoPlist.strings in Resources */,
 				AED9E4D016F798AF00EA71A7 /* MPBannerAdDetailViewController.xib in Resources */,
 				AE43414B16F9068000B73710 /* MPInterstitialAdDetailViewController.xib in Resources */,
+				AEEA5E7416F94102003D48F4 /* libGoogleAdMobAds.a in Resources */,
+				AEEA5E7716F94102003D48F4 /* libMMSDK_4.6.2.a in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -889,6 +967,8 @@
 				AED9E50816F7B8A600EA71A7 /* MPAdBrowserController.xib in Resources */,
 				AED9E50916F7B8A600EA71A7 /* MPBannerAdDetailViewController.xib in Resources */,
 				AE43414C16F9068000B73710 /* MPInterstitialAdDetailViewController.xib in Resources */,
+				AEEA5E7516F94102003D48F4 /* libGoogleAdMobAds.a in Resources */,
+				AEEA5E7816F94102003D48F4 /* libMMSDK_4.6.2.a in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
