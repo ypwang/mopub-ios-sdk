@@ -5,7 +5,7 @@ SDK_VERSION = "6.1"
 BUILD_DIR = File.join(File.dirname(__FILE__), "build")
 SCRIPTS_DIR = File.join(File.dirname(__FILE__), "Scripts")
 
-EXPECTED_KIF_IMPRESSIONS = 6
+EXPECTED_KIF_IMPRESSIONS = 8
 
 def xcode_developer_dir
   `xcode-select -print-path`.strip
@@ -206,7 +206,13 @@ namespace :mopubsample do
       run_in_simulator(project: "MoPubSampleApp", target: "SampleAppKIF", success_condition: "TESTING FINISHED: 0 failures")
     end
 
-    number_of_impressions = File.readlines("#{SCRIPTS_DIR}/proxy.log").length
+    impressions = File.readlines("#{SCRIPTS_DIR}/proxy.log")
+    head "KIF Proxy Log"
+    impressions.each do |impression|
+      puts "#{impression}\n"
+    end
+
+    number_of_impressions = impressions.length
     unless number_of_impressions == EXPECTED_KIF_IMPRESSIONS
       puts "******** KIF Test Impression Count Failed ********"
       puts "Expected #{EXPECTED_KIF_IMPRESSIONS} impressions, got #{number_of_impressions}"

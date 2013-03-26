@@ -20,8 +20,8 @@ f = File.open(file_path, 'w')
 handler = Proc.new do |req,res|
   path = req.request_uri.to_s
   if path =~ /ads\.mopub\.com\/m\/imp/
-    f << path
-    f << "\n"
+    time = Time.now.strftime('%F %H:%M:%S.%L')
+    f << "#{time} #{path}\n"
   end
 end
 
