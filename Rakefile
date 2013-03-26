@@ -236,3 +236,8 @@ namespace :all do
   task :clean => ["mopub:clean"]
 end
 
+at_exit do
+  if ENV['IS_CI_BOX']
+    `osascript -e "tell application \"Safari\" to activate"`
+  end
+end
