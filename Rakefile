@@ -20,14 +20,8 @@ def build_dir(effective_platform_name)
 end
 
 def output_file(target)
-  output_dir = if ENV['IS_CI_BOX']
-    ENV['CC_BUILD_ARTIFACTS']
-  else
-    build_dir = File.join(File.dirname(__FILE__), "build")
-    Dir.mkdir(build_dir) unless File.exists?(build_dir)
-    build_dir
-  end
-
+  output_dir = File.join(File.dirname(__FILE__), "build")
+  Dir.mkdir(output_dir) unless File.exists?(output_dir)
   output_file = File.join(output_dir, "#{target}.output")
   puts "Output: #{output_file}"
   output_file
