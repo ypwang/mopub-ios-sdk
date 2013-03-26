@@ -165,10 +165,8 @@ namespace :mopubsdk do
 end
 
 def run_with_proxy
-  network = ENV['IS_CI_BOX'] ? "Ethernet" : "Wi-Fi"
-
   pid = fork do
-    exec "#{SCRIPTS_DIR}/proxy.rb #{network}"
+    exec "#{SCRIPTS_DIR}/proxy.rb Wi-Fi"
   end
 
   begin
