@@ -142,6 +142,11 @@ task :fix_copyright do
   `find . -name "*.[mh]" -exec sed -i '' '/\\/\\/  Created by pivotal/d' {} \\;`
 end
 
+desc "Upload Third Party Integrations to CI"
+task :upload_third_party_integrations do
+  `scp -r ./Externals/ThirdPartyNetworks pivotal@192.168.1.33:/Users/pivotal/workspace/ThirdPartyNetworks`
+end
+
 namespace :mopubsdk do
   desc "Build MoPub SDK against all available SDK versions"
   task :build do
