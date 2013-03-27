@@ -251,6 +251,11 @@ task :copy do
   path_to_repo_sdk = File.absolute_path(File.join(File.dirname(__FILE__), '../mopub-client/MoPubiOS/MoPubSDK'))
   `rm -rf #{path_to_repo_sdk}`
   `cp -r #{path_to_development_sdk} #{path_to_repo_sdk}`
+
+  path_to_development_3rd = File.absolute_path(File.join(File.dirname(__FILE__), 'ThirdPartyIntegrations'))
+  path_to_repo_3rd = File.absolute_path(File.join(File.dirname(__FILE__), '../mopub-client/MoPubiOS/extras'))
+  `rm -rf #{path_to_repo_3rd}`
+  `cp -r #{path_to_development_3rd} #{path_to_repo_3rd}`
 end
 
 namespace :all do

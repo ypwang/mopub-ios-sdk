@@ -19,6 +19,10 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 @property (weak, nonatomic) IBOutlet UILabel *failLabel;
 @property (weak, nonatomic) IBOutlet UILabel *expireLabel;
+@property (weak, nonatomic) IBOutlet UILabel *willAppearLabel;
+@property (weak, nonatomic) IBOutlet UILabel *didAppearLabel;
+@property (weak, nonatomic) IBOutlet UILabel *willDisappearLabel;
+@property (weak, nonatomic) IBOutlet UILabel *didDisappearLabel;
 
 - (id)initWithAdInfo:(MPAdInfo *)adInfo;
 

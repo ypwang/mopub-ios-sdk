@@ -47,6 +47,10 @@
     self.loadButton.enabled = NO;
     self.expireLabel.hidden = YES;
     self.failLabel.hidden = YES;
+    self.willAppearLabel.alpha = 0.1;
+    self.didAppearLabel.alpha = 0.1;
+    self.willDisappearLabel.alpha = 0.1;
+    self.didDisappearLabel.alpha = 0.1;
     [self.interstitial loadAd];
 }
 
@@ -79,9 +83,25 @@
     [self.spinner stopAnimating];
 }
 
+- (void)interstitialWillAppear:(MPInterstitialAdController *)interstitial
+{
+    self.willAppearLabel.alpha = 1.0;
+}
+
+- (void)interstitialDidAppear:(MPInterstitialAdController *)interstitial
+{
+    self.didAppearLabel.alpha = 1.0;
+}
+
+- (void)interstitialWillDisappear:(MPInterstitialAdController *)interstitial
+{
+    self.willDisappearLabel.alpha = 1.0;
+}
+
 - (void)interstitialDidDisappear:(MPInterstitialAdController *)interstitial
 {
     self.showButton.hidden = YES;
+    self.didDisappearLabel.alpha = 1.0;
 }
 
 @end

@@ -43,6 +43,13 @@ describe(@"MPInterstitialAdDetailViewController", ^{
             controller.loadButton.enabled should equal(NO);
         });
 
+        it(@"should make all of the callback labels transparent", ^{
+            controller.willAppearLabel.alpha should be_less_than(0.5);
+            controller.didAppearLabel.alpha should be_less_than(0.5);
+            controller.willDisappearLabel.alpha should be_less_than(0.5);
+            controller.didDisappearLabel.alpha should be_less_than(0.5);
+        });
+
         it(@"should tell the ad view to load", ^{
             interstitial.wasLoaded should equal(YES);
         });
@@ -74,18 +81,34 @@ describe(@"MPInterstitialAdDetailViewController", ^{
                 it(@"should present the interstitial", ^{
                     interstitial.presenter should equal(controller);
                 });
-                
+
+                context(@"when receiving interstitial callbacks", ^{
+                    it(@"should display the appropriate labels", ^{
+                        [interstitial.delegate interstitialWillAppear:interstitial];
+                        controller.willAppearLabel.alpha should equal(1);
+
+                        [interstitial.delegate interstitialDidAppear:interstitial];
+                        controller.didAppearLabel.alpha should equal(1);
+
+                        [interstitial.delegate interstitialWillDisappear:interstitial];
+                        controller.willDisappearLabel.alpha should equal(1);
+
+                        [interstitial.delegate interstitialDidDisappear:interstitial];
+                        controller.didDisappearLabel.alpha should equal(1);
+                    });
+                });
+
                 context(@"when the interstitial is dismissed", ^{
                     beforeEach(^{
                         [interstitial.delegate interstitialDidDisappear:interstitial];
                     });
-                    
+
                     it(@"should hide the show button", ^{
                         controller.showButton.hidden should equal(YES);
                     });
                 });
             });
-            
+
             context(@"when the interstitial expires", ^{
                 beforeEach(^{
                     [interstitial.delegate interstitialDidExpire:interstitial];
