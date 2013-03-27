@@ -13,6 +13,7 @@
 
 @property (nonatomic, strong) MPAdInfo *info;
 @property (nonatomic, strong) MPAdView *adView;
+@property (nonatomic, assign) BOOL didLoadAd;
 
 @end
 
@@ -48,7 +49,10 @@
     [super viewDidAppear:animated];
 
     [self.spinner startAnimating];
-    [self.adView loadAd];
+    if (!self.didLoadAd) {
+        [self.adView loadAd];
+        self.didLoadAd = YES;
+    }
 }
 
 #pragma mark - <MPAdViewDelegate>

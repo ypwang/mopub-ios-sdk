@@ -65,6 +65,14 @@ describe(@"MPBannerAdDetailViewController", ^{
                 controller.spinner.isAnimating should equal(NO);
             });
         });
+
+        context(@"when the view appears again", ^{
+            it(@"should not tell the ad to reload", ^{
+                adView.wasLoaded = NO;
+                [controller viewDidAppear:NO];
+                adView.wasLoaded should equal(NO);
+            });
+        });
     });
 });
 

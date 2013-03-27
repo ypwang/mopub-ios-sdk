@@ -5,7 +5,7 @@ SDK_VERSION = "6.1"
 BUILD_DIR = File.join(File.dirname(__FILE__), "build")
 SCRIPTS_DIR = File.join(File.dirname(__FILE__), "Scripts")
 
-EXPECTED_KIF_IMPRESSIONS = 8
+EXPECTED_KIF_IMPRESSIONS = 6
 
 def xcode_developer_dir
   `xcode-select -print-path`.strip
@@ -213,7 +213,9 @@ namespace :mopubsample do
     end
 
     number_of_impressions = impressions.length
-    unless number_of_impressions == EXPECTED_KIF_IMPRESSIONS
+    if number_of_impressions == EXPECTED_KIF_IMPRESSIONS
+      puts "******** KIF Test Impression Count Succeeded (#{number_of_impressions}/#{EXPECTED_KIF_IMPRESSIONS}) ********"
+    else
       puts "******** KIF Test Impression Count Failed ********"
       puts "Expected #{EXPECTED_KIF_IMPRESSIONS} impressions, got #{number_of_impressions}"
       exit(1)

@@ -1,8 +1,7 @@
 //
 //  FakeMPAdWebView.h
-//  MoPubSDK
+//  MoPub
 //
-//  Created by pivotal on 3/26/13.
 //  Copyright (c) 2013 MoPub. All rights reserved.
 //
 
