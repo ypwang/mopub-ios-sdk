@@ -5,8 +5,6 @@ SDK_VERSION = "6.1"
 BUILD_DIR = File.join(File.dirname(__FILE__), "build")
 SCRIPTS_DIR = File.join(File.dirname(__FILE__), "Scripts")
 
-EXPECTED_KIF_IMPRESSIONS = 7
-
 def xcode_developer_dir
   `xcode-select -print-path`.strip
 end
@@ -82,6 +80,7 @@ def run_in_simulator(options)
       puts "******** Build failed ********"
       exit(1)
   end
+  return out_file
 end
 
 def with_environment(env)
@@ -202,28 +201,46 @@ namespace :mopubsample do
 
     head "Running KIF Integration Suite"
 
+    kif_log_file = nil
     run_with_proxy do
-      run_in_simulator(project: "MoPubSampleApp", target: "SampleAppKIF", success_condition: "TESTING FINISHED: 0 failures")
+      kif_log_file = run_in_simulator(project: "MoPubSampleApp", target: "SampleAppKIF", success_condition: "TESTING FINISHED: 0 failures")
     end
 
-    impressions = File.readlines("#{SCRIPTS_DIR}/proxy.log")
-    head "KIF Proxy Log"
-    impressions.each do |impression|
-      puts "#{impression}\n"
-    end
-
-    number_of_impressions = impressions.length
-    if number_of_impressions == EXPECTED_KIF_IMPRESSIONS
-      puts "******** KIF Test Impression Count Succeeded (#{number_of_impressions}/#{EXPECTED_KIF_IMPRESSIONS}) ********"
-    else
-      puts "******** KIF Test Impression Count Failed ********"
-      puts "Expected #{EXPECTED_KIF_IMPRESSIONS} impressions, got #{number_of_impressions}"
-      exit(1)
-    end
+    head "Verifying KIF Impressions"
+    verify_impressions(File.readlines("#{SCRIPTS_DIR}/proxy.log"), File.readlines(kif_log_file))
   end
 
   task :clean do
     system_or_exit(%Q[xcodebuild -project MoPubSampleApp.xcodeproj -alltargets -configuration #{CONFIGURATION} clean SYMROOT=#{BUILD_DIR}], {}, output_file("mopub_clean"))
+  end
+end
+
+def verify_impressions(proxy_lines, kif_lines)
+  kif_ad_ids = []
+  impression_matcher = /~~~ EXPECT IMPRESSION FOR AD UNIT ID: ([A-Za-z0-9]+)/
+  kif_lines.each do |kif_line|
+    match = impression_matcher.match(kif_line)
+    kif_ad_ids << match[1] if match
+  end
+
+  proxy_ad_ids = []
+  impression_matcher = /http:\/\/ads.mopub.com\/m\/imp\?.*&id=([A-Za-z0-9]+)&/
+  proxy_lines.each do |proxy_line|
+    match = impression_matcher.match(proxy_line)
+    proxy_ad_ids << match[1] if match
+  end
+
+  if kif_ad_ids == proxy_ad_ids
+    puts "******** KIF TEST IMPRESSIONS SUCCEEDED (#{proxy_ad_ids.length}/#{kif_ad_ids.length}) ********"
+  else
+    puts "******** KIF TEST IMPRESSIONS FAILED ********"
+    puts "Expected                         Received"
+    count = [proxy_ad_ids.length, kif_ad_ids.length].max
+    (0...count).each do |i|
+      puts "#{kif_ad_ids[i]} #{proxy_ad_ids[i]}"
+    end
+
+    exit(1)
   end
 end
 

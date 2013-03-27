@@ -39,6 +39,7 @@
     [scenario addStep:[KIFTestStep stepToWaitUntilActivityIndicatorIsNotAnimating]];
     [scenario addStep:[KIFTestStep stepToTapViewWithAccessibilityLabel:@"Show"]];
     [scenario addStep:[KIFTestStep stepToVerifyPresentationOfViewControllerClass:NSClassFromString(@"GADWebAppViewController")]];
+    [scenario addStep:[KIFTestStep stepToLogImpressionForAdUnit:[MPAdSection adInfoAtIndexPath:indexPath].ID]];
     [scenario addStep:[KIFTestStep stepToDismissGADInterstitial]];
 
     [scenario addStep:[KIFTestStep stepToReturnToBannerAds]];

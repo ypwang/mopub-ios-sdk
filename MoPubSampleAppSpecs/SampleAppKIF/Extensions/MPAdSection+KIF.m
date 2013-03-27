@@ -6,9 +6,15 @@
 //
 
 #import "MPAdSection+KIF.h"
-#import "MPAdInfo.h"
 
 @implementation MPAdSection (KIF)
+
++ (MPAdInfo *)adInfoAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray *sections = [self adSections];
+    MPAdSection *section = sections[indexPath.section];
+    return [section adAtIndex:indexPath.row];
+}
 
 + (NSIndexPath *)indexPathForAd:(NSString *)adTitle inSection:(NSString *)sectionTitle
 {

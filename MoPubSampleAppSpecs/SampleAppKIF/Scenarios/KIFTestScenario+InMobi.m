@@ -20,6 +20,7 @@
     [scenario addStep:[KIFTestStep stepToWaitUntilActivityIndicatorIsNotAnimating]];
     [scenario addStep:[KIFTestStep stepToTapViewWithAccessibilityLabel:@"Show"]];
     [scenario addStep:[KIFTestStep stepToWaitForPresenceOfViewWithClassName:@"UIWebView"]];
+    [scenario addStep:[KIFTestStep stepToLogImpressionForAdUnit:[MPAdSection adInfoAtIndexPath:indexPath].ID]];
     [scenario addStep:[KIFTestStep stepToTapScreenAtPoint:CGPointMake(295, 25)]];
     [scenario addStep:[KIFTestStep stepToWaitForAbsenseOfViewWithClassName:@"UIWebView"]];
 

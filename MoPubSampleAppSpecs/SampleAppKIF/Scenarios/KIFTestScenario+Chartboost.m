@@ -20,6 +20,7 @@
     [scenario addStep:[KIFTestStep stepToWaitUntilActivityIndicatorIsNotAnimating]];
     [scenario addStep:[KIFTestStep stepToTapViewWithAccessibilityLabel:@"Show"]];
     [scenario addStep:[KIFTestStep stepToWaitForPresenceOfViewWithClassName:@"CBNativeInterstitialView"]];
+    [scenario addStep:[KIFTestStep stepToLogImpressionForAdUnit:[MPAdSection adInfoAtIndexPath:indexPath].ID]];
     [scenario addStep:[KIFTestStep stepToTapScreenAtPoint:CGPointMake(285, 60)]];
     [scenario addStep:[KIFTestStep stepToWaitForAbsenseOfViewWithClassName:@"CBNativeInterstitialView"]];
 

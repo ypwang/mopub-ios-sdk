@@ -35,6 +35,7 @@
                                                                      atIndexPath:indexPath]];
 
     [scenario addStep:[KIFTestStep stepToWaitUntilActivityIndicatorIsNotAnimating]];
+    [scenario addStep:[KIFTestStep stepToLogImpressionForAdUnit:[MPAdSection adInfoAtIndexPath:indexPath].ID]];
     [scenario addStep:[KIFTestStep stepToTapLink:@"LinkMaker"]];
     [scenario addStep:[KIFTestStep stepToVerifyPresentationOfViewControllerClass:[SKStoreProductViewController class]]];
     [scenario addStep:[KIFTestStep stepToDismissStoreKit]];
@@ -50,6 +51,7 @@
     [scenario addStep:[KIFTestStep stepToTapRowInTableViewWithAccessibilityLabel:@"Ad Table View"
                                                                      atIndexPath:indexPath]];
     [scenario addStep:[KIFTestStep stepToWaitUntilActivityIndicatorIsNotAnimating]];
+    [scenario addStep:[KIFTestStep stepToLogImpressionForAdUnit:[MPAdSection adInfoAtIndexPath:indexPath].ID]];
     [scenario addStep:[KIFTestStep stepToTapLink:@"Invalid iTunes Item"]];
     [scenario addStep:[KIFTestStep stepToVerifyPresentationOfViewControllerClass:[SKStoreProductViewController class]]];
     [scenario addStep:[KIFTestStep stepToTapScreenAtPoint:CGPointMake(160, 290)]];
@@ -70,6 +72,7 @@
     [scenario addStep:[KIFTestStep stepToWaitUntilActivityIndicatorIsNotAnimating]];
     [scenario addStep:[KIFTestStep stepToTapViewWithAccessibilityLabel:@"Show"]];
     [scenario addStep:[KIFTestStep stepToWaitForViewWithAccessibilityLabel:@"Close Interstitial Ad"]];
+    [scenario addStep:[KIFTestStep stepToLogImpressionForAdUnit:[MPAdSection adInfoAtIndexPath:indexPath].ID]];
     [scenario addStep:[KIFTestStep stepToTapLink:@"LinkMaker"]];
     [scenario addStep:[KIFTestStep stepToVerifyPresentationOfViewControllerClass:[SKStoreProductViewController class]]];
     [scenario addStep:[KIFTestStep stepToDismissStoreKit]];

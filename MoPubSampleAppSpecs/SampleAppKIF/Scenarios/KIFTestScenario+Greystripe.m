@@ -21,6 +21,7 @@
     [scenario addStep:[KIFTestStep stepToWaitUntilActivityIndicatorIsNotAnimating]];
     [scenario addStep:[KIFTestStep stepToTapViewWithAccessibilityLabel:@"Show"]];
     [scenario addStep:[KIFTestStep stepToWaitForPresenceOfViewWithClassName:@"GSFullscreenAdView"]];
+    [scenario addStep:[KIFTestStep stepToLogImpressionForAdUnit:[MPAdSection adInfoAtIndexPath:indexPath].ID]];
     [scenario addStep:[KIFTestStep stepToPerformBlock:^{
         // We can't get KIF to tap on Greystripe's webview, so instead, we grab the controller and tell it to go away
         id gsFullScreenAdViewController = [KIFHelper topMostViewController];

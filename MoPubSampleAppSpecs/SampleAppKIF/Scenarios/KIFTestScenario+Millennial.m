@@ -36,6 +36,7 @@
     [scenario addStep:[KIFTestStep stepToWaitUntilActivityIndicatorIsNotAnimating]];
     [scenario addStep:[KIFTestStep stepToTapViewWithAccessibilityLabel:@"Show"]];
     [scenario addStep:[KIFTestStep stepToVerifyPresentationOfViewControllerClass:NSClassFromString(@"MMOverlayViewController")]];
+    [scenario addStep:[KIFTestStep stepToLogImpressionForAdUnit:[MPAdSection adInfoAtIndexPath:indexPath].ID]];
     [scenario addStep:[KIFTestStep stepToDismissMillennialInterstitial]];
     [scenario addStep:[KIFTestStep stepToWaitForViewWithAccessibilityLabel:@"expired"]];
     [scenario addStep:[KIFTestStep stepToReturnToBannerAds]];
