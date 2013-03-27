@@ -53,6 +53,7 @@ describe(@"MPHTMLInterstitialAdapter", ^{
 
             [adapter interstitialDidAppear:controller];
             delegate should have_received(@selector(interstitialDidAppearForAdapter:)).with(adapter);
+            fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations should contain(configuration);
 
             [adapter interstitialWillDisappear:controller];
             delegate should have_received(@selector(interstitialWillDisappearForAdapter:)).with(adapter);
@@ -63,8 +64,7 @@ describe(@"MPHTMLInterstitialAdapter", ^{
             [adapter interstitialWillLeaveApplication:controller];
             delegate should have_received(@selector(interstitialWillLeaveApplicationForAdapter:)).with(adapter);
 
-            //Impression and click tracking is handled by JS in the webview.  We should not track it ourselves.
-            fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations should be_empty;
+            //Click tracking is handled by JS in the webview.  We should not track it ourselves.
             fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations should be_empty;
         });
     });

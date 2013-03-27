@@ -63,6 +63,7 @@
 - (void)interstitialDidAppear:(MPMRAIDInterstitialViewController *)interstitial
 {
     [self.delegate interstitialDidAppearForAdapter:self];
+    [self trackImpression];
 }
 
 - (void)interstitialWillDisappear:(MPMRAIDInterstitialViewController *)interstitial

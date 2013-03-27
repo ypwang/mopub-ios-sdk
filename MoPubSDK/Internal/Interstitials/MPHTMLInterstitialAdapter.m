@@ -65,6 +65,7 @@
 - (void)interstitialDidAppear:(MPHTMLInterstitialViewController *)interstitial
 {
     [self.delegate interstitialDidAppearForAdapter:self];
+    [self trackImpression];
 }
 
 - (void)interstitialWillDisappear:(MPHTMLInterstitialViewController *)interstitial

@@ -84,8 +84,8 @@ describe(@"HTMLInterstitialIntegrationSuite", ^{
                 [interstitial showFromViewController:presentingController];
             });
 
-            it(@"should not track an impression (since the webview does this on its own)", ^{
-                fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(0);
+            it(@"should track an impression", ^{
+                fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
             });
 
             it(@"should tell the webview that it has been shown", ^{
