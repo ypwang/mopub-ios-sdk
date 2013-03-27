@@ -5,7 +5,7 @@ SDK_VERSION = "6.1"
 BUILD_DIR = File.join(File.dirname(__FILE__), "build")
 SCRIPTS_DIR = File.join(File.dirname(__FILE__), "Scripts")
 
-EXPECTED_KIF_IMPRESSIONS = 6
+EXPECTED_KIF_IMPRESSIONS = 7
 
 def xcode_developer_dir
   `xcode-select -print-path`.strip

@@ -63,7 +63,7 @@
 
 - (void)addInMobiScenarios
 {
-//    [self addScenario:[KIFTestScenario scenarioForInMobiInterstitial]];
+    [self addScenario:[KIFTestScenario scenarioForInMobiInterstitial]];
 }
 
 @end

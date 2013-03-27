@@ -12,6 +12,7 @@
 @interface MPInstanceProvider (InMobiInterstitials)
 
 - (IMAdInterstitial *)buildIMAdInterstitialWithDelegate:(id<IMAdInterstitialDelegate>)delegate appId:(NSString *)appId;
+- (IMAdRequest *)buildIMAdRequest;
 
 @end
 
@@ -23,6 +24,11 @@
     inMobiInterstitial.delegate = delegate;
     inMobiInterstitial.imAppId = appId;
     return inMobiInterstitial;
+}
+
+- (IMAdRequest *)buildIMAdRequest
+{
+    return [IMAdRequest request];
 }
 
 @end
@@ -49,7 +55,7 @@
     self.inMobiInterstitial = [[MPInstanceProvider sharedProvider] buildIMAdInterstitialWithDelegate:self
                                                                                                appId:kInMobiAppID];
 
-    IMAdRequest *request = [IMAdRequest request];
+    IMAdRequest *request = [[MPInstanceProvider sharedProvider] buildIMAdRequest];
     [self.inMobiInterstitial loadRequest:request];
 }
 

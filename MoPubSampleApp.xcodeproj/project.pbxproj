@@ -51,6 +51,7 @@
 		AE43415716F916FC00B73710 /* KIFTestStep+ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE43415616F916FC00B73710 /* KIFTestStep+ViewController.m */; };
 		AE867A6A170215DB007E9D8C /* KIFMPInstanceProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AE867A69170215DB007E9D8C /* KIFMPInstanceProvider.m */; };
 		AE867A7517021852007E9D8C /* KIFTestScenario+InMobi.m in Sources */ = {isa = PBXBuildFile; fileRef = AE867A7417021851007E9D8C /* KIFTestScenario+InMobi.m */; };
+		AE867AD917027471007E9D8C /* KIFTestStep+TableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE867AD817027471007E9D8C /* KIFTestStep+TableView.m */; };
 		AED1B2BF16FCE336000F5C39 /* MPAdSection+KIF.m in Sources */ = {isa = PBXBuildFile; fileRef = AED1B2BE16FCE336000F5C39 /* MPAdSection+KIF.m */; };
 		AED1B2D016FD024D000F5C39 /* KIFTestScenario+Millennial.m in Sources */ = {isa = PBXBuildFile; fileRef = AED1B2CF16FD024D000F5C39 /* KIFTestScenario+Millennial.m */; };
 		AED1B2D316FD060F000F5C39 /* UIWebView+KIF.m in Sources */ = {isa = PBXBuildFile; fileRef = AED1B2D216FD060F000F5C39 /* UIWebView+KIF.m */; };
@@ -339,6 +340,8 @@
 		AE867A69170215DB007E9D8C /* KIFMPInstanceProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KIFMPInstanceProvider.m; sourceTree = "<group>"; };
 		AE867A7317021851007E9D8C /* KIFTestScenario+InMobi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KIFTestScenario+InMobi.h"; sourceTree = "<group>"; };
 		AE867A7417021851007E9D8C /* KIFTestScenario+InMobi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KIFTestScenario+InMobi.m"; sourceTree = "<group>"; };
+		AE867AD717027471007E9D8C /* KIFTestStep+TableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KIFTestStep+TableView.h"; sourceTree = "<group>"; };
+		AE867AD817027471007E9D8C /* KIFTestStep+TableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KIFTestStep+TableView.m"; sourceTree = "<group>"; };
 		AED1B2BD16FCE336000F5C39 /* MPAdSection+KIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MPAdSection+KIF.h"; sourceTree = "<group>"; };
 		AED1B2BE16FCE336000F5C39 /* MPAdSection+KIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MPAdSection+KIF.m"; sourceTree = "<group>"; };
 		AED1B2CE16FD024D000F5C39 /* KIFTestScenario+Millennial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KIFTestScenario+Millennial.h"; sourceTree = "<group>"; };
@@ -504,6 +507,8 @@
 				AED1B2F816FD1368000F5C39 /* KIFTestStep+Hacks.m */,
 				AE1091A1170108AA00812E6E /* KIFTestStep+View.h */,
 				AE1091A2170108AA00812E6E /* KIFTestStep+View.m */,
+				AE867AD717027471007E9D8C /* KIFTestStep+TableView.h */,
+				AE867AD817027471007E9D8C /* KIFTestStep+TableView.m */,
 			);
 			path = Steps;
 			sourceTree = "<group>";
@@ -1128,6 +1133,7 @@
 				AE1091F517011EF400812E6E /* KIFTestScenario+Greystripe.m in Sources */,
 				AE867A6A170215DB007E9D8C /* KIFMPInstanceProvider.m in Sources */,
 				AE867A7517021852007E9D8C /* KIFTestScenario+InMobi.m in Sources */,
+				AE867AD917027471007E9D8C /* KIFTestStep+TableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

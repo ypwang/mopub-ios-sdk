@@ -40,4 +40,11 @@ static KIFMPInstanceProvider *sharedProvider = nil;
     return inMobiInterstitial;
 }
 
+- (IMAdRequest *)buildIMAdRequest
+{
+    IMAdRequest *request = [IMAdRequest request];
+    request.testMode = YES;
+    return request;
+}
+
 @end

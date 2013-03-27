@@ -14,5 +14,6 @@
 #import "KIFTestStep+ViewController.h"
 #import "KIFTestStep+Hacks.h"
 #import "KIFTestStep+View.h"
+#import "KIFTestStep+TableView.h"
 
 #endif
