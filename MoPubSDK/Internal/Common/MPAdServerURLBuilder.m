@@ -10,6 +10,7 @@
 #import "MPConstants.h"
 #import "MPGlobal.h"
 #import "MPKeywordProvider.h"
+#import "MPIdentityProvider.h"
 
 NSString * const kMoPubInterfaceOrientationPortrait = @"p";
 NSString * const kMoPubInterfaceOrientationLandscape = @"l";
@@ -17,18 +18,15 @@ NSString * const kMoPubInterfaceOrientationLandscape = @"l";
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @interface MPAdServerURLBuilder ()
-{
-    
-}
 
 + (NSString *)queryParameterForKeywords:(NSString *)keywords;
 + (NSString *)queryParameterForOrientation;
 + (NSString *)queryParameterForScaleFactor;
 + (NSString *)queryParameterForTimeZone;
-+ (NSString *)queryParameterForLocation:(CLLocation *)location;
 + (NSString *)queryParameterForLocationArray:(NSArray *)locationArray;
 + (NSString *)queryParameterForMRAID;
 + (NSString *)queryParameterForDNT;
++ (BOOL)advertisingTrackingEnabled;
 
 @end
 
@@ -43,10 +41,10 @@ NSString * const kMoPubInterfaceOrientationLandscape = @"l";
 {
     NSString *URLString = [NSString stringWithFormat:@"http://%@/m/ad?v=8&udid=%@&id=%@&nv=%@",
                            testing ? HOSTNAME_FOR_TESTING : HOSTNAME,
-                           MPAdvertisingIdentifier(),
+                           [MPIdentityProvider identifier],
                            [adUnitID stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
                            MP_SDK_VERSION];
-    
+
     URLString = [URLString stringByAppendingString:[self queryParameterForKeywords:keywords]];
     URLString = [URLString stringByAppendingString:[self queryParameterForOrientation]];
     URLString = [URLString stringByAppendingString:[self queryParameterForScaleFactor]];
@@ -54,7 +52,7 @@ NSString * const kMoPubInterfaceOrientationLandscape = @"l";
     URLString = [URLString stringByAppendingString:[self queryParameterForLocationArray:locationArray]];
     URLString = [URLString stringByAppendingString:[self queryParameterForMRAID]];
     URLString = [URLString stringByAppendingString:[self queryParameterForDNT]];
-    
+
     return [NSURL URLWithString:URLString];
 }
 
@@ -63,21 +61,15 @@ NSString * const kMoPubInterfaceOrientationLandscape = @"l";
                   location:(CLLocation *)location
                    testing:(BOOL)testing
 {
-    NSString *URLString = [NSString stringWithFormat:@"http://%@/m/ad?v=8&udid=%@&id=%@&nv=%@",
-                           testing ? HOSTNAME_FOR_TESTING : HOSTNAME,
-                           MPAdvertisingIdentifier(),
-                           [adUnitID stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
-                           MP_SDK_VERSION];
-    
-    URLString = [URLString stringByAppendingString:[self queryParameterForKeywords:keywords]];
-    URLString = [URLString stringByAppendingString:[self queryParameterForOrientation]];
-    URLString = [URLString stringByAppendingString:[self queryParameterForScaleFactor]];
-    URLString = [URLString stringByAppendingString:[self queryParameterForTimeZone]];
-    URLString = [URLString stringByAppendingString:[self queryParameterForLocation:location]];
-    URLString = [URLString stringByAppendingString:[self queryParameterForMRAID]];
-    URLString = [URLString stringByAppendingString:[self queryParameterForDNT]];
-    
-    return [NSURL URLWithString:URLString];
+    NSMutableArray *locationArray = [NSMutableArray array];
+    if (location) {
+        [locationArray addObject:[NSNumber numberWithDouble:location.coordinate.latitude]];
+        [locationArray addObject:[NSNumber numberWithDouble:location.coordinate.longitude]];
+    }
+    return [self URLWithAdUnitID:adUnitID
+                        keywords:keywords
+                   locationArray:locationArray
+                         testing:testing];
 }
 
 
@@ -89,7 +81,7 @@ NSString * const kMoPubInterfaceOrientationLandscape = @"l";
     if ([trimmedKeywords length] > 0) {
         [keywordsArray addObject:trimmedKeywords];
     }
-    
+
     // Append the Facebook attribution keyword (if available).
     Class fbKeywordProviderClass = NSClassFromString(@"MPFacebookKeywordProvider");
     if ([fbKeywordProviderClass conformsToProtocol:@protocol(MPKeywordProvider)])
@@ -99,7 +91,7 @@ NSString * const kMoPubInterfaceOrientationLandscape = @"l";
             [keywordsArray addObject:fbAttributionKeyword];
         }
     }
-    
+
     if ([keywordsArray count] == 0) {
         return @"";
     } else {
@@ -112,9 +104,9 @@ NSString * const kMoPubInterfaceOrientationLandscape = @"l";
 + (NSString *)queryParameterForOrientation
 {
     UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-	NSString *orientString = UIInterfaceOrientationIsPortrait(orientation) ?
+    NSString *orientString = UIInterfaceOrientationIsPortrait(orientation) ?
         kMoPubInterfaceOrientationPortrait : kMoPubInterfaceOrientationLandscape;
-	return [NSString stringWithFormat:@"&o=%@", orientString];
+    return [NSString stringWithFormat:@"&o=%@", orientString];
 }
 
 + (NSString *)queryParameterForScaleFactor
@@ -125,41 +117,27 @@ NSString * const kMoPubInterfaceOrientationLandscape = @"l";
 + (NSString *)queryParameterForTimeZone
 {
     static NSDateFormatter *formatter;
-	@synchronized(self)
-	{
-		if (!formatter) formatter = [[NSDateFormatter alloc] init];
-	}
-	[formatter setDateFormat:@"Z"];
-	NSDate *today = [NSDate date];
-	return [NSString stringWithFormat:@"&z=%@", [formatter stringFromDate:today]];
+    @synchronized(self)
+    {
+        if (!formatter) formatter = [[NSDateFormatter alloc] init];
+    }
+    [formatter setDateFormat:@"Z"];
+    NSDate *today = [NSDate date];
+    return [NSString stringWithFormat:@"&z=%@", [formatter stringFromDate:today]];
 }
 
 + (NSString *)queryParameterForLocationArray:(NSArray *)locationArray
 {
     NSString *result = @"";
-	
-	if ([locationArray count] == 2) {
-		result = [result stringByAppendingFormat:
-				  @"&ll=%@,%@",
-				  [locationArray objectAtIndex:0],
-				  [locationArray objectAtIndex:1]];
-	}
-	
-	return result;
-}
 
-+ (NSString *)queryParameterForLocation:(CLLocation *)location
-{
-    NSString *result = @"";
-    
-	if (location) {
+    if ([locationArray count] == 2) {
         result = [result stringByAppendingFormat:
-				  @"&ll=%@,%@",
-				  [NSNumber numberWithDouble:location.coordinate.latitude],
-				  [NSNumber numberWithDouble:location.coordinate.longitude]];
-	}
-	
-	return result;
+                  @"&ll=%@,%@",
+                  [locationArray objectAtIndex:0],
+                  [locationArray objectAtIndex:1]];
+    }
+
+    return result;
 }
 
 + (NSString *)queryParameterForMRAID
@@ -174,7 +152,12 @@ NSString * const kMoPubInterfaceOrientationLandscape = @"l";
 
 + (NSString *)queryParameterForDNT
 {
-    return MPAdvertisingTrackingEnabled() ? @"" : @"&dnt=1";
+    return [self advertisingTrackingEnabled] ? @"" : @"&dnt=1";
+}
+
++ (BOOL)advertisingTrackingEnabled
+{
+    return [MPIdentityProvider advertisingTrackingEnabled];
 }
 
 @end

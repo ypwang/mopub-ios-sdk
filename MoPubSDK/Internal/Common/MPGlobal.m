@@ -10,10 +10,6 @@
 #import "MPConstants.h"
 #import <CommonCrypto/CommonDigest.h>
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= MP_IOS_6_0
-#import <AdSupport/AdSupport.h>
-#endif
-
 BOOL MPViewHasHiddenAncestor(UIView *view);
 BOOL MPViewIsDescendantOfKeyWindow(UIView *view);
 BOOL MPViewIntersectsKeyWindow(UIView *view);
@@ -21,7 +17,7 @@ NSString *MPSHA1Digest(NSString *string);
 
 UIInterfaceOrientation MPInterfaceOrientation()
 {
-	return [UIApplication sharedApplication].statusBarOrientation;
+    return [UIApplication sharedApplication].statusBarOrientation;
 }
 
 UIWindow *MPKeyWindow()
@@ -31,9 +27,9 @@ UIWindow *MPKeyWindow()
 
 CGFloat MPStatusBarHeight() {
     if ([UIApplication sharedApplication].statusBarHidden) return 0.0;
-    
+
     UIInterfaceOrientation orientation = MPInterfaceOrientation();
-    
+
     return UIInterfaceOrientationIsLandscape(orientation) ?
         CGRectGetWidth([UIApplication sharedApplication].statusBarFrame) :
         CGRectGetHeight([UIApplication sharedApplication].statusBarFrame);
@@ -42,106 +38,61 @@ CGFloat MPStatusBarHeight() {
 CGRect MPApplicationFrame()
 {
     CGRect frame = MPScreenBounds();
-    
+
     frame.origin.y += MPStatusBarHeight();
     frame.size.height -= MPStatusBarHeight();
-    
+
     return frame;
 }
 
 CGRect MPScreenBounds()
 {
-	CGRect bounds = [UIScreen mainScreen].bounds;
-	
-	if (UIInterfaceOrientationIsLandscape(MPInterfaceOrientation()))
-	{
-		CGFloat width = bounds.size.width;
-		bounds.size.width = bounds.size.height;
-		bounds.size.height = width;
-	}
-	
-	return bounds;
+    CGRect bounds = [UIScreen mainScreen].bounds;
+
+    if (UIInterfaceOrientationIsLandscape(MPInterfaceOrientation()))
+    {
+        CGFloat width = bounds.size.width;
+        bounds.size.width = bounds.size.height;
+        bounds.size.height = width;
+    }
+
+    return bounds;
 }
 
 CGFloat MPDeviceScaleFactor()
 {
-	if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
-		[[UIScreen mainScreen] respondsToSelector:@selector(scale)])
-	{
-		return [[UIScreen mainScreen] scale];
-	}
-	else return 1.0;
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
+        [[UIScreen mainScreen] respondsToSelector:@selector(scale)])
+    {
+        return [[UIScreen mainScreen] scale];
+    }
+    else return 1.0;
 }
 
 NSString *MPUserAgentString()
 {
-	static NSString *userAgent = nil;
-	
+    static NSString *userAgent = nil;
+
     if (!userAgent) {
         UIWebView *webview = [[UIWebView alloc] init];
         userAgent = [[webview stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"] copy];
         [webview release];
     }
-    
+
     return userAgent;
 }
 
 NSDictionary *MPDictionaryFromQueryString(NSString *query) {
     NSMutableDictionary *queryDict = [NSMutableDictionary dictionary];
-	NSArray *queryElements = [query componentsSeparatedByString:@"&"];
-	for (NSString *element in queryElements) {
-		NSArray *keyVal = [element componentsSeparatedByString:@"="];
-		NSString *key = [keyVal objectAtIndex:0];
-		NSString *value = [keyVal lastObject];
-		[queryDict setObject:[value stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding] 
-					  forKey:key];
-	}
-	return queryDict;
-}
-
-NSString *MPAdvertisingIdentifier()
-{
-    // In iOS 6, the advertisingIdentifier property of ASIdentifierManager can be used to uniquely
-    // identify a device for advertising purposes. Note: devices running OS versions prior to iOS 6
-    // will not be identifiable unless the MOPUB_ENABLE_UDID preprocessor constant is set.
-
-    // Cache the identifier for the lifetime of the process.
-    static NSString *cachedIdentifier = nil;
-    
-    if (cachedIdentifier) {
-        return cachedIdentifier;
+    NSArray *queryElements = [query componentsSeparatedByString:@"&"];
+    for (NSString *element in queryElements) {
+        NSArray *keyVal = [element componentsSeparatedByString:@"="];
+        NSString *key = [keyVal objectAtIndex:0];
+        NSString *value = [keyVal lastObject];
+        [queryDict setObject:[value stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+                      forKey:key];
     }
-    
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= MP_IOS_6_0
-    NSString *identifier;
-    if (NSClassFromString(@"ASIdentifierManager")) {
-        identifier = [[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString];
-        cachedIdentifier = [NSString stringWithFormat:@"ifa:%@", [identifier uppercaseString]];
-    }
-    #if MOPUB_ENABLE_UDID
-    else {
-        identifier = MPSHA1Digest([[UIDevice currentDevice] uniqueIdentifier]);
-        cachedIdentifier = [NSString stringWithFormat:@"sha:%@", [identifier uppercaseString]];
-    }
-    #endif
-#elif MOPUB_ENABLE_UDID
-    NSString *identifier = MPSHA1Digest([[UIDevice currentDevice] uniqueIdentifier]);
-    cachedIdentifier = [NSString stringWithFormat:@"sha:%@", [identifier uppercaseString]];
-#endif
-    
-    [cachedIdentifier retain];
-    return cachedIdentifier;
-}
-
-BOOL MPAdvertisingTrackingEnabled()
-{
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= MP_IOS_6_0
-    if (NSClassFromString(@"ASIdentifierManager")) {
-        return [ASIdentifierManager sharedManager].advertisingTrackingEnabled;
-    }
-#endif
-    
-    return YES;
+    return queryDict;
 }
 
 NSString *MPSHA1Digest(NSString *string)
@@ -149,13 +100,13 @@ NSString *MPSHA1Digest(NSString *string)
     unsigned char digest[CC_SHA1_DIGEST_LENGTH];
     NSData *data = [string dataUsingEncoding:NSASCIIStringEncoding];
     CC_SHA1([data bytes], [data length], digest);
-    
+
     NSMutableString *output = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
     for (int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++)
     {
         [output appendFormat:@"%02x", digest[i]];
     }
-    
+
     return output;
 }
 
@@ -168,7 +119,7 @@ BOOL MPViewIsVisible(UIView *view)
     // 4) must be within the frame of the key window.
     //
     // Note: this function does not check whether any part of the view is obscured by another view.
-    
+
     return (!view.hidden &&
             !MPViewHasHiddenAncestor(view) &&
             MPViewIsDescendantOfKeyWindow(view) &&
@@ -199,10 +150,10 @@ BOOL MPViewIsDescendantOfKeyWindow(UIView *view)
 BOOL MPViewIntersectsKeyWindow(UIView *view)
 {
     UIWindow *keyWindow = MPKeyWindow();
-    
+
     // We need to call convertRect:toView: on this view's superview rather than on this view itself.
     CGRect viewFrameInWindowCoordinates = [view.superview convertRect:view.frame toView:keyWindow];
-    
+
     return CGRectIntersectsRect(viewFrameInWindowCoordinates, keyWindow.frame);
 }
 
@@ -225,12 +176,12 @@ BOOL MPViewIntersectsKeyWindow(UIView *view)
 
 - (NSString *)URLEncodedString
 {
-	NSString *result = (NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,
-																		   (CFStringRef)self,
-																		   NULL,
-																		   (CFStringRef)@"!*'();:@&=+$,/?%#[]<>",
-																		   kCFStringEncodingUTF8);
-	return [result autorelease];
+    NSString *result = (NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                                           (CFStringRef)self,
+                                                                           NULL,
+                                                                           (CFStringRef)@"!*'();:@&=+$,/?%#[]<>",
+                                                                           kCFStringEncodingUTF8);
+    return [result autorelease];
 }
 
 @end

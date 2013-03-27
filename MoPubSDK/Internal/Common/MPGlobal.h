@@ -22,8 +22,6 @@ CGFloat MPStatusBarHeight(void);
 CGRect MPApplicationFrame(void);
 CGRect MPScreenBounds(void);
 CGFloat MPDeviceScaleFactor(void);
-NSString *MPAdvertisingIdentifier(void);
-BOOL MPAdvertisingTrackingEnabled(void);
 NSString *MPUserAgentString(void);
 NSDictionary *MPDictionaryFromQueryString(NSString *query);
 BOOL MPViewIsVisible(UIView *view);
