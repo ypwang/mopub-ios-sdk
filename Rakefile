@@ -117,11 +117,13 @@ end
 
 desc "Build MoPubSDK on all SDKs
  then run tests"
-task :default => [:trim_whitespace, :mopubsdk, :mopubsample]
-task :spec => ["mopubsdk:spec", "mopubsample:spec", "mopubsample:kif"]
-task :mopubsdk => ["mopubsdk:build", "mopubsdk:spec"]
-task :mopubsample => ["mopubsample:build", "mopubsample:spec", "mopubsample:kif"]
-task :cruise => ["all:clean", "all:spec"]
+task :default => [:trim_whitespace, "mopubsdk:build", "mopubsdk:spec", "mopubsample:build", "mopubsample:spec", "mopubsample:kif"]
+
+desc "Build MoPubSDK on all SDKs and run all unit tests"
+task :unit_specs => ["mopubsdk:build", "mopubsample:build", "mopubsdk:spec", "mopubsample:spec"]
+
+desc "Run KIF integration tests"
+task :integration_specs => ["mopubsample:kif"]
 
 desc "Trim Whitespace"
 task :trim_whitespace do
@@ -256,14 +258,6 @@ task :copy do
   path_to_repo_3rd = File.absolute_path(File.join(File.dirname(__FILE__), '../mopub-client/MoPubiOS/extras'))
   `rm -rf #{path_to_repo_3rd}`
   `cp -r #{path_to_development_3rd} #{path_to_repo_3rd}`
-end
-
-namespace :all do
-  desc "Run all Specs"
-  task :spec => ["mopub:spec"]
-
-  desc "Clean all Temporary Files"
-  task :clean => ["mopub:clean"]
 end
 
 at_exit do
