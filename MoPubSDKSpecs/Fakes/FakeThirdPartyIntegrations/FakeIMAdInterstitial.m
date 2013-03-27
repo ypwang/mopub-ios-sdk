@@ -34,9 +34,19 @@
     [self.delegate interstitial:self didFailToReceiveAdWithError:nil];
 }
 
+- (void)simulateUserTap
+{
+    [self.delegate interstitialWillLeaveApplication:self];
+}
+
 - (void)simulateUserDismissingAd
 {
     self.presentingViewController = nil;
+    [self.delegate interstitialWillDismissScreen:self];
+}
+
+- (void)simulateInterstitialFinishedDisappearing
+{
     [self.delegate interstitialDidDismissScreen:self];
 }
 

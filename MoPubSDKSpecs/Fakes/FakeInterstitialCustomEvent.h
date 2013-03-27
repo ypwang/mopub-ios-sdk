@@ -14,7 +14,12 @@
 
 - (void)simulateLoadingAd;
 - (void)simulateFailingToLoad;
-- (void)simulateUserInteraction;
+
+- (void)simulateUserTap;
+
+- (void)simulateInterstitialFinishedAppearing;
+
 - (void)simulateUserDismissingAd;
+- (void)simulateInterstitialFinishedDisappearing;
 
 @end

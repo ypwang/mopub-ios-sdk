@@ -75,10 +75,12 @@ describe(@"CustomEventInterstitialIntegrationSuite", ^{
                 [delegate reset_sent_messages];
                 fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(0);
                 [interstitial showFromViewController:presentingController];
+                verify_fake_received_selectors(delegate, @[@"interstitialWillAppear:"]);
+                [fakeInterstitialCustomEvent simulateInterstitialFinishedAppearing];
+                verify_fake_received_selectors(delegate, @[@"interstitialDidAppear:"]);
             });
 
             it(@"should track an impression and tell the custom event to show", ^{
-                verify_fake_received_selectors(delegate, @[@"interstitialWillAppear:", @"interstitialDidAppear:"]);
                 fakeInterstitialCustomEvent.presentingViewController should equal(presentingController);
                 fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
             });
@@ -88,11 +90,10 @@ describe(@"CustomEventInterstitialIntegrationSuite", ^{
                     [delegate reset_sent_messages];
                 });
 
-                xit(@"should track only one click, no matter how many interactions there are, and shouldn't tell the delegate anything", ^{
-                    //TODO: track the click impression in the adapter.  this test will fail until we do that.
-                    [fakeInterstitialCustomEvent simulateUserInteraction];
+                it(@"should track only one click, no matter how many interactions there are, and shouldn't tell the delegate anything", ^{
+                    [fakeInterstitialCustomEvent simulateUserTap];
                     fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
-                    [fakeInterstitialCustomEvent simulateUserInteraction];
+                    [fakeInterstitialCustomEvent simulateUserTap];
                     fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
 
                     delegate.sent_messages should be_empty;
@@ -110,6 +111,7 @@ describe(@"CustomEventInterstitialIntegrationSuite", ^{
 
                     newPresentingController = [[[UIViewController alloc] init] autorelease];
                     [interstitial showFromViewController:newPresentingController];
+                    [fakeInterstitialCustomEvent simulateInterstitialFinishedAppearing];
                 });
 
                 it(@"should tell the custom event to show and send the delegate messages again", ^{
@@ -128,10 +130,12 @@ describe(@"CustomEventInterstitialIntegrationSuite", ^{
                 beforeEach(^{
                     [delegate reset_sent_messages];
                     [fakeInterstitialCustomEvent simulateUserDismissingAd];
+                    verify_fake_received_selectors(delegate, @[@"interstitialWillDisappear:"]);
+                    [fakeInterstitialCustomEvent simulateInterstitialFinishedDisappearing];
+                    verify_fake_received_selectors(delegate, @[@"interstitialDidDisappear:"]);
                 });
 
                 it(@"should tell the delegate and should no longer be ready", ^{
-                    verify_fake_received_selectors(delegate, @[@"interstitialWillDisappear:", @"interstitialDidDisappear:"]);
                     interstitial.ready should equal(NO);
                 });
 

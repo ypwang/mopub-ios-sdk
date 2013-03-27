@@ -26,23 +26,43 @@
        didFailToLoadAdWithError:(NSError *)error;
 
 /*
- * Your custom event subclass should call this method when it is about to present the interstitial
- * ad. This method is optional; however, if you call it, you must also call either
- * -interstitialCustomEventDidDisappear: or -interstitialCustomEventWillLeaveApplication at a later
- * point.
+ * Your custom event subclass must call this method when it is about to present the interstitial
+ * ad. Failure to do so will disrupt the mediation waterfall and cause future ad requests to stall.
  */
 - (void)interstitialCustomEventWillAppear:(MPInterstitialCustomEvent *)customEvent;
 
 /*
- * Your custom event subclass should call this method when the user has dismissed the interstitial
- * ad. This method is optional.
+ * Your custom event subclass must call this method when the interstitial is presented.
+ * Failure to do so will disrupt the mediation waterfall and cause future ad requests to stall.
+ * Note: if it is not possible to know when the interstitial *finished* appearing, you should call
+ * this immediately after calling interstitialCustomEventWillAppear:.
+ */
+- (void)interstitialCustomEventDidAppear:(MPInterstitialCustomEvent *)customEvent;
+
+/*
+ * Your custom event subclass must call this method when it is about to dismiss the interstitial
+ * ad. Failure to do so will disrupt the mediation waterfall and cause future ad requests to stall.
+ */
+- (void)interstitialCustomEventWillDisappear:(MPInterstitialCustomEvent *)customEvent;
+
+/*
+ * Your custom event subclass must call this method when the interstitial is dismissed.
+ * Failure to do so will disrupt the mediation waterfall and cause future ad requests to stall.
+ * Note: if it is not possible to know when the interstitial *finished* dismissing, you should call
+ * this immediately after calling interstitialCustomEventDidDisappear:.
  */
 - (void)interstitialCustomEventDidDisappear:(MPInterstitialCustomEvent *)customEvent;
 
 /*
- * Your custom event subclass should call this method if the ad will cause the user to leave the
- * application (e.g. for the App Store or Safari). This method is optional.
+ * Your custom event subclass may call this method when the interstitial is tapped.
+ * This method is optional and only serves to allow MoPub to track clicks.
+ * You do not need to guard against calling this multiple times.  Only one click is tracked
+ * per ad.
+ *
+ * Note: some third-party networks provide a "will leave application" callback instead of/in
+ * addition to a "user did click" callback. You should call this method in response to either of
+ * those callbacks (since leaving the application is generally an indicator of a user tap).
  */
-- (void)interstitialCustomEventWillLeaveApplication:(MPInterstitialCustomEvent *)customEvent;
+- (void)interstitialCustomEventDidReceiveTapEvent:(MPInterstitialCustomEvent *)customEvent;
 
 @end

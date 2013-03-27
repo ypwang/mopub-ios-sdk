@@ -36,6 +36,12 @@
     [self.delegate didFailToLoadInterstitial:nil];
 }
 
+- (void)simulateUserTap
+{
+    [self.delegate didClickInterstitial:nil];
+    [self simulateUserDismissingAd]; //Chartboost always dismisses the ad when clicked
+}
+
 - (void)simulateUserDismissingAd
 {
     self.presentingViewController = nil;

@@ -97,15 +97,28 @@
 
 - (void)interstitialCustomEventWillAppear:(MPInterstitialCustomEvent *)customEvent
 {
-    [self trackImpression];
     [self.delegate interstitialWillAppearForAdapter:self];
+}
+
+- (void)interstitialCustomEventDidAppear:(MPInterstitialCustomEvent *)customEvent
+{
+    [self trackImpression];
     [self.delegate interstitialDidAppearForAdapter:self];
+}
+
+- (void)interstitialCustomEventWillDisappear:(MPInterstitialCustomEvent *)customEvent
+{
+    [self.delegate interstitialWillDisappearForAdapter:self];
 }
 
 - (void)interstitialCustomEventDidDisappear:(MPInterstitialCustomEvent *)customEvent
 {
-    [self.delegate interstitialWillDisappearForAdapter:self];
     [self.delegate interstitialDidDisappearForAdapter:self];
+}
+
+- (void)interstitialCustomEventDidReceiveTapEvent:(MPInterstitialCustomEvent *)customEvent
+{
+    [self trackClick];
 }
 
 - (void)interstitialCustomEventWillLeaveApplication:(MPInterstitialCustomEvent *)customEvent

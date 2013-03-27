@@ -20,6 +20,18 @@
     self.presentingViewController = rootViewController;
 }
 
+- (void)simulateInterstitialFinishedAppearing
+{
+    if (self.presentingViewController) {
+        [self.delegate interstitialCustomEventDidAppear:self];
+    }
+}
+
+- (void)simulateInterstitialFinishedDisappearing
+{
+    [self.delegate interstitialCustomEventDidDisappear:self];
+}
+
 - (void)simulateLoadingAd
 {
     [self.delegate interstitialCustomEvent:self didLoadAd:nil];
@@ -30,15 +42,15 @@
     [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:nil];
 }
 
-- (void)simulateUserInteraction
+- (void)simulateUserTap
 {
-    [self.delegate interstitialCustomEventWillLeaveApplication:self];
+    [self.delegate interstitialCustomEventDidReceiveTapEvent:self];
 }
 
 - (void)simulateUserDismissingAd
 {
+    [self.delegate interstitialCustomEventWillDisappear:self];
     self.presentingViewController = nil;
-    [self.delegate interstitialCustomEventDidDisappear:self];
 }
 
 @end

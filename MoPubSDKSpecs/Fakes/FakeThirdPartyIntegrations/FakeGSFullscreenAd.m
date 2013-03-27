@@ -36,9 +36,19 @@
     [self.delegate greystripeAdFetchFailed:self withError:0];
 }
 
+- (void)simulateUserTap
+{
+    [self.delegate greystripeAdClickedThrough:self];
+}
+
 - (void)simulateUserDismissingAd
 {
     self.presentingViewController = nil;
+    [self.delegate greystripeWillDismissModalViewController];
+}
+
+- (void)simulateInterstitialFinishedDisappearing
+{
     [self.delegate greystripeDidDismissModalViewController];
 }
 

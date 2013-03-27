@@ -92,7 +92,14 @@ describe(@"GreystripeInterstitialIntegrationSuite", ^{
                     [delegate reset_sent_messages];
                 });
 
-                xit(@"should track only one click, no matter how many interactions there are, and shouldn't tell the delegate anything", ^{
+                it(@"should track only one click, no matter how many interactions there are, and shouldn't tell the delegate anything", ^{
+                    [greystripeAd simulateUserTap];
+                    fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
+
+                    [greystripeAd simulateUserTap];
+                    fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
+
+                    delegate.sent_messages.count should equal(0);
                 });
             });
 
@@ -102,10 +109,12 @@ describe(@"GreystripeInterstitialIntegrationSuite", ^{
                 beforeEach(^{
                     [delegate reset_sent_messages];
                     [greystripeAd simulateUserDismissingAd];
+                    verify_fake_received_selectors(delegate, @[@"interstitialWillDisappear:"]);
+                    [greystripeAd simulateInterstitialFinishedDisappearing];
+                    verify_fake_received_selectors(delegate, @[@"interstitialDidDisappear:"]);
                 });
 
                 it(@"should tell the delegate and should no longer be ready", ^{
-                    verify_fake_received_selectors(delegate, @[@"interstitialWillDisappear:", @"interstitialDidDisappear:"]);
                     interstitial.ready should equal(NO);
                 });
 

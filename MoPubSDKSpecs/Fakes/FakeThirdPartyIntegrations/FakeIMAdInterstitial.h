@@ -16,6 +16,8 @@
 
 - (void)simulateLoadingAd;
 - (void)simulateFailingToLoad;
+- (void)simulateUserTap;
 - (void)simulateUserDismissingAd;
+- (void)simulateInterstitialFinishedDisappearing;
 
 @end

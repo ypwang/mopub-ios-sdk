@@ -93,6 +93,10 @@
     MPLogInfo(@"InMobi interstitial will be shown.");
 
     [self.delegate interstitialCustomEventWillAppear:self];
+
+    // InMobi doesn't seem to have a separate callback for the "did appear" event, so we
+    // signal that manually.
+    [self.delegate interstitialCustomEventDidAppear:self];
 }
 
 - (void)interstitial:(IMAdInterstitial *)ad didFailToPresentScreenWithError:(IMAdError *)error
@@ -100,11 +104,24 @@
     [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:nil];
 }
 
+- (void)interstitialWillDismissScreen:(IMAdInterstitial *)ad
+{
+    [self.delegate interstitialCustomEventWillDisappear:self];
+}
+
 - (void)interstitialDidDismissScreen:(IMAdInterstitial *)ad
 {
     MPLogInfo(@"InMobi interstitial was dismissed.");
 
     [self.delegate interstitialCustomEventDidDisappear:self];
+}
+
+- (void)interstitialWillLeaveApplication:(IMAdInterstitial *)ad
+{
+    // InMobi doesn't seem to have an explicit callback for tap events. However, leaving the
+    // application is generally an indicator of a user tap, so we can use this callback
+    // to signal the tap event.
+    [self.delegate interstitialCustomEventDidReceiveTapEvent:self];
 }
 
 @end

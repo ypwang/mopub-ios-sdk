@@ -41,16 +41,16 @@
 - (void)requestInterstitialWithCustomEventInfo:(NSDictionary *)info
 {
     MPLogInfo(@"Requesting Chartboost interstitial.");
-    
+
     NSString *appId = [info objectForKey:@"appId"];
     NSString *appSignature = [info objectForKey:@"appSignature"];
-    
+
     if ([appId length] > 0 && [appSignature length] > 0) {
         self.chartboost = [[MPInstanceProvider sharedProvider] buildChartboost];
         self.chartboost.appId = [info objectForKey:@"appId"];
         self.chartboost.appSignature = [info objectForKey:@"appSignature"];
         self.chartboost.delegate = self;
-        
+
         [self.chartboost startSession];
         [self.chartboost cacheInterstitial];
     } else {
@@ -63,13 +63,13 @@
 {
     if ([self.chartboost hasCachedInterstitial]) {
         MPLogInfo(@"Chartboost interstitial will be shown.");
-        
-        // Normally, we would call this method when a callback notifies us that an ad is about to be
-        // presented. Chartboost doesn't seem to have such a callback, so we'll call this method
-        // right before we show the ad.
+
+        // Normally, we call the "will appear" and "did appear" methods in response to
+        // callbacks from Third Party Integrations. Unfortunately, Chartboost doesn't seem to have
+        // such callbacks, so we call the methods manually.
         [self.delegate interstitialCustomEventWillAppear:self];
-        
         [self.chartboost showInterstitial];
+        [self.delegate interstitialCustomEventDidAppear:self];
     } else {
         MPLogInfo(@"Failed to show Chartboost interstitial.");
         [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:nil];
@@ -84,9 +84,9 @@
     if (self.chartboost.delegate == self) {
         self.chartboost.delegate = nil;
     }
-    
+
     self.chartboost = nil;
-    
+
     [super dealloc];
 }
 
@@ -95,22 +95,31 @@
 - (void)didCacheInterstitial:(NSString *)location
 {
     MPLogInfo(@"Successfully loaded Chartboost interstitial.");
-    
+
     [self.delegate interstitialCustomEvent:self didLoadAd:self.chartboost];
 }
 
 - (void)didFailToLoadInterstitial:(NSString *)location
 {
     MPLogInfo(@"Failed to load Chartboost interstitial.");
-    
+
     [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:nil];
 }
 
 - (void)didDismissInterstitial:(NSString *)location
 {
     MPLogInfo(@"Chartboost interstitial was dismissed.");
-    
+
+    // Chartboost doesn't seem to have a separate callback for the "will disappear" event, so we
+    // signal "will disappear" manually.
+
+    [self.delegate interstitialCustomEventWillDisappear:self];
     [self.delegate interstitialCustomEventDidDisappear:self];
+}
+
+- (void)didClickInterstitial:(NSString *)location
+{
+    [self.delegate interstitialCustomEventDidReceiveTapEvent:self];
 }
 
 @end

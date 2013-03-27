@@ -26,7 +26,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//This is a sample Greystripe GUID.  You will need to replace it with your Greystripe GUID.
+// This is a sample Greystripe GUID. You will need to replace it with your Greystripe GUID.
 #define kGreystripeGUID @"YOUR_GREYSTRIPE_GUID"
 
 @interface GreystripeInterstitialCustomEvent ()
@@ -82,11 +82,25 @@
     [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:nil];
 }
 
+- (void)greystripeAdClickedThrough:(id<GSAd>)a_ad
+{
+    [self.delegate interstitialCustomEventDidReceiveTapEvent:self];
+}
+
 - (void)greystripeWillPresentModalViewController
 {
     MPLogInfo(@"Greystripe interstitial will be shown.");
 
     [self.delegate interstitialCustomEventWillAppear:self];
+
+    // Greystripe doesn't seem to have a separate callback for the "did appear" event, so we
+    // signal that manually.
+    [self.delegate interstitialCustomEventDidAppear:self];
+}
+
+- (void)greystripeWillDismissModalViewController
+{
+    [self.delegate interstitialCustomEventWillDisappear:self];
 }
 
 - (void)greystripeDidDismissModalViewController

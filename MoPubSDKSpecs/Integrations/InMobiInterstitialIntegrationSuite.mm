@@ -93,7 +93,14 @@ describe(@"InMobiInterstitialIntegrationSuite", ^{
                         [delegate reset_sent_messages];
                     });
 
-                    xit(@"should track only one click, no matter how many interactions there are, and shouldn't tell the delegate anything", ^{
+                    it(@"should track only one click, no matter how many interactions there are, and shouldn't tell the delegate anything", ^{
+                        [inMobi simulateUserTap];
+                        fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
+
+                        [inMobi simulateUserTap];
+                        fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
+
+                        delegate.sent_messages.count should equal(0);
                     });
                 });
 
@@ -103,10 +110,12 @@ describe(@"InMobiInterstitialIntegrationSuite", ^{
                     beforeEach(^{
                         [delegate reset_sent_messages];
                         [inMobi simulateUserDismissingAd];
+                        verify_fake_received_selectors(delegate, @[@"interstitialWillDisappear:"]);
+                        [inMobi simulateInterstitialFinishedDisappearing];
+                        verify_fake_received_selectors(delegate, @[@"interstitialDidDisappear:"]);
                     });
 
                     it(@"should tell the delegate and should no longer be ready", ^{
-                        verify_fake_received_selectors(delegate, @[@"interstitialWillDisappear:", @"interstitialDidDisappear:"]);
                         interstitial.ready should equal(NO);
                     });
 
