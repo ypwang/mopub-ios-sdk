@@ -122,8 +122,13 @@ task :default => [:trim_whitespace, "mopubsdk:build", "mopubsdk:spec", "mopubsam
 desc "Build MoPubSDK on all SDKs and run all unit tests"
 task :unit_specs => ["mopubsdk:build", "mopubsample:build", "mopubsdk:spec", "mopubsample:spec"]
 
-desc "Run KIF integration tests"
+desc "Run KIF integration tests (skip flaky tests)"
 task :integration_specs => ["mopubsample:kif"]
+
+desc "Run All KIF integration tests (including flaky tests)"
+task :flaky_integration_specs do
+  Rake.application.invoke_task("mopubsample:kif['flaky']")
+end
 
 desc "Trim Whitespace"
 task :trim_whitespace do
@@ -197,15 +202,18 @@ namespace :mopubsample do
   end
 
   desc "Run MoPub Sample App Integration Specs"
-  task :kif do
+  task :kif, :flaky do |t, args|
     head "Building KIF Integration Suite"
     build project: "MoPubSampleApp", target: "SampleAppKIF"
 
     head "Running KIF Integration Suite"
 
+    environment = { }
+    environment["KIF_FLAKY_TESTS"] = '1' if args.flaky
+
     kif_log_file = nil
     run_with_proxy do
-      kif_log_file = run_in_simulator(project: "MoPubSampleApp", target: "SampleAppKIF", success_condition: "TESTING FINISHED: 0 failures")
+      kif_log_file = run_in_simulator(project: "MoPubSampleApp", target: "SampleAppKIF", environment:environment, success_condition: "TESTING FINISHED: 0 failures")
     end
 
     head "Verifying KIF Impressions"

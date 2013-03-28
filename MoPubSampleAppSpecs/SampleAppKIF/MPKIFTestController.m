@@ -15,6 +15,11 @@
 
 @implementation MPKIFTestController
 
+- (BOOL)flakyTestMode
+{
+    return getenv("KIF_FLAKY_TESTS") ? YES : NO;
+}
+
 - (void)initializeScenarios
 {
     [self addStoreKitScenarios];
@@ -57,13 +62,16 @@
 
 - (void)addGreystripeScenarios
 {
-    [self addScenario:[KIFTestScenario scenarioForGreystripeInterstitial]];
+    if (self.flakyTestMode) {
+        [self addScenario:[KIFTestScenario scenarioForGreystripeInterstitial]];
+    }
 }
-
 
 - (void)addInMobiScenarios
 {
-    [self addScenario:[KIFTestScenario scenarioForInMobiInterstitial]];
+    if (self.flakyTestMode) {
+        [self addScenario:[KIFTestScenario scenarioForInMobiInterstitial]];
+    }
 }
 
 @end
