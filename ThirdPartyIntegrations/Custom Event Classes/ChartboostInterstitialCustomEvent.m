@@ -31,6 +31,7 @@
 @interface MPChartboostRouter : NSObject <ChartboostDelegate>
 
 @property (nonatomic, retain) NSMutableDictionary *events;
+@property (nonatomic, retain) NSMutableSet *activeLocations;
 @property (nonatomic, retain) Chartboost *chartboost;
 
 + (MPChartboostRouter *)sharedRouter;
@@ -148,6 +149,7 @@ forChartboostInterstitialCustomEvent:(ChartboostInterstitialCustomEvent *)event;
 @implementation MPChartboostRouter
 
 @synthesize events = _events;
+@synthesize activeLocations = _activeLocations;
 
 static MPChartboostRouter *sharedRouter = nil;
 
@@ -169,6 +171,19 @@ static MPChartboostRouter *sharedRouter = nil;
     self = [super init];
     if (self) {
         self.events = [NSMutableDictionary dictionary];
+
+        /*
+         * We need the activeLocations set to keep track of locations that are currently being
+         * cached/ready to show/visible on screen.
+         * It is *not* enough to just use the events dictionary.  The reason is that when a user
+         * taps a Chartboost interstitial.  Chartboost calls didDismissInterstitial *before* it calls
+         * didClickInterstitial.  Since we *must* mark the location as available for reuse when
+         * the interstitial is dismissed (e.g. the user simply closes it) the only way to allow
+         * for click tracking, is to ensure that the event is still available after dismissal, but
+         * is marked as free to be released.
+         */
+        self.activeLocations = [NSMutableSet set];
+
         self.chartboost = [[MPInstanceProvider sharedProvider] buildChartboost];
         self.chartboost.delegate = self;
     }
@@ -179,6 +194,7 @@ static MPChartboostRouter *sharedRouter = nil;
 {
     self.chartboost = nil;
     self.events = nil;
+    self.activeLocations = nil;
     [super dealloc];
 }
 
@@ -187,7 +203,7 @@ static MPChartboostRouter *sharedRouter = nil;
                           location:(NSString *)location
 forChartboostInterstitialCustomEvent:(ChartboostInterstitialCustomEvent *)event
 {
-    if ([self eventForLocation:location]) {
+    if ([self.activeLocations containsObject:location]) {
         MPLogInfo(@"Failed to load Chartboost interstitial: this location is already in use.");
         [event didFailToLoadInterstitial:location];
         return;
@@ -225,11 +241,12 @@ forChartboostInterstitialCustomEvent:(ChartboostInterstitialCustomEvent *)event
 - (void)setEvent:(ChartboostInterstitialCustomEvent *)event forLocation:(NSString *)location
 {
     [self.events setObject:event forKey:location];
+    [self.activeLocations addObject:location];
 }
 
 - (void)unregisterEventForLocation:(NSString *)location
 {
-    [self.events removeObjectForKey:location];
+    [self.activeLocations removeObject:location];
 }
 
 - (void)didCacheInterstitial:(NSString *)location

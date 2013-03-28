@@ -53,8 +53,8 @@
 
 - (void)simulateUserTap:(NSString *)location
 {
-    [self.delegate didClickInterstitial:location];
     [self simulateUserDismissingLocation:location]; //Chartboost always dismisses the ad when clicked
+    [self.delegate didClickInterstitial:location];
 }
 
 - (void)simulateUserDismissingLocation:(NSString *)location
