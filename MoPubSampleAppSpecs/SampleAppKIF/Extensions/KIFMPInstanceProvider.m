@@ -36,7 +36,7 @@ static KIFMPInstanceProvider *sharedProvider = nil;
 {
     IMAdInterstitial *inMobiInterstitial = [[IMAdInterstitial alloc] init];
     inMobiInterstitial.delegate = delegate;
-    inMobiInterstitial.imAppId = @"5d6694314fbe4ddb804eab8eb4ad6693";
+    inMobiInterstitial.imAppId = @"4028cba631d63df10131e1d4650600cd";
     return inMobiInterstitial;
 }
 

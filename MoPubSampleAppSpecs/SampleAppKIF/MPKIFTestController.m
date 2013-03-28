@@ -66,9 +66,7 @@
 
 - (void)addInMobiScenarios
 {
-    if (self.flakyTestMode) {
-        [self addScenario:[KIFTestScenario scenarioForInMobiInterstitial]];
-    }
+    [self addScenario:[KIFTestScenario scenarioForInMobiInterstitial]];
 }
 
 @end
