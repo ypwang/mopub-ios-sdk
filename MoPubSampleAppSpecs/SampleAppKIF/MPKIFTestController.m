@@ -61,9 +61,7 @@
 
 - (void)addGreystripeScenarios
 {
-    if (self.flakyTestMode) {
-        [self addScenario:[KIFTestScenario scenarioForGreystripeInterstitial]];
-    }
+    [self addScenario:[KIFTestScenario scenarioForGreystripeInterstitial]];
 }
 
 - (void)addInMobiScenarios
