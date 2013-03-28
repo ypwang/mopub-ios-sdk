@@ -16,7 +16,7 @@ describe(@"MPInterstitialCustomEventAdapter", ^{
 
     beforeEach(^{
         delegate = nice_fake_for(@protocol(MPBaseInterstitialAdapterDelegate));
-        adapter = [[MPInterstitialCustomEventAdapter alloc] initWithDelegate:delegate];
+        adapter = [[[MPInterstitialCustomEventAdapter alloc] initWithDelegate:delegate] autorelease];
         configuration = [MPAdConfigurationFactory defaultInterstitialConfigurationWithCustomEventClassName:@"FakeInterstitialCustomEvent"];
         event = [[[FakeInterstitialCustomEvent alloc] init] autorelease];
         fakeProvider.fakeInterstitialCustomEvent = event;
@@ -59,6 +59,15 @@ describe(@"MPInterstitialCustomEventAdapter", ^{
 
         it(@"should ask the custom event class", ^{
             event.presentingViewController should equal(controller);
+        });
+    });
+
+    context(@"upon dealloc", ^{
+        it(@"should inform its custom event instance that it is going away", ^{
+            MPInterstitialCustomEventAdapter *anotherAdapter = [[MPInterstitialCustomEventAdapter alloc] initWithDelegate:nil];
+            [anotherAdapter _getAdWithConfiguration:configuration];
+            [anotherAdapter release];
+            event.didUnload should equal(YES);
         });
     });
 });

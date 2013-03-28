@@ -6,6 +6,7 @@
 //
 
 #import "MPSpecHelper.h"
+#import "MPInterstitialAdController.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -36,6 +37,11 @@ void verify_fake_received_selectors(id<CedarDouble> fake, NSArray *selectors)
     }
 
     fakeProvider = [[[FakeMPInstanceProvider alloc] init] autorelease];
+}
+
++ (void)afterEach
+{
+    [[MPInterstitialAdController sharedInterstitialAdControllers] removeAllObjects];
 }
 
 @end

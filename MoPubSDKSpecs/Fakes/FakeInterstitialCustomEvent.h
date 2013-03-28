@@ -11,6 +11,7 @@
 
 @property (nonatomic, assign) NSDictionary *customEventInfo;
 @property (nonatomic, assign) UIViewController *presentingViewController;
+@property (nonatomic, assign) BOOL didUnload;
 
 - (void)simulateLoadingAd;
 - (void)simulateFailingToLoad;

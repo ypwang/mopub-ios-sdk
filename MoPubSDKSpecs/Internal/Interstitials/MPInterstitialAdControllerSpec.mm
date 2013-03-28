@@ -8,13 +8,6 @@ SPEC_BEGIN(MPInterstitialAdControllerSpec)
 describe(@"MPInterstitialAdController", ^{
     __block MPInterstitialAdController *controller;
 
-    beforeEach(^{
-    });
-
-    afterEach(^{
-        [MPInterstitialAdController removeSharedInterstitialAdController:controller];
-    });
-
     context(@"when asking for a shared interstitial", ^{
         context(@"if an interstitial already exists for the given ad unit ID", ^{
             it(@"should return the same instance", ^{
@@ -33,9 +26,6 @@ describe(@"MPInterstitialAdController", ^{
                 [MPInterstitialAdController removeSharedInterstitialAdController:controller];
                 MPInterstitialAdController *another = [MPInterstitialAdController interstitialAdControllerForAdUnitId:@"guy1"];
                 another should_not be_same_instance_as(controller);
-
-                // Clean up the other controller we created.
-                [MPInterstitialAdController removeSharedInterstitialAdController:another];
             });
         });
 

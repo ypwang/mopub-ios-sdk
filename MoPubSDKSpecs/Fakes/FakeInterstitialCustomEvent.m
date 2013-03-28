@@ -20,6 +20,12 @@
     self.presentingViewController = rootViewController;
 }
 
+- (void)customEventDidUnload
+{
+    self.didUnload = YES;
+    [super customEventDidUnload];
+}
+
 - (void)simulateInterstitialFinishedAppearing
 {
     if (self.presentingViewController) {

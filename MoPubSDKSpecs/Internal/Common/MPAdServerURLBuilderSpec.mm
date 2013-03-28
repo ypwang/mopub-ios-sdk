@@ -68,6 +68,7 @@ describe(@"MPAdServerURLBuilder", ^{
                                       locationArray:nil
                                             testing:YES];
         URL.absoluteString should contain(@"&q=a=1,FBATTRID:from%20zuckerberg%20with%20love");
+        [UIPasteboard removePasteboardWithName:@"fb_app_attribution"];
     });
 
     it(@"should process orientation", ^{

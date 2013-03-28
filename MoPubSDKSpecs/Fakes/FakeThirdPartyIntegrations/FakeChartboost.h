@@ -11,13 +11,14 @@
 
 @property (nonatomic, assign) UIViewController *presentingViewController;
 
-@property (nonatomic, assign) BOOL didStartSession;
-@property (nonatomic, assign) BOOL didStartCaching;
-@property (nonatomic, assign) BOOL hasCachedInterstitial;
+@property (nonatomic, assign) NSMutableArray *requestedLocations;
 
-- (void)simulateLoadingAd;
-- (void)simulateFailingToLoad;
-- (void)simulateUserTap;
-- (void)simulateUserDismissingAd;
+@property (nonatomic, assign) BOOL didStartSession;
+@property (nonatomic, assign) NSMutableDictionary *cachedInterstitials;
+
+- (void)simulateLoadingLocation:(NSString *)location;
+- (void)simulateFailingToLoadLocation:(NSString *)location;
+- (void)simulateUserDismissingLocation:(NSString *)location;
+- (void)simulateUserTap:(NSString *)location;
 
 @end

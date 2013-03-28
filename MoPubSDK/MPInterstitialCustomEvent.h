@@ -39,9 +39,16 @@
 - (void)showInterstitialFromRootViewController:(UIViewController *)rootViewController;
 
 /*
+ * This message is sent when the MoPub SDK is about to deallocate your custom event instance.
+ * You may override this method to perform any necessary cleanup.  Your implementation must call
+ * [super customEventDidUnload].
+ */
+- (void)customEventDidUnload;
+
+/*
  * The `delegate` object defines several methods that you should call in order to inform both MoPub
  * and your MPInterstitialAdController's delegate of the progress of your custom event. At a
- * minimum, you are required to call the -interstitialCustomEvent:didLoadAd: and 
+ * minimum, you are required to call the -interstitialCustomEvent:didLoadAd: and
  * -interstitialCustomEvent:didFailToLoadAdWithError: methods in order for MoPub's
  * mediation behavior to work properly.
  */

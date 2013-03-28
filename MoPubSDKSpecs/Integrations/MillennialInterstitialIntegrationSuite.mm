@@ -17,9 +17,6 @@ describe(@"MillennialInterstitialIntegrationSuite", ^{
     __block MPAdConfiguration *configuration;
 
     beforeEach(^{
-        // Because MPInterstitialAdController has a shared pool, we need to clear it before each run.
-        [MPInterstitialAdController removeSharedInterstitialAdController:interstitial];
-
         delegate = nice_fake_for(@protocol(MPInterstitialAdControllerDelegate));
 
         interstitial = [MPInterstitialAdController interstitialAdControllerForAdUnitId:@"MM_interstitial"];

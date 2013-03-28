@@ -20,6 +20,7 @@
 + (MPAdConfiguration *)defaultMRAIDInterstitialConfiguration;
 + (MPAdConfiguration *)defaultFakeInterstitialConfiguration;
 + (MPAdConfiguration *)defaultInterstitialConfigurationWithNetworkType:(NSString *)type;
++ (MPAdConfiguration *)defaultChartboostInterstitialConfigurationWithLocation:(NSString *)location;
 + (MPAdConfiguration *)defaultInterstitialConfigurationWithCustomEventClassName:(NSString *)eventClassName;
 + (MPAdConfiguration *)defaultInterstitialConfigurationWithHeaders:(NSDictionary *)dictionary
                                                         HTMLString:(NSString *)HTMLString;

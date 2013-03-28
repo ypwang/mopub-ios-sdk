@@ -9,43 +9,59 @@
 
 @implementation FakeChartboost
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        self.requestedLocations = [NSMutableArray array];
+        self.cachedInterstitials = [NSMutableDictionary dictionary];
+    }
+    return self;
+}
+
 - (void)startSession
 {
     self.didStartSession = YES;
 }
 
-- (void)cacheInterstitial
+- (void)cacheInterstitial:(NSString *)location
 {
-    self.didStartCaching = YES;
+    [self.requestedLocations addObject:location ? location : [NSNull null]];
 }
 
-- (void)showInterstitial
+- (BOOL)hasCachedInterstitial:(NSString *)location
+{
+    return [[self.cachedInterstitials objectForKey:location ? location : [NSNull null]] boolValue];
+}
+
+- (void)showInterstitial:(NSString *)location
 {
     // chartboost doesn't actually need a view controller
     // this is here as a proxy
     self.presentingViewController = [[[UIViewController alloc] init] autorelease];
 }
 
-- (void)simulateLoadingAd
+- (void)simulateLoadingLocation:(NSString *)location
 {
-    [self.delegate didCacheInterstitial:nil];
+    [self.delegate didCacheInterstitial:location];
 }
 
-- (void)simulateFailingToLoad
+- (void)simulateFailingToLoadLocation:(NSString *)location
 {
-    [self.delegate didFailToLoadInterstitial:nil];
+    [self.delegate didFailToLoadInterstitial:location];
 }
 
-- (void)simulateUserTap
+- (void)simulateUserTap:(NSString *)location
 {
-    [self.delegate didClickInterstitial:nil];
-    [self simulateUserDismissingAd]; //Chartboost always dismisses the ad when clicked
+    [self.delegate didClickInterstitial:location];
+    [self simulateUserDismissingLocation:location]; //Chartboost always dismisses the ad when clicked
 }
 
-- (void)simulateUserDismissingAd
+- (void)simulateUserDismissingLocation:(NSString *)location
 {
     self.presentingViewController = nil;
-    [self.delegate didDismissInterstitial:nil];
+    [self.delegate didDismissInterstitial:location];
+    [self.cachedInterstitials removeObjectForKey:location ? location : [NSNull null]];
 }
 
 @end

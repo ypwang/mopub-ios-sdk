@@ -46,12 +46,12 @@
 
 - (void)dealloc
 {
+    [self.interstitialCustomEvent customEventDidUnload];
     self.interstitialCustomEvent.delegate = nil;
     self.interstitialCustomEvent = nil;
 
     [super dealloc];
 }
-
 
 - (void)getAdWithConfiguration:(MPAdConfiguration *)configuration
 {

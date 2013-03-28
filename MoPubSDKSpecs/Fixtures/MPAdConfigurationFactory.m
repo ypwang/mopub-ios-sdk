@@ -75,6 +75,20 @@
                                                   HTMLString:nil];
 }
 
++ (MPAdConfiguration *)defaultChartboostInterstitialConfigurationWithLocation:(NSString *)location
+{
+    MPAdConfiguration *configuration = [MPAdConfigurationFactory defaultInterstitialConfigurationWithCustomEventClassName:@"ChartboostInterstitialCustomEvent"];
+    NSMutableDictionary *data = [@{@"appId": @"myAppId",
+                                 @"appSignature": @"myAppSignature"} mutableCopy];
+
+    if (location) {
+        data[@"location"] = location;
+    }
+
+    configuration.customEventClassData = data;
+    return configuration;
+}
+
 + (MPAdConfiguration *)defaultFakeInterstitialConfiguration
 {
     return [self defaultInterstitialConfigurationWithNetworkType:@"fake"];
