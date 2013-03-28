@@ -43,6 +43,7 @@
 		AE2323A516F78A17002C2082 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = AE2323A416F78A17002C2082 /* Default.png */; };
 		AE2323A716F78A17002C2082 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE2323A616F78A17002C2082 /* Default@2x.png */; };
 		AE2323A916F78A17002C2082 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE2323A816F78A17002C2082 /* Default-568h@2x.png */; };
+		AE25B3AC1704FDC4005A3017 /* UIApplication+KIF.m in Sources */ = {isa = PBXBuildFile; fileRef = AE25B3AB1704FDC4005A3017 /* UIApplication+KIF.m */; };
 		AE43413D16F8EEC500B73710 /* MPAdSection.m in Sources */ = {isa = PBXBuildFile; fileRef = AE43413C16F8EEC500B73710 /* MPAdSection.m */; };
 		AE43413E16F8EEC500B73710 /* MPAdSection.m in Sources */ = {isa = PBXBuildFile; fileRef = AE43413C16F8EEC500B73710 /* MPAdSection.m */; };
 		AE43413F16F8EEC500B73710 /* MPAdSection.m in Sources */ = {isa = PBXBuildFile; fileRef = AE43413C16F8EEC500B73710 /* MPAdSection.m */; };
@@ -335,6 +336,8 @@
 		AE2323A416F78A17002C2082 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		AE2323A616F78A17002C2082 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		AE2323A816F78A17002C2082 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		AE25B3AA1704FDC4005A3017 /* UIApplication+KIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+KIF.h"; sourceTree = "<group>"; };
+		AE25B3AB1704FDC4005A3017 /* UIApplication+KIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+KIF.m"; sourceTree = "<group>"; };
 		AE43413B16F8EEC400B73710 /* MPAdSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MPAdSection.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AE43413C16F8EEC500B73710 /* MPAdSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MPAdSection.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AE43414016F8EF1600B73710 /* MPAdSectionSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = MPAdSectionSpec.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -540,6 +543,8 @@
 				AED1B2D216FD060F000F5C39 /* UIWebView+KIF.m */,
 				AE867A68170215DB007E9D8C /* KIFMPInstanceProvider.h */,
 				AE867A69170215DB007E9D8C /* KIFMPInstanceProvider.m */,
+				AE25B3AA1704FDC4005A3017 /* UIApplication+KIF.h */,
+				AE25B3AB1704FDC4005A3017 /* UIApplication+KIF.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1162,6 +1167,7 @@
 				AE867AD917027471007E9D8C /* KIFTestStep+TableView.m in Sources */,
 				AE867AE417034D52007E9D8C /* KIFTestStep+Logging.m in Sources */,
 				AE0021E81704C46400A220F0 /* MPManualAdViewController.m in Sources */,
+				AE25B3AC1704FDC4005A3017 /* UIApplication+KIF.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

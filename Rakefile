@@ -218,6 +218,9 @@ namespace :mopubsample do
 
     head "Verifying KIF Impressions"
     verify_impressions(File.readlines("#{SCRIPTS_DIR}/proxy.log"), File.readlines(kif_log_file))
+
+    head "Verifying KIF Clicks"
+    verify_clicks(File.readlines("#{SCRIPTS_DIR}/proxy.log"), File.readlines(kif_log_file))
   end
 
   task :clean do
@@ -225,25 +228,20 @@ namespace :mopubsample do
   end
 end
 
-def verify_impressions(proxy_lines, kif_lines)
-  kif_ad_ids = []
-  impression_matcher = /~~~ EXPECT IMPRESSION FOR AD UNIT ID: ([A-Za-z0-9]+)/
-  kif_lines.each do |kif_line|
-    match = impression_matcher.match(kif_line)
-    kif_ad_ids << match[1] if match
+def ids_matching_matcher(lines, matcher)
+  ids = []
+  lines.each do |line|
+    match = matcher.match(line)
+    ids << match[1] if match
   end
+  ids
+end
 
-  proxy_ad_ids = []
-  impression_matcher = /http:\/\/ads.mopub.com\/m\/imp\?.*&id=([A-Za-z0-9]+)&/
-  proxy_lines.each do |proxy_line|
-    match = impression_matcher.match(proxy_line)
-    proxy_ad_ids << match[1] if match
-  end
-
+def verify_match(kif_ad_ids, proxy_ad_ids, kind)
   if kif_ad_ids == proxy_ad_ids
-    puts "******** KIF TEST IMPRESSIONS SUCCEEDED (#{proxy_ad_ids.length}/#{kif_ad_ids.length}) ********"
+    puts "******** KIF TEST #{kind} SUCCEEDED (#{proxy_ad_ids.length}/#{kif_ad_ids.length}) ********"
   else
-    puts "******** KIF TEST IMPRESSIONS FAILED ********"
+    puts "******** KIF TEST #{kind} FAILED ********"
     puts "Expected                         Received"
     count = [proxy_ad_ids.length, kif_ad_ids.length].max
     (0...count).each do |i|
@@ -252,6 +250,18 @@ def verify_impressions(proxy_lines, kif_lines)
 
     exit(1)
   end
+end
+
+def verify_impressions(proxy_lines, kif_lines)
+  kif_ad_ids = ids_matching_matcher(kif_lines, /~~~ EXPECT IMPRESSION FOR AD UNIT ID: ([A-Za-z0-9_\-]+)/)
+  proxy_ad_ids = ids_matching_matcher(proxy_lines, /http:\/\/ads.mopub.com\/m\/imp\?.*&id=([A-Za-z0-9_\-]+)&/)
+  verify_match(kif_ad_ids, proxy_ad_ids, "IMPRESSIONS")
+end
+
+def verify_clicks(proxy_lines, kif_lines)
+  kif_ad_ids = ids_matching_matcher(kif_lines, /~~~ EXPECT CLICK FOR AD UNIT ID: ([A-Za-z0-9_\-]+)/)
+  proxy_ad_ids = ids_matching_matcher(proxy_lines, /http:\/\/ads.mopub.com\/m\/aclk\?.*&id=([A-Za-z0-9_\-]+)&/)
+  verify_match(kif_ad_ids, proxy_ad_ids, "CLICKS")
 end
 
 desc "Copy SDK to Public/Private repo"

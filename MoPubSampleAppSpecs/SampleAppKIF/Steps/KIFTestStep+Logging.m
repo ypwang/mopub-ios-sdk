@@ -19,4 +19,14 @@
     }];
 }
 
++ (id)stepToLogClickForAdUnit:(NSString *)adUnitId
+{
+    NSString *description = [NSString stringWithFormat:@"Logging click for %@", adUnitId];
+    return [KIFTestStep stepWithDescription:description executionBlock:^KIFTestStepResult(KIFTestStep *step, NSError *__autoreleasing *error) {
+
+        NSLog(@"~~~ EXPECT CLICK FOR AD UNIT ID: %@", adUnitId);
+        return KIFTestStepResultSuccess;
+    }];
+}
+
 @end

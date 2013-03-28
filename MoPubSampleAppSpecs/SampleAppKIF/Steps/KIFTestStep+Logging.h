@@ -10,5 +10,6 @@
 @interface KIFTestStep (Logging)
 
 + (id)stepToLogImpressionForAdUnit:(NSString *)adUnitId;
++ (id)stepToLogClickForAdUnit:(NSString *)adUnitId;
 
 @end
