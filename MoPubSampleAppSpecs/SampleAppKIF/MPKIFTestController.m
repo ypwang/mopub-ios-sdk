@@ -55,9 +55,8 @@
 
 - (void)addChartboostScenarios
 {
-    //Sadly, this scenario only works if the chartboost appId in question is still in test mode
-    //Disfortunately, test mode gets disabled after 20 impressions.
-//    [self addScenario:[KIFTestScenario scenarioForChartboostInterstitial]];
+    [self addScenario:[KIFTestScenario scenarioForChartboostInterstitial]];
+    [self addScenario:[KIFTestScenario scenarioForMultipleChartboostInterstitials]];
 }
 
 - (void)addGreystripeScenarios

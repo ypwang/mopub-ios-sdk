@@ -26,12 +26,12 @@
 
 - (void)cacheInterstitial:(NSString *)location
 {
-    [self.requestedLocations addObject:location ? location : [NSNull null]];
+    [self.requestedLocations addObject:location];
 }
 
 - (BOOL)hasCachedInterstitial:(NSString *)location
 {
-    return [[self.cachedInterstitials objectForKey:location ? location : [NSNull null]] boolValue];
+    return [[self.cachedInterstitials objectForKey:location] boolValue];
 }
 
 - (void)showInterstitial:(NSString *)location
@@ -61,7 +61,6 @@
 {
     self.presentingViewController = nil;
     [self.delegate didDismissInterstitial:location];
-    [self.cachedInterstitials removeObjectForKey:location ? location : [NSNull null]];
 }
 
 @end

@@ -200,7 +200,7 @@ describe(@"handling multiple Chartboost requests (and locations)", ^{
         });
 
         it(@"should make three chartboost requests, passing in the correct location", ^{
-            chartboost.requestedLocations should equal(@[[NSNull null], @"foo", @"bar"]);
+            chartboost.requestedLocations should equal(@[@"Default", @"foo", @"bar"]);
         });
 
         it(@"should route chartboost notifications to the correct request", ^{
@@ -208,7 +208,7 @@ describe(@"handling multiple Chartboost requests (and locations)", ^{
             delegate should have_received(@selector(interstitialDidLoadAd:)).with(fooInterstitial);
             [delegate reset_sent_messages];
 
-            [chartboost simulateLoadingLocation:nil];
+            [chartboost simulateLoadingLocation:@"Default"];
             delegate should have_received(@selector(interstitialDidLoadAd:)).with(nullInterstitial);
             [delegate reset_sent_messages];
 
@@ -252,7 +252,7 @@ describe(@"handling multiple Chartboost requests (and locations)", ^{
         context(@"when an interstitial request fails", ^{
             it(@"should allow a subsequent request to the same location to load", ^{
                 [nullCommunicator reset];
-                [chartboost simulateFailingToLoadLocation:nil];
+                [chartboost simulateFailingToLoadLocation:@"Default"];
                 nullCommunicator.loadedURL should equal([NSURL URLWithString:@"http://null.com"]);
 
                 MPInterstitialAdController *interstitial = [MPInterstitialAdController interstitialAdControllerForAdUnitId:@"another_null_guy"];
@@ -262,7 +262,7 @@ describe(@"handling multiple Chartboost requests (and locations)", ^{
                 configuration = [MPAdConfigurationFactory defaultChartboostInterstitialConfigurationWithLocation:nil];
                 configuration.failoverURL = [NSURL URLWithString:@"http://null.com/null"];
                 [communicator receiveConfiguration:configuration];
-                [chartboost simulateLoadingLocation:nil];
+                [chartboost simulateLoadingLocation:@"Default"];
 
                 delegate should have_received(@selector(interstitialDidLoadAd:)).with(interstitial);
             });
@@ -270,8 +270,8 @@ describe(@"handling multiple Chartboost requests (and locations)", ^{
 
         context(@"when an interstitial is dismissed", ^{
             it(@"should allow a subsequent request to the same location to load", ^{
-                [chartboost simulateLoadingLocation:nil];
-                [chartboost simulateUserDismissingLocation:nil];
+                [chartboost simulateLoadingLocation:@"Default"];
+                [chartboost simulateUserDismissingLocation:@"Default"];
                 delegate should have_received(@selector(interstitialDidDisappear:)).with(nullInterstitial);
 
                 MPInterstitialAdController *interstitial = [MPInterstitialAdController interstitialAdControllerForAdUnitId:@"another_null_guy"];
@@ -281,7 +281,7 @@ describe(@"handling multiple Chartboost requests (and locations)", ^{
                 configuration = [MPAdConfigurationFactory defaultChartboostInterstitialConfigurationWithLocation:nil];
                 configuration.failoverURL = [NSURL URLWithString:@"http://null.com/null"];
                 [communicator receiveConfiguration:configuration];
-                [chartboost simulateLoadingLocation:nil];
+                [chartboost simulateLoadingLocation:@"Default"];
                 delegate should have_received(@selector(interstitialDidLoadAd:)).with(interstitial);
             });
         });

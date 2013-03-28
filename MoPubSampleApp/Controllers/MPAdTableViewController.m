@@ -50,6 +50,7 @@
                                                                               style:UIBarButtonItemStyleDone
                                                                              target:self
                                                                              action:@selector(didTapManualButton:)];
+    self.navigationItem.rightBarButtonItem.accessibilityLabel = @"Manual";
 
     [super viewDidLoad];
 }

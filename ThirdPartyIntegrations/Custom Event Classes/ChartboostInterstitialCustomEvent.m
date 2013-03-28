@@ -35,7 +35,10 @@
 
 + (MPChartboostRouter *)sharedRouter;
 
-- (void)cacheInterstitialWithCustomEventInfo:(NSDictionary *)info forChartboostInterstitialCustomEvent:(ChartboostInterstitialCustomEvent *)event;
+- (void)cacheInterstitialWithAppId:(NSString *)appId
+                      appSignature:(NSString *)appSignature
+                          location:(NSString *)location
+forChartboostInterstitialCustomEvent:(ChartboostInterstitialCustomEvent *)event;
 - (ChartboostInterstitialCustomEvent *)eventForLocation:(NSString *)location;
 - (void)setEvent:(ChartboostInterstitialCustomEvent *)event forLocation:(NSString *)location;
 - (void)unregisterEventForLocation:(NSString *)location;
@@ -67,12 +70,16 @@
 
 - (void)requestInterstitialWithCustomEventInfo:(NSDictionary *)info
 {
+    NSString *appId = [info objectForKey:@"appId"];
+    NSString *appSignature = [info objectForKey:@"appSignature"];
     NSString *location = [info objectForKey:@"location"];
-    self.location = location;
+    self.location = location ? location : @"Default";
 
     MPLogInfo(@"Requesting Chartboost interstitial.");
-    [[MPChartboostRouter sharedRouter] cacheInterstitialWithCustomEventInfo:info
-                                       forChartboostInterstitialCustomEvent:self];
+    [[MPChartboostRouter sharedRouter] cacheInterstitialWithAppId:appId
+                                                     appSignature:appSignature
+                                                         location:self.location
+                             forChartboostInterstitialCustomEvent:self];
 }
 
 - (void)showInterstitialFromRootViewController:(UIViewController *)rootViewController
@@ -175,12 +182,11 @@ static MPChartboostRouter *sharedRouter = nil;
     [super dealloc];
 }
 
-- (void)cacheInterstitialWithCustomEventInfo:(NSDictionary *)info forChartboostInterstitialCustomEvent:(ChartboostInterstitialCustomEvent *)event
+- (void)cacheInterstitialWithAppId:(NSString *)appId
+                      appSignature:(NSString *)appSignature
+                          location:(NSString *)location
+forChartboostInterstitialCustomEvent:(ChartboostInterstitialCustomEvent *)event
 {
-    NSString *appId = [info objectForKey:@"appId"];
-    NSString *appSignature = [info objectForKey:@"appSignature"];
-    NSString *location = [info objectForKey:@"location"];
-
     if ([self eventForLocation:location]) {
         MPLogInfo(@"Failed to load Chartboost interstitial: this location is already in use.");
         [event didFailToLoadInterstitial:location];
@@ -213,17 +219,17 @@ static MPChartboostRouter *sharedRouter = nil;
 
 - (ChartboostInterstitialCustomEvent *)eventForLocation:(NSString *)location
 {
-    return [self.events objectForKey:location ? location : [NSNull null]];
+    return [self.events objectForKey:location];
 }
 
 - (void)setEvent:(ChartboostInterstitialCustomEvent *)event forLocation:(NSString *)location
 {
-    [self.events setObject:event forKey:location ? location : [NSNull null]];
+    [self.events setObject:event forKey:location];
 }
 
 - (void)unregisterEventForLocation:(NSString *)location
 {
-    [self.events removeObjectForKey:location ? location : [NSNull null]];
+    [self.events removeObjectForKey:location];
 }
 
 - (void)didCacheInterstitial:(NSString *)location

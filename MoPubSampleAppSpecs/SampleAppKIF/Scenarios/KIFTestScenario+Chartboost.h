@@ -10,5 +10,6 @@
 @interface KIFTestScenario (Chartboost)
 
 + (KIFTestScenario *)scenarioForChartboostInterstitial;
++ (KIFTestScenario *)scenarioForMultipleChartboostInterstitials;
 
 @end

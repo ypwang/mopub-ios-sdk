@@ -8,6 +8,7 @@
 #import "AppDelegate.h"
 #import "MPAdTableViewController.h"
 #import "MPAdSection.h"
+#import "MPIdentityProvider.h"
 
 #if RUN_KIF_TESTS
 #import "MPKIFTestController.h"
@@ -17,6 +18,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSLog(@"This device's UDID: %@", [[UIDevice currentDevice] uniqueIdentifier]);
+    NSLog(@"This device's advertisingIdentifier: %@", [MPIdentityProvider identifier]);
+
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[MPAdTableViewController alloc] initWithAdSections:[MPAdSection adSections]]];
