@@ -3,6 +3,7 @@
 #import "MPBannerAdDetailViewController.h"
 #import "MPAdSection.h"
 #import "MPInterstitialAdDetailViewController.h"
+#import "MPManualAdViewController.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -89,6 +90,15 @@ describe(@"MPAdTableViewController", ^{
             detailController.IDLabel.text should equal(@"intlid1");
         });
     });
+
+    context(@"when the manual button is pressed", ^{
+        it(@"should push a manual ad view controller onto the navigation stack", ^{
+            [controller.navigationItem.rightBarButtonItem tap];
+
+            navigationController.topViewController should be_instance_of([MPManualAdViewController class]);
+        });
+    });
+
 });
 
 SPEC_END

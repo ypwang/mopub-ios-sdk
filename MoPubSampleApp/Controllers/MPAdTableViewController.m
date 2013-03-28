@@ -10,6 +10,7 @@
 #import "MPAdSection.h"
 #import "MPBannerAdDetailViewController.h"
 #import "MPInterstitialAdDetailViewController.h"
+#import "MPManualAdViewController.h"
 
 @interface MPAdTableViewController ()
 
@@ -44,7 +45,18 @@
     self.title = @"Ads";
     self.tableView.accessibilityLabel = @"Ad Table View";
     [self.tableView reloadData];
+
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Manual"
+                                                                              style:UIBarButtonItemStyleDone
+                                                                             target:self
+                                                                             action:@selector(didTapManualButton:)];
+
     [super viewDidLoad];
+}
+
+- (void)didTapManualButton:(id)sender
+{
+    [self.navigationController pushViewController:[[MPManualAdViewController alloc] init] animated:YES];
 }
 
 #pragma mark - Table view data source

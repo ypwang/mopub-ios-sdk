@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE0021E61704C46400A220F0 /* MPManualAdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE0021E41704C46400A220F0 /* MPManualAdViewController.m */; };
+		AE0021E71704C46400A220F0 /* MPManualAdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE0021E41704C46400A220F0 /* MPManualAdViewController.m */; };
+		AE0021E81704C46400A220F0 /* MPManualAdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE0021E41704C46400A220F0 /* MPManualAdViewController.m */; };
+		AE0021E91704C46400A220F0 /* MPManualAdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE0021E51704C46400A220F0 /* MPManualAdViewController.xib */; };
+		AE0021EA1704C46400A220F0 /* MPManualAdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE0021E51704C46400A220F0 /* MPManualAdViewController.xib */; };
+		AE0021EB1704C46400A220F0 /* MPManualAdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE0021E51704C46400A220F0 /* MPManualAdViewController.xib */; };
+		AE0021F51704C74200A220F0 /* MPManualAdViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE0021F41704C74200A220F0 /* MPManualAdViewControllerSpec.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		AE109198170103BD00812E6E /* KIFTestScenario+Chartboost.m in Sources */ = {isa = PBXBuildFile; fileRef = AE109197170103BD00812E6E /* KIFTestScenario+Chartboost.m */; };
 		AE1091A3170108AA00812E6E /* KIFTestStep+View.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1091A2170108AA00812E6E /* KIFTestStep+View.m */; };
 		AE1091F517011EF400812E6E /* KIFTestScenario+Greystripe.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1091F417011EF300812E6E /* KIFTestScenario+Greystripe.m */; };
@@ -290,6 +297,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AE0021E31704C46300A220F0 /* MPManualAdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPManualAdViewController.h; sourceTree = "<group>"; };
+		AE0021E41704C46400A220F0 /* MPManualAdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPManualAdViewController.m; sourceTree = "<group>"; };
+		AE0021E51704C46400A220F0 /* MPManualAdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MPManualAdViewController.xib; sourceTree = "<group>"; };
+		AE0021F41704C74200A220F0 /* MPManualAdViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPManualAdViewControllerSpec.mm; sourceTree = "<group>"; };
 		AE109196170103BD00812E6E /* KIFTestScenario+Chartboost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KIFTestScenario+Chartboost.h"; sourceTree = "<group>"; };
 		AE109197170103BD00812E6E /* KIFTestScenario+Chartboost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KIFTestScenario+Chartboost.m"; sourceTree = "<group>"; };
 		AE1091A1170108AA00812E6E /* KIFTestStep+View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KIFTestStep+View.h"; sourceTree = "<group>"; };
@@ -673,6 +684,9 @@
 				AE43414416F9068000B73710 /* MPInterstitialAdDetailViewController.h */,
 				AE43414516F9068000B73710 /* MPInterstitialAdDetailViewController.m */,
 				AE43414616F9068000B73710 /* MPInterstitialAdDetailViewController.xib */,
+				AE0021E31704C46300A220F0 /* MPManualAdViewController.h */,
+				AE0021E41704C46400A220F0 /* MPManualAdViewController.m */,
+				AE0021E51704C46400A220F0 /* MPManualAdViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -690,6 +704,7 @@
 				AED9E4C016F7921500EA71A7 /* MPAdTableViewControllerSpec.mm */,
 				AED9E4D116F79C0300EA71A7 /* MPBannerAdDetailViewControllerSpec.mm */,
 				AE43414D16F9074A00B73710 /* MPInterstitialAdDetailViewControllerSpec.mm */,
+				AE0021F41704C74200A220F0 /* MPManualAdViewControllerSpec.mm */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1030,6 +1045,7 @@
 				AE43414A16F9068000B73710 /* MPInterstitialAdDetailViewController.xib in Resources */,
 				AEEA5E7316F94102003D48F4 /* libGoogleAdMobAds.a in Resources */,
 				AEEA5E7616F94102003D48F4 /* libMMSDK_4.6.2.a in Resources */,
+				AE0021E91704C46400A220F0 /* MPManualAdViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1042,6 +1058,7 @@
 				AE43414B16F9068000B73710 /* MPInterstitialAdDetailViewController.xib in Resources */,
 				AEEA5E7416F94102003D48F4 /* libGoogleAdMobAds.a in Resources */,
 				AEEA5E7716F94102003D48F4 /* libMMSDK_4.6.2.a in Resources */,
+				AE0021EA1704C46400A220F0 /* MPManualAdViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1061,6 +1078,7 @@
 				AE43414C16F9068000B73710 /* MPInterstitialAdDetailViewController.xib in Resources */,
 				AEEA5E7516F94102003D48F4 /* libGoogleAdMobAds.a in Resources */,
 				AEEA5E7816F94102003D48F4 /* libMMSDK_4.6.2.a in Resources */,
+				AE0021EB1704C46400A220F0 /* MPManualAdViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1079,6 +1097,7 @@
 				AED9E4DE16F7B00100EA71A7 /* MPSampleAppInstanceProvider.m in Sources */,
 				AE43413D16F8EEC500B73710 /* MPAdSection.m in Sources */,
 				AE43414716F9068000B73710 /* MPInterstitialAdDetailViewController.m in Sources */,
+				AE0021E61704C46400A220F0 /* MPManualAdViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1105,6 +1124,8 @@
 				AE43414816F9068000B73710 /* MPInterstitialAdDetailViewController.m in Sources */,
 				AE43414E16F9074A00B73710 /* MPInterstitialAdDetailViewControllerSpec.mm in Sources */,
 				AE43415116F9094C00B73710 /* FakeMPInterstitialAdController.m in Sources */,
+				AE0021E71704C46400A220F0 /* MPManualAdViewController.m in Sources */,
+				AE0021F51704C74200A220F0 /* MPManualAdViewControllerSpec.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1140,6 +1161,7 @@
 				AE867A7517021852007E9D8C /* KIFTestScenario+InMobi.m in Sources */,
 				AE867AD917027471007E9D8C /* KIFTestStep+TableView.m in Sources */,
 				AE867AE417034D52007E9D8C /* KIFTestStep+Logging.m in Sources */,
+				AE0021E81704C46400A220F0 /* MPManualAdViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
