@@ -1,4 +1,5 @@
 require 'tmpdir'
+require 'pp'
 
 CONFIGURATION = "Debug"
 SDK_VERSION = "6.1"
@@ -225,6 +226,11 @@ namespace :mopubsample do
 
   task :clean do
     system_or_exit(%Q[xcodebuild -project MoPubSampleApp.xcodeproj -alltargets -configuration #{CONFIGURATION} clean SYMROOT=#{BUILD_DIR}], {}, output_file("mopub_clean"))
+  end
+
+  task :bump_server do
+    head "Bumping Server Ad Units"
+    system("./Scripts/bump_server.rb")
   end
 end
 
