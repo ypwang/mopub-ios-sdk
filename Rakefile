@@ -270,19 +270,31 @@ def verify_clicks(proxy_lines, kif_lines)
   verify_match(kif_ad_ids, proxy_ad_ids, "CLICKS")
 end
 
-desc "Copy SDK to Public/Private repo"
-task :copy do
-  head "Copying SDK to Public/Private repo"
-  path_to_development_sdk = File.absolute_path(File.join(File.dirname(__FILE__), 'MoPubSDK'))
-  path_to_repo_sdk = File.absolute_path(File.join(File.dirname(__FILE__), '../mopub-client/MoPubiOS/MoPubSDK'))
-  `rm -rf #{path_to_repo_sdk}`
-  `cp -r #{path_to_development_sdk} #{path_to_repo_sdk}`
+desc "Copy and Verify code into the mopub client repo"
+task :mopub_client => ["mopub_client:copy", "mopub_client:verify"]
 
-  path_to_development_3rd = File.absolute_path(File.join(File.dirname(__FILE__), 'ThirdPartyIntegrations'))
-  path_to_repo_3rd = File.absolute_path(File.join(File.dirname(__FILE__), '../mopub-client/MoPubiOS/extras'))
-  `rm -rf #{path_to_repo_3rd}`
-  `cp -r #{path_to_development_3rd} #{path_to_repo_3rd}`
+namespace :mopub_client do
+  desc "Copy SDK to Public/Private repo"
+  task :copy do
+    head "Copying SDK to Public/Private repo"
+    path_to_development_sdk = File.absolute_path(File.join(File.dirname(__FILE__), 'MoPubSDK'))
+    path_to_repo_sdk = File.absolute_path(File.join(File.dirname(__FILE__), '../mopub-client/MoPubiOS/MoPubSDK'))
+    `rm -rf #{path_to_repo_sdk}`
+    `cp -r #{path_to_development_sdk} #{path_to_repo_sdk}`
+
+    path_to_development_3rd = File.absolute_path(File.join(File.dirname(__FILE__), 'ThirdPartyIntegrations'))
+    path_to_repo_3rd = File.absolute_path(File.join(File.dirname(__FILE__), '../mopub-client/MoPubiOS/extras'))
+    `rm -rf #{path_to_repo_3rd}`
+    `cp -r #{path_to_development_3rd} #{path_to_repo_3rd}`
+  end
+
+  desc "Verify that the SimpleAds demo compiles"
+  task :verify do
+    project = File.absolute_path(File.join(File.dirname(__FILE__),'..','mopub-client', 'MoPubiOS', 'SimpleAdsDemo', 'SimpleAds'))
+    build(project: project, target: 'MoPub')
+  end
 end
+
 
 at_exit do
   if ENV['IS_CI_BOX']
