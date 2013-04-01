@@ -45,6 +45,7 @@ forChartboostInterstitialCustomEvent:(ChartboostInterstitialCustomEvent *)event;
 - (void)unregisterEventForLocation:(NSString *)location;
 - (BOOL)hasCachedInterstitialForLocation:(NSString *)location;
 - (void)showInterstitialForLocation:(NSString *)location;
+- (void)unregisterEvent:(ChartboostInterstitialCustomEvent *)event;
 
 @end
 
@@ -62,7 +63,7 @@ forChartboostInterstitialCustomEvent:(ChartboostInterstitialCustomEvent *)event;
 
 - (void)customEventDidUnload
 {
-    [[MPChartboostRouter sharedRouter] unregisterEventForLocation:self.location];
+    [[MPChartboostRouter sharedRouter] unregisterEvent:self];
     self.location = nil;
     [super customEventDidUnload];
 }
@@ -247,6 +248,13 @@ forChartboostInterstitialCustomEvent:(ChartboostInterstitialCustomEvent *)event
 - (void)unregisterEventForLocation:(NSString *)location
 {
     [self.activeLocations removeObject:location];
+}
+
+- (void)unregisterEvent:(ChartboostInterstitialCustomEvent *)event
+{
+    if ([[self.events objectForKey:event.location] isEqual:event]) {
+        [self unregisterEventForLocation:event.location];
+    }
 }
 
 - (void)didCacheInterstitial:(NSString *)location

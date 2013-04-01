@@ -287,6 +287,57 @@ describe(@"handling multiple Chartboost requests (and locations)", ^{
         });
     });
 
+    context(@"when multiple interstitials request the same location", ^{
+        beforeEach(^{
+            chartboost = [[[FakeChartboost alloc] init] autorelease];
+            fakeProvider.fakeChartboost = chartboost;
+            configuration = [MPAdConfigurationFactory defaultChartboostInterstitialConfigurationWithLocation:@"foo"];
+
+            delegate = nice_fake_for(@protocol(MPInterstitialAdControllerDelegate));
+        });
+
+        it(@"should only connect the first interstitial to chartboost and should always fail the other interstitials", ^{
+            // make interstitial A (and give it the configuration)
+            MPInterstitialAdController *interstitialA = [MPInterstitialAdController interstitialAdControllerForAdUnitId:@"A"];
+            interstitialA.delegate = delegate;
+            [interstitialA loadAd];
+            [fakeProvider.lastFakeMPAdServerCommunicator receiveConfiguration:configuration];
+
+            @autoreleasepool {
+                // make interstiatial B (and give it the configuration
+                MPInterstitialAdController *interstitialB = [MPInterstitialAdController interstitialAdControllerForAdUnitId:@"B"];
+                interstitialB.delegate = delegate;
+                [interstitialB loadAd];
+                configuration.failoverURL = [NSURL URLWithString:@"http://b.com/b"];
+                [fakeProvider.lastFakeMPAdServerCommunicator receiveConfiguration:configuration];
+
+                // assert that B failed, and that A didn't get any messages
+                fakeProvider.lastFakeMPAdServerCommunicator.loadedURL.absoluteString should equal(@"http://b.com/b");
+                delegate.sent_messages should be_empty;
+
+                // kill off B (like, really deallocate it)
+                [MPInterstitialAdController removeSharedInterstitialAdController:interstitialB];
+            }
+
+            // make interstitial C (and give it the configuration)
+            MPInterstitialAdController *interstitialC = [MPInterstitialAdController interstitialAdControllerForAdUnitId:@"C"];
+            interstitialC.delegate = delegate;
+            [interstitialC loadAd];
+            configuration.failoverURL = [NSURL URLWithString:@"http://c.com/c"];
+            [fakeProvider.lastFakeMPAdServerCommunicator receiveConfiguration:configuration];
+
+            // assert that C failed <--
+            fakeProvider.lastFakeMPAdServerCommunicator.loadedURL.absoluteString should equal(@"http://c.com/c");
+
+            // let chartboost finish loading
+            [chartboost simulateLoadingLocation:@"foo"];
+
+            // assert that A got the message, and B and C did not
+            delegate should have_received(@selector(interstitialDidLoadAd:)).with(interstitialA);
+            delegate.sent_messages.count should equal(1);
+        });
+    });
+
     context(@"when a chartboost interstitial controller is deallocated", ^{
         beforeEach(^{
             chartboost = [[[FakeChartboost alloc] init] autorelease];
