@@ -34,6 +34,7 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
 - (void)scheduleAutorefreshTimer;
 - (void)cancelPendingAutorefreshTimer;
 - (void)rotateToOrientation:(UIInterfaceOrientation)orientation;
+- (void)scheduleDefaultAutorefreshTimer;
 
 - (NSString *)adUnitID;
 - (NSString *)keywords;

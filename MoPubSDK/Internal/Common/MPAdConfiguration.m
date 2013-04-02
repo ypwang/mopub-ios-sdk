@@ -38,6 +38,10 @@ NSString * const kAdTypeMraid = @"mraid";
 @interface MPAdConfiguration ()
 
 @property (nonatomic, copy) NSString *adResponseHTMLString;
+- (MPAdType)adTypeFromHeaders:(NSDictionary *)headers;
+- (NSString *)networkTypeFromHeaders:(NSDictionary *)headers;
+- (NSTimeInterval)refreshIntervalFromHeaders:(NSDictionary *)headers;
+- (NSDictionary *)dictionaryFromHeaders:(NSDictionary *)headers forKey:(NSString *)key;
 
 @end
 
@@ -63,6 +67,7 @@ NSString * const kAdTypeMraid = @"mraid";
 @synthesize customEventClass = _customEventClass;
 @synthesize customEventClassData = _customEventClassData;
 @synthesize adSize = _adSize;
+@synthesize customSelectorName = _customSelectorName;
 
 - (id)init
 {

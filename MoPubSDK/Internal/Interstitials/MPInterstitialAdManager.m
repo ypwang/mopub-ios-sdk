@@ -24,6 +24,8 @@
 @property (nonatomic, retain) MPAdServerCommunicator *communicator;
 @property (nonatomic, retain) MPAdConfiguration *configuration;
 
+- (void)setUpAdapterWithConfiguration:(MPAdConfiguration *)configuration;
+
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

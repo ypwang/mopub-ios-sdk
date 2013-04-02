@@ -37,6 +37,7 @@
 @interface MPInterstitialCustomEventAdapter ()
 
 @property (nonatomic, retain) MPInterstitialCustomEvent *interstitialCustomEvent;
+- (void)loadAdFromCustomClass:(Class)customClass configuration:(MPAdConfiguration *)configuration;
 
 @end
 

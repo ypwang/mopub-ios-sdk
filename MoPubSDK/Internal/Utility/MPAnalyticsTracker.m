@@ -11,10 +11,13 @@
 @interface MPAnalyticsTracker ()
 
 @property (nonatomic, retain) NSString *userAgentString;
+- (NSURLRequest *)requestForURL:(NSURL *)URL;
 
 @end
 
 @implementation MPAnalyticsTracker
+
+@synthesize userAgentString = _userAgentString;
 
 + (MPAnalyticsTracker *)trackerWithUserAgentString:(NSString *)userAgentString
 {

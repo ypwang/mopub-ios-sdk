@@ -41,6 +41,7 @@
 @implementation MPIAdInterstitialAdapter
 
 @synthesize iAdInterstitial = _iAdInterstitial;
+@synthesize isOnScreen = _isOnScreen;
 
 - (void)getAdWithConfiguration:(MPAdConfiguration *)configuration
 {

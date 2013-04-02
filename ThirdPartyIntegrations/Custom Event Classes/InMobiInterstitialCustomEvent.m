@@ -46,6 +46,8 @@
 
 @implementation InMobiInterstitialCustomEvent
 
+@synthesize inMobiInterstitial = _inMobiInterstitial;
+
 #pragma mark - MPInterstitialCustomEvent Subclass Methods
 
 - (void)requestInterstitialWithCustomEventInfo:(NSDictionary *)info

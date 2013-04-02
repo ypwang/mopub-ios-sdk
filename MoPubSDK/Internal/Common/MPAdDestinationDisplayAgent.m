@@ -17,6 +17,8 @@
 @property (nonatomic, assign) id<MPAdDestinationDisplayAgentDelegate> delegate;
 
 - (void)presentStoreKitControllerWithItemIdentifier:(NSString *)identifier fallbackURL:(NSURL *)URL;
+- (void)hideOverlay;
+- (void)hideModalAndNotifyDelegate;
 
 @end
 
@@ -24,6 +26,7 @@
 
 @synthesize delegate = _delegate;
 @synthesize resolver = _resolver;
+@synthesize inUse = _inUse;
 
 + (MPAdDestinationDisplayAgent *)agentWithDelegate:(id<MPAdDestinationDisplayAgentDelegate>)delegate
 {

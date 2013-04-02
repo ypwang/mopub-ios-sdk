@@ -15,12 +15,21 @@
 @property (nonatomic, retain) NSURLConnection *connection;
 @property (nonatomic, retain) NSMutableData *responseData;
 
+- (BOOL)handleURL:(NSURL *)URL;
+- (NSString *)storeItemIdentifierForURL:(NSURL *)URL;
+- (BOOL)URLShouldOpenInApplication:(NSURL *)URL;
+- (BOOL)URLIsHTTPOrHTTPS:(NSURL *)URL;
+- (BOOL)URLPointsToAMap:(NSURL *)URL;
+
+
 @end
 
 @implementation MPURLResolver
 
 @synthesize URL = _URL;
 @synthesize delegate = _delegate;
+@synthesize connection = _connection;
+@synthesize responseData = _responseData;
 
 + (MPURLResolver *)resolver
 {

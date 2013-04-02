@@ -151,6 +151,7 @@ forChartboostInterstitialCustomEvent:(ChartboostInterstitialCustomEvent *)event;
 
 @synthesize events = _events;
 @synthesize activeLocations = _activeLocations;
+@synthesize chartboost = _chartboost;
 
 static MPChartboostRouter *sharedRouter = nil;
 

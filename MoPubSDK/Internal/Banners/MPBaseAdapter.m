@@ -12,9 +12,8 @@
 #import "MPLogging.h"
 
 @interface MPBaseAdapter ()
-{
-    NSMutableURLRequest *_metricsURLRequest;
-}
+
+@property (nonatomic, retain) NSMutableURLRequest *metricsURLRequest;
 
 @end
 
@@ -25,31 +24,32 @@
 @synthesize delegate = _delegate;
 @synthesize impressionTrackingURL = _impressionTrackingURL;
 @synthesize clickTrackingURL = _clickTrackingURL;
+@synthesize metricsURLRequest = _metricsURLRequest;
 
 - (id)initWithAdapterDelegate:(id<MPAdapterDelegate>)delegate
 {
-	if (self = [super init]) {
-		_delegate = delegate;
-        
+    if (self = [super init]) {
+        _delegate = delegate;
+
         _metricsURLRequest = [[NSMutableURLRequest alloc] init];
         [_metricsURLRequest setCachePolicy:NSURLRequestReloadIgnoringCacheData];
         [_metricsURLRequest setValue:MPUserAgentString() forHTTPHeaderField:@"User-Agent"];
-	}
-	return self;
+    }
+    return self;
 }
 
 - (void)dealloc
 {
-	[self unregisterDelegate];
+    [self unregisterDelegate];
     [_impressionTrackingURL release];
     [_clickTrackingURL release];
     [_metricsURLRequest release];
-	[super dealloc];
+    [super dealloc];
 }
 
 - (void)unregisterDelegate
 {
-	_delegate = nil;
+    _delegate = nil;
 }
 
 #pragma mark - Requesting Ads
@@ -64,7 +64,7 @@
 {
     self.impressionTrackingURL = [configuration impressionTrackingURL];
     self.clickTrackingURL = [configuration clickTrackingURL];
-    
+
     [self retain];
     [self getAdWithConfiguration:configuration];
     [self release];
@@ -74,9 +74,9 @@
 
 - (void)rotateToOrientation:(UIInterfaceOrientation)newOrientation
 {
-	// Do nothing by default. Subclasses can override.
-	MPLogDebug(@"rotateToOrientation %d called for adapter %@ (%p)",
-		  newOrientation, NSStringFromClass([self class]), self);
+    // Do nothing by default. Subclasses can override.
+    MPLogDebug(@"rotateToOrientation %d called for adapter %@ (%p)",
+          newOrientation, NSStringFromClass([self class]), self);
 }
 
 #pragma mark - Metrics
@@ -99,13 +99,13 @@
 
 - (void)getAd
 {
-	[self getAdWithParams:nil];
+    [self getAdWithParams:nil];
 }
 
 - (void)getAdWithParams:(NSDictionary *)params
 {
-	// To be implemented by subclasses.
-	[self doesNotRecognizeSelector:_cmd];
+    // To be implemented by subclasses.
+    [self doesNotRecognizeSelector:_cmd];
 }
 
 - (void)_getAdWithParams:(NSDictionary *)params

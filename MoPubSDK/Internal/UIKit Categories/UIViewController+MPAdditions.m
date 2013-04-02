@@ -24,7 +24,7 @@
 }
 
 - (UIViewController *)mp_presentingViewController
-{  
+{
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= MP_IOS_5_0
     if ([self respondsToSelector:@selector(presentingViewController)]) {
         // For iOS 5 and above.
@@ -40,25 +40,25 @@
 - (void)mp_presentModalViewController:(UIViewController *)modalViewController
                              animated:(BOOL)animated
 {
-#if NS_BLOCKS_AVAILABLE
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= MP_IOS_5_0
     if ([self respondsToSelector:@selector(presentViewController:animated:completion:)]) {
         [self presentViewController:modalViewController animated:animated completion:nil];
         return;
     }
 #endif
-    
+
     [self presentModalViewController:modalViewController animated:animated];
 }
 
 - (void)mp_dismissModalViewControllerAnimated:(BOOL)animated
 {
-#if NS_BLOCKS_AVAILABLE
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= MP_IOS_5_0
     if ([self respondsToSelector:@selector(dismissViewControllerAnimated:completion:)]) {
         [self dismissViewControllerAnimated:animated completion:nil];
         return;
     }
 #endif
-    
+
     [self dismissModalViewControllerAnimated:animated];
 }
 

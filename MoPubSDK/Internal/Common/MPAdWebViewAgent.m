@@ -29,6 +29,11 @@ NSString * const kMoPubCustomHost = @"custom";
 @property (nonatomic, retain) MPAdDestinationDisplayAgent *destinationDisplayAgent;
 @property (nonatomic, assign) BOOL shouldHandleRequests;
 
+- (void)performActionForMoPubSpecificURL:(NSURL *)URL;
+- (BOOL)shouldIntercept:(NSURL *)URL navigationType:(UIWebViewNavigationType)navigationType;
+- (void)interceptURL:(NSURL *)URL;
+- (void)handleMoPubCustomURL:(NSURL *)URL;
+
 @end
 
 @implementation MPAdWebViewAgent
@@ -38,6 +43,7 @@ NSString * const kMoPubCustomHost = @"custom";
 @synthesize destinationDisplayAgent = _destinationDisplayAgent;
 @synthesize customMethodDelegate = _customMethodDelegate;
 @synthesize shouldHandleRequests = _shouldHandleRequests;
+@synthesize view = _view;
 
 - (id)initWithAdWebViewFrame:(CGRect)frame delegate:(id<MPAdWebViewAgentDelegate>)delegate customMethodDelegate:(id)customMethodDelegate;
 {

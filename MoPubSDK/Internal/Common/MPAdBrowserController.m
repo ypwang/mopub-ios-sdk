@@ -36,6 +36,7 @@
 @synthesize delegate = _delegate;
 @synthesize URL = _URL;
 @synthesize webViewLoadCount = _webViewLoadCount;
+@synthesize HTMLString = _HTMLString;
 
 #pragma mark -
 #pragma mark Lifecycle

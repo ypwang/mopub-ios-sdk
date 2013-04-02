@@ -27,6 +27,7 @@
 @synthesize configuration = _configuration;
 @synthesize hasTrackedImpression = _hasTrackedImpression;
 @synthesize hasTrackedClick = _hasTrackedClick;
+@synthesize analyticsTracker = _analyticsTracker;
 
 - (id)initWithDelegate:(id<MPBaseInterstitialAdapterDelegate>)delegate
 {

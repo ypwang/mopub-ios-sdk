@@ -22,6 +22,8 @@
 
 @implementation MPMRAIDInterstitialAdapter
 
+@synthesize interstitial = _interstitial;
+
 - (void)getAdWithConfiguration:(MPAdConfiguration *)configuration
 {
     self.interstitial = [[MPInstanceProvider sharedProvider] buildMPMRAIDInterstitialViewControllerWithDelegate:self

@@ -61,12 +61,12 @@ static MPInstanceProvider *sharedProvider = nil;
 
 - (MPInterstitialAdManager *)buildMPInterstitialAdManagerWithDelegate:(id<MPInterstitialAdManagerDelegate>)delegate
 {
-    return [[[MPInterstitialAdManager alloc] initWithDelegate:delegate] autorelease];
+    return [[(MPInterstitialAdManager *)[MPInterstitialAdManager alloc] initWithDelegate:delegate] autorelease];
 }
 
 - (MPAdServerCommunicator *)buildMPAdServerCommunicatorWithDelegate:(id<MPAdServerCommunicatorDelegate>)delegate
 {
-    return [[[MPAdServerCommunicator alloc] initWithDelegate:delegate] autorelease];
+    return [[(MPAdServerCommunicator *)[MPAdServerCommunicator alloc] initWithDelegate:delegate] autorelease];
 }
 
 - (MPBaseInterstitialAdapter *)buildInterstitialAdapterForConfiguration:(MPAdConfiguration *)configuration
@@ -74,9 +74,9 @@ static MPInstanceProvider *sharedProvider = nil;
 {
     if ([configuration.networkType isEqualToString:@"custom"]) {
         if (configuration.customEventClass) {
-            return [[[MPInterstitialCustomEventAdapter alloc] initWithDelegate:delegate] autorelease];
+            return [[(MPInterstitialCustomEventAdapter *)[MPInterstitialCustomEventAdapter alloc] initWithDelegate:delegate] autorelease];
         } else if (configuration.customSelectorName) {
-            return [[[MPLegacyInterstitialCustomEventAdapter alloc] initWithDelegate:delegate] autorelease];
+            return [[(MPLegacyInterstitialCustomEventAdapter *)[MPLegacyInterstitialCustomEventAdapter alloc] initWithDelegate:delegate] autorelease];
         } else {
             return nil;
         }
