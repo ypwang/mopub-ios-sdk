@@ -1,5 +1,6 @@
 #import "MPManualAdViewController.h"
 #import "FakeMPInterstitialAdController.h"
+#import "FakeMPAdView.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -150,6 +151,62 @@ describe(@"MPManualAdViewController", ^{
         });
 
         itShouldBehaveLike(@"an interstitial manager");
+    });
+
+    context(@"the banner", ^{
+        __block FakeMPAdView *adView;
+
+        beforeEach(^{
+            loadButton = controller.bannerLoadButton;
+            textField = controller.bannerTextField;
+            spinner = controller.bannerActivityIndicator;
+            statusLabel = controller.bannerStatusLabel;
+
+            adView = fakeProvider.lastFakeAdView;
+        });
+
+        it(@"should put the adView in the view hierarchy", ^{
+            controller.bannerContainer.subviews.lastObject should equal(adView);
+        });
+
+        context(@"when the load button is tapped", ^{
+            beforeEach(^{
+                statusLabel.text = @"something";
+                textField.text = @"fluffy bears";
+                [loadButton tap];
+            });
+
+            it(@"should tell the banner to load", ^{
+                adView.adUnitId should equal(textField.text);
+                adView.wasLoaded should equal(YES);
+            });
+
+            it(@"should show the spinner and clear out the status label", ^{
+                spinner.isAnimating should equal(YES);
+                statusLabel.text should equal(@"");
+            });
+
+            context(@"when the ad arrives", ^{
+                beforeEach(^{
+                    [adView.delegate adViewDidLoadAd:adView];
+                });
+
+                it(@"should hide the spinner", ^{
+                    spinner.isAnimating should equal(NO);
+                });
+            });
+
+            context(@"when the ad fails to arrive", ^{
+                beforeEach(^{
+                    [adView.delegate adViewDidFailToLoadAd:adView];
+                });
+
+                it(@"should hide the spinner update the status label", ^{
+                    statusLabel.text should equal(@"Failed");
+                    spinner.isAnimating should equal(NO);
+                });
+            });
+        });
     });
 });
 

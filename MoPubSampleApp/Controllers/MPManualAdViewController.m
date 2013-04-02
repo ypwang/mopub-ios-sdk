@@ -12,6 +12,8 @@
 
 @property (nonatomic, strong) MPInterstitialAdController *firstInterstitial;
 @property (nonatomic, strong) MPInterstitialAdController *secondInterstitial;
+@property (nonatomic, strong) MPAdView *banner;
+@property (nonatomic, strong) UITextField *activeField;
 
 @end
 
@@ -24,6 +26,24 @@
     self.title = @"Manual";
     self.firstInterstitialShowButton.hidden = YES;
     self.secondInterstitialShowButton.hidden = YES;
+
+    [self registerForKeyboardNotifications];
+
+    self.banner = [[MPSampleAppInstanceProvider sharedProvider] buildMPAdViewWithAdUnitID:@"" size:MOPUB_BANNER_SIZE];
+    self.banner.delegate = self;
+    [self.bannerContainer addSubview:self.banner];
+
+    [self.scrollView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapScrollView)]];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    self.scrollView.contentSize = self.scrollView.bounds.size;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (IBAction)didTapFirstInterstitialLoadButton:(id)sender
@@ -58,6 +78,15 @@
 - (IBAction)didTapSecondInterstitialShowButton:(id)sender
 {
     [self.secondInterstitial showFromViewController:self];
+}
+
+- (IBAction)didTapBannerLoadButton:(id)sender
+{
+    [self.view endEditing:YES];
+    [self.bannerActivityIndicator startAnimating];
+    self.bannerStatusLabel.text = @"";
+    self.banner.adUnitId = self.bannerTextField.text;
+    [self.banner loadAd];
 }
 
 #pragma mark - <MPInterstitialAdControllerDelegate>
@@ -112,15 +141,82 @@
     }
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+#pragma mark - <MPAdViewDelegate>
+
+- (UIViewController *)viewControllerForPresentingModalView
+{
+    return self;
+}
+
+- (void)adViewDidLoadAd:(MPAdView *)view
+{
+    [self.bannerActivityIndicator stopAnimating];
+}
+
+- (void)adViewDidFailToLoadAd:(MPAdView *)view
+{
+    self.bannerStatusLabel.text = @"Failed";
+    [self.bannerActivityIndicator stopAnimating];
+}
+
+- (void)didTapScrollView
 {
     [self.view endEditing:YES];
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    self.activeField = textField;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    self.activeField = nil;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [self.view endEditing:YES];
     return YES;
+}
+
+#pragma mark - Keyboard Scroll Management
+
+- (void)registerForKeyboardNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+
+}
+
+- (void)keyboardWasShown:(NSNotification*)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    self.scrollView.contentInset = contentInsets;
+    self.scrollView.scrollIndicatorInsets = contentInsets;
+
+    CGRect aRect = self.view.frame;
+    aRect.size.height -= kbSize.height;
+    CGPoint activeFieldVisiblePoint = CGPointMake(self.activeField.frame.origin.x, self.activeField.frame.origin.y + self.activeField.frame.size.height + 10);
+    if (!CGRectContainsPoint(aRect, activeFieldVisiblePoint) ) {
+        CGPoint scrollPoint = CGPointMake(0.0, activeFieldVisiblePoint.y - aRect.size.height);
+        [self.scrollView setContentOffset:scrollPoint animated:YES];
+    }
+}
+
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    self.scrollView.contentInset = contentInsets;
+    self.scrollView.scrollIndicatorInsets = contentInsets;
 }
 
 @end
