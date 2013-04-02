@@ -29,7 +29,7 @@ static KIFMPInstanceProvider *sharedProvider = nil;
 
 - (GSFullscreenAd *)buildGSFullscreenAdWithDelegate:(id<GSAdDelegate>)delegate GUID:(NSString *)GUID
 {
-    return [[GSFullscreenAd alloc] initWithDelegate:delegate GUID:@"5f750a48-7e73-42e7-bede-839fda15f367"];
+    return [[GSFullscreenAd alloc] initWithDelegate:delegate GUID:@"1d73efc1-c8c5-44e6-9b02-b6dd29374c1c"];
 }
 
 - (IMAdInterstitial *)buildIMAdInterstitialWithDelegate:(id<IMAdInterstitialDelegate>)delegate appId:(NSString *)appId;
