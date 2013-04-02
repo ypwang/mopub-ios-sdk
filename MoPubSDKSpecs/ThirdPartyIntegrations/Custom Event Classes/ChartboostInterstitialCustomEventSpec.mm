@@ -36,14 +36,11 @@ describe(@"ChartboostInterstitialCustomEvent", ^{
                 [customEvent requestInterstitialWithCustomEventInfo:nil];
             });
 
-            it(@"should immediately tell the delegate that it failed to load an ad", ^{
-                delegate should have_received(@selector(interstitialCustomEvent:didFailToLoadAdWithError:)).with(customEvent).and_with(nil);
-            });
-
-            it(@"should not set itself as the chartboost's delegate, or tell it to do anything", ^{
-                chartboost.delegate should_not equal(customEvent);
-                chartboost.didStartSession should equal(NO);
-                chartboost.requestedLocations should be_empty;
+            it(@"should tell chartboost to load with the app ID or app signature specified in the #defines", ^{
+                chartboost.appId should equal(@"YOUR_CHARTBOOST_APP_ID");
+                chartboost.appSignature should equal(@"YOUR_CHARTBOOST_APP_SIGNATURE");
+                chartboost.didStartSession should equal(YES);
+                chartboost.requestedLocations should contain(@"Default");
             });
         });
     });

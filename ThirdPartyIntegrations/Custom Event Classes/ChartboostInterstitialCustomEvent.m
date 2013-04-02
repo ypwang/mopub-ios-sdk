@@ -9,6 +9,9 @@
 #import "MPInstanceProvider.h"
 #import "MPLogging.h"
 
+#define kChartboostAppID        @"YOUR_CHARTBOOST_APP_ID"
+#define kChartboostAppSignature @"YOUR_CHARTBOOST_APP_SIGNATURE"
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @interface MPInstanceProvider (ChartboostInterstitials)
@@ -73,7 +76,13 @@ forChartboostInterstitialCustomEvent:(ChartboostInterstitialCustomEvent *)event;
 - (void)requestInterstitialWithCustomEventInfo:(NSDictionary *)info
 {
     NSString *appId = [info objectForKey:@"appId"];
+    if (!appId) {
+        appId = kChartboostAppID;
+    }
     NSString *appSignature = [info objectForKey:@"appSignature"];
+    if (!appSignature) {
+        appSignature = kChartboostAppSignature;
+    }
     NSString *location = [info objectForKey:@"location"];
     self.location = location ? location : @"Default";
 
