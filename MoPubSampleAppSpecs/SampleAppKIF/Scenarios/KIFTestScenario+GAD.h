@@ -10,5 +10,6 @@
 @interface KIFTestScenario (GAD)
 
 + (KIFTestScenario *)scenarioForGADInterstitial;
++ (KIFTestScenario *)scenarioForGADBanner;
 
 @end

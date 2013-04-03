@@ -31,7 +31,7 @@
 {
     KIFTestScenario *scenario = [MPSampleAppTestScenario scenarioWithDescription:@"Test that a banner ad with a StoreKit link works."];
     NSIndexPath *indexPath = [MPAdSection indexPathForAd:@"Valid StoreKit Link" inSection:@"Banner Ads"];
-    [scenario addStep:[KIFTestStep stepToTapRowInTableViewWithAccessibilityLabel:@"Ad Table View"
+    [scenario addStep:[KIFTestStep stepToActuallyTapRowInTableViewWithAccessibilityLabel:@"Ad Table View"
                                                                      atIndexPath:indexPath]];
 
     [scenario addStep:[KIFTestStep stepToWaitUntilActivityIndicatorIsNotAnimating]];
@@ -49,7 +49,7 @@
 {
     KIFTestScenario *scenario = [MPSampleAppTestScenario scenarioWithDescription:@"Test that a banner ad with a StoreKit link to an invalid item does not explode."];
     NSIndexPath *indexPath = [MPAdSection indexPathForAd:@"Invalid StoreKit Link" inSection:@"Banner Ads"];
-    [scenario addStep:[KIFTestStep stepToTapRowInTableViewWithAccessibilityLabel:@"Ad Table View"
+    [scenario addStep:[KIFTestStep stepToActuallyTapRowInTableViewWithAccessibilityLabel:@"Ad Table View"
                                                                      atIndexPath:indexPath]];
     [scenario addStep:[KIFTestStep stepToWaitUntilActivityIndicatorIsNotAnimating]];
     [scenario addStep:[KIFTestStep stepToLogImpressionForAdUnit:[MPAdSection adInfoAtIndexPath:indexPath].ID]];
@@ -67,7 +67,7 @@
 {
     KIFTestScenario *scenario = [MPSampleAppTestScenario scenarioWithDescription:@"Test that an interstitial ad with a StoreKit link works."];
     NSIndexPath *indexPath = [MPAdSection indexPathForAd:@"Valid StoreKit Link" inSection:@"Interstitial Ads"];
-    [scenario addStep:[KIFTestStep stepToTapRowInTableViewWithAccessibilityLabel:@"Ad Table View"
+    [scenario addStep:[KIFTestStep stepToActuallyTapRowInTableViewWithAccessibilityLabel:@"Ad Table View"
                                                                      atIndexPath:indexPath]];
 
     [scenario addStep:[KIFTestStep stepToTapViewWithAccessibilityLabel:@"Load"]];

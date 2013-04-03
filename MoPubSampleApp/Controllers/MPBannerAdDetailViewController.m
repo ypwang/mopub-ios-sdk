@@ -39,6 +39,7 @@
     self.adView = [[MPSampleAppInstanceProvider sharedProvider] buildMPAdViewWithAdUnitID:self.info.ID
                                                                                      size:MOPUB_BANNER_SIZE];
     self.adView.delegate = self;
+    self.adView.accessibilityLabel = @"banner";
     [self.adViewContainer addSubview:self.adView];
 
     [self.spinner startAnimating];
@@ -48,8 +49,8 @@
 {
     [super viewDidAppear:animated];
 
-    [self.spinner startAnimating];
     if (!self.didLoadAd) {
+        [self.spinner startAnimating];
         [self.adView loadAd];
         self.didLoadAd = YES;
     }
@@ -65,6 +66,12 @@
 - (void)adViewDidLoadAd:(MPAdView *)view
 {
     [self.spinner stopAnimating];
+}
+
+- (void)adViewDidFailToLoadAd:(MPAdView *)view
+{
+    [self.spinner stopAnimating];
+    self.failLabel.hidden = NO;
 }
 
 @end

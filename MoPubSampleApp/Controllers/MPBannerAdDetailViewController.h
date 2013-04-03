@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *IDLabel;
 @property (weak, nonatomic) IBOutlet UIView *adViewContainer;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+@property (weak, nonatomic) IBOutlet UILabel *failLabel;
 
 - (id)initWithAdInfo:(MPAdInfo *)info;
 

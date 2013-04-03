@@ -13,7 +13,7 @@
 {
     KIFTestScenario *scenario = [MPSampleAppTestScenario scenarioWithDescription:@"Test that a Chartboost interstitial ad works."];
     NSIndexPath *indexPath = [MPAdSection indexPathForAd:@"Chartboost Interstitial" inSection:@"Interstitial Ads"];
-    [scenario addStep:[KIFTestStep stepToTapRowInTableViewWithAccessibilityLabel:@"Ad Table View"
+    [scenario addStep:[KIFTestStep stepToActuallyTapRowInTableViewWithAccessibilityLabel:@"Ad Table View"
                                                                      atIndexPath:indexPath]];
 
     [scenario addStep:[KIFTestStep stepToTapViewWithAccessibilityLabel:@"Load"]];

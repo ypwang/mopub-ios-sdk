@@ -51,6 +51,7 @@
 - (void)addAdMobScenarios
 {
     [self addScenario:[KIFTestScenario scenarioForGADInterstitial]];
+    [self addScenario:[KIFTestScenario scenarioForGADBanner]];
 }
 
 - (void)addChartboostScenarios

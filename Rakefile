@@ -228,6 +228,7 @@ namespace :mopubsample do
     system_or_exit(%Q[xcodebuild -project MoPubSampleApp.xcodeproj -alltargets -configuration #{CONFIGURATION} clean SYMROOT=#{BUILD_DIR}], {}, output_file("mopub_clean"))
   end
 
+  desc "Bump Server Ad Units"
   task :bump_server do
     head "Bumping Server Ad Units"
     system("./Scripts/bump_server.rb")

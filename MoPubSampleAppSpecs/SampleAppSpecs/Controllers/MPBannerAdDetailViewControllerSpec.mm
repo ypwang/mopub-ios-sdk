@@ -66,6 +66,17 @@ describe(@"MPBannerAdDetailViewController", ^{
             });
         });
 
+        context(@"when the ad fails to arrive", ^{
+            beforeEach(^{
+                [adView.delegate adViewDidFailToLoadAd:adView];
+            });
+
+            it(@"should hide the spinner and show the fail label", ^{
+                controller.spinner.isAnimating should equal(NO);
+                controller.failLabel.hidden should equal(NO);
+            });
+        });
+
         context(@"when the view appears again", ^{
             it(@"should not tell the ad to reload", ^{
                 adView.wasLoaded = NO;
