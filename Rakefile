@@ -118,7 +118,7 @@ end
 
 desc "Build MoPubSDK on all SDKs
  then run tests"
-task :default => [:trim_whitespace, "mopubsdk:build", "mopubsdk:spec", "mopubsample:build", "mopubsample:spec", "mopubsample:kif"]
+task :default => [:fix_copyright, :trim_whitespace, "mopubsdk:build", "mopubsdk:spec", "mopubsample:build", "mopubsample:spec", "mopubsample:kif"]
 
 desc "Build MoPubSDK on all SDKs and run all unit tests"
 task :unit_specs => ["mopubsdk:build", "mopubsample:build", "mopubsdk:spec", "mopubsample:spec"]
@@ -133,14 +133,18 @@ end
 
 desc "Trim Whitespace"
 task :trim_whitespace do
+  head "Trimming Whitespace"
+
   system_or_exit(%Q[git status --short | awk '{if ($1 != "D" && $1 != "R") for (i=2; i<=NF; i++) printf("%s%s", $i, i<NF ? " " : ""); print ""}' | grep -e '.*.[mh]"*$' | xargs sed -i '' -e 's/	/    /g;s/ *$//g;'])
 end
 
 desc "Fix Up Copyright"
 task :fix_copyright do
-  `find . -name "*.[mh]" -exec sed -i '' 's/\\/\\/  MoPubSampleApp/\\/\\/  MoPub/g' {} \\;`
-  `find . -name "*.[mh]" -exec sed -i '' 's/\\/\\/  MoPubSDK/\\/\\/  MoPub/g' {} \\;`
-  `find . -name "*.[mh]" -exec sed -i '' '/\\/\\/  Created by pivotal/d' {} \\;`
+  head "Fixing Copyright"
+
+  `find . -name "*.[mh]" -print0 | xargs -0 grep -l "Created by pivotal" | xargs sed -i '' 's/\\/\\/  MoPubSampleApp/\\/\\/  MoPub/g'`
+  `find . -name "*.[mh]" -print0 | xargs -0 grep -l "Created by pivotal" | xargs sed -i '' 's/\\/\\/  MoPubSDK/\\/\\/  MoPub/g'`
+  `find . -name "*.[mh]" -print0 | xargs -0 grep -l "Created by pivotal" | xargs sed -i '' '/\\/\\/  Created by pivotal/d'`
 end
 
 desc "Upload Third Party Integrations to CI"
