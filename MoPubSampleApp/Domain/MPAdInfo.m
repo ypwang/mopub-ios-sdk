@@ -15,6 +15,7 @@
              [MPAdInfo infoWithTitle:@"Valid StoreKit Link" ID:@"b086a37c8fe911e295fa123138070049" type:MPAdInfoBanner],
              [MPAdInfo infoWithTitle:@"Invalid StoreKit Link" ID:@"4ebfdd8a90ba11e295fa123138070049" type:MPAdInfoBanner],
 #if RUN_KIF_TESTS
+             [MPAdInfo infoWithTitle:@"Millennial Banner" ID:@"1aa442709c9f11e281c11231392559e4" type:MPAdInfoBanner],
              [MPAdInfo infoWithTitle:@"Google AdMob Banner" ID:@"01535a569c8e11e281c11231392559e4" type:MPAdInfoBanner]
 #endif
              ];

@@ -46,6 +46,7 @@
 - (void)addMillennialScenarios
 {
     [self addScenario:[KIFTestScenario scenarioForMillennialInterstitial]];
+    [self addScenario:[KIFTestScenario scenarioForMillennialBanner]];
 }
 
 - (void)addAdMobScenarios

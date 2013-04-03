@@ -7,6 +7,7 @@
 
 #import "KIFTestScenario+Millennial.h"
 #import "UIView-KIFAdditions.h"
+#import "MPBannerAdDetailViewController.h"
 
 @implementation KIFTestStep (MillennialScenario)
 
@@ -39,6 +40,30 @@
     [scenario addStep:[KIFTestStep stepToLogImpressionForAdUnit:[MPAdSection adInfoAtIndexPath:indexPath].ID]];
     [scenario addStep:[KIFTestStep stepToDismissMillennialInterstitial]];
     [scenario addStep:[KIFTestStep stepToWaitForViewWithAccessibilityLabel:@"expired"]];
+    [scenario addStep:[KIFTestStep stepToReturnToBannerAds]];
+
+    return scenario;
+}
+
++ (KIFTestScenario *)scenarioForMillennialBanner
+{
+    KIFTestScenario *scenario = [MPSampleAppTestScenario scenarioWithDescription:@"Test that a Millennial banner ad works."];
+    NSIndexPath *indexPath = [MPAdSection indexPathForAd:@"Millennial Banner" inSection:@"Banner Ads"];
+    [scenario addStep:[KIFTestStep stepToActuallyTapRowInTableViewWithAccessibilityLabel:@"Ad Table View"
+                                                                             atIndexPath:indexPath]];
+
+    [scenario addStep:[KIFTestStep stepToWaitUntilActivityIndicatorIsNotAnimating]];
+
+    [scenario addStep:[KIFTestStep stepToWaitForPresenceOfViewWithClassName:@"MMBannerAdView"]];
+    [scenario addStep:[KIFTestStep stepToLogImpressionForAdUnit:[MPAdSection adInfoAtIndexPath:indexPath].ID]];
+
+    [scenario addStep:[KIFTestStep stepToTapViewWithAccessibilityLabel:@"banner"]];
+    [scenario addStep:[KIFTestStep stepToWaitForPresenceOfViewWithClassName:@"MMOverlayView"]];
+    [scenario addStep:[KIFTestStep stepToLogClickForAdUnit:[MPAdSection adInfoAtIndexPath:indexPath].ID]];
+
+    [scenario addStep:[KIFTestStep stepToTapViewWithAccessibilityLabel:@"Stop"]];
+    [scenario addStep:[KIFTestStep stepToVerifyPresentationOfViewControllerClass:[MPBannerAdDetailViewController class]]];
+
     [scenario addStep:[KIFTestStep stepToReturnToBannerAds]];
 
     return scenario;

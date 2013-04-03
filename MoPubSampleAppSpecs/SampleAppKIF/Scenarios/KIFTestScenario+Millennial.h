@@ -10,5 +10,6 @@
 @interface KIFTestScenario (Millennial)
 
 + (KIFTestScenario *)scenarioForMillennialInterstitial;
++ (KIFTestScenario *)scenarioForMillennialBanner;
 
 @end

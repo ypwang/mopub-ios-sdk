@@ -12,5 +12,6 @@ typedef void(^KIFTestStepBlock)(void);
 @interface KIFTestStep (Hacks)
 
 + (KIFTestStep *)stepToPerformBlock:(KIFTestStepBlock)block;
++ (KIFTestStep *)stepToPrintOutViewHierarchy;
 
 @end
