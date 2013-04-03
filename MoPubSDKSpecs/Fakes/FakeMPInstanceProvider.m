@@ -13,11 +13,19 @@
 
 - (ADInterstitialAd *)buildADInterstitialAd;
 - (GADInterstitial *)buildGADInterstitialAd;
+- (GADBannerView *)buildGADBannerViewWithFrame:(CGRect)frame;
+- (GADRequest *)buildGADRequest;
+
 - (MMAdView *)buildMMInterstitialAdWithAPID:(NSString *)apid delegate:(MPMillennialInterstitialAdapter *)delegate;
+- (MMAdView *)buildMMAdViewWithFrame:(CGRect)frame type:(MMAdType)type apid:(NSString *)apid delegate:(id<MMAdDelegate>)delegate;
+
 - (Chartboost *)buildChartboost;
+
 - (GSFullscreenAd *)buildGSFullscreenAdWithDelegate:(id<GSAdDelegate>)delegate GUID:(NSString *)GUID;
+
 - (MPInterstitialCustomEvent *)buildInterstitialCustomEventFromCustomClass:(Class)customClass
                                                                   delegate:(id<MPInterstitialCustomEventDelegate>)delegate;
+
 - (IMAdInterstitial *)buildIMAdInterstitialWithDelegate:(id<IMAdInterstitialDelegate>)delegate appId:(NSString *)appID;
 
 @end
@@ -139,6 +147,22 @@
                      }];
 }
 
+- (GADBannerView *)buildGADBannerViewWithFrame:(CGRect)frame
+{
+    return [self returnFake:self.fakeGADBannerView
+                     orCall:^{
+                         return [super buildGADBannerViewWithFrame:frame];
+                     }];
+}
+
+- (GADRequest *)buildGADRequest
+{
+    return [self returnFake:self.fakeGADRequest
+                     orCall:^{
+                         return [super buildGADRequest];
+                     }];
+}
+
 - (MMAdView *)buildMMInterstitialAdWithAPID:(NSString *)apid delegate:(MPMillennialInterstitialAdapter *)delegate
 {
     if ([apid length] == 0) {
@@ -152,6 +176,19 @@
     }
 
     return [super buildMMInterstitialAdWithAPID:apid delegate:delegate];
+}
+
+- (MMAdView *)buildMMAdViewWithFrame:(CGRect)frame type:(MMAdType)type apid:(NSString *)apid delegate:(id<MMAdDelegate>)delegate
+{
+    if (self.fakeMMAdViewBanner) {
+        self.fakeMMAdViewBanner.frame = frame;
+        self.fakeMMAdViewBanner.type = type;
+        self.fakeMMAdViewBanner.apid = apid;
+        self.fakeMMAdViewBanner.delegate = delegate;
+        return self.fakeMMAdViewBanner.masquerade;
+    }
+
+    return [super buildMMAdViewWithFrame:frame type:type apid:apid delegate:delegate];
 }
 
 - (MPInterstitialCustomEvent *)buildInterstitialCustomEventFromCustomClass:(Class)customClass

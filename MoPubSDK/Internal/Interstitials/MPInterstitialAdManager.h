@@ -38,6 +38,7 @@
 @protocol MPInterstitialAdManagerDelegate <NSObject>
 
 - (MPInterstitialAdController *)interstitialAdController;
+- (CLLocation *)location;
 - (id)interstitialDelegate;
 - (void)managerDidLoadInterstitial:(MPInterstitialAdManager *)manager;
 - (void)manager:(MPInterstitialAdManager *)manager

@@ -21,6 +21,7 @@
 - (MPAdView *)adView;
 - (id<MPAdViewDelegate>)adViewDelegate;
 - (UIViewController *)rootViewController;
+- (CLLocation *)location;
 
 #pragma mark - Callbacks
 

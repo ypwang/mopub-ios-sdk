@@ -1,6 +1,7 @@
 #import "MPGoogleAdMobInterstitialAdapter.h"
 #import "MPAdConfigurationFactory.h"
 #import "FakeGADInterstitial.h"
+#import <CoreLocation/CoreLocation.h>
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -12,6 +13,8 @@ describe(@"MPGoogleAdMobInterstitialAdapter", ^{
     __block MPGoogleAdMobInterstitialAdapter *adapter;
     __block MPAdConfiguration *configuration;
     __block FakeGADInterstitial *interstitial;
+    __block CLLocation *location;
+    __block GADRequest<CedarDouble> *request;
 
     beforeEach(^{
         interstitial = [[[FakeGADInterstitial alloc] init] autorelease];
@@ -25,7 +28,15 @@ describe(@"MPGoogleAdMobInterstitialAdapter", ^{
         configuration = [MPAdConfigurationFactory defaultInterstitialConfigurationWithHeaders:headers
                                                                                    HTMLString:nil];
 
-        delegate stub_method("locationDescriptionPair").and_return(@[@30, @40]);
+        location = [[[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.1, 21.2)
+                                                  altitude:11
+                                        horizontalAccuracy:12.3
+                                          verticalAccuracy:10
+                                                 timestamp:[NSDate date]] autorelease];
+        delegate stub_method("location").and_return(location);
+        request = nice_fake_for([GADRequest class]);
+        fakeProvider.fakeGADRequest = request;
+
         [adapter _getAdWithConfiguration:configuration];
     });
 
@@ -35,9 +46,11 @@ describe(@"MPGoogleAdMobInterstitialAdapter", ^{
             interstitial.delegate should equal(adapter);
         });
 
-        xit(@"should load the interstitial with a proper request object", ^{
-            interstitial.loadedRequest.testDevices should contain(GAD_SIMULATOR_ID);
-//            [interstitial.request performSelector:@selector(location)];
+        it(@"should load the interstitial with a proper request object", ^{
+            interstitial.loadedRequest should equal(request);
+
+            request should have_received(@selector(setLocationWithLatitude:longitude:accuracy:)).with(37.1f).and_with(21.2f).and_with(12.3f);
+            request should have_received(@selector(setTestDevices:)).with(@[GAD_SIMULATOR_ID]);
         });
     });
 

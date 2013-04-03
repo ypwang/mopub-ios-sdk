@@ -23,7 +23,7 @@ NSString * const kMoPubInterfaceOrientationLandscape = @"l";
 + (NSString *)queryParameterForOrientation;
 + (NSString *)queryParameterForScaleFactor;
 + (NSString *)queryParameterForTimeZone;
-+ (NSString *)queryParameterForLocationArray:(NSArray *)locationArray;
++ (NSString *)queryParameterForLocation:(CLLocation *)location;
 + (NSString *)queryParameterForMRAID;
 + (NSString *)queryParameterForDNT;
 + (BOOL)advertisingTrackingEnabled;
@@ -36,7 +36,7 @@ NSString * const kMoPubInterfaceOrientationLandscape = @"l";
 
 + (NSURL *)URLWithAdUnitID:(NSString *)adUnitID
                   keywords:(NSString *)keywords
-             locationArray:(NSArray *)locationArray
+                  location:(CLLocation *)location
                    testing:(BOOL)testing
 {
     NSString *URLString = [NSString stringWithFormat:@"http://%@/m/ad?v=8&udid=%@&id=%@&nv=%@",
@@ -49,27 +49,11 @@ NSString * const kMoPubInterfaceOrientationLandscape = @"l";
     URLString = [URLString stringByAppendingString:[self queryParameterForOrientation]];
     URLString = [URLString stringByAppendingString:[self queryParameterForScaleFactor]];
     URLString = [URLString stringByAppendingString:[self queryParameterForTimeZone]];
-    URLString = [URLString stringByAppendingString:[self queryParameterForLocationArray:locationArray]];
+    URLString = [URLString stringByAppendingString:[self queryParameterForLocation:location]];
     URLString = [URLString stringByAppendingString:[self queryParameterForMRAID]];
     URLString = [URLString stringByAppendingString:[self queryParameterForDNT]];
 
     return [NSURL URLWithString:URLString];
-}
-
-+ (NSURL *)URLWithAdUnitID:(NSString *)adUnitID
-                  keywords:(NSString *)keywords
-                  location:(CLLocation *)location
-                   testing:(BOOL)testing
-{
-    NSMutableArray *locationArray = [NSMutableArray array];
-    if (location) {
-        [locationArray addObject:[NSNumber numberWithDouble:location.coordinate.latitude]];
-        [locationArray addObject:[NSNumber numberWithDouble:location.coordinate.longitude]];
-    }
-    return [self URLWithAdUnitID:adUnitID
-                        keywords:keywords
-                   locationArray:locationArray
-                         testing:testing];
 }
 
 
@@ -126,15 +110,19 @@ NSString * const kMoPubInterfaceOrientationLandscape = @"l";
     return [NSString stringWithFormat:@"&z=%@", [formatter stringFromDate:today]];
 }
 
-+ (NSString *)queryParameterForLocationArray:(NSArray *)locationArray
++ (NSString *)queryParameterForLocation:(CLLocation *)location
 {
     NSString *result = @"";
 
-    if ([locationArray count] == 2) {
-        result = [result stringByAppendingFormat:
-                  @"&ll=%@,%@",
-                  [locationArray objectAtIndex:0],
-                  [locationArray objectAtIndex:1]];
+    if (location && location.horizontalAccuracy >= 0) {
+        result = [NSString stringWithFormat:@"&ll=%@,%@",
+                  [NSNumber numberWithDouble:location.coordinate.latitude],
+                  [NSNumber numberWithDouble:location.coordinate.longitude]];
+
+        if (location.horizontalAccuracy) {
+            result = [result stringByAppendingFormat:@"&lla=%@",
+                      [NSNumber numberWithDouble:location.horizontalAccuracy]];
+        }
     }
 
     return result;

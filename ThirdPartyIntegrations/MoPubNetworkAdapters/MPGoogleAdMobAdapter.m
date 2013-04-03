@@ -8,77 +8,95 @@
 
 #import "MPGoogleAdMobAdapter.h"
 #import "MPLogging.h"
-#import "CJSONDeserializer.h"
+#import "MPInstanceProvider.h"
+#import "MPAdConfiguration.h"
 
-#define kLocationAccuracyMeters	100
+@interface MPInstanceProvider (AdMobBanners)
 
-@interface MPGoogleAdMobAdapter ()
+- (GADBannerView *)buildGADBannerViewWithFrame:(CGRect)frame;
+- (GADRequest *)buildGADRequest;
 
-- (void)setAdPropertiesFromNativeParams:(NSDictionary *)params;
+@end
+
+@implementation MPInstanceProvider (AdMobBanners)
+
+- (GADBannerView *)buildGADBannerViewWithFrame:(CGRect)frame
+{
+    return [[[GADBannerView alloc] initWithFrame:frame] autorelease];
+}
+
+- (GADRequest *)buildGADRequest
+{
+    return [GADRequest request];
+}
 
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+@interface MPGoogleAdMobAdapter ()
+
+@property (nonatomic, retain) GADBannerView *adBannerView;
+
+@end
+
+
 @implementation MPGoogleAdMobAdapter
+
+@synthesize adBannerView = _adBannerView;
 
 - (id)initWithAdapterDelegate:(id<MPAdapterDelegate>)delegate
 {
-	if (self = [super initWithAdapterDelegate:delegate])
-	{
-		_adBannerView = [[GADBannerView alloc] initWithFrame:CGRectZero];
-		_adBannerView.delegate = self;
-	}
-	return self;
+    if (self = [super initWithAdapterDelegate:delegate])
+    {
+        self.adBannerView = [[MPInstanceProvider sharedProvider] buildGADBannerViewWithFrame:CGRectZero];
+        self.adBannerView.delegate = self;
+    }
+    return self;
 }
 
 - (void)dealloc
 {
-	_adBannerView.delegate = nil;
-	[_adBannerView release];
-	[super dealloc];
+    self.adBannerView.delegate = nil;
+    self.adBannerView = nil;
+    [super dealloc];
 }
 
-- (void)getAdWithParams:(NSDictionary *)params
+- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration
 {
-	CJSONDeserializer *deserializer = [CJSONDeserializer deserializerWithNullObject:NULL];
-    
-    NSData *hdrData = [(NSString *)[params objectForKey:@"X-Nativeparams"] 
-					   dataUsingEncoding:NSUTF8StringEncoding];
-	NSDictionary *hdrParams = [deserializer deserializeAsDictionary:hdrData error:NULL];
-	
-	[self setAdPropertiesFromNativeParams:hdrParams];
-	_adBannerView.rootViewController = [self.delegate viewControllerForPresentingModalView];
-	
-	GADRequest *request = [GADRequest request];
-	
-	NSArray *locationPair = [[self.delegate adView] locationDescriptionPair];
-	if ([locationPair count] == 2) {
-		[request setLocationWithLatitude:[[locationPair objectAtIndex:0] floatValue] 
-							   longitude:[[locationPair objectAtIndex:1] floatValue]
-								accuracy:kLocationAccuracyMeters];
-	}
-	
-	// Here, you can specify a list of devices that will receive test ads.
-	// See: http://code.google.com/mobile/ads/docs/ios/intermediate.html#testdevices
-	request.testDevices = [NSArray arrayWithObjects:
-						   GAD_SIMULATOR_ID, 
-						   // more UDIDs here,
-						   nil];
-	
-	[_adBannerView loadRequest:request];
+    self.adBannerView.frame = [self frameForConfiguration:configuration];
+    self.adBannerView.adUnitID = [configuration.nativeSDKParameters objectForKey:@"adUnitID"];
+    self.adBannerView.rootViewController = [self.delegate viewControllerForPresentingModalView];
+
+    GADRequest *request = [[MPInstanceProvider sharedProvider] buildGADRequest];
+
+    CLLocation *location = self.delegate.location;
+    if (location) {
+        [request setLocationWithLatitude:location.coordinate.latitude
+                               longitude:location.coordinate.longitude
+                                accuracy:location.horizontalAccuracy];
+    }
+
+    // Here, you can specify a list of devices that will receive test ads.
+    // See: http://code.google.com/mobile/ads/docs/ios/intermediate.html#testdevices
+    request.testDevices = [NSArray arrayWithObjects:
+                           GAD_SIMULATOR_ID,
+                           // more UDIDs here,
+                           nil];
+
+    [self.adBannerView loadRequest:request];
 }
 
-- (void)setAdPropertiesFromNativeParams:(NSDictionary *)params
+- (CGRect)frameForConfiguration:(MPAdConfiguration *)configuration
 {
-	CGFloat width = [(NSString *)[params objectForKey:@"adWidth"] floatValue];
-	CGFloat height = [(NSString *)[params objectForKey:@"adHeight"] floatValue];
-	if (width < GAD_SIZE_320x50.width && height < GAD_SIZE_320x50.height) {
-		width = GAD_SIZE_320x50.width;
-		height = GAD_SIZE_320x50.height;
-	}
-	_adBannerView.frame = CGRectMake(0, 0, width, height);
-	_adBannerView.adUnitID = [params objectForKey:@"adUnitID"];
+    CGFloat width = [[configuration.nativeSDKParameters objectForKey:@"adWidth"] floatValue];
+    CGFloat height = [[configuration.nativeSDKParameters objectForKey:@"adHeight"] floatValue];
+
+    if (width < GAD_SIZE_320x50.width && height < GAD_SIZE_320x50.height) {
+        width = GAD_SIZE_320x50.width;
+        height = GAD_SIZE_320x50.height;
+    }
+    return CGRectMake(0, 0, width, height);
 }
 
 #pragma mark -
@@ -86,28 +104,28 @@
 
 - (void)adViewDidReceiveAd:(GADBannerView *)bannerView
 {
-	[self.delegate adapter:self didFinishLoadingAd:bannerView shouldTrackImpression:YES];
+    [self.delegate adapter:self didFinishLoadingAd:bannerView shouldTrackImpression:YES];
 }
 
 - (void)adView:(GADBannerView *)bannerView
-		didFailToReceiveAdWithError:(GADRequestError *)error
+        didFailToReceiveAdWithError:(GADRequestError *)error
 {
-	[self.delegate adapter:self didFailToLoadAdWithError:nil];
+    [self.delegate adapter:self didFailToLoadAdWithError:nil];
 }
 
 - (void)adViewWillPresentScreen:(GADBannerView *)bannerView
 {
-	[self.delegate userActionWillBeginForAdapter:self];
+    [self.delegate userActionWillBeginForAdapter:self];
 }
 
 - (void)adViewDidDismissScreen:(GADBannerView *)bannerView
 {
-	[self.delegate userActionDidFinishForAdapter:self];
+    [self.delegate userActionDidFinishForAdapter:self];
 }
 
 - (void)adViewWillLeaveApplication:(GADBannerView *)bannerView
 {
-	[self.delegate userWillLeaveApplicationFromAdapter:self];
+    [self.delegate userWillLeaveApplicationFromAdapter:self];
 }
 
 @end

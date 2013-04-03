@@ -7,19 +7,18 @@
 //
 
 #import "MPGoogleAdMobInterstitialAdapter.h"
-#import "CJSONDeserializer.h"
 #import "MPInterstitialAdController.h"
 #import "MPLogging.h"
 #import "MPAdConfiguration.h"
 #import "MPInstanceProvider.h"
-
-#define kLocationAccuracyMeters 100
+#import <CoreLocation/CoreLocation.h>
 
 ////// Add AdMob support to the shared instance provider
 
 @interface MPInstanceProvider (AdMobInterstitials)
 
 - (GADInterstitial *)buildGADInterstitialAd;
+- (GADRequest *)buildGADRequest;
 
 @end
 
@@ -28,6 +27,11 @@
 - (GADInterstitial *)buildGADInterstitialAd
 {
     return [[[GADInterstitial alloc] init] autorelease];
+}
+
+- (GADRequest *)buildGADRequest
+{
+    return [GADRequest request];
 }
 
 @end
@@ -48,23 +52,16 @@
 {
     self.interstitial = [[MPInstanceProvider sharedProvider] buildGADInterstitialAd];
 
-    NSDictionary *params = configuration.headers;
-    CJSONDeserializer *deserializer = [CJSONDeserializer deserializerWithNullObject:NULL];
-
-    NSData *hdrData = [(NSString *)[params objectForKey:@"X-Nativeparams"]
-                       dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *hdrParams = [deserializer deserializeAsDictionary:hdrData error:NULL];
-
-    self.interstitial.adUnitID = [hdrParams objectForKey:@"adUnitID"];
+    self.interstitial.adUnitID = [configuration.nativeSDKParameters objectForKey:@"adUnitID"];
     self.interstitial.delegate = self;
 
-    GADRequest *request = [GADRequest request];
+    GADRequest *request = [[MPInstanceProvider sharedProvider] buildGADRequest];
 
-    NSArray *locationPair = [self.delegate locationDescriptionPair];
-    if ([locationPair count] == 2) {
-        [request setLocationWithLatitude:[[locationPair objectAtIndex:0] floatValue]
-                               longitude:[[locationPair objectAtIndex:1] floatValue]
-                                accuracy:kLocationAccuracyMeters];
+    CLLocation *location = self.delegate.location;
+    if (location) {
+        [request setLocationWithLatitude:location.coordinate.latitude
+                               longitude:location.coordinate.longitude
+                                accuracy:location.horizontalAccuracy];
     }
 
     // Here, you can specify a list of devices that will receive test ads.

@@ -11,12 +11,15 @@
 #import "FakeMPAnalyticsTracker.h"
 #import <iAd/iAd.h>
 #import "GADInterstitial.h"
+#import "GADBannerView.h"
 #import "FakeMMInterstitialAdView.h"
 #import "FakeInterstitialCustomEvent.h"
 #import "Chartboost.h"
 #import "FakeGSFullscreenAd.h"
 #import "IMAdInterstitial.h"
 #import "MPInterstitialAdManager.h"
+#import "GADRequest.h"
+#import "FakeMMBannerAdView.h"
 
 @interface FakeMPInstanceProvider : MPInstanceProvider
 
@@ -31,7 +34,11 @@
 
 @property (nonatomic, assign) ADInterstitialAd *fakeADInterstitialAd;
 @property (nonatomic, assign) GADInterstitial *fakeGADInterstitial;
+@property (nonatomic, assign) GADBannerView *fakeGADBannerView;
+@property (nonatomic, assign) GADRequest *fakeGADRequest;
+
 @property (nonatomic, assign) FakeMMInterstitialAdView *fakeMMAdViewInterstitial;
+@property (nonatomic, assign) FakeMMBannerAdView *fakeMMAdViewBanner;
 @property (nonatomic, assign) FakeInterstitialCustomEvent *fakeInterstitialCustomEvent;
 @property (nonatomic, assign) Chartboost *fakeChartboost;
 @property (nonatomic, assign) FakeGSFullscreenAd *fakeGSFullscreenAd;

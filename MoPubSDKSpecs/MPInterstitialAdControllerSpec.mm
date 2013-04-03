@@ -39,15 +39,22 @@ describe(@"MPInterstitialAdController", ^{
 
     describe(@"loadAd", ^{
         it(@"should tell its manager to begin loading", ^{
-            MPInterstitialAdManager<CedarDouble> *manager = nice_fake_for([MPInterstitialAdManager class]);
-            fakeProvider.fakeMPInterstitialAdManager = manager;
             controller = [MPInterstitialAdController interstitialAdControllerForAdUnitId:@"guy1"];
             controller.keywords = @"hi=4";
-            controller.location = [[[CLLocation alloc] initWithLatitude:20 longitude:20] autorelease];
+            controller.location = [[[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(20, 20)
+                                                                 altitude:10
+                                                       horizontalAccuracy:100
+                                                         verticalAccuracy:200
+                                                                timestamp:[NSDate date]] autorelease];
             controller.testing = YES;
             [controller loadAd];
 
-            manager should have_received(@selector(loadInterstitialWithAdUnitID:keywords:location:testing:)).with(@"guy1").and_with(@"hi=4").and_with(controller.location).and_with(YES);
+            NSString *requestedPath = fakeProvider.lastFakeMPAdServerCommunicator.loadedURL.absoluteString;
+            requestedPath should contain(@"id=guy1");
+            requestedPath should contain(@"&q=hi=4");
+            requestedPath should contain(@"&ll=20,20");
+            requestedPath should contain(@"&lla=100");
+            requestedPath should contain(@"http://testing.ads.mopub.com");
         });
     });
 

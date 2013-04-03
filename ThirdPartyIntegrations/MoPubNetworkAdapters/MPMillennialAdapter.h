@@ -15,11 +15,5 @@
  */
 
 @interface MPMillennialAdapter : MPBaseAdapter <MMAdDelegate>
-{
-	MMAdView *_mmAdView;
-	NSString *_mmAdApid;
-	CGSize _mmAdSize;
-	MMAdType _mmAdType;
-}
 
 @end

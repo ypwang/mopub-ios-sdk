@@ -10,7 +10,6 @@
 #import "MPInterstitialAdController.h"
 #import "MMAdView.h"
 #import "MPLogging.h"
-#import "CJSONDeserializer.h"
 #import "MPAdConfiguration.h"
 #import "MPInstanceProvider.h"
 
@@ -68,13 +67,7 @@ static NSMutableDictionary *sharedMMAdViews = nil;
 
 - (void)getAdWithConfiguration:(MPAdConfiguration *)configuration
 {
-    NSDictionary *params = configuration.headers;
-    CJSONDeserializer *deserializer = [CJSONDeserializer deserializerWithNullObject:NULL];
-
-    NSData *hdrData = [(NSString *)[params objectForKey:@"X-Nativeparams"]
-                       dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *hdrParams = [deserializer deserializeAsDictionary:hdrData error:NULL];
-    NSString *apid = [hdrParams objectForKey:@"adUnitID"];
+    NSString *apid = [configuration.nativeSDKParameters objectForKey:@"adUnitID"];
 
     self.interstitial = [[MPInstanceProvider sharedProvider] buildMMInterstitialAdWithAPID:apid delegate:self];
 
@@ -126,10 +119,10 @@ static NSMutableDictionary *sharedMMAdViews = nil;
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    @"mopubsdk", @"vendor", nil];
 
-    NSArray *locationPair = [self.delegate locationDescriptionPair];
-    if ([locationPair count] == 2) {
-        [params setObject:[locationPair objectAtIndex:0] forKey:@"lat"];
-        [params setObject:[locationPair objectAtIndex:1] forKey:@"lon"];
+    CLLocation *location = self.delegate.location;
+    if (location) {
+        [params setObject:[[NSNumber numberWithDouble:location.coordinate.latitude] stringValue] forKey:@"lat"];
+        [params setObject:[[NSNumber numberWithDouble:location.coordinate.longitude] stringValue] forKey:@"long"];
     }
 
     return params;

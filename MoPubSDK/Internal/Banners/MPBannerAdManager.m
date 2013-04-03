@@ -16,6 +16,7 @@
 #import "MPTimer.h"
 
 #import "MPAdConfiguration.h"
+#import "MPInstanceProvider.h"
 
 NSString * const kTimerNotificationName = @"Autorefresh";
 const CGFloat kMoPubRequestRetryInterval = 60.0;
@@ -38,7 +39,7 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
 
 - (NSString *)adUnitID;
 - (NSString *)keywords;
-- (NSArray *)locationDescriptionPair;
+- (CLLocation *)location;
 - (BOOL)isTesting;
 
 @end
@@ -62,8 +63,7 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
         [self initializeTimerTarget];
         [self registerForApplicationStateTransitionNotifications];
 
-        _communicator = [[MPAdServerCommunicator alloc] init];
-        _communicator.delegate = self;
+        _communicator = [[[MPInstanceProvider sharedProvider] buildMPAdServerCommunicatorWithDelegate:self] retain];
 
         _adapterManager = [[MPBannerAdapterManager alloc] initWithDelegate:self];
     }
@@ -107,7 +107,7 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
 
     URL = (URL) ? URL : [MPAdServerURLBuilder URLWithAdUnitID:[self adUnitID]
                                                      keywords:[self keywords]
-                                                locationArray:[self locationDescriptionPair]
+                                                     location:[self location]
                                                       testing:[self isTesting]];
 
     MPLogInfo(@"Banner view (%p) loading ad with MoPub server URL: %@", self.adView, URL);
@@ -145,9 +145,9 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
     return [self.adView keywords];
 }
 
-- (NSArray *)locationDescriptionPair
+- (CLLocation *)location
 {
-    return [self.adView locationDescriptionPair];
+    return [self.adView location];
 }
 
 - (BOOL)isTesting

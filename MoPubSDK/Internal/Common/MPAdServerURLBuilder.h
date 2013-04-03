@@ -12,11 +12,6 @@
 
 + (NSURL *)URLWithAdUnitID:(NSString *)adUnitID
                   keywords:(NSString *)keywords
-             locationArray:(NSArray *)locationArray
-                   testing:(BOOL)testing;
-
-+ (NSURL *)URLWithAdUnitID:(NSString *)adUnitID
-                  keywords:(NSString *)keywords
                   location:(CLLocation *)location
                    testing:(BOOL)testing;
 

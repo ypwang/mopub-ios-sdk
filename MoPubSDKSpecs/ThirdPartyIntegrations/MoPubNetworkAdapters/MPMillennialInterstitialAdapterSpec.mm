@@ -214,8 +214,13 @@ describe(@"MPMillennialInterstitialAdapter", ^{
 
         describe(@"-requestData", ^{
             it(@"should return the right set of params", ^{
-                delegate stub_method("locationDescriptionPair").and_return(@[@"30", @"40"]);
-                [adapter requestData] should equal(@{@"vendor": @"mopubsdk", @"lat": @"30", @"lon": @"40"});
+                CLLocation *location = [[[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(30, 40)
+                                                                      altitude:11
+                                                            horizontalAccuracy:12
+                                                              verticalAccuracy:10
+                                                                     timestamp:[NSDate date]] autorelease];
+                delegate stub_method("location").and_return(location);
+                [adapter requestData] should equal(@{@"vendor": @"mopubsdk", @"lat": @"30", @"long": @"40"});
             });
         });
 

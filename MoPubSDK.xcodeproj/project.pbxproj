@@ -33,6 +33,19 @@
 		AE109207170120B400812E6E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AE1091E517011C8A00812E6E /* libz.dylib */; };
 		AE109208170120BE00812E6E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE1091E717011C9E00812E6E /* Security.framework */; };
 		AE109209170120C800812E6E /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE1091E917011CC900812E6E /* CoreTelephony.framework */; };
+		AE25B6DA170BA208005A3017 /* MPAdViewSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE25B6D9170BA208005A3017 /* MPAdViewSpec.mm */; };
+		AE25B6DB170BA328005A3017 /* MPAdView.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C7716EF9DBC0046D464 /* MPAdView.m */; };
+		AE25B6DC170BA32E005A3017 /* MPBannerAdManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97BFF16EF9DB00046D464 /* MPBannerAdManager.m */; };
+		AE25B6DD170BA36C005A3017 /* MPBannerAdapterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97BFC16EF9DB00046D464 /* MPBannerAdapterManager.m */; };
+		AE25B6DE170BA371005A3017 /* MPBannerDelegateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C0316EF9DB00046D464 /* MPBannerDelegateHelper.m */; };
+		AE25B6DF170BA37F005A3017 /* MPBannerCustomEventAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C0116EF9DB00046D464 /* MPBannerCustomEventAdapter.m */; };
+		AE25B6E0170BA384005A3017 /* MPError.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C1916EF9DB00046D464 /* MPError.m */; };
+		AE25B6E4170BAD9E005A3017 /* MPGoogleAdMobAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = AEC845F216F2371900943383 /* MPGoogleAdMobAdapter.m */; };
+		AE25B6E6170BADBC005A3017 /* MPGoogleAdMobAdapterSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE25B6E5170BADBB005A3017 /* MPGoogleAdMobAdapterSpec.mm */; };
+		AE25B6E7170BADD2005A3017 /* MPMillennialAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = AEC845FC16F2371900943383 /* MPMillennialAdapter.m */; };
+		AE25B6E9170BADE0005A3017 /* MPMillennialAdapterSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE25B6E8170BADE0005A3017 /* MPMillennialAdapterSpec.mm */; };
+		AE25B6EC170BAE6C005A3017 /* FakeGADBannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE25B6EB170BAE6C005A3017 /* FakeGADBannerView.m */; };
+		AE25B6F0170C9DC3005A3017 /* FakeMMBannerAdView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE25B6EF170C9DC3005A3017 /* FakeMMBannerAdView.m */; };
 		AE341F1B16EFB9460074C859 /* NSURLConnection+MPSpecs.m in Sources */ = {isa = PBXBuildFile; fileRef = AE341F1A16EFB9460074C859 /* NSURLConnection+MPSpecs.m */; };
 		AE341F3C16EFC7CB0074C859 /* libFoundation+PivotalSpecHelper-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE341F3216EFC7790074C859 /* libFoundation+PivotalSpecHelper-StaticLib.a */; };
 		AE341F4016EFFA690074C859 /* MPAdDestinationDisplayAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = AE341F3F16EFFA690074C859 /* MPAdDestinationDisplayAgent.m */; };
@@ -386,6 +399,13 @@
 		AE1091E517011C8A00812E6E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		AE1091E717011C9E00812E6E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		AE1091E917011CC900812E6E /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		AE25B6D9170BA208005A3017 /* MPAdViewSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPAdViewSpec.mm; sourceTree = "<group>"; };
+		AE25B6E5170BADBB005A3017 /* MPGoogleAdMobAdapterSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPGoogleAdMobAdapterSpec.mm; sourceTree = "<group>"; };
+		AE25B6E8170BADE0005A3017 /* MPMillennialAdapterSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPMillennialAdapterSpec.mm; sourceTree = "<group>"; };
+		AE25B6EA170BAE6B005A3017 /* FakeGADBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeGADBannerView.h; sourceTree = "<group>"; };
+		AE25B6EB170BAE6C005A3017 /* FakeGADBannerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeGADBannerView.m; sourceTree = "<group>"; };
+		AE25B6EE170C9DC2005A3017 /* FakeMMBannerAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeMMBannerAdView.h; sourceTree = "<group>"; };
+		AE25B6EF170C9DC3005A3017 /* FakeMMBannerAdView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeMMBannerAdView.m; sourceTree = "<group>"; };
 		AE341F1916EFB9460074C859 /* NSURLConnection+MPSpecs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLConnection+MPSpecs.h"; sourceTree = "<group>"; };
 		AE341F1A16EFB9460074C859 /* NSURLConnection+MPSpecs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLConnection+MPSpecs.m"; sourceTree = "<group>"; };
 		AE341F2116EFC7790074C859 /* Foundation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Foundation.xcodeproj; path = PivotalCoreKit/Foundation/Foundation.xcodeproj; sourceTree = "<group>"; };
@@ -600,8 +620,6 @@
 		AEC845F216F2371900943383 /* MPGoogleAdMobAdapter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MPGoogleAdMobAdapter.m; sourceTree = "<group>"; };
 		AEC845F316F2371900943383 /* MPGoogleAdMobInterstitialAdapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MPGoogleAdMobInterstitialAdapter.h; sourceTree = "<group>"; };
 		AEC845F416F2371900943383 /* MPGoogleAdMobInterstitialAdapter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MPGoogleAdMobInterstitialAdapter.m; sourceTree = "<group>"; };
-		AEC845F516F2371900943383 /* MPGoogleAdSenseAdapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MPGoogleAdSenseAdapter.h; sourceTree = "<group>"; };
-		AEC845F616F2371900943383 /* MPGoogleAdSenseAdapter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MPGoogleAdSenseAdapter.m; sourceTree = "<group>"; };
 		AEC845F716F2371900943383 /* MPIAdAdapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MPIAdAdapter.h; sourceTree = "<group>"; };
 		AEC845F816F2371900943383 /* MPIAdAdapter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MPIAdAdapter.m; sourceTree = "<group>"; };
 		AEC845F916F2371900943383 /* MPIAdInterstitialAdapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MPIAdInterstitialAdapter.h; sourceTree = "<group>"; };
@@ -894,7 +912,6 @@
 			isa = PBXGroup;
 			children = (
 				AE60D7FD16F2A2BB00A4B67F /* MPHTMLInterstitialViewControllerSpec.mm */,
-				AE867AB217025229007E9D8C /* MPInterstitialAdControllerSpec.mm */,
 				AE60D8B416F3E6A300A4B67F /* MPInterstitialViewControllerSpec.mm */,
 				AE43417616F9281A00B73710 /* MPInterstitialCustomEventAdapterSpec.mm */,
 				AEEA5E8616FA2225003D48F4 /* MPInterstitialAdManagerSpec.mm */,
@@ -918,6 +935,8 @@
 		AEA97BE416EF9C030046D464 /* MoPubSDKSpecs */ = {
 			isa = PBXGroup;
 			children = (
+				AE867AB217025229007E9D8C /* MPInterstitialAdControllerSpec.mm */,
+				AE25B6D9170BA208005A3017 /* MPAdViewSpec.mm */,
 				AE341F1316EFB9290074C859 /* Extensions */,
 				AEC9E56C16EFACA1007CA2BA /* Fakes */,
 				AEC845E016F2325100943383 /* Fixtures */,
@@ -1238,8 +1257,6 @@
 				AEC845F216F2371900943383 /* MPGoogleAdMobAdapter.m */,
 				AEC845F316F2371900943383 /* MPGoogleAdMobInterstitialAdapter.h */,
 				AEC845F416F2371900943383 /* MPGoogleAdMobInterstitialAdapter.m */,
-				AEC845F516F2371900943383 /* MPGoogleAdSenseAdapter.h */,
-				AEC845F616F2371900943383 /* MPGoogleAdSenseAdapter.m */,
 				AEC845F716F2371900943383 /* MPIAdAdapter.h */,
 				AEC845F816F2371900943383 /* MPIAdAdapter.m */,
 				AEC845F916F2371900943383 /* MPIAdInterstitialAdapter.h */,
@@ -1291,6 +1308,8 @@
 				AEE8E94416FB8B2300C41D15 /* MPIAdInterstitialAdapterSpec.mm */,
 				AEE8E94816FB918200C41D15 /* MPGoogleAdMobInterstitialAdapterSpec.mm */,
 				AEE8E94F16FBAAE400C41D15 /* MPMillennialInterstitialAdapterSpec.mm */,
+				AE25B6E5170BADBB005A3017 /* MPGoogleAdMobAdapterSpec.mm */,
+				AE25B6E8170BADE0005A3017 /* MPMillennialAdapterSpec.mm */,
 			);
 			path = MoPubNetworkAdapters;
 			sourceTree = "<group>";
@@ -1328,6 +1347,10 @@
 				AE1091E117011AEA00812E6E /* FakeGSFullscreenAd.m */,
 				AE867A5917021075007E9D8C /* FakeIMAdInterstitial.h */,
 				AE867A5A17021075007E9D8C /* FakeIMAdInterstitial.m */,
+				AE25B6EA170BAE6B005A3017 /* FakeGADBannerView.h */,
+				AE25B6EB170BAE6C005A3017 /* FakeGADBannerView.m */,
+				AE25B6EE170C9DC2005A3017 /* FakeMMBannerAdView.h */,
+				AE25B6EF170C9DC3005A3017 /* FakeMMBannerAdView.m */,
 			);
 			path = FakeThirdPartyIntegrations;
 			sourceTree = "<group>";
@@ -1685,6 +1708,19 @@
 				AEE457971703A22B007B1D19 /* MPFacebookKeywordProvider.m in Sources */,
 				AEE457981703A5ED007B1D19 /* MPGlobal.m in Sources */,
 				AE0021B71703AA9400A220F0 /* MPMRAIDBannerAdapter.m in Sources */,
+				AE25B6DA170BA208005A3017 /* MPAdViewSpec.mm in Sources */,
+				AE25B6DB170BA328005A3017 /* MPAdView.m in Sources */,
+				AE25B6DC170BA32E005A3017 /* MPBannerAdManager.m in Sources */,
+				AE25B6DD170BA36C005A3017 /* MPBannerAdapterManager.m in Sources */,
+				AE25B6DE170BA371005A3017 /* MPBannerDelegateHelper.m in Sources */,
+				AE25B6DF170BA37F005A3017 /* MPBannerCustomEventAdapter.m in Sources */,
+				AE25B6E0170BA384005A3017 /* MPError.m in Sources */,
+				AE25B6E4170BAD9E005A3017 /* MPGoogleAdMobAdapter.m in Sources */,
+				AE25B6E6170BADBC005A3017 /* MPGoogleAdMobAdapterSpec.mm in Sources */,
+				AE25B6E7170BADD2005A3017 /* MPMillennialAdapter.m in Sources */,
+				AE25B6E9170BADE0005A3017 /* MPMillennialAdapterSpec.mm in Sources */,
+				AE25B6EC170BAE6C005A3017 /* FakeGADBannerView.m in Sources */,
+				AE25B6F0170C9DC3005A3017 /* FakeMMBannerAdView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,8 +15,5 @@
  */
 
 @interface MPGoogleAdMobAdapter : MPBaseAdapter <GADBannerViewDelegate>
-{
-	GADBannerView *_adBannerView;
-}
 
 @end

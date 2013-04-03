@@ -144,6 +144,11 @@
     return [_delegate adView];
 }
 
+- (CLLocation *)location
+{
+    return self.delegate.location;
+}
+
 - (id<MPAdViewDelegate>)adViewDelegate
 {
     return [_delegate adViewDelegate];

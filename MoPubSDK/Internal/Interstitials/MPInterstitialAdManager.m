@@ -114,9 +114,9 @@
     }
 }
 
-- (NSArray *)locationDescriptionPair
+- (CLLocation *)location
 {
-    return nil;
+    return [self.delegate location];
 }
 
 - (MPInterstitialAdController *)interstitialAdController

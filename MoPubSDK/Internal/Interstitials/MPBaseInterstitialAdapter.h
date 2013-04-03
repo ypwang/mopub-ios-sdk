@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@class MPAdConfiguration;
+@class MPAdConfiguration, CLLocation;
 
 @protocol MPBaseInterstitialAdapterDelegate;
 
@@ -52,7 +52,7 @@
 
 - (MPInterstitialAdController *)interstitialAdController;
 - (id)interstitialDelegate;
-- (NSArray *)locationDescriptionPair;
+- (CLLocation *)location;
 
 - (void)adapterDidFinishLoadingAd:(MPBaseInterstitialAdapter *)adapter;
 - (void)adapter:(MPBaseInterstitialAdapter *)adapter didFailToLoadAdWithError:(NSError *)error;

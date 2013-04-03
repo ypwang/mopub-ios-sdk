@@ -13,9 +13,9 @@
 @protocol MPAdapterDelegate;
 @class MPAdConfiguration;
 
-@interface MPBaseAdapter : NSObject 
+@interface MPBaseAdapter : NSObject
 {
-	id<MPAdapterDelegate> _delegate;
+    id<MPAdapterDelegate> _delegate;
     NSURL *_impressionTrackingURL;
     NSURL *_clickTrackingURL;
 }
@@ -70,6 +70,7 @@
 - (CGSize)maximumAdSize;
 - (UIViewController *)viewControllerForPresentingModalView;
 - (MPNativeAdOrientation)allowedNativeAdsOrientation;
+- (CLLocation *)location;
 
 - (void)pauseAutorefresh;
 - (void)resumeAutorefreshIfEnabled;
@@ -78,8 +79,8 @@
  * These callbacks notify you that the adapter (un)successfully loaded an ad.
  */
 - (void)adapter:(MPBaseAdapter *)adapter didFailToLoadAdWithError:(NSError *)error;
-- (void)adapter:(MPBaseAdapter *)adapter didFinishLoadingAd:(UIView *)ad 
-		shouldTrackImpression:(BOOL)shouldTrack;
+- (void)adapter:(MPBaseAdapter *)adapter didFinishLoadingAd:(UIView *)ad
+        shouldTrackImpression:(BOOL)shouldTrack;
 
 /*
  * These callbacks notify you that the user interacted (or stopped interacting) with the native ad.
@@ -88,7 +89,7 @@
 - (void)userActionDidFinishForAdapter:(MPBaseAdapter *)adapter;
 
 /*
- * This callback notifies you that user has tapped on an ad which will cause them to leave the 
+ * This callback notifies you that user has tapped on an ad which will cause them to leave the
  * current application (e.g. the ad action opens the iTunes store, Mobile Safari, etc).
  */
 - (void)userWillLeaveApplicationFromAdapter:(MPBaseAdapter *)adapter;

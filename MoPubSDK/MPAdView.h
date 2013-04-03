@@ -14,73 +14,63 @@
 
 typedef enum
 {
-	MPAdAnimationTypeNone,
-	MPAdAnimationTypeRandom,
-	MPAdAnimationTypeFlipFromLeft,
-	MPAdAnimationTypeFlipFromRight,
-	MPAdAnimationTypeCurlUp,
-	MPAdAnimationTypeCurlDown,
-	MPAdAnimationTypeFade,
-	// Important: additional types must be added here to maintain backwards compatibility.
-	MPAdAnimationTypeCount
+    MPAdAnimationTypeNone,
+    MPAdAnimationTypeRandom,
+    MPAdAnimationTypeFlipFromLeft,
+    MPAdAnimationTypeFlipFromRight,
+    MPAdAnimationTypeCurlUp,
+    MPAdAnimationTypeCurlDown,
+    MPAdAnimationTypeFade,
+    // Important: additional types must be added here to maintain backwards compatibility.
+    MPAdAnimationTypeCount
 } MPAdAnimationType;
 
 typedef enum
 {
-	MPNativeAdOrientationAny,
-	MPNativeAdOrientationPortrait,
-	MPNativeAdOrientationLandscape
+    MPNativeAdOrientationAny,
+    MPNativeAdOrientationPortrait,
+    MPNativeAdOrientationLandscape
 } MPNativeAdOrientation;
 
 @protocol MPAdViewDelegate;
 @class MPBannerAdManager;
 
-@interface MPAdView : UIView  
+@interface MPAdView : UIView
 {
-	// Delegate object for the ad view.
-	id<MPAdViewDelegate> _delegate;
-	
-	// "Business-logic" object for the ad view.
-	MPBannerAdManager *_adManager;
-	
-	// Ad unit identifier for the ad view.
-	NSString *_adUnitId;
-	
-	// Location data which may be used for targeting.
-	CLLocation *_location;
-		
-	// Subview that represents the actual ad content. Set via -setAdContentView.
-	UIView *_adContentView;
-	
-	// Stores the initial size of the ad view.
-	CGSize _originalSize;
-	
-	// Stores the size of the ad creative (handed down from the server). If the server does not
-	// pass back size information, this value will be equal to _originalSize.
-	CGSize _creativeSize;
-	
-	// Whether scrolling is enabled for the ad view.
-	BOOL _scrollable;
-	
-	// Whether location data should be sent with MoPub ad requests.
-	BOOL _locationEnabled;
-	
-	// The number of decimal digits to include in location data sent with MoPub ad requests.
-	NSUInteger _locationPrecision;
-	
-	// Pair of strings representing latitude and longitude, taking into account the values of 
-	// _locationEnabled and _locationPrecision.
-	NSArray *_locationDescriptionPair;
-	
-	// Specifies the transition used for bringing an ad into view. You can specify an
-	// animation type for any ad unit using the MoPub web interface.
-	MPAdAnimationType _animationType;
-	
-	MPNativeAdOrientation _allowedNativeAdOrientation;
-	
-	// Whether the ad view ignores autorefresh values sent down from the server. If YES,
-	// the ad view will never refresh once it has an ad.
-	BOOL _ignoresAutorefresh;
+    // Delegate object for the ad view.
+    id<MPAdViewDelegate> _delegate;
+
+    // "Business-logic" object for the ad view.
+    MPBannerAdManager *_adManager;
+
+    // Ad unit identifier for the ad view.
+    NSString *_adUnitId;
+
+    // Location data which may be used for targeting.
+    CLLocation *_location;
+
+    // Subview that represents the actual ad content. Set via -setAdContentView.
+    UIView *_adContentView;
+
+    // Stores the initial size of the ad view.
+    CGSize _originalSize;
+
+    // Stores the size of the ad creative (handed down from the server). If the server does not
+    // pass back size information, this value will be equal to _originalSize.
+    CGSize _creativeSize;
+
+    // Whether scrolling is enabled for the ad view.
+    BOOL _scrollable;
+
+    // Specifies the transition used for bringing an ad into view. You can specify an
+    // animation type for any ad unit using the MoPub web interface.
+    MPAdAnimationType _animationType;
+
+    MPNativeAdOrientation _allowedNativeAdOrientation;
+
+    // Whether the ad view ignores autorefresh values sent down from the server. If YES,
+    // the ad view will never refresh once it has an ad.
+    BOOL _ignoresAutorefresh;
 }
 
 @property (nonatomic, assign) id<MPAdViewDelegate> delegate;
@@ -89,8 +79,6 @@ typedef enum
 @property (nonatomic, retain) NSString *keywords;
 @property (nonatomic, assign) CGSize creativeSize;
 @property (nonatomic, assign) BOOL scrollable;
-@property (nonatomic, assign) BOOL locationEnabled;
-@property (nonatomic, assign) NSUInteger locationPrecision;
 @property (nonatomic, assign) MPAdAnimationType animationType;
 @property (nonatomic, assign) BOOL ignoresAutorefresh;
 @property (nonatomic, assign, getter = isTesting) BOOL testing;
@@ -102,19 +90,12 @@ typedef enum
  */
 - (id)initWithAdUnitId:(NSString *)adUnitId size:(CGSize)size;
 
-/* 
+/*
  * Ad sizes may vary between different ad networks. This method returns the actual
  * size of the underlying ad, which you can use to adjust the size of the MPAdView
  * to avoid clipping or border issues.
  */
 - (CGSize)adContentViewSize;
-
-/*
- * Returns an array of two strings representing location coordinates (possibly truncated) as long as
- * a location has been set and locationEnabled is set to YES. If these conditions are not met, this 
- * method will return nil.
- */
-- (NSArray *)locationDescriptionPair;
 
 /*
  * Loads a new ad using a default URL constructed from the ad unit ID.
@@ -141,8 +122,8 @@ typedef enum
 
 /*
  * Replaces the content of the MPAdView with the specified view and retains the view.
- * 
- * This method is crucial for implementing adapters or custom events involving other 
+ *
+ * This method is crucial for implementing adapters or custom events involving other
  * ad networks.
  */
 - (void)setAdContentView:(UIView *)view;
@@ -152,7 +133,7 @@ typedef enum
  */
 - (void)adViewDidAppear;
 
-/* 
+/*
  * Informs the ad view that the device orientation has changed. You should call
  * this method when your application's orientation changes if you want your
  * underlying ads to adjust their orientation properly. You may want to use
@@ -162,8 +143,8 @@ typedef enum
 - (void)rotateToOrientation:(UIInterfaceOrientation)newOrientation;
 
 /*
- * Forces native ad networks to only use ads sized for the specified orientation. For instance, 
- * if you call this with UIInterfaceOrientationPortrait, native networks (e.g. iAd) will never 
+ * Forces native ad networks to only use ads sized for the specified orientation. For instance,
+ * if you call this with UIInterfaceOrientationPortrait, native networks (e.g. iAd) will never
  * return ads sized for the landscape orientation.
  */
 - (void)lockNativeAdsToOrientation:(MPNativeAdOrientation)orientation;
@@ -213,8 +194,8 @@ typedef enum
 
 @required
 /*
- * The ad view relies on this method to determine which view controller will be 
- * used for presenting/dismissing modal views, such as the browser view presented 
+ * The ad view relies on this method to determine which view controller will be
+ * used for presenting/dismissing modal views, such as the browser view presented
  * when a user clicks on an ad.
  */
 - (UIViewController *)viewControllerForPresentingModalView;
@@ -238,7 +219,7 @@ typedef enum
 
 /*
  * This method is called when the user is about to leave your application as a result of tapping on
- * an ad. 
+ * an ad.
  */
 - (void)willLeaveApplicationFromAd:(MPAdView *)view;
 
