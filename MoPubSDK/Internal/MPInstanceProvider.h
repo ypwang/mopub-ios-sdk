@@ -18,6 +18,7 @@
 @class MPAdConfiguration;
 @class MPHTMLInterstitialViewController;
 @class MPAnalyticsTracker;
+@class MPReachability;
 @class MPMRAIDInterstitialViewController;
 
 @protocol MPAdWebViewAgentDelegate;
@@ -33,6 +34,7 @@
 + (MPInstanceProvider *)sharedProvider;
 
 - (MPAnalyticsTracker *)buildMPAnalyticsTracker;
+- (MPReachability *)sharedMPReachability;
 
 - (MPAdWebViewAgent *)buildMPAdWebViewAgentWithAdWebViewFrame:(CGRect)frame
                                                      delegate:(id<MPAdWebViewAgentDelegate>)delegate

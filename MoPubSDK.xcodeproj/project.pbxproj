@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		AE0021B71703AA9400A220F0 /* MPMRAIDBannerAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C0916EF9DB00046D464 /* MPMRAIDBannerAdapter.m */; };
+		AE093BBE170CD1AC00F5334B /* MPReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AE093BBD170CD1AC00F5334B /* MPReachability.m */; };
+		AE093BBF170CD1AC00F5334B /* MPReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AE093BBD170CD1AC00F5334B /* MPReachability.m */; };
+		AE093BC9170CD49600F5334B /* FakeMPReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AE093BC8170CD49600F5334B /* FakeMPReachability.m */; };
 		AE1091741700B82400812E6E /* CustomEventInterstitialIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE1091731700B82400812E6E /* CustomEventInterstitialIntegrationSuite.mm */; };
 		AE1091761700C63800812E6E /* LegacyCustomEventInterstitialIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE1091751700C63800812E6E /* LegacyCustomEventInterstitialIntegrationSuite.mm */; };
 		AE1091781700D01E00812E6E /* ChartboostInterstitialIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE1091771700D01E00812E6E /* ChartboostInterstitialIntegrationSuite.mm */; };
@@ -365,6 +368,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AE093BBC170CD1AC00F5334B /* MPReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPReachability.h; sourceTree = "<group>"; };
+		AE093BBD170CD1AC00F5334B /* MPReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPReachability.m; sourceTree = "<group>"; };
+		AE093BC7170CD49600F5334B /* FakeMPReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeMPReachability.h; sourceTree = "<group>"; };
+		AE093BC8170CD49600F5334B /* FakeMPReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeMPReachability.m; sourceTree = "<group>"; };
 		AE1091731700B82400812E6E /* CustomEventInterstitialIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CustomEventInterstitialIntegrationSuite.mm; sourceTree = "<group>"; };
 		AE1091751700C63800812E6E /* LegacyCustomEventInterstitialIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LegacyCustomEventInterstitialIntegrationSuite.mm; sourceTree = "<group>"; };
 		AE1091771700D01E00812E6E /* ChartboostInterstitialIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ChartboostInterstitialIntegrationSuite.mm; sourceTree = "<group>"; };
@@ -1113,6 +1120,8 @@
 				AEE8E93316FB6F9B00C41D15 /* MPAnalyticsTracker.m */,
 				AEE4578A17039461007B1D19 /* MPIdentityProvider.h */,
 				AEE4578B17039461007B1D19 /* MPIdentityProvider.m */,
+				AE093BBC170CD1AC00F5334B /* MPReachability.h */,
+				AE093BBD170CD1AC00F5334B /* MPReachability.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -1289,6 +1298,8 @@
 				AEE8E93B16FB733800C41D15 /* FakeMPAnalyticsTracker.m */,
 				AE867A7A17021FA8007E9D8C /* FakeMPAdWebView.h */,
 				AE867A7B17021FA8007E9D8C /* FakeMPAdWebView.m */,
+				AE093BC7170CD49600F5334B /* FakeMPReachability.h */,
+				AE093BC8170CD49600F5334B /* FakeMPReachability.m */,
 			);
 			path = Fakes;
 			sourceTree = "<group>";
@@ -1721,6 +1732,8 @@
 				AE25B6E9170BADE0005A3017 /* MPMillennialAdapterSpec.mm in Sources */,
 				AE25B6EC170BAE6C005A3017 /* FakeGADBannerView.m in Sources */,
 				AE25B6F0170C9DC3005A3017 /* FakeMMBannerAdView.m in Sources */,
+				AE093BBF170CD1AC00F5334B /* MPReachability.m in Sources */,
+				AE093BC9170CD49600F5334B /* FakeMPReachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1795,6 +1808,7 @@
 				AE1091DF17011A4D00812E6E /* GreystripeInterstitialCustomEvent.m in Sources */,
 				AE867A5D1702143D007E9D8C /* InMobiInterstitialCustomEvent.m in Sources */,
 				AEE4578C17039462007B1D19 /* MPIdentityProvider.m in Sources */,
+				AE093BBE170CD1AC00F5334B /* MPReachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

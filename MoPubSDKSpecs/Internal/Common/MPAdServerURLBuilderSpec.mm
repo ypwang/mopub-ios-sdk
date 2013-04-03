@@ -175,6 +175,26 @@ describe(@"MPAdServerURLBuilder", ^{
 
         advertisingTrackingEnabled = YES;
     });
+
+    it(@"should provide connectivity information", ^{
+        fakeProvider.fakeMPReachability = [[[FakeMPReachability alloc] init] autorelease];
+        FakeMPReachability *fakeMPReachability = fakeProvider.fakeMPReachability;
+        fakeMPReachability.hasWifi = YES;
+
+        URL = [MPAdServerURLBuilder URLWithAdUnitID:@"guy"
+                                           keywords:nil
+                                           location:nil
+                                            testing:YES];
+        URL.absoluteString should contain(@"&ct=2");
+
+        fakeMPReachability.hasWifi = NO;
+
+        URL = [MPAdServerURLBuilder URLWithAdUnitID:@"guy"
+                                           keywords:nil
+                                           location:nil
+                                            testing:YES];
+        URL.absoluteString should contain(@"&ct=3");
+    });
 });
 
 SPEC_END

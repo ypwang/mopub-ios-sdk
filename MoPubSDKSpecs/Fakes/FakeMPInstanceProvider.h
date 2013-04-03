@@ -20,6 +20,7 @@
 #import "MPInterstitialAdManager.h"
 #import "GADRequest.h"
 #import "FakeMMBannerAdView.h"
+#import "FakeMPReachability.h"
 
 @interface FakeMPInstanceProvider : MPInstanceProvider
 
@@ -44,8 +45,9 @@
 @property (nonatomic, assign) FakeGSFullscreenAd *fakeGSFullscreenAd;
 @property (nonatomic, assign) IMAdInterstitial *fakeIMAdInterstitial;
 
+@property (nonatomic, assign) FakeMPReachability *fakeMPReachability;
+
 @property (nonatomic, assign) FakeMPAdServerCommunicator *lastFakeMPAdServerCommunicator;
 @property (nonatomic, assign) FakeMPAnalyticsTracker *lastFakeMPAnalyticsTracker;
-
 
 @end

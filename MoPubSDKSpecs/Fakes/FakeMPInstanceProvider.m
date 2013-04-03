@@ -42,6 +42,14 @@
     }
 }
 
+- (MPReachability *)sharedMPReachability
+{
+    return [self returnFake:self.fakeMPReachability
+                     orCall:^id{
+                         return [super sharedMPReachability];
+                     }];
+}
+
 - (MPAnalyticsTracker *)buildMPAnalyticsTracker
 {
     self.lastFakeMPAnalyticsTracker = [[[FakeMPAnalyticsTracker alloc] init] autorelease];

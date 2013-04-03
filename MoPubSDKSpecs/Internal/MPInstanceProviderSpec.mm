@@ -4,6 +4,7 @@
 #import "FakeInterstitialCustomEvent.h"
 #import "MPInterstitialCustomEventAdapter.h"
 #import "MPLegacyInterstitialCustomEventAdapter.h"
+#import "MPReachability.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -83,6 +84,15 @@ describe(@"MPInstanceProvider", ^{
             controller.delegate should equal(delegate);
             controller.orientationType should equal(MPInterstitialOrientationTypePortrait);
             controller.customMethodDelegate should equal(customMethodDelegate);
+        });
+    });
+
+    describe(@"providing a reachability object", ^{
+        it(@"should always provide the same singleton object", ^{
+            MPReachability *firstReachability = [provider sharedMPReachability];
+            MPReachability *secondReachability = [provider sharedMPReachability];
+            firstReachability should be_instance_of([MPReachability class]);
+            firstReachability should be_same_instance_as(secondReachability);
         });
     });
 });

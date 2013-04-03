@@ -11,6 +11,8 @@
 #import "MPGlobal.h"
 #import "MPKeywordProvider.h"
 #import "MPIdentityProvider.h"
+#import "MPInstanceProvider.h"
+#import "MPReachability.h"
 
 NSString * const kMoPubInterfaceOrientationPortrait = @"p";
 NSString * const kMoPubInterfaceOrientationLandscape = @"l";
@@ -26,6 +28,7 @@ NSString * const kMoPubInterfaceOrientationLandscape = @"l";
 + (NSString *)queryParameterForLocation:(CLLocation *)location;
 + (NSString *)queryParameterForMRAID;
 + (NSString *)queryParameterForDNT;
++ (NSString *)queryParameterForConnectionType;
 + (BOOL)advertisingTrackingEnabled;
 
 @end
@@ -52,6 +55,7 @@ NSString * const kMoPubInterfaceOrientationLandscape = @"l";
     URLString = [URLString stringByAppendingString:[self queryParameterForLocation:location]];
     URLString = [URLString stringByAppendingString:[self queryParameterForMRAID]];
     URLString = [URLString stringByAppendingString:[self queryParameterForDNT]];
+    URLString = [URLString stringByAppendingString:[self queryParameterForConnectionType]];
 
     return [NSURL URLWithString:URLString];
 }
@@ -141,6 +145,11 @@ NSString * const kMoPubInterfaceOrientationLandscape = @"l";
 + (NSString *)queryParameterForDNT
 {
     return [self advertisingTrackingEnabled] ? @"" : @"&dnt=1";
+}
+
++ (NSString *)queryParameterForConnectionType
+{
+    return [[[MPInstanceProvider sharedProvider] sharedMPReachability] hasWifi] ? @"&ct=2" : @"&ct=3";
 }
 
 + (BOOL)advertisingTrackingEnabled

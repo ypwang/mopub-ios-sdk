@@ -19,8 +19,17 @@
 #import "MPAnalyticsTracker.h"
 #import "MPGlobal.h"
 #import "MPMRAIDInterstitialViewController.h"
+#import "MPReachability.h"
+
+@interface MPInstanceProvider ()
+
+@property (nonatomic, retain) MPReachability *sharedReachability;
+
+@end
 
 @implementation MPInstanceProvider
+
+@synthesize sharedReachability = _sharedReachability;
 
 static MPInstanceProvider *sharedProvider = nil;
 
@@ -32,9 +41,23 @@ static MPInstanceProvider *sharedProvider = nil;
     return sharedProvider;
 }
 
+- (void)dealloc
+{
+    self.sharedReachability = nil;
+    [super dealloc];
+}
+
 - (MPAnalyticsTracker *)buildMPAnalyticsTracker
 {
     return [MPAnalyticsTracker trackerWithUserAgentString:MPUserAgentString()];
+}
+
+- (MPReachability *)sharedMPReachability
+{
+    if (!self.sharedReachability) {
+        self.sharedReachability = [MPReachability reachabilityForLocalWiFi];
+    }
+    return self.sharedReachability;
 }
 
 - (MPAdWebViewAgent *)buildMPAdWebViewAgentWithAdWebViewFrame:(CGRect)frame delegate:(id<MPAdWebViewAgentDelegate>)delegate customMethodDelegate:(id)customMethodDelegate
