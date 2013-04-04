@@ -38,10 +38,12 @@ NSString * const kAdTypeMraid = @"mraid";
 @interface MPAdConfiguration ()
 
 @property (nonatomic, copy) NSString *adResponseHTMLString;
+
 - (MPAdType)adTypeFromHeaders:(NSDictionary *)headers;
 - (NSString *)networkTypeFromHeaders:(NSDictionary *)headers;
 - (NSTimeInterval)refreshIntervalFromHeaders:(NSDictionary *)headers;
 - (NSDictionary *)dictionaryFromHeaders:(NSDictionary *)headers forKey:(NSString *)key;
+- (NSURL *)URLFromHeaders:(NSDictionary *)headers forKey:(NSString *)key;
 
 @end
 
@@ -49,7 +51,6 @@ NSString * const kAdTypeMraid = @"mraid";
 
 @implementation MPAdConfiguration
 
-@synthesize headers = _headers;
 @synthesize adType = _adType;
 @synthesize networkType = _networkType;
 @synthesize preferredSize = _preferredSize;
@@ -69,79 +70,87 @@ NSString * const kAdTypeMraid = @"mraid";
 @synthesize adSize = _adSize;
 @synthesize customSelectorName = _customSelectorName;
 
-- (id)init
+- (id)initWithHeaders:(NSDictionary *)headers data:(NSData *)data
 {
     self = [super init];
     if (self) {
-        _adType = MPAdTypeUnknown;
-        _networkType = @"";
-        _shouldInterceptLinks = YES;
-        _scrollable = NO;
-    }
-    return self;
-}
+        self.adResponseData = data;
 
-- (id)initWithHeaders:(NSDictionary *)headers data:(NSData *)data
-{
-    self = [self init];
-    if (self) {
-        _headers = [headers retain];
-        _adType = [self adTypeFromHeaders:headers];
+        self.adType = [self adTypeFromHeaders:headers];
 
-        _networkType = [[self networkTypeFromHeaders:headers] copy];
-        _preferredSize = CGSizeMake([[headers objectForKey:kWidthHeaderKey] floatValue],
-                                    [[headers objectForKey:kHeightHeaderKey] floatValue]);
-        _clickTrackingURL = [[self URLFromHeaders:headers forKey:kClickthroughHeaderKey] retain];
-        _impressionTrackingURL = [[self URLFromHeaders:headers forKey:kImpressionTrackerHeaderKey] retain];
-        _failoverURL = [[self URLFromHeaders:headers forKey:kFailUrlHeaderKey] retain];
-        _interceptURLPrefix = [[self URLFromHeaders:headers forKey:kLaunchpageHeaderKey] retain];
-        _shouldInterceptLinks = [headers objectForKey:kInterceptLinksHeaderKey] ?
-            [[headers objectForKey:kInterceptLinksHeaderKey] boolValue] : YES;
+        self.networkType = [self networkTypeFromHeaders:headers];
+        self.networkType = self.networkType ? self.networkType : @"";
 
-        _scrollable = [[headers objectForKey:kScrollableHeaderKey] boolValue];
-        _refreshInterval = [self refreshIntervalFromHeaders:headers];
-        _adResponseData = [data copy];
-        _nativeSDKParameters = [[self dictionaryFromHeaders:headers
-                                                     forKey:kNativeSDKParametersHeaderKey] retain];
-        _customSelectorName = [[headers objectForKey:kCustomSelectorHeaderKey] copy];
+        self.preferredSize = CGSizeMake([[headers objectForKey:kWidthHeaderKey] floatValue],
+                                        [[headers objectForKey:kHeightHeaderKey] floatValue]);
 
-        NSString *orientationTemp = [headers objectForKey:kOrientationTypeHeaderKey];
-        if ([orientationTemp isEqualToString:@"p"]) {
-            _orientationType = MPInterstitialOrientationTypePortrait;
-        } else if ([orientationTemp isEqualToString:@"l"]) {
-            _orientationType = MPInterstitialOrientationTypeLandscape;
-        } else {
-            _orientationType = MPInterstitialOrientationTypeAll;
-        }
+        self.clickTrackingURL = [self URLFromHeaders:headers
+                                              forKey:kClickthroughHeaderKey];
+        self.impressionTrackingURL = [self URLFromHeaders:headers
+                                                   forKey:kImpressionTrackerHeaderKey];
+        self.failoverURL = [self URLFromHeaders:headers
+                                         forKey:kFailUrlHeaderKey];
+        self.interceptURLPrefix = [self URLFromHeaders:headers
+                                                forKey:kLaunchpageHeaderKey];
 
-        NSString *className = [headers objectForKey:kCustomEventClassNameHeaderKey];
-        _customEventClass = NSClassFromString(className);
+        NSNumber *shouldInterceptLinks = [headers objectForKey:kInterceptLinksHeaderKey];
+        self.shouldInterceptLinks = shouldInterceptLinks ? [shouldInterceptLinks boolValue] : YES;
+        self.scrollable = [[headers objectForKey:kScrollableHeaderKey] boolValue];
+        self.refreshInterval = [self refreshIntervalFromHeaders:headers];
 
-        NSString *customEventJSONString = [headers objectForKey:kCustomEventClassDataHeaderKey];
-        NSData *customEventJSONData = [customEventJSONString dataUsingEncoding:NSUTF8StringEncoding];
-        CJSONDeserializer *deserializer = [CJSONDeserializer deserializerWithNullObject:NULL];
-        _customEventClassData = [[deserializer deserializeAsDictionary:customEventJSONData
-                                                                 error:NULL] retain];
+
+        self.nativeSDKParameters = [self dictionaryFromHeaders:headers
+                                                        forKey:kNativeSDKParametersHeaderKey];
+        self.customSelectorName = [headers objectForKey:kCustomSelectorHeaderKey];
+
+        self.orientationType = [self orientationTypeFromHeaders:headers];
+
+        NSString *customEventClassName = [headers objectForKey:kCustomEventClassNameHeaderKey];
+        self.customEventClass = NSClassFromString(customEventClassName);
+
+        self.customEventClassData = [self dictionaryFromHeaders:headers
+                                                         forKey:kCustomEventClassDataHeaderKey];
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [_headers release];
-    [_networkType release];
-    [_clickTrackingURL release];
-    [_impressionTrackingURL release];
-    [_failoverURL release];
-    [_interceptURLPrefix release];
-    [_adResponseData release];
-    [_adResponseHTMLString release];
-    [_nativeSDKParameters release];
-    [_customSelectorName release];
-    [_customEventClassData release];
+    self.networkType = nil;
+    self.clickTrackingURL = nil;
+    self.impressionTrackingURL = nil;
+    self.failoverURL = nil;
+    self.interceptURLPrefix = nil;
+    self.adResponseData = nil;
+    self.adResponseHTMLString = nil;
+    self.nativeSDKParameters = nil;
+    self.customSelectorName = nil;
+    self.customEventClassData = nil;
 
     [super dealloc];
 }
+
+- (BOOL)hasPreferredSize
+{
+    return (self.preferredSize.width > 0 && self.preferredSize.height > 0);
+}
+
+- (NSString *)adResponseHTMLString
+{
+    if (!_adResponseHTMLString) {
+        self.adResponseHTMLString = [[[NSString alloc] initWithData:self.adResponseData
+                                                           encoding:NSUTF8StringEncoding] autorelease];
+    }
+
+    return _adResponseHTMLString;
+}
+
+- (NSString *)clickDetectionURLPrefix
+{
+    return self.interceptURLPrefix.absoluteString ? self.interceptURLPrefix.absoluteString : @"";
+}
+
+#pragma mark - Private
 
 - (MPAdType)adTypeFromHeaders:(NSDictionary *)headers
 {
@@ -195,24 +204,16 @@ NSString * const kAdTypeMraid = @"mraid";
     return interval;
 }
 
-- (BOOL)hasPreferredSize
+- (MPInterstitialOrientationType)orientationTypeFromHeaders:(NSDictionary *)headers
 {
-    return (self.preferredSize.width > 0 && self.preferredSize.height > 0);
-}
-
-- (NSString *)adResponseHTMLString
-{
-    if (!_adResponseHTMLString) {
-        _adResponseHTMLString = [[NSString alloc] initWithData:self.adResponseData
-                                                      encoding:NSUTF8StringEncoding];
+    NSString *orientation = [headers objectForKey:kOrientationTypeHeaderKey];
+    if ([orientation isEqualToString:@"p"]) {
+        return MPInterstitialOrientationTypePortrait;
+    } else if ([orientation isEqualToString:@"l"]) {
+        return MPInterstitialOrientationTypeLandscape;
+    } else {
+        return MPInterstitialOrientationTypeAll;
     }
-
-    return _adResponseHTMLString;
-}
-
-- (NSString *)clickDetectionURLPrefix
-{
-    return self.interceptURLPrefix.absoluteString ? self.interceptURLPrefix.absoluteString : @"";
 }
 
 @end

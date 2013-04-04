@@ -95,24 +95,4 @@
     [NSURLConnection connectionWithRequest:_metricsURLRequest delegate:nil];
 }
 
-#pragma mark - Requesting Ads (Legacy)
-
-- (void)getAd
-{
-    [self getAdWithParams:nil];
-}
-
-- (void)getAdWithParams:(NSDictionary *)params
-{
-    // To be implemented by subclasses.
-    [self doesNotRecognizeSelector:_cmd];
-}
-
-- (void)_getAdWithParams:(NSDictionary *)params
-{
-    [self retain];
-    [self getAdWithParams:params];
-    [self release];
-}
-
 @end

@@ -32,19 +32,9 @@
 - (void)unregisterDelegate;
 
 /*
- * -getAdWithParams: needs to be implemented by adapter subclasses that want to load native ads.
- * -getAd simply calls -getAdWithParams: with a nil dictionary.
+ * -_getAdWithConfiguration wraps -getAdWithConfiguration in retain/release calls to prevent the
+ * adapter from being prematurely deallocated.
  */
-- (void)getAd;
-- (void)getAdWithParams:(NSDictionary *)params;
-
-/*
- * This method wraps -getAdWithParams: with calls to -retain and -release, since that method
- * may prematurely deallocate the adapter during its own execution (as the result of various
- * callbacks).
- */
-- (void)_getAdWithParams:(NSDictionary *)params;
-
 - (void)getAdWithConfiguration:(MPAdConfiguration *)configuration;
 - (void)_getAdWithConfiguration:(MPAdConfiguration *)configuration;
 

@@ -91,7 +91,6 @@
                 forConfiguration:(MPAdConfiguration *)configuration
 {
     BOOL adapterIsValid = NO;
-    BOOL adapterIsLegacy = NO;
 
     unsigned int adapterMethodCount = 0;
     Method *adapterMethodList = class_copyMethodList([adapter class], &adapterMethodCount);
@@ -100,19 +99,11 @@
         if (sel_isEqual(selector, @selector(getAdWithConfiguration:))) {
             adapterIsValid = YES;
             break;
-        } else if (sel_isEqual(selector, @selector(getAdWithParams:))) {
-            adapterIsValid = YES;
-            adapterIsLegacy = YES;
         }
     }
     free(adapterMethodList);
 
-    if (adapterIsValid && adapterIsLegacy) {
-        [adapter setImpressionTrackingURL:[configuration impressionTrackingURL]];
-        [adapter setClickTrackingURL:[configuration clickTrackingURL]];
-        [adapter _getAdWithParams:[configuration headers]];
-    }
-    else if (adapterIsValid) {
+    if (adapterIsValid) {
         [adapter _getAdWithConfiguration:configuration];
     } else {
         MPError *adapterInvalidError = [MPError errorWithCode:MPErrorAdapterInvalid];

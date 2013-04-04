@@ -149,6 +149,7 @@
 		AE60D8BF16F3E8D900A4B67F /* MPTimerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D8BE16F3E8D900A4B67F /* MPTimerSpec.mm */; };
 		AE60D8C116F3E8F200A4B67F /* MRPropertySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D8C016F3E8F200A4B67F /* MRPropertySpec.mm */; };
 		AE60D8C316F3E8FE00A4B67F /* MRCommandSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D8C216F3E8FE00A4B67F /* MRCommandSpec.mm */; };
+		AE7565B6170E3DF600ED83C3 /* MPBannerCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C7916EF9DBC0046D464 /* MPBannerCustomEvent.m */; };
 		AE867A5B17021075007E9D8C /* FakeIMAdInterstitial.m in Sources */ = {isa = PBXBuildFile; fileRef = AE867A5A17021075007E9D8C /* FakeIMAdInterstitial.m */; };
 		AE867A5C1702143B007E9D8C /* InMobiInterstitialCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = AEC845EF16F2371900943383 /* InMobiInterstitialCustomEvent.m */; };
 		AE867A5D1702143D007E9D8C /* InMobiInterstitialCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = AEC845EF16F2371900943383 /* InMobiInterstitialCustomEvent.m */; };
@@ -1783,6 +1784,7 @@
 				AE093C5F170DF92E00F5334B /* CustomEventBannerIntegrationSuiteSpec.mm in Sources */,
 				AE093C62170E31BE00F5334B /* FakeMPTimer.m in Sources */,
 				AE093C65170E354F00F5334B /* FakeBannerCustomEvent.m in Sources */,
+				AE7565B6170E3DF600ED83C3 /* MPBannerCustomEvent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

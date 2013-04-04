@@ -40,29 +40,7 @@ extern NSString * const kAdTypeInterstitial;
 extern NSString * const kAdTypeMraid;
 
 @interface MPAdConfiguration : NSObject
-{
-    NSDictionary *_headers;
 
-    MPAdType _adType;
-    NSString *_networkType;
-    CGSize _preferredSize;
-    NSURL *_clickTrackingURL;
-    NSURL *_impressionTrackingURL;
-    NSURL *_failoverURL;
-    NSURL *_interceptURLPrefix;
-    BOOL _shouldInterceptLinks;
-    BOOL _scrollable;
-    NSTimeInterval _refreshInterval;
-    NSData *_adResponseData;
-    NSString *_adResponseHTMLString;
-    NSDictionary *_nativeSDKParameters;
-    NSString *_customSelectorName;
-    Class _customEventClass;
-    NSDictionary *_customEventClassData;
-    MPInterstitialOrientationType _orientationType;
-}
-
-@property (nonatomic, retain) NSDictionary *headers;
 @property (nonatomic, assign) MPAdType adType;
 @property (nonatomic, copy) NSString *networkType;
 @property (nonatomic, assign) CGSize adSize;
@@ -81,9 +59,8 @@ extern NSString * const kAdTypeMraid;
 @property (nonatomic, retain) NSDictionary *customEventClassData;
 @property (nonatomic, assign) MPInterstitialOrientationType orientationType;
 
-- (id)init;
 - (id)initWithHeaders:(NSDictionary *)headers data:(NSData *)data;
-- (NSURL *)URLFromHeaders:(NSDictionary *)headers forKey:(NSString *)key;
+
 - (BOOL)hasPreferredSize;
 - (NSString *)adResponseHTMLString;
 - (NSString *)clickDetectionURLPrefix;

@@ -48,7 +48,7 @@
     [_adBannerView release];
 }
 
-- (void)getAdWithParams:(NSDictionary *)params
+- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration
 {
     Class cls = NSClassFromString(@"ADBannerView");
     if (cls != nil)
