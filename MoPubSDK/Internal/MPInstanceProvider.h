@@ -15,11 +15,13 @@
 @class MPInterstitialAdManager;
 @class MPAdServerCommunicator;
 @class MPBaseInterstitialAdapter;
+@class MPInterstitialCustomEvent;
 @class MPAdConfiguration;
 @class MPHTMLInterstitialViewController;
 @class MPAnalyticsTracker;
 @class MPReachability;
 @class MPMRAIDInterstitialViewController;
+@class MPTimer;
 
 @protocol MPAdWebViewAgentDelegate;
 @protocol MPAdDestinationDisplayAgentDelegate;
@@ -28,6 +30,7 @@
 @protocol MPBaseInterstitialAdapterDelegate;
 @protocol MPHTMLInterstitialViewControllerDelegate;
 @protocol MPMRAIDInterstitialViewControllerDelegate;
+@protocol MPInterstitialCustomEventDelegate;
 
 @interface MPInstanceProvider : NSObject
 
@@ -35,6 +38,7 @@
 
 - (MPAnalyticsTracker *)buildMPAnalyticsTracker;
 - (MPReachability *)sharedMPReachability;
+- (MPTimer *)buildMPTimerWithTimeInterval:(NSTimeInterval)seconds target:(id)target selector:(SEL)selector repeats:(BOOL)repeats;
 
 - (NSMutableURLRequest *)buildConfiguredURLRequestWithURL:(NSURL *)URL;
 
@@ -47,8 +51,12 @@
 - (MPURLResolver *)buildMPURLResolver;
 - (MPInterstitialAdManager *)buildMPInterstitialAdManagerWithDelegate:(id<MPInterstitialAdManagerDelegate>)delegate;
 - (MPAdServerCommunicator *)buildMPAdServerCommunicatorWithDelegate:(id<MPAdServerCommunicatorDelegate>)delegate;
+
 - (MPBaseInterstitialAdapter *)buildInterstitialAdapterForConfiguration:(MPAdConfiguration *)configuration
                                                                delegate:(id<MPBaseInterstitialAdapterDelegate>)delegate;
+- (MPInterstitialCustomEvent *)buildInterstitialCustomEventFromCustomClass:(Class)customClass
+                                                                  delegate:(id<MPInterstitialCustomEventDelegate>)delegate;
+
 - (MPHTMLInterstitialViewController *)buildMPHTMLInterstitialViewControllerWithDelegate:(id<MPHTMLInterstitialViewControllerDelegate>)delegate
                                                                         orientationType:(MPInterstitialOrientationType)type
                                                                    customMethodDelegate:(id)customMethodDelegate;

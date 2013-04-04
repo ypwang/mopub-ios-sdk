@@ -14,6 +14,7 @@
 + (MPAdConfiguration *)defaultBannerConfiguration;
 + (MPAdConfiguration *)defaultBannerConfigurationWithHeaders:(NSDictionary *)dictionary
                                                   HTMLString:(NSString *)HTMLString;
++ (MPAdConfiguration *)defaultBannerConfigurationWithCustomEventClassName:(NSString *)eventClassName;
 
 + (NSMutableDictionary *)defaultInterstitialHeaders;
 + (MPAdConfiguration *)defaultInterstitialConfiguration;

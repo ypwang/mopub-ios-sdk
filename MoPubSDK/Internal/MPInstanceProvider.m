@@ -20,6 +20,8 @@
 #import "MPGlobal.h"
 #import "MPMRAIDInterstitialViewController.h"
 #import "MPReachability.h"
+#import "MPTimer.h"
+#import "MPInterstitialCustomEvent.h"
 
 @interface MPInstanceProvider ()
 
@@ -47,6 +49,11 @@ static MPInstanceProvider *sharedProvider = nil;
 {
     self.sharedReachability = nil;
     [super dealloc];
+}
+
+- (MPTimer *)buildMPTimerWithTimeInterval:(NSTimeInterval)seconds target:(id)target selector:(SEL)selector repeats:(BOOL)repeats
+{
+    return [MPTimer timerWithTimeInterval:seconds target:target selector:selector repeats:repeats];
 }
 
 - (MPAnalyticsTracker *)buildMPAnalyticsTracker
@@ -125,6 +132,14 @@ static MPInstanceProvider *sharedProvider = nil;
         Class adapterClass = [[MPAdapterMap sharedAdapterMap] interstitialAdapterClassForNetworkType:configuration.networkType];
         return [[(MPBaseInterstitialAdapter *)[adapterClass alloc] initWithDelegate:delegate] autorelease];
     }
+}
+
+- (MPInterstitialCustomEvent *)buildInterstitialCustomEventFromCustomClass:customClass
+                                                                  delegate:(id<MPInterstitialCustomEventDelegate>)delegate
+{
+    MPInterstitialCustomEvent *customEvent = [[[customClass alloc] init] autorelease];
+    customEvent.delegate = delegate;
+    return customEvent;
 }
 
 - (MPHTMLInterstitialViewController *)buildMPHTMLInterstitialViewControllerWithDelegate:(id<MPHTMLInterstitialViewControllerDelegate>)delegate

@@ -33,7 +33,6 @@
 
 @implementation FakeMPInstanceProvider
 
-
 - (id)returnFake:(id)fake orCall:(IDReturningBlock)block
 {
     if (fake) {
@@ -60,6 +59,16 @@
 {
     self.lastFakeMPAnalyticsTracker = [[[FakeMPAnalyticsTracker alloc] init] autorelease];
     return self.lastFakeMPAnalyticsTracker;
+}
+
+- (MPTimer *)buildMPTimerWithTimeInterval:(NSTimeInterval)seconds target:(id)target selector:(SEL)selector repeats:(BOOL)repeats
+{
+    if (!self.fakeTimers) {
+        self.fakeTimers = [NSMutableArray array];
+    }
+    MPTimer *fakeTimer = [FakeMPTimer timerWithTimeInterval:seconds target:target selector:selector repeats:repeats];
+    [self.fakeTimers addObject:fakeTimer];
+    return fakeTimer;
 }
 
 - (MPAdWebViewAgent *)buildMPAdWebViewAgentWithAdWebViewFrame:(CGRect)frame delegate:(id<MPAdWebViewAgentDelegate>)delegate customMethodDelegate:(id)customMethodDelegate

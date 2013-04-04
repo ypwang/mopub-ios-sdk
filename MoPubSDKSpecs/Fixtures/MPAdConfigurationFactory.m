@@ -43,6 +43,14 @@
                                                   data:[HTMLString dataUsingEncoding:NSUTF8StringEncoding]] autorelease];
 }
 
++ (MPAdConfiguration *)defaultBannerConfigurationWithCustomEventClassName:(NSString *)eventClassName
+{
+    return [MPAdConfigurationFactory defaultBannerConfigurationWithHeaders:@{
+                                            kCustomEventClassNameHeaderKey: eventClassName,
+                                                          kAdTypeHeaderKey: @"custom"}
+                                                                HTMLString:nil];
+}
+
 #pragma mark - Interstitials
 
 + (NSMutableDictionary *)defaultInterstitialHeaders

@@ -1,15 +1,40 @@
+#import "FakeBannerCustomEvent.h"
+#import "MPAdView.h"
+#import "MPAdConfigurationFactory.h"
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
 SPEC_BEGIN(CustomEventBannerIntegrationSuiteSpec)
 
 describe(@"CustomEventBannerIntegrationSuite", ^{
-
+    __block FakeBannerCustomEvent *event;
+    __block MPAdView *banner;
+    __block id<CedarDouble, MPAdViewDelegate> delegate;
+    __block FakeMPAdServerCommunicator *communicator;
+    __block MPAdConfiguration *configuration;
+    
+    beforeEach(^{
+        event = [[[FakeBannerCustomEvent alloc] init] autorelease];
+        fakeProvider.fakeBannerCustomEvent = event;
+        
+        delegate = nice_fake_for(@protocol(MPAdViewDelegate));
+        banner = [[[MPAdView alloc] initWithAdUnitId:@"custom_event" size:MOPUB_BANNER_SIZE] autorelease];
+        banner.delegate = delegate;
+    });
+    
     //think about foregrounding?
     //handle rotateToOrientation
     context(@"loading an ad", ^{
+        beforeEach(^{
+            [banner loadAd];
+            
+            communicator = fakeProvider.lastFakeMPAdServerCommunicator;
+            configuration = [MPAdConfigurationFactory defaultBannerConfigurationWithCustomEventClassName:@"FakeBannerCustomEvent"];
+            [communicator receiveConfiguration:configuration];
+        });
+        
         it(@"should tell the custom event to load the ad, with the appropriate size", ^{
-
+            
         });
 
         it(@"should not have a refresh timer scheduled yet", ^{

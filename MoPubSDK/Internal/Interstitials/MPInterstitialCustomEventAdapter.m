@@ -13,25 +13,6 @@
 #import "MPLogging.h"
 #import "MPInstanceProvider.h"
 
-@interface MPInstanceProvider (CustomEventInterstitials)
-
-- (MPInterstitialCustomEvent *)buildInterstitialCustomEventFromCustomClass:(Class)customClass
-                                                                  delegate:(id<MPInterstitialCustomEventDelegate>)delegate;
-
-@end
-
-@implementation MPInstanceProvider (CustomEventInterstitials)
-
-- (MPInterstitialCustomEvent *)buildInterstitialCustomEventFromCustomClass:customClass
-                                                                  delegate:(id<MPInterstitialCustomEventDelegate>)delegate
-{
-    MPInterstitialCustomEvent *customEvent = [[[customClass alloc] init] autorelease];
-    customEvent.delegate = delegate;
-    return customEvent;
-}
-
-@end
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @interface MPInterstitialCustomEventAdapter ()

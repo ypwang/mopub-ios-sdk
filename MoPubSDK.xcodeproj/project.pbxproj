@@ -27,6 +27,8 @@
 		AE093C5B170DF8E000F5334B /* LegacyCustomEventInterstitialIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE093C51170DF8E000F5334B /* LegacyCustomEventInterstitialIntegrationSuite.mm */; };
 		AE093C5C170DF8E000F5334B /* MillennialInterstitialIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE093C52170DF8E000F5334B /* MillennialInterstitialIntegrationSuite.mm */; };
 		AE093C5F170DF92E00F5334B /* CustomEventBannerIntegrationSuiteSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE093C5E170DF92E00F5334B /* CustomEventBannerIntegrationSuiteSpec.mm */; };
+		AE093C62170E31BE00F5334B /* FakeMPTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = AE093C61170E31BE00F5334B /* FakeMPTimer.m */; };
+		AE093C65170E354F00F5334B /* FakeBannerCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = AE093C64170E354F00F5334B /* FakeBannerCustomEvent.m */; };
 		AE10917D1700D37200812E6E /* libChartboost.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE10917C1700D37200812E6E /* libChartboost.a */; };
 		AE10917E1700D37200812E6E /* libChartboost.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE10917C1700D37200812E6E /* libChartboost.a */; };
 		AE10917F1700D38F00812E6E /* ChartboostInterstitialCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = AEC845E716F2371900943383 /* ChartboostInterstitialCustomEvent.m */; };
@@ -394,6 +396,10 @@
 		AE093C51170DF8E000F5334B /* LegacyCustomEventInterstitialIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LegacyCustomEventInterstitialIntegrationSuite.mm; sourceTree = "<group>"; };
 		AE093C52170DF8E000F5334B /* MillennialInterstitialIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MillennialInterstitialIntegrationSuite.mm; sourceTree = "<group>"; };
 		AE093C5E170DF92E00F5334B /* CustomEventBannerIntegrationSuiteSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CustomEventBannerIntegrationSuiteSpec.mm; sourceTree = "<group>"; };
+		AE093C60170E31BE00F5334B /* FakeMPTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeMPTimer.h; sourceTree = "<group>"; };
+		AE093C61170E31BE00F5334B /* FakeMPTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeMPTimer.m; sourceTree = "<group>"; };
+		AE093C63170E354E00F5334B /* FakeBannerCustomEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeBannerCustomEvent.h; sourceTree = "<group>"; };
+		AE093C64170E354F00F5334B /* FakeBannerCustomEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeBannerCustomEvent.m; sourceTree = "<group>"; };
 		AE10917A1700D37200812E6E /* CBAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBAnalytics.h; sourceTree = "<group>"; };
 		AE10917B1700D37200812E6E /* Chartboost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chartboost.h; sourceTree = "<group>"; };
 		AE10917C1700D37200812E6E /* libChartboost.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libChartboost.a; sourceTree = "<group>"; };
@@ -1341,6 +1347,10 @@
 				AE867A7B17021FA8007E9D8C /* FakeMPAdWebView.m */,
 				AE093BC7170CD49600F5334B /* FakeMPReachability.h */,
 				AE093BC8170CD49600F5334B /* FakeMPReachability.m */,
+				AE093C60170E31BE00F5334B /* FakeMPTimer.h */,
+				AE093C61170E31BE00F5334B /* FakeMPTimer.m */,
+				AE093C63170E354E00F5334B /* FakeBannerCustomEvent.h */,
+				AE093C64170E354F00F5334B /* FakeBannerCustomEvent.m */,
 			);
 			path = Fakes;
 			sourceTree = "<group>";
@@ -1771,6 +1781,8 @@
 				AE093C5B170DF8E000F5334B /* LegacyCustomEventInterstitialIntegrationSuite.mm in Sources */,
 				AE093C5C170DF8E000F5334B /* MillennialInterstitialIntegrationSuite.mm in Sources */,
 				AE093C5F170DF92E00F5334B /* CustomEventBannerIntegrationSuiteSpec.mm in Sources */,
+				AE093C62170E31BE00F5334B /* FakeMPTimer.m in Sources */,
+				AE093C65170E354F00F5334B /* FakeBannerCustomEvent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

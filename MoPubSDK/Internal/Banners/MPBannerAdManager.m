@@ -60,9 +60,9 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
     self = [super init];
     if (self) {
         [self registerForApplicationStateTransitionNotifications];
-
+        
         _communicator = [[[MPInstanceProvider sharedProvider] buildMPAdServerCommunicatorWithDelegate:self] retain];
-
+        
         _adapterManager = [[MPBannerAdapterManager alloc] initWithDelegate:self];
     }
     return self;
@@ -71,23 +71,23 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
 - (void)dealloc
 {
     _adView = nil;
-
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-
+    
     [_autorefreshTimer invalidate];
     [_autorefreshTimer release];
-
+    
     [_communicator cancel];
     [_communicator setDelegate:nil];
     [_communicator release];
-
+    
     [_adapterManager setDelegate:nil];
     [_adapterManager release];
-
+    
     [_delegateHelper release];
-
+    
     [_failoverURL release];
-
+    
     [super dealloc];
 }
 
@@ -99,16 +99,16 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
         MPLogWarn(@"Banner view is already loading an ad. Wait for previous load to finish.");
         return;
     }
-
+    
     _loading = YES;
-
+    
     URL = (URL) ? URL : [MPAdServerURLBuilder URLWithAdUnitID:[self adUnitID]
                                                      keywords:[self keywords]
                                                      location:[self location]
                                                       testing:[self isTesting]];
-
+    
     MPLogInfo(@"Banner view (%p) loading ad with MoPub server URL: %@", self.adView, URL);
-
+    
     [_communicator loadURL:URL];
 }
 
@@ -160,38 +160,38 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
         [self communicatorDidFailWithError:nil];
         return;
     }
-
+    
     configuration.adSize = _adView.originalSize;
-
+    
     if (configuration.refreshInterval != -1) {
-        self.autorefreshTimer = [MPTimer timerWithTimeInterval:configuration.refreshInterval
-                                                        target:self
-                                                      selector:@selector(forceRefreshAd)
-                                                       repeats:NO];
+        self.autorefreshTimer = [[MPInstanceProvider sharedProvider] buildMPTimerWithTimeInterval:configuration.refreshInterval
+                                                                                           target:self
+                                                                                         selector:@selector(forceRefreshAd)
+                                                                                          repeats:NO];
     } else {
         [self.autorefreshTimer invalidate];
         self.autorefreshTimer = nil;
     }
-
+    
     self.failoverURL = configuration.failoverURL;
-
+    
     [_adapterManager loadAdapterForConfig:configuration];
 }
 
 - (void)communicatorDidFailWithError:(NSError *)error
 {
     _loading = NO;
-
+    
     if (!self.autorefreshTimer || ![self.autorefreshTimer isValid]) {
         [self scheduleDefaultAutorefreshTimer];
     } else {
         [self scheduleAutorefreshTimerIfEnabled];
     }
-
+    
     if ([[self adViewDelegate] respondsToSelector:@selector(adViewDidFailToLoadAd:)]) {
         [[self adViewDelegate] adViewDidFailToLoadAd:[self adView]];
     }
-
+    
     MPLogError(@"Ad view (%p) failed to get a valid response from MoPub server. Error: %@",
                self.adView, error);
 }
@@ -201,7 +201,7 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
 - (void)registerForApplicationStateTransitionNotifications
 {
     NSNotificationCenter *defaultNotificationCenter = [NSNotificationCenter defaultCenter];
-
+    
     // iOS version > 4.0: Register for relevant application state transition notifications.
     if (&UIApplicationDidEnterBackgroundNotification != nil)
     {
@@ -238,7 +238,7 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
 
 - (void)setAdView:(MPAdView *)adView {
     _adView = adView;
-
+    
     self.delegateHelper = [[[MPBannerDelegateHelper alloc] initWithAdView:adView] autorelease];
     self.ignoresAutorefresh = adView.ignoresAutorefresh;
 }
@@ -272,10 +272,10 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
 - (void)scheduleDefaultAutorefreshTimer
 {
     [self.autorefreshTimer invalidate];
-    self.autorefreshTimer = [MPTimer timerWithTimeInterval:kMoPubRequestRetryInterval
-                                                    target:self
-                                                  selector:@selector(forceRefreshAd)
-                                                   repeats:NO];
+    self.autorefreshTimer = [[MPInstanceProvider sharedProvider] buildMPTimerWithTimeInterval:kMoPubRequestRetryInterval
+                                                                                       target:self
+                                                                                     selector:@selector(forceRefreshAd)
+                                                                                      repeats:NO];
     [self scheduleAutorefreshTimerIfEnabled];
 }
 
@@ -335,14 +335,14 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
 - (void)adapterManager:(MPBannerAdapterManager *)manager didLoadAd:(UIView *)ad
 {
     _loading = NO;
-
+    
     if (_adActionInProgress) {
         self.nextAdContentView = ad;
     } else {
         [self.adView setAdContentView:ad];
         [manager requestedAdDidBecomeVisible];
         [self scheduleAutorefreshTimerIfEnabled];
-
+        
         if ([[self adViewDelegate] respondsToSelector:@selector(adViewDidLoadAd:)]) {
             [[self adViewDelegate] adViewDidLoadAd:[self adView]];
         }
@@ -353,7 +353,7 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
 {
     [self.adView setAdContentView:ad];
     [self scheduleAutorefreshTimerIfEnabled];
-
+    
     if ([[self adViewDelegate] respondsToSelector:@selector(adViewDidLoadAd:)]) {
         [[self adViewDelegate] adViewDidLoadAd:[self adView]];
     }
@@ -362,7 +362,7 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
 - (void)adapterManager:(MPBannerAdapterManager *)manager didFailToLoadAdWithError:(MPError *)error
 {
     _loading = NO;
-
+    
     if ([error code] == MPErrorNoInventory) {
         [self scheduleAutorefreshTimerIfEnabled];
         if ([[self adViewDelegate] respondsToSelector:@selector(adViewDidFailToLoadAd:)]) {
@@ -376,11 +376,11 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
 - (void)adapterManagerUserActionWillBegin:(MPBannerAdapterManager *)manager
 {
     _adActionInProgress = YES;
-
+    
     if ([self.autorefreshTimer isScheduled] && [self.autorefreshTimer isValid]) {
         [self.autorefreshTimer pause];
     }
-
+    
     if ([[self adViewDelegate] respondsToSelector:@selector(willPresentModalViewForAd:)]) {
         [[self adViewDelegate] willPresentModalViewForAd:[self adView]];
     }
@@ -389,7 +389,7 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
 - (void)adapterManagerUserActionDidFinish:(MPBannerAdapterManager *)manager
 {
     _adActionInProgress = NO;
-
+    
     if (self.nextAdContentView) {
         [self.adView setAdContentView:self.nextAdContentView];
         self.nextAdContentView = nil;
@@ -398,7 +398,7 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
     } else if ([self.autorefreshTimer isScheduled] && [self.autorefreshTimer isValid]) {
         [self.autorefreshTimer resume];
     }
-
+    
     if ([[self adViewDelegate] respondsToSelector:@selector(didDismissModalViewForAd:)]) {
         [[self adViewDelegate] didDismissModalViewForAd:[self adView]];
     }
@@ -408,7 +408,7 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
 {
     // XXX:
     _adActionInProgress = NO;
-
+    
     if ([[self adViewDelegate] respondsToSelector:@selector(willLeaveApplicationFromAd:)]) {
         [[self adViewDelegate] willLeaveApplicationFromAd:[self adView]];
     }
@@ -419,7 +419,7 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
 - (void)customEventDidLoadAd
 {
     [_adapterManager customEventDidLoadAd];
-
+    
     _loading = NO;
     [self scheduleAutorefreshTimerIfEnabled];
 }
@@ -427,7 +427,7 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
 - (void)customEventDidFailToLoadAd
 {
     [_adapterManager customEventDidFailToLoadAd];
-
+    
     _loading = NO;
     [self loadAdWithURL:self.failoverURL];
 }

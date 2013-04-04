@@ -21,6 +21,7 @@
 #import "GADRequest.h"
 #import "FakeMMBannerAdView.h"
 #import "FakeMPReachability.h"
+#import "FakeMPTimer.h"
 
 @interface FakeMPInstanceProvider : MPInstanceProvider
 
@@ -49,5 +50,6 @@
 
 @property (nonatomic, assign) FakeMPAdServerCommunicator *lastFakeMPAdServerCommunicator;
 @property (nonatomic, assign) FakeMPAnalyticsTracker *lastFakeMPAnalyticsTracker;
+@property (nonatomic, assign) NSMutableArray *fakeTimers;
 
 @end
