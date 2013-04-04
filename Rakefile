@@ -62,7 +62,7 @@ def system_or_exit(cmd, env_overrides = {}, stdout = nil)
 end
 
 def run_in_simulator(options)
-  `osascript -e 'tell application "iPhone Simulator" to quit'`
+  `osascript ./Scripts/reset_simulator.as`
 
   app_name = "#{options[:target]}.app"
   app_location = "#{File.join(build_dir("-iphonesimulator"), app_name)}"
@@ -221,6 +221,10 @@ namespace :mopubsample do
       kif_log_file = run_in_simulator(project: "MoPubSampleApp", target: "SampleAppKIF", environment:environment, success_condition: "TESTING FINISHED: 0 failures")
     end
 
+    head "Verifying Conversion Tracking"
+    verify_presence_of_url("Conversion Tracking", File.readlines("#{SCRIPTS_DIR}/proxy.log"), /http:\/\/ads.mopub.com\/m\/open\?v=\d&udid=[A-Za-z0-9_\-\:]+&id=112358&av=1\.0/)
+    verify_presence_of_url("Foreground Tracking", File.readlines("#{SCRIPTS_DIR}/proxy.log"), /http:\/\/ads.mopub.com\/m\/open\?v=\d&udid=[A-Za-z0-9_\-\:]+&id=com\.mopub\.SampleAppKIF&av=1\.0/)
+
     head "Verifying KIF Impressions"
     verify_impressions(File.readlines("#{SCRIPTS_DIR}/proxy.log"), File.readlines(kif_log_file))
 
@@ -260,6 +264,16 @@ def verify_match(kif_ad_ids, proxy_ad_ids, kind)
     end
 
     exit(1)
+  end
+end
+
+def verify_presence_of_url(kind, proxy_lines, regex)
+  matches = ids_matching_matcher(proxy_lines, regex)
+  if matches.count == 0
+    puts "******** KIF TEST #{kind} FAILED (expected #{regex}) ********"
+    exit(1)
+  else
+    puts "******** #{kind} SUCCEEDED ********"
   end
 end
 

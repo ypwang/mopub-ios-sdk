@@ -11,7 +11,7 @@
 
 @interface MPAnalyticsTracker : NSObject
 
-+ (MPAnalyticsTracker *)trackerWithUserAgentString:(NSString *)userAgentString;
++ (MPAnalyticsTracker *)tracker;
 
 - (void)trackImpressionForConfiguration:(MPAdConfiguration *)configuration;
 - (void)trackClickForConfiguration:(MPAdConfiguration *)configuration;

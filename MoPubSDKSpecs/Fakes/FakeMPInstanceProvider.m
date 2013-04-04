@@ -33,6 +33,7 @@
 
 @implementation FakeMPInstanceProvider
 
+
 - (id)returnFake:(id)fake orCall:(IDReturningBlock)block
 {
     if (fake) {
@@ -40,6 +41,11 @@
     } else {
         return block();
     }
+}
+
+- (NSString *)userAgent
+{
+    return @"FAKE_TEST_USER_AGENT_STRING";
 }
 
 - (MPReachability *)sharedMPReachability

@@ -72,6 +72,7 @@
 
         identifier = [NSString stringWithFormat:@"mopub:%@", [uuidStr uppercaseString]];
         [[NSUserDefaults standardUserDefaults] setObject:identifier forKey:MOPUB_IDENTIFIER_DEFAULTS_KEY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
     return identifier;
 }

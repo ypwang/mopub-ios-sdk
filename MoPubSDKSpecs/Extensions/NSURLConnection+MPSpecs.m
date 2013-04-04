@@ -22,4 +22,12 @@
     [self receiveResponse:response];
 }
 
+- (void)receiveResponseWithStatusCode:(int)code body:(NSString *)body
+{
+    PSHKFakeHTTPURLResponse *response = [[[PSHKFakeHTTPURLResponse alloc] initWithStatusCode:code
+                                                                                  andHeaders:nil
+                                                                                     andBody:body] autorelease];
+    [self receiveResponse:response];
+}
+
 @end

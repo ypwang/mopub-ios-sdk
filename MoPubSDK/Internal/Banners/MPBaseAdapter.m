@@ -10,6 +10,7 @@
 
 #import "MPAdConfiguration.h"
 #import "MPLogging.h"
+#import "MPInstanceProvider.h"
 
 @interface MPBaseAdapter ()
 
@@ -31,9 +32,8 @@
     if (self = [super init]) {
         _delegate = delegate;
 
-        _metricsURLRequest = [[NSMutableURLRequest alloc] init];
+        _metricsURLRequest = [[[MPInstanceProvider sharedProvider] buildConfiguredURLRequestWithURL:nil] retain];
         [_metricsURLRequest setCachePolicy:NSURLRequestReloadIgnoringCacheData];
-        [_metricsURLRequest setValue:MPUserAgentString() forHTTPHeaderField:@"User-Agent"];
     }
     return self;
 }

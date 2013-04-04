@@ -36,6 +36,8 @@
 - (MPAnalyticsTracker *)buildMPAnalyticsTracker;
 - (MPReachability *)sharedMPReachability;
 
+- (NSMutableURLRequest *)buildConfiguredURLRequestWithURL:(NSURL *)URL;
+
 - (MPAdWebViewAgent *)buildMPAdWebViewAgentWithAdWebViewFrame:(CGRect)frame
                                                      delegate:(id<MPAdWebViewAgentDelegate>)delegate
                                          customMethodDelegate:(id)customMethodDelegate;

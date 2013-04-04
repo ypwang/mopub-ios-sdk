@@ -22,7 +22,6 @@ CGFloat MPStatusBarHeight(void);
 CGRect MPApplicationFrame(void);
 CGRect MPScreenBounds(void);
 CGFloat MPDeviceScaleFactor(void);
-NSString *MPUserAgentString(void);
 NSDictionary *MPDictionaryFromQueryString(NSString *query);
 BOOL MPViewIsVisible(UIView *view);
 

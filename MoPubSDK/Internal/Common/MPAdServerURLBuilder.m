@@ -42,8 +42,9 @@ NSString * const kMoPubInterfaceOrientationLandscape = @"l";
                   location:(CLLocation *)location
                    testing:(BOOL)testing
 {
-    NSString *URLString = [NSString stringWithFormat:@"http://%@/m/ad?v=8&udid=%@&id=%@&nv=%@",
+    NSString *URLString = [NSString stringWithFormat:@"http://%@/m/ad?v=%@&udid=%@&id=%@&nv=%@",
                            testing ? HOSTNAME_FOR_TESTING : HOSTNAME,
+                           MP_SERVER_VERSION,
                            [MPIdentityProvider identifier],
                            [adUnitID stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
                            MP_SDK_VERSION];

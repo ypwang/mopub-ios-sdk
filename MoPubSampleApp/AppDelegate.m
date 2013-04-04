@@ -9,6 +9,7 @@
 #import "MPAdTableViewController.h"
 #import "MPAdSection.h"
 #import "MPIdentityProvider.h"
+#import "MPAdConversionTracker.h"
 
 #if RUN_KIF_TESTS
 #import "MPKIFTestController.h"
@@ -25,6 +26,8 @@
     self.window.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[MPAdTableViewController alloc] initWithAdSections:[MPAdSection adSections]]];
     [self.window makeKeyAndVisible];
+
+    [[MPAdConversionTracker sharedConversionTracker] reportApplicationOpenForApplicationID:@"112358"];
 
 #if RUN_KIF_TESTS
     [[MPKIFTestController sharedInstance] startTestingWithCompletionBlock:^{

@@ -12,7 +12,7 @@ describe(@"MPAnalyticsTracker", ^{
 
     beforeEach(^{
         configuration = [MPAdConfigurationFactory defaultBannerConfiguration];
-        analyticsTracker = [MPAnalyticsTracker trackerWithUserAgentString:@"James Bond"];
+        analyticsTracker = [MPAnalyticsTracker tracker];
     });
 
     context(@"when told to track an impression", ^{
@@ -29,7 +29,7 @@ describe(@"MPAnalyticsTracker", ^{
 
         it(@"should configure the request and connection correctly", ^{
             connection.request.cachePolicy should equal(NSURLRequestReloadIgnoringCacheData);
-            [connection.request valueForHTTPHeaderField:@"User-Agent"] should equal(@"James Bond");
+            [connection.request valueForHTTPHeaderField:@"User-Agent"] should equal(@"FAKE_TEST_USER_AGENT_STRING");
             connection.delegate should be_nil;
         });
     });
@@ -48,7 +48,7 @@ describe(@"MPAnalyticsTracker", ^{
 
         it(@"should configure the request and connection correctly", ^{
             connection.request.cachePolicy should equal(NSURLRequestReloadIgnoringCacheData);
-            [connection.request valueForHTTPHeaderField:@"User-Agent"] should equal(@"James Bond");
+            [connection.request valueForHTTPHeaderField:@"User-Agent"] should equal(@"FAKE_TEST_USER_AGENT_STRING");
             connection.delegate should be_nil;
         });
     });

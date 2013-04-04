@@ -7,23 +7,19 @@
 
 #import "MPAnalyticsTracker.h"
 #import "MPAdConfiguration.h"
+#import "MPInstanceProvider.h"
 
 @interface MPAnalyticsTracker ()
 
-@property (nonatomic, retain) NSString *userAgentString;
 - (NSURLRequest *)requestForURL:(NSURL *)URL;
 
 @end
 
 @implementation MPAnalyticsTracker
 
-@synthesize userAgentString = _userAgentString;
-
-+ (MPAnalyticsTracker *)trackerWithUserAgentString:(NSString *)userAgentString
++ (MPAnalyticsTracker *)tracker
 {
-    MPAnalyticsTracker *tracker = [[[MPAnalyticsTracker alloc] init] autorelease];
-    tracker.userAgentString = userAgentString;
-    return tracker;
+    return [[[MPAnalyticsTracker alloc] init] autorelease];
 }
 
 - (void)trackImpressionForConfiguration:(MPAdConfiguration *)configuration
@@ -40,9 +36,8 @@
 
 - (NSURLRequest *)requestForURL:(NSURL *)URL
 {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
+    NSMutableURLRequest *request = [[MPInstanceProvider sharedProvider] buildConfiguredURLRequestWithURL:URL];
     request.cachePolicy = NSURLRequestReloadIgnoringCacheData;
-    [request setValue:self.userAgentString forHTTPHeaderField:@"User-Agent"];
     return request;
 }
 

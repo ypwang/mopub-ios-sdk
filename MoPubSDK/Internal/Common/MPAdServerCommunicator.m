@@ -9,9 +9,9 @@
 
 #import "MPAdConfiguration.h"
 #import "MPLogging.h"
+#import "MPInstanceProvider.h"
 
 const NSTimeInterval kRequestTimeoutInterval = 10.0;
-NSString * const kHTTPHeaderFieldUserAgent = @"User-Agent";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -92,7 +92,7 @@ NSString * const kHTTPHeaderFieldUserAgent = @"User-Agent";
             return;
         }
     }
-    
+
     self.responseData = [NSMutableData data];
     self.responseHeaders = [(NSHTTPURLResponse *)response allHeaderFields];
 }
@@ -132,9 +132,9 @@ NSString * const kHTTPHeaderFieldUserAgent = @"User-Agent";
 
 - (NSURLRequest *)adRequestForURL:(NSURL *)URL
 {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL
-        cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:kRequestTimeoutInterval];
-    [request setValue:MPUserAgentString() forHTTPHeaderField:kHTTPHeaderFieldUserAgent];
+    NSMutableURLRequest *request = [[MPInstanceProvider sharedProvider] buildConfiguredURLRequestWithURL:URL];
+    [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
+    [request setTimeoutInterval:kRequestTimeoutInterval];
     return request;
 }
 

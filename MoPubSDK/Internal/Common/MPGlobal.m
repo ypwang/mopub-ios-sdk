@@ -69,19 +69,6 @@ CGFloat MPDeviceScaleFactor()
     else return 1.0;
 }
 
-NSString *MPUserAgentString()
-{
-    static NSString *userAgent = nil;
-
-    if (!userAgent) {
-        UIWebView *webview = [[UIWebView alloc] init];
-        userAgent = [[webview stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"] copy];
-        [webview release];
-    }
-
-    return userAgent;
-}
-
 NSDictionary *MPDictionaryFromQueryString(NSString *query) {
     NSMutableDictionary *queryDict = [NSMutableDictionary dictionary];
     NSArray *queryElements = [query componentsSeparatedByString:@"&"];

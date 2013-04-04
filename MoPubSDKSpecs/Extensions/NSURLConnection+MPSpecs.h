@@ -11,5 +11,6 @@
 
 + (NSURLConnection *)lastConnection;
 - (void)receiveSuccessfulResponse:(NSString *)body;
+- (void)receiveResponseWithStatusCode:(int)code body:(NSString *)body;
 
 @end

@@ -24,12 +24,14 @@
 @interface MPInstanceProvider ()
 
 @property (nonatomic, retain) MPReachability *sharedReachability;
+@property (nonatomic, copy) NSString *userAgent;
 
 @end
 
 @implementation MPInstanceProvider
 
 @synthesize sharedReachability = _sharedReachability;
+@synthesize userAgent = _userAgent;
 
 static MPInstanceProvider *sharedProvider = nil;
 
@@ -49,7 +51,7 @@ static MPInstanceProvider *sharedProvider = nil;
 
 - (MPAnalyticsTracker *)buildMPAnalyticsTracker
 {
-    return [MPAnalyticsTracker trackerWithUserAgentString:MPUserAgentString()];
+    return [MPAnalyticsTracker tracker];
 }
 
 - (MPReachability *)sharedMPReachability
@@ -58,6 +60,22 @@ static MPInstanceProvider *sharedProvider = nil;
         self.sharedReachability = [MPReachability reachabilityForLocalWiFi];
     }
     return self.sharedReachability;
+}
+
+- (NSString *)userAgent
+{
+    if (!_userAgent) {
+        self.userAgent = [[[[UIWebView alloc] init] autorelease] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+    }
+
+    return _userAgent;
+}
+
+- (NSMutableURLRequest *)buildConfiguredURLRequestWithURL:(NSURL *)URL
+{
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
+    [request setValue:self.userAgent forHTTPHeaderField:@"User-Agent"];
+    return request;
 }
 
 - (MPAdWebViewAgent *)buildMPAdWebViewAgentWithAdWebViewFrame:(CGRect)frame delegate:(id<MPAdWebViewAgentDelegate>)delegate customMethodDelegate:(id)customMethodDelegate
