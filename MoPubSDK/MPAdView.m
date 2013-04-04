@@ -39,7 +39,6 @@ static NSString * const kNewContentViewKey = @"NewContentView";
 @synthesize keywords;
 @synthesize delegate = _delegate;
 @synthesize adContentView = _adContentView;
-@synthesize creativeSize = _creativeSize;
 @synthesize originalSize = _originalSize;
 @synthesize scrollable = _scrollable;
 @synthesize animationType = _animationType;
@@ -249,13 +248,6 @@ static NSString * const kNewContentViewKey = @"NewContentView";
     [_adManager loadAdWithURL:URL];
 }
 
-- (void)adViewDidAppear
-{
-    if ([_adContentView isKindOfClass:[UIWebView class]]) {
-        [(UIWebView *)_adContentView stringByEvaluatingJavaScriptFromString:@"webviewDidAppear();"];
-    }
-}
-
 - (void)lockNativeAdsToOrientation:(MPNativeAdOrientation)orientation
 {
     _allowedNativeAdOrientation = orientation;
@@ -269,15 +261,6 @@ static NSString * const kNewContentViewKey = @"NewContentView";
 - (MPNativeAdOrientation)allowedNativeAdsOrientation
 {
     return _allowedNativeAdOrientation;
-}
-
-- (void)backFillWithNothing
-{
-    [self setAdContentView:nil];
-
-    // Notify delegate that the ad has failed to load.
-    if ([self.delegate respondsToSelector:@selector(adViewDidFailToLoadAd:)])
-        [self.delegate adViewDidFailToLoadAd:self];
 }
 
 # pragma mark - Deprecated Custom Events Mechanism

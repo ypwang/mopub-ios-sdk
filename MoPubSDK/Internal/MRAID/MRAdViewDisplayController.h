@@ -9,29 +9,28 @@
 #import <Foundation/Foundation.h>
 #import "MRAdView.h"
 
-@class MRAdView, MPTimer, MPTimerTarget, MRDimmingView;
+@class MRAdView, MPTimer, MRDimmingView;
 
 @interface MRAdViewDisplayController : NSObject <MRAdViewDelegate> {
     MRAdView *_view;
     MRAdView *_expansionContentView;
     MRAdView *_twoPartExpansionView;
-    
+
     // Timer to periodically update the value of _isViewable.
     MPTimer *_viewabilityTimer;
-    MPTimerTarget *_viewabilityTimerTarget;
-    
+
     MRDimmingView *_dimmingView;
-    
+
     BOOL _allowsExpansion;
     MRAdViewCloseButtonStyle _closeButtonStyle;
     MRAdViewState _currentState;
-    
+
     // Indicates whether any part of the ad is visible on-screen.
     BOOL _isViewable;
-    
+
     // Variables for resizable ads.
     CGSize _maxSize;
-    
+
     // Variables for expandable ads.
     CGRect _defaultFrame;
     CGRect _defaultFrameInKeyWindow;
@@ -51,8 +50,8 @@
 - (void)rotateToOrientation:(UIInterfaceOrientation)newOrientation;
 - (void)revertViewToDefaultState;
 - (void)close;
-- (void)expandToFrame:(CGRect)frame withURL:(NSURL *)url 
-       useCustomClose:(BOOL)shouldUseCustomClose isModal:(BOOL)isModal 
+- (void)expandToFrame:(CGRect)frame withURL:(NSURL *)url
+       useCustomClose:(BOOL)shouldUseCustomClose isModal:(BOOL)isModal
 shouldLockOrientation:(BOOL)shouldLockOrientation;
 - (void)expandToFrame:(CGRect)frame withURL:(NSURL *)url blockingColor:(UIColor *)blockingColor
       blockingOpacity:(CGFloat)blockingOpacity shouldLockOrientation:(BOOL)shouldLockOrientation;

@@ -79,18 +79,11 @@ static NSString *const kMovieWillExitNotification42 =
         _defaultFrame = _view.frame;
         _maxSize = _view.frame.size;
 
-        _viewabilityTimerTarget = [[MPTimerTarget alloc]
-                                   initWithNotificationName:kViewabilityTimerNotificationName];
-        _viewabilityTimer = [[MPTimer scheduledTimerWithTimeInterval:kViewabilityTimerInterval
-                                                              target:_viewabilityTimerTarget
-                                                            selector:@selector(postNotification)
-                                                            userInfo:nil
-                                                             repeats:YES] retain];
-
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(checkViewability)
-                                                     name:kViewabilityTimerNotificationName
-                                                   object:_viewabilityTimerTarget];
+        _viewabilityTimer = [[MPTimer timerWithTimeInterval:kViewabilityTimerInterval
+                                                     target:self
+                                                   selector:@selector(checkViewability)
+                                                    repeats:YES] retain];
+        [_viewabilityTimer scheduleNow];
 
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(moviePlayerWillEnterFullscreen:)
@@ -123,7 +116,6 @@ static NSString *const kMovieWillExitNotification42 =
     [_twoPartExpansionView release];
     [_viewabilityTimer invalidate];
     [_viewabilityTimer release];
-    [_viewabilityTimerTarget release];
     [_dimmingView release];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];

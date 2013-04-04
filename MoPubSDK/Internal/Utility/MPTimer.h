@@ -8,24 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-/* 
- * MPTimer is a simple wrapper class for NSTimer, adding pause/resume functionality.
- * It does not inherit NSTimer's entire interface -- just a few convenience methods for
- * creation and the -invalidate method.
+/*
+ * MPTimer wraps an NSTimer and adds pause/resume functionality.
  */
-@interface MPTimer : NSObject 
-{
-	NSTimer *_timer;
-	BOOL _isPaused;
-    NSTimeInterval _timeInterval;
-	NSTimeInterval _secondsLeft;
-	NSDate *_pauseDate;
-}
+@interface MPTimer : NSObject
 
-+ (MPTimer *)scheduledTimerWithTimeInterval:(NSTimeInterval)seconds target:(id)target 
-						  selector:(SEL)aSelector userInfo:(id)userInfo repeats:(BOOL)repeats;
-+ (MPTimer *)timerWithTimeInterval:(NSTimeInterval)seconds target:(id)target 
-						  selector:(SEL)aSelector userInfo:(id)userInfo repeats:(BOOL)repeats;
++ (MPTimer *)timerWithTimeInterval:(NSTimeInterval)seconds
+                            target:(id)target
+                          selector:(SEL)aSelector
+                           repeats:(BOOL)repeats;
 
 - (BOOL)isValid;
 - (void)invalidate;
@@ -34,25 +25,5 @@
 - (BOOL)pause;
 - (BOOL)resume;
 - (NSTimeInterval)initialTimeInterval;
-
-@end
-
-/*
- * MPTimerTarget helps to avoid a common retain-cycle issue with NSTimer (and thus MPTimer). 
- * Specifically, MPAdView uses an MPTimer in order to pause/resume/invalidate appropriately. 
- * When MPAdView passes itself as the "target" to MPTimer's convenience method, the timer implicitly
- * retains the ad view, causing a cycle. Note that the problem still exists if MPAdView does not
- * retain MPTimer, since the run loop retains the timer as well.
- *
- * To avoid this, we pass an MPTimerTarget object as the "target" to MPTimer. When the timer fires,
- * MPTimerTarget posts a notification which MPAdView can observe. MPAdView retains both the timer 
- * and the target, but the timer no longer implicitly retains the ad view.
- */
-@interface MPTimerTarget : NSObject
-{
-	NSString *_notificationName;
-}
-
-- (id)initWithNotificationName:(NSString *)name;
 
 @end

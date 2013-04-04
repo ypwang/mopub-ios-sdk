@@ -16,16 +16,23 @@
 		AE093C02170CE69F00F5334B /* MPSessionTrackerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE093C01170CE69F00F5334B /* MPSessionTrackerSpec.mm */; };
 		AE093C17170CF89400F5334B /* MPAdConversionTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C7516EF9DBC0046D464 /* MPAdConversionTracker.m */; };
 		AE093C20170CF9D900F5334B /* MPAdConversionTrackerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE093C1F170CF9D900F5334B /* MPAdConversionTrackerSpec.mm */; };
-		AE1091741700B82400812E6E /* CustomEventInterstitialIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE1091731700B82400812E6E /* CustomEventInterstitialIntegrationSuite.mm */; };
-		AE1091761700C63800812E6E /* LegacyCustomEventInterstitialIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE1091751700C63800812E6E /* LegacyCustomEventInterstitialIntegrationSuite.mm */; };
-		AE1091781700D01E00812E6E /* ChartboostInterstitialIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE1091771700D01E00812E6E /* ChartboostInterstitialIntegrationSuite.mm */; };
+		AE093C53170DF8E000F5334B /* AdMobInterstitialIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE093C48170DF8E000F5334B /* AdMobInterstitialIntegrationSuite.mm */; };
+		AE093C54170DF8E000F5334B /* ChartboostInterstitialIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE093C49170DF8E000F5334B /* ChartboostInterstitialIntegrationSuite.mm */; };
+		AE093C55170DF8E000F5334B /* CustomEventInterstitialIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE093C4A170DF8E000F5334B /* CustomEventInterstitialIntegrationSuite.mm */; };
+		AE093C56170DF8E000F5334B /* GreystripeInterstitialIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE093C4B170DF8E000F5334B /* GreystripeInterstitialIntegrationSuite.mm */; };
+		AE093C57170DF8E000F5334B /* HTMLInterstitialIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE093C4C170DF8E000F5334B /* HTMLInterstitialIntegrationSuite.mm */; };
+		AE093C58170DF8E000F5334B /* iADIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE093C4D170DF8E000F5334B /* iADIntegrationSuite.mm */; };
+		AE093C59170DF8E000F5334B /* InMobiInterstitialIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE093C4E170DF8E000F5334B /* InMobiInterstitialIntegrationSuite.mm */; };
+		AE093C5A170DF8E000F5334B /* InterstitialIntegrationSharedBehaviors.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE093C50170DF8E000F5334B /* InterstitialIntegrationSharedBehaviors.mm */; };
+		AE093C5B170DF8E000F5334B /* LegacyCustomEventInterstitialIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE093C51170DF8E000F5334B /* LegacyCustomEventInterstitialIntegrationSuite.mm */; };
+		AE093C5C170DF8E000F5334B /* MillennialInterstitialIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE093C52170DF8E000F5334B /* MillennialInterstitialIntegrationSuite.mm */; };
+		AE093C5F170DF92E00F5334B /* CustomEventBannerIntegrationSuiteSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE093C5E170DF92E00F5334B /* CustomEventBannerIntegrationSuiteSpec.mm */; };
 		AE10917D1700D37200812E6E /* libChartboost.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE10917C1700D37200812E6E /* libChartboost.a */; };
 		AE10917E1700D37200812E6E /* libChartboost.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE10917C1700D37200812E6E /* libChartboost.a */; };
 		AE10917F1700D38F00812E6E /* ChartboostInterstitialCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = AEC845E716F2371900943383 /* ChartboostInterstitialCustomEvent.m */; };
 		AE109182170100B400812E6E /* ChartboostInterstitialCustomEventSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE109181170100B400812E6E /* ChartboostInterstitialCustomEventSpec.mm */; };
 		AE1091991701053300812E6E /* ChartboostInterstitialCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = AEC845E716F2371900943383 /* ChartboostInterstitialCustomEvent.m */; };
 		AE1091AA17010D6F00812E6E /* FakeChartboost.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1091A917010D6F00812E6E /* FakeChartboost.m */; };
-		AE1091BF170115B400812E6E /* GreystripeInterstitialIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE1091BE170115B400812E6E /* GreystripeInterstitialIntegrationSuite.mm */; };
 		AE1091DB1701181F00812E6E /* libGreystripeSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE1091D01701181F00812E6E /* libGreystripeSDK.a */; };
 		AE1091DC1701181F00812E6E /* libInMobiAdNetwork-3.6.5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE1091D91701181F00812E6E /* libInMobiAdNetwork-3.6.5.a */; };
 		AE1091DD1701181F00812E6E /* libInMobiCommons-3.6.5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE1091DA1701181F00812E6E /* libInMobiCommons-3.6.5.a */; };
@@ -140,14 +147,12 @@
 		AE60D8BF16F3E8D900A4B67F /* MPTimerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D8BE16F3E8D900A4B67F /* MPTimerSpec.mm */; };
 		AE60D8C116F3E8F200A4B67F /* MRPropertySpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D8C016F3E8F200A4B67F /* MRPropertySpec.mm */; };
 		AE60D8C316F3E8FE00A4B67F /* MRCommandSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D8C216F3E8FE00A4B67F /* MRCommandSpec.mm */; };
-		AE867A5117021047007E9D8C /* InMobiInterstitialIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE867A5017021047007E9D8C /* InMobiInterstitialIntegrationSuite.mm */; };
 		AE867A5B17021075007E9D8C /* FakeIMAdInterstitial.m in Sources */ = {isa = PBXBuildFile; fileRef = AE867A5A17021075007E9D8C /* FakeIMAdInterstitial.m */; };
 		AE867A5C1702143B007E9D8C /* InMobiInterstitialCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = AEC845EF16F2371900943383 /* InMobiInterstitialCustomEvent.m */; };
 		AE867A5D1702143D007E9D8C /* InMobiInterstitialCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = AEC845EF16F2371900943383 /* InMobiInterstitialCustomEvent.m */; };
 		AE867A5E1702144A007E9D8C /* libInMobiAdNetwork-3.6.5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE1091D91701181F00812E6E /* libInMobiAdNetwork-3.6.5.a */; };
 		AE867A5F1702144A007E9D8C /* libInMobiCommons-3.6.5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE1091DA1701181F00812E6E /* libInMobiCommons-3.6.5.a */; };
 		AE867A7C17021FA8007E9D8C /* FakeMPAdWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE867A7B17021FA8007E9D8C /* FakeMPAdWebView.m */; };
-		AE867A8517022279007E9D8C /* HTMLInterstitialIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE867A8417022279007E9D8C /* HTMLInterstitialIntegrationSuite.mm */; };
 		AE867AB317025229007E9D8C /* MPInterstitialAdControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE867AB217025229007E9D8C /* MPInterstitialAdControllerSpec.mm */; };
 		AEA97BE016EF9C030046D464 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97BDF16EF9C030046D464 /* UIKit.framework */; };
 		AEA97BE116EF9C030046D464 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF1F32B16EF9AD700273462 /* Foundation.framework */; };
@@ -218,8 +223,6 @@
 		AEC9E56B16EFABD7007CA2BA /* MPURLResolverSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEC9E56A16EFABD7007CA2BA /* MPURLResolverSpec.mm */; };
 		AEC9E56F16EFACBB007CA2BA /* FakeMPURLResolverDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AEC9E56E16EFACBB007CA2BA /* FakeMPURLResolverDelegate.m */; };
 		AEC9E5A616EFB48F007CA2BA /* MPSpecHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEC9E5A516EFB48F007CA2BA /* MPSpecHelper.mm */; };
-		AED1B2A216FCCCC9000F5C39 /* MillennialInterstitialIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AED1B2A116FCCCC9000F5C39 /* MillennialInterstitialIntegrationSuite.mm */; };
-		AED1B2D916FD0E6F000F5C39 /* AdMobInterstitialIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AED1B2D816FD0E6F000F5C39 /* AdMobInterstitialIntegrationSuite.mm */; };
 		AED1B2E316FD120D000F5C39 /* FakeGADInterstitial.m in Sources */ = {isa = PBXBuildFile; fileRef = AED1B2E216FD120D000F5C39 /* FakeGADInterstitial.m */; };
 		AED9E4B016F78FC600EA71A7 /* libFoundation+PivotalCore-StaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE341F2E16EFC7790074C859 /* libFoundation+PivotalCore-StaticLib.a */; };
 		AED9E4B216F78FCB00EA71A7 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AED9E4B116F78FCB00EA71A7 /* libxml2.2.dylib */; };
@@ -256,10 +259,8 @@
 		AEE8E95616FBBBD900C41D15 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE4341A316F93E7C00B73710 /* MediaPlayer.framework */; };
 		AEE8E95716FBBBF200C41D15 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE4341A816F93E8F00B73710 /* AVFoundation.framework */; };
 		AEE8E95816FBBBF900C41D15 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE4341A116F93E7600B73710 /* QuartzCore.framework */; };
-		AEE8E95B16FBC33900C41D15 /* iADIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEE8E95A16FBC33900C41D15 /* iADIntegrationSuite.mm */; };
 		AEE8E95C16FBC73300C41D15 /* MPInterstitialAdController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C7D16EF9DBC0046D464 /* MPInterstitialAdController.m */; };
 		AEE8E95F16FCBD1800C41D15 /* FakeAdInterstitialAd.m in Sources */ = {isa = PBXBuildFile; fileRef = AEE8E95E16FCBD1700C41D15 /* FakeAdInterstitialAd.m */; };
-		AEE8E96216FCBE1D00C41D15 /* InterstitialIntegrationSharedBehaviors.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEE8E96116FCBE1D00C41D15 /* InterstitialIntegrationSharedBehaviors.mm */; };
 		AEEA5E8716FA2225003D48F4 /* MPInterstitialAdManagerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEEA5E8616FA2225003D48F4 /* MPInterstitialAdManagerSpec.mm */; };
 		AEEA5E8816FA223C003D48F4 /* MPInterstitialAdManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C2B16EF9DB00046D464 /* MPInterstitialAdManager.m */; };
 		AEEA5E8D16FA2272003D48F4 /* MPAdServerCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C1316EF9DB00046D464 /* MPAdServerCommunicator.m */; };
@@ -381,16 +382,24 @@
 		AE093BF7170CE67200F5334B /* MPSessionTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSessionTracker.m; sourceTree = "<group>"; };
 		AE093C01170CE69F00F5334B /* MPSessionTrackerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPSessionTrackerSpec.mm; sourceTree = "<group>"; };
 		AE093C1F170CF9D900F5334B /* MPAdConversionTrackerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPAdConversionTrackerSpec.mm; sourceTree = "<group>"; };
-		AE1091731700B82400812E6E /* CustomEventInterstitialIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CustomEventInterstitialIntegrationSuite.mm; sourceTree = "<group>"; };
-		AE1091751700C63800812E6E /* LegacyCustomEventInterstitialIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LegacyCustomEventInterstitialIntegrationSuite.mm; sourceTree = "<group>"; };
-		AE1091771700D01E00812E6E /* ChartboostInterstitialIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ChartboostInterstitialIntegrationSuite.mm; sourceTree = "<group>"; };
+		AE093C48170DF8E000F5334B /* AdMobInterstitialIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AdMobInterstitialIntegrationSuite.mm; sourceTree = "<group>"; };
+		AE093C49170DF8E000F5334B /* ChartboostInterstitialIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ChartboostInterstitialIntegrationSuite.mm; sourceTree = "<group>"; };
+		AE093C4A170DF8E000F5334B /* CustomEventInterstitialIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CustomEventInterstitialIntegrationSuite.mm; sourceTree = "<group>"; };
+		AE093C4B170DF8E000F5334B /* GreystripeInterstitialIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GreystripeInterstitialIntegrationSuite.mm; sourceTree = "<group>"; };
+		AE093C4C170DF8E000F5334B /* HTMLInterstitialIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HTMLInterstitialIntegrationSuite.mm; sourceTree = "<group>"; };
+		AE093C4D170DF8E000F5334B /* iADIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iADIntegrationSuite.mm; sourceTree = "<group>"; };
+		AE093C4E170DF8E000F5334B /* InMobiInterstitialIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InMobiInterstitialIntegrationSuite.mm; sourceTree = "<group>"; };
+		AE093C4F170DF8E000F5334B /* InterstitialIntegrationSharedBehaviors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterstitialIntegrationSharedBehaviors.h; sourceTree = "<group>"; };
+		AE093C50170DF8E000F5334B /* InterstitialIntegrationSharedBehaviors.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InterstitialIntegrationSharedBehaviors.mm; sourceTree = "<group>"; };
+		AE093C51170DF8E000F5334B /* LegacyCustomEventInterstitialIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LegacyCustomEventInterstitialIntegrationSuite.mm; sourceTree = "<group>"; };
+		AE093C52170DF8E000F5334B /* MillennialInterstitialIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MillennialInterstitialIntegrationSuite.mm; sourceTree = "<group>"; };
+		AE093C5E170DF92E00F5334B /* CustomEventBannerIntegrationSuiteSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CustomEventBannerIntegrationSuiteSpec.mm; sourceTree = "<group>"; };
 		AE10917A1700D37200812E6E /* CBAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBAnalytics.h; sourceTree = "<group>"; };
 		AE10917B1700D37200812E6E /* Chartboost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chartboost.h; sourceTree = "<group>"; };
 		AE10917C1700D37200812E6E /* libChartboost.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libChartboost.a; sourceTree = "<group>"; };
 		AE109181170100B400812E6E /* ChartboostInterstitialCustomEventSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ChartboostInterstitialCustomEventSpec.mm; sourceTree = "<group>"; };
 		AE1091A817010D6F00812E6E /* FakeChartboost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeChartboost.h; sourceTree = "<group>"; };
 		AE1091A917010D6F00812E6E /* FakeChartboost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeChartboost.m; sourceTree = "<group>"; };
-		AE1091BE170115B400812E6E /* GreystripeInterstitialIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GreystripeInterstitialIntegrationSuite.mm; sourceTree = "<group>"; };
 		AE1091C81701181F00812E6E /* GSAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSAd.h; sourceTree = "<group>"; };
 		AE1091C91701181F00812E6E /* GSAdDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSAdDelegate.h; sourceTree = "<group>"; };
 		AE1091CA1701181F00812E6E /* GSBannerAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSBannerAdView.h; sourceTree = "<group>"; };
@@ -486,12 +495,10 @@
 		AE60D8BE16F3E8D900A4B67F /* MPTimerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPTimerSpec.mm; sourceTree = "<group>"; };
 		AE60D8C016F3E8F200A4B67F /* MRPropertySpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MRPropertySpec.mm; sourceTree = "<group>"; };
 		AE60D8C216F3E8FE00A4B67F /* MRCommandSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MRCommandSpec.mm; sourceTree = "<group>"; };
-		AE867A5017021047007E9D8C /* InMobiInterstitialIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InMobiInterstitialIntegrationSuite.mm; sourceTree = "<group>"; };
 		AE867A5917021075007E9D8C /* FakeIMAdInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeIMAdInterstitial.h; sourceTree = "<group>"; };
 		AE867A5A17021075007E9D8C /* FakeIMAdInterstitial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeIMAdInterstitial.m; sourceTree = "<group>"; };
 		AE867A7A17021FA8007E9D8C /* FakeMPAdWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeMPAdWebView.h; sourceTree = "<group>"; };
 		AE867A7B17021FA8007E9D8C /* FakeMPAdWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeMPAdWebView.m; sourceTree = "<group>"; };
-		AE867A8417022279007E9D8C /* HTMLInterstitialIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HTMLInterstitialIntegrationSuite.mm; sourceTree = "<group>"; };
 		AE867AB217025229007E9D8C /* MPInterstitialAdControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPInterstitialAdControllerSpec.mm; sourceTree = "<group>"; };
 		AEA97BDE16EF9C030046D464 /* Specs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Specs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEA97BDF16EF9C030046D464 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -649,8 +656,6 @@
 		AEC9E56E16EFACBB007CA2BA /* FakeMPURLResolverDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeMPURLResolverDelegate.m; sourceTree = "<group>"; };
 		AEC9E5A416EFB48F007CA2BA /* MPSpecHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSpecHelper.h; sourceTree = "<group>"; };
 		AEC9E5A516EFB48F007CA2BA /* MPSpecHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPSpecHelper.mm; sourceTree = "<group>"; };
-		AED1B2A116FCCCC9000F5C39 /* MillennialInterstitialIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MillennialInterstitialIntegrationSuite.mm; sourceTree = "<group>"; };
-		AED1B2D816FD0E6F000F5C39 /* AdMobInterstitialIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AdMobInterstitialIntegrationSuite.mm; sourceTree = "<group>"; };
 		AED1B2E116FD120D000F5C39 /* FakeGADInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeGADInterstitial.h; sourceTree = "<group>"; };
 		AED1B2E216FD120D000F5C39 /* FakeGADInterstitial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeGADInterstitial.m; sourceTree = "<group>"; };
 		AED9E4B116F78FCB00EA71A7 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
@@ -672,11 +677,8 @@
 		AEE8E94F16FBAAE400C41D15 /* MPMillennialInterstitialAdapterSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPMillennialInterstitialAdapterSpec.mm; sourceTree = "<group>"; };
 		AEE8E95116FBAD4900C41D15 /* FakeMMInterstitialAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeMMInterstitialAdView.h; sourceTree = "<group>"; };
 		AEE8E95216FBAD4900C41D15 /* FakeMMInterstitialAdView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeMMInterstitialAdView.m; sourceTree = "<group>"; };
-		AEE8E95A16FBC33900C41D15 /* iADIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iADIntegrationSuite.mm; sourceTree = "<group>"; };
 		AEE8E95D16FCBD1700C41D15 /* FakeAdInterstitialAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeAdInterstitialAd.h; sourceTree = "<group>"; };
 		AEE8E95E16FCBD1700C41D15 /* FakeAdInterstitialAd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeAdInterstitialAd.m; sourceTree = "<group>"; };
-		AEE8E96116FCBE1D00C41D15 /* InterstitialIntegrationSharedBehaviors.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InterstitialIntegrationSharedBehaviors.mm; sourceTree = "<group>"; };
-		AEE8E96316FCBE7100C41D15 /* InterstitialIntegrationSharedBehaviors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InterstitialIntegrationSharedBehaviors.h; sourceTree = "<group>"; };
 		AEEA5E8616FA2225003D48F4 /* MPInterstitialAdManagerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPInterstitialAdManagerSpec.mm; sourceTree = "<group>"; };
 		AEEA5E9716FA229C003D48F4 /* MPAdServerCommunicatorSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPAdServerCommunicatorSpec.mm; sourceTree = "<group>"; };
 		AEEA5E9A16FA22DC003D48F4 /* MPAdServerURLBuilderSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPAdServerURLBuilderSpec.mm; sourceTree = "<group>"; };
@@ -760,6 +762,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AE093C47170DF8E000F5334B /* Interstitials */ = {
+			isa = PBXGroup;
+			children = (
+				AE093C48170DF8E000F5334B /* AdMobInterstitialIntegrationSuite.mm */,
+				AE093C49170DF8E000F5334B /* ChartboostInterstitialIntegrationSuite.mm */,
+				AE093C4A170DF8E000F5334B /* CustomEventInterstitialIntegrationSuite.mm */,
+				AE093C4B170DF8E000F5334B /* GreystripeInterstitialIntegrationSuite.mm */,
+				AE093C4C170DF8E000F5334B /* HTMLInterstitialIntegrationSuite.mm */,
+				AE093C4D170DF8E000F5334B /* iADIntegrationSuite.mm */,
+				AE093C4E170DF8E000F5334B /* InMobiInterstitialIntegrationSuite.mm */,
+				AE093C4F170DF8E000F5334B /* InterstitialIntegrationSharedBehaviors.h */,
+				AE093C50170DF8E000F5334B /* InterstitialIntegrationSharedBehaviors.mm */,
+				AE093C51170DF8E000F5334B /* LegacyCustomEventInterstitialIntegrationSuite.mm */,
+				AE093C52170DF8E000F5334B /* MillennialInterstitialIntegrationSuite.mm */,
+			);
+			path = Interstitials;
+			sourceTree = "<group>";
+		};
+		AE093C5D170DF8F100F5334B /* Banners */ = {
+			isa = PBXGroup;
+			children = (
+				AE093C5E170DF92E00F5334B /* CustomEventBannerIntegrationSuiteSpec.mm */,
+			);
+			path = Banners;
+			sourceTree = "<group>";
+		};
 		AE1091791700D37200812E6E /* Chartboost_3.1.1 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1341,17 +1369,8 @@
 		AEE8E95916FBC30700C41D15 /* Integrations */ = {
 			isa = PBXGroup;
 			children = (
-				AE867A8417022279007E9D8C /* HTMLInterstitialIntegrationSuite.mm */,
-				AED1B2D816FD0E6F000F5C39 /* AdMobInterstitialIntegrationSuite.mm */,
-				AEE8E95A16FBC33900C41D15 /* iADIntegrationSuite.mm */,
-				AEE8E96116FCBE1D00C41D15 /* InterstitialIntegrationSharedBehaviors.mm */,
-				AEE8E96316FCBE7100C41D15 /* InterstitialIntegrationSharedBehaviors.h */,
-				AED1B2A116FCCCC9000F5C39 /* MillennialInterstitialIntegrationSuite.mm */,
-				AE1091731700B82400812E6E /* CustomEventInterstitialIntegrationSuite.mm */,
-				AE1091751700C63800812E6E /* LegacyCustomEventInterstitialIntegrationSuite.mm */,
-				AE1091771700D01E00812E6E /* ChartboostInterstitialIntegrationSuite.mm */,
-				AE1091BE170115B400812E6E /* GreystripeInterstitialIntegrationSuite.mm */,
-				AE867A5017021047007E9D8C /* InMobiInterstitialIntegrationSuite.mm */,
+				AE093C5D170DF8F100F5334B /* Banners */,
+				AE093C47170DF8E000F5334B /* Interstitials */,
 			);
 			path = Integrations;
 			sourceTree = "<group>";
@@ -1705,27 +1724,17 @@
 				AEE8E95016FBAAE400C41D15 /* MPMillennialInterstitialAdapterSpec.mm in Sources */,
 				AEE8E95316FBAD4A00C41D15 /* FakeMMInterstitialAdView.m in Sources */,
 				AEE8E95416FBBBA100C41D15 /* MPMillennialInterstitialAdapter.m in Sources */,
-				AEE8E95B16FBC33900C41D15 /* iADIntegrationSuite.mm in Sources */,
 				AEE8E95C16FBC73300C41D15 /* MPInterstitialAdController.m in Sources */,
 				AEE8E95F16FCBD1800C41D15 /* FakeAdInterstitialAd.m in Sources */,
-				AEE8E96216FCBE1D00C41D15 /* InterstitialIntegrationSharedBehaviors.mm in Sources */,
-				AED1B2A216FCCCC9000F5C39 /* MillennialInterstitialIntegrationSuite.mm in Sources */,
-				AED1B2D916FD0E6F000F5C39 /* AdMobInterstitialIntegrationSuite.mm in Sources */,
 				AED1B2E316FD120D000F5C39 /* FakeGADInterstitial.m in Sources */,
-				AE1091741700B82400812E6E /* CustomEventInterstitialIntegrationSuite.mm in Sources */,
-				AE1091761700C63800812E6E /* LegacyCustomEventInterstitialIntegrationSuite.mm in Sources */,
-				AE1091781700D01E00812E6E /* ChartboostInterstitialIntegrationSuite.mm in Sources */,
 				AE10917F1700D38F00812E6E /* ChartboostInterstitialCustomEvent.m in Sources */,
 				AE109182170100B400812E6E /* ChartboostInterstitialCustomEventSpec.mm in Sources */,
 				AE1091AA17010D6F00812E6E /* FakeChartboost.m in Sources */,
-				AE1091BF170115B400812E6E /* GreystripeInterstitialIntegrationSuite.mm in Sources */,
 				AE1091DE17011A4A00812E6E /* GreystripeInterstitialCustomEvent.m in Sources */,
 				AE1091E217011AEA00812E6E /* FakeGSFullscreenAd.m in Sources */,
-				AE867A5117021047007E9D8C /* InMobiInterstitialIntegrationSuite.mm in Sources */,
 				AE867A5B17021075007E9D8C /* FakeIMAdInterstitial.m in Sources */,
 				AE867A5C1702143B007E9D8C /* InMobiInterstitialCustomEvent.m in Sources */,
 				AE867A7C17021FA8007E9D8C /* FakeMPAdWebView.m in Sources */,
-				AE867A8517022279007E9D8C /* HTMLInterstitialIntegrationSuite.mm in Sources */,
 				AE867AB317025229007E9D8C /* MPInterstitialAdControllerSpec.mm in Sources */,
 				AEE4578D17039462007B1D19 /* MPIdentityProvider.m in Sources */,
 				AEE45796170394B4007B1D19 /* MPIdentityProviderSpec.mm in Sources */,
@@ -1751,6 +1760,17 @@
 				AE093C02170CE69F00F5334B /* MPSessionTrackerSpec.mm in Sources */,
 				AE093C17170CF89400F5334B /* MPAdConversionTracker.m in Sources */,
 				AE093C20170CF9D900F5334B /* MPAdConversionTrackerSpec.mm in Sources */,
+				AE093C53170DF8E000F5334B /* AdMobInterstitialIntegrationSuite.mm in Sources */,
+				AE093C54170DF8E000F5334B /* ChartboostInterstitialIntegrationSuite.mm in Sources */,
+				AE093C55170DF8E000F5334B /* CustomEventInterstitialIntegrationSuite.mm in Sources */,
+				AE093C56170DF8E000F5334B /* GreystripeInterstitialIntegrationSuite.mm in Sources */,
+				AE093C57170DF8E000F5334B /* HTMLInterstitialIntegrationSuite.mm in Sources */,
+				AE093C58170DF8E000F5334B /* iADIntegrationSuite.mm in Sources */,
+				AE093C59170DF8E000F5334B /* InMobiInterstitialIntegrationSuite.mm in Sources */,
+				AE093C5A170DF8E000F5334B /* InterstitialIntegrationSharedBehaviors.mm in Sources */,
+				AE093C5B170DF8E000F5334B /* LegacyCustomEventInterstitialIntegrationSuite.mm in Sources */,
+				AE093C5C170DF8E000F5334B /* MillennialInterstitialIntegrationSuite.mm in Sources */,
+				AE093C5F170DF92E00F5334B /* CustomEventBannerIntegrationSuiteSpec.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

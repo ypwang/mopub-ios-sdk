@@ -29,7 +29,6 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
 @property (nonatomic, readwrite, copy) NSURL *failoverURL;
 @property (nonatomic, retain) UIView *nextAdContentView;
 
-- (void)initializeTimerTarget;
 - (void)registerForApplicationStateTransitionNotifications;
 - (void)scheduleAutorefreshTimerIfEnabled;
 - (void)scheduleAutorefreshTimer;
@@ -60,7 +59,6 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
 {
     self = [super init];
     if (self) {
-        [self initializeTimerTarget];
         [self registerForApplicationStateTransitionNotifications];
 
         _communicator = [[[MPInstanceProvider sharedProvider] buildMPAdServerCommunicatorWithDelegate:self] retain];
@@ -78,7 +76,6 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
 
     [_autorefreshTimer invalidate];
     [_autorefreshTimer release];
-    [_timerTarget release];
 
     [_communicator cancel];
     [_communicator setDelegate:nil];
@@ -168,11 +165,11 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
 
     if (configuration.refreshInterval != -1) {
         self.autorefreshTimer = [MPTimer timerWithTimeInterval:configuration.refreshInterval
-                                                        target:_timerTarget
-                                                      selector:@selector(postNotification)
-                                                      userInfo:nil
+                                                        target:self
+                                                      selector:@selector(forceRefreshAd)
                                                        repeats:NO];
     } else {
+        [self.autorefreshTimer invalidate];
         self.autorefreshTimer = nil;
     }
 
@@ -200,15 +197,6 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
 }
 
 #pragma mark - Initialization helpers
-
-- (void)initializeTimerTarget
-{
-    _timerTarget = [[MPTimerTarget alloc] initWithNotificationName:kTimerNotificationName];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(forceRefreshAd)
-                                                 name:kTimerNotificationName
-                                               object:_timerTarget];
-}
 
 - (void)registerForApplicationStateTransitionNotifications
 {
@@ -285,9 +273,8 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
 {
     [self.autorefreshTimer invalidate];
     self.autorefreshTimer = [MPTimer timerWithTimeInterval:kMoPubRequestRetryInterval
-                                                    target:_timerTarget
-                                                  selector:@selector(postNotification)
-                                                  userInfo:nil
+                                                    target:self
+                                                  selector:@selector(forceRefreshAd)
                                                    repeats:NO];
     [self scheduleAutorefreshTimerIfEnabled];
 }

@@ -77,7 +77,6 @@ typedef enum
 @property (nonatomic, copy) NSString *adUnitId;
 @property (nonatomic, copy) CLLocation *location;
 @property (nonatomic, retain) NSString *keywords;
-@property (nonatomic, assign) CGSize creativeSize;
 @property (nonatomic, assign) BOOL scrollable;
 @property (nonatomic, assign) MPAdAnimationType animationType;
 @property (nonatomic, assign) BOOL ignoresAutorefresh;
@@ -103,11 +102,6 @@ typedef enum
 - (void)loadAd;
 
 /*
- * Loads a new ad using the specified URL.
- */
-- (void)loadAdWithURL:(NSURL *)URL;
-
-/*
  * Tells the ad view to get another ad using its current URL. Note: if the ad view
  * is already loading an ad, this call does nothing; use -forceRefreshAd instead
  * if you want to cancel any existing ad requests.
@@ -127,11 +121,6 @@ typedef enum
  * ad networks.
  */
 - (void)setAdContentView:(UIView *)view;
-
-/*
- * Signals the internal webview that it has appeared on-screen.
- */
-- (void)adViewDidAppear;
 
 /*
  * Informs the ad view that the device orientation has changed. You should call
@@ -155,8 +144,6 @@ typedef enum
 - (void)unlockNativeAdsOrientation;
 
 - (MPNativeAdOrientation)allowedNativeAdsOrientation;
-
-- (void)backFillWithNothing;
 
 #pragma mark - Deprecated
 

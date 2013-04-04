@@ -16,7 +16,7 @@ extern const CGFloat kMoPubRequestRetryInterval;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @protocol MPBannerAdManagerDelegate;
-@class MPAdView, MPBaseAdapter, MPBannerDelegateHelper, MPTimer, MPTimerTarget;
+@class MPAdView, MPBaseAdapter, MPBannerDelegateHelper, MPTimer;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -25,17 +25,16 @@ extern const CGFloat kMoPubRequestRetryInterval;
 {
     MPAdServerCommunicator *_communicator;
     BOOL _loading;
-    
+
     MPBannerAdapterManager *_adapterManager;
     MPBannerDelegateHelper *_delegateHelper;
-    
+
     MPAdView *_adView;
-    
+
     BOOL _adActionInProgress;
     UIView *_nextAdContentView;
-    
+
     MPTimer *_autorefreshTimer;
-    MPTimerTarget *_timerTarget;
     BOOL _ignoresAutorefresh;
     BOOL _previousIgnoresAutorefresh;
     BOOL _autorefreshTimerNeedsScheduling;

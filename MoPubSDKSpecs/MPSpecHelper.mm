@@ -11,7 +11,7 @@
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
-static BOOL didNap = NO;
+static BOOL beforeAllDidRun = NO;
 
 FakeMPInstanceProvider *fakeProvider;
 
@@ -31,9 +31,10 @@ void verify_fake_received_selectors(id<CedarDouble> fake, NSArray *selectors)
 
 + (void)beforeEach
 {
-    if (!didNap) {
+    if (!beforeAllDidRun) {
         usleep(200000);
-        didNap = YES;
+        beforeAllDidRun = YES;
+        [MMAdView setLogLevel:MMLOG_LEVEL_OFF];
     }
 
     fakeProvider = [[[FakeMPInstanceProvider alloc] init] autorelease];
