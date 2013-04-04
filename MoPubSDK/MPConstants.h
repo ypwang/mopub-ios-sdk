@@ -25,5 +25,5 @@
 // Miscellaneous constants.
 #define MINIMUM_REFRESH_INTERVAL    5.0
 
-// In-app purchase constants.
-#define STORE_RECEIPT_SUFFIX        @"/m/purchase"
+// Feature Flags
+#define SESSION_TRACKING_ENABLED    1

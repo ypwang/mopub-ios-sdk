@@ -1,13 +1,13 @@
-#import "MPForegroundObserver.h"
+#import "MPSessionTracker.h"
 #import "MPIdentityProvider.h"
 #import "MPGlobal.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
-SPEC_BEGIN(MPForegroundObserverSpec)
+SPEC_BEGIN(MPSessionTrackerSpec)
 
-describe(@"MPForegroundObserver", ^{
+describe(@"MPSessionTracker", ^{
     it(@"should notify MoPub when an application enters the foreground", ^{
         [NSURLConnection connections] should be_empty;
         [[NSNotificationCenter defaultCenter] postNotificationName:UIApplicationWillEnterForegroundNotification
