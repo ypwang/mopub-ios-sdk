@@ -29,6 +29,7 @@ NSString * const kMoPubInterfaceOrientationLandscape = @"l";
 + (NSString *)queryParameterForMRAID;
 + (NSString *)queryParameterForDNT;
 + (NSString *)queryParameterForConnectionType;
++ (NSString *)queryParameterForApplicationVersion;
 + (BOOL)advertisingTrackingEnabled;
 
 @end
@@ -57,6 +58,7 @@ NSString * const kMoPubInterfaceOrientationLandscape = @"l";
     URLString = [URLString stringByAppendingString:[self queryParameterForMRAID]];
     URLString = [URLString stringByAppendingString:[self queryParameterForDNT]];
     URLString = [URLString stringByAppendingString:[self queryParameterForConnectionType]];
+    URLString = [URLString stringByAppendingString:[self queryParameterForApplicationVersion]];
 
     return [NSURL URLWithString:URLString];
 }
@@ -151,6 +153,13 @@ NSString * const kMoPubInterfaceOrientationLandscape = @"l";
 + (NSString *)queryParameterForConnectionType
 {
     return [[[MPInstanceProvider sharedProvider] sharedMPReachability] hasWifi] ? @"&ct=2" : @"&ct=3";
+}
+
++ (NSString *)queryParameterForApplicationVersion
+{
+    NSString *applicationVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    return [NSString stringWithFormat:@"&av=%@",
+            [applicationVersion stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 }
 
 + (BOOL)advertisingTrackingEnabled

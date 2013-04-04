@@ -195,6 +195,14 @@ describe(@"MPAdServerURLBuilder", ^{
                                             testing:YES];
         URL.absoluteString should contain(@"&ct=3");
     });
+
+    it(@"should provide application version", ^{
+        URL = [MPAdServerURLBuilder URLWithAdUnitID:@"guy"
+                                           keywords:nil
+                                           location:nil
+                                            testing:YES];
+        URL.absoluteString should contain(@"&av=1.0");
+    });
 });
 
 SPEC_END
