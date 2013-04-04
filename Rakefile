@@ -222,8 +222,8 @@ namespace :mopubsample do
     end
 
     head "Verifying Conversion Tracking"
-    verify_presence_of_url("Conversion Tracking", File.readlines("#{SCRIPTS_DIR}/proxy.log"), /http:\/\/ads.mopub.com\/m\/open\?v=\d&udid=[A-Za-z0-9_\-\:]+&id=112358&av=1\.0/)
-    verify_presence_of_url("Foreground Tracking", File.readlines("#{SCRIPTS_DIR}/proxy.log"), /http:\/\/ads.mopub.com\/m\/open\?v=\d&udid=[A-Za-z0-9_\-\:]+&id=com\.mopub\.SampleAppKIF&av=1\.0/)
+    verify_presence_of_url("Conversion Tracking", File.readlines("#{SCRIPTS_DIR}/proxy.log"), /http:\/\/ads.mopub.com\/m\/open\?v=\d&udid=[A-Za-z0-9_\-\:]+&id=112358&av=1\.0$/)
+    verify_presence_of_url("Foreground Tracking", File.readlines("#{SCRIPTS_DIR}/proxy.log"), /http:\/\/ads.mopub.com\/m\/open\?v=\d&udid=[A-Za-z0-9_\-\:]+&id=com\.mopub\.SampleAppKIF&av=1\.0&st=1$/)
 
     head "Verifying KIF Impressions"
     verify_impressions(File.readlines("#{SCRIPTS_DIR}/proxy.log"), File.readlines(kif_log_file))

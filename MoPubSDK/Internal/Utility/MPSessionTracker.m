@@ -20,7 +20,7 @@
                                                  selector:@selector(trackEvent)
                                                      name:UIApplicationWillEnterForegroundNotification
                                                    object:nil];
-        
+
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(trackEvent)
                                                      name:UIApplicationDidFinishLaunchingNotification
@@ -36,14 +36,14 @@
 
 + (NSURL *)URL
 {
-    NSString *path = [NSString stringWithFormat:@"http://%@/m/open?v=%@&udid=%@&id=%@&av=%@",
+    NSString *path = [NSString stringWithFormat:@"http://%@/m/open?v=%@&udid=%@&id=%@&av=%@&st=1",
                       HOSTNAME,
                       MP_SERVER_VERSION,
                       [MPIdentityProvider identifier],
                       [[[NSBundle mainBundle] bundleIdentifier] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
                       [[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
                       ];
-    
+
     return [NSURL URLWithString:path];
 }
 

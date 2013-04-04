@@ -21,6 +21,7 @@ describe(@"MPSessionTracker", ^{
         URL should contain(@"http://ads.mopub.com/m/open?v=8");
         URL should contain(@"&id=com.mopub.Specs");
         URL should contain(@"&av=1.0");
+        URL should contain(@"&st=1");
 
         NSString *expectedIdentifierQuery = [NSString stringWithFormat:@"&udid=%@", [MPIdentityProvider identifier]];
         URL should contain(expectedIdentifierQuery);
@@ -39,6 +40,7 @@ describe(@"MPSessionTracker", ^{
         URL should contain(@"http://ads.mopub.com/m/open?v=8");
         URL should contain(@"&id=com.mopub.Specs");
         URL should contain(@"&av=1.0");
+        URL should contain(@"&st=1");
 
         NSString *expectedIdentifierQuery = [NSString stringWithFormat:@"&udid=%@", [MPIdentityProvider identifier]];
         URL should contain(expectedIdentifierQuery);
