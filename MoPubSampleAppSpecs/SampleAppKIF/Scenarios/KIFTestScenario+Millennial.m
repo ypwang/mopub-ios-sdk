@@ -52,6 +52,7 @@
     [scenario addStep:[KIFTestStep stepToActuallyTapRowInTableViewWithAccessibilityLabel:@"Ad Table View"
                                                                              atIndexPath:indexPath]];
 
+    [scenario addStep:[KIFTestStep stepToWaitForViewWithAccessibilityLabel:@"banner"]];
     [scenario addStep:[KIFTestStep stepToWaitUntilActivityIndicatorIsNotAnimating]];
 
     [scenario addStep:[KIFTestStep stepToWaitForPresenceOfViewWithClassName:@"MMBannerAdView"]];

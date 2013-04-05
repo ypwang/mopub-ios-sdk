@@ -13,6 +13,9 @@
 {
     return [KIFTestStep stepWithDescription:@"Verify Spinner has stopped spinning." executionBlock:^KIFTestStepResult(KIFTestStep *step, NSError *__autoreleasing *error) {
         NSArray *indicators = [KIFHelper findViewsOfClass:[UIActivityIndicatorView class]];
+        if (indicators.count == 0) {
+            KIFTestWaitCondition(NO, error, @"No spinners found");
+        }
         for (UIActivityIndicatorView *indicator in indicators) {
             if (indicator.isAnimating) {
                 KIFTestWaitCondition(NO, error, @"Spinner is still animating");
