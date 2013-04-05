@@ -22,6 +22,7 @@
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= MP_IOS_6_0
 + (SKStoreProductViewController *)buildController
 {
+    NSLog(@"================> PROVIDING STORE KIT!!");
     return [[[SKStoreProductViewController alloc] init] autorelease];
 }
 #endif
