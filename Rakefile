@@ -30,7 +30,12 @@ def head(text)
   puts "\n########### #{text} ###########"
 end
 
+def clean!
+  `rm -rf #{BUILD_DIR}`
+end
+
 def build(options)
+  clean!
   target = options[:target]
   project = options[:project]
   configuration = options[:configuration] || CONFIGURATION
@@ -232,7 +237,6 @@ namespace :mopubsample do
   task :kif, :flaky, :record do |t, args|
     head "Building KIF Integration Suite"
     build project: "MoPubSampleApp", target: "SampleAppKIF"
-
     head "Running KIF Integration Suite"
 
     environment = { }
