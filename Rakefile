@@ -191,15 +191,21 @@ def run_with_proxy
 end
 
 def run_with_video_recording(video_path)
-  if video_path
+  if ENV['IS_CI_BOX']
+    video_file_name = "KIF_RUN_#{Time.new.strftime("%Y_%m_%d_%H_%M")}.mov"
+    video_path = File.join(SCRIPTS_DIR, video_file_name)
+
     begin
       `osascript ./Scripts/start_recording.applescript`
       yield
     rescue SystemExit => e
+      `osascript ./Scripts/stop_and_save_recording.applescript #{video_path}`
+      puts "Saved simulator recording to #{video_path}"
+      puts "On Jenkins: http://192.168.1.33:8080/job/MoPubIOSSDKIntegrations/ws/Scripts/#{video_file_name}"
+
       exit(1)
     ensure
-      `osascript ./Scripts/stop_recording.applescript #{video_path}`
-      puts "Saved simulator recording to #{video_path}"
+      `osascript ./Scripts/stop_recording.applescript`
     end
   else
     yield
@@ -232,9 +238,8 @@ namespace :mopubsample do
     environment = { }
     environment["KIF_FLAKY_TESTS"] = '1' if args.flaky == 'flaky'
 
-    video_path = ENV['IS_CI_BOX'] ? File.join(SCRIPTS_DIR, "KIF_RUN_#{Time.new.strftime("%Y_%m_%d_%H_%M")}.mov") : nil
     kif_log_file = nil
-    run_with_video_recording(video_path) do
+    run_with_video_recording do
       run_with_proxy do
         kif_log_file = run_in_simulator(project: "MoPubSampleApp", target: "SampleAppKIF", environment:environment, success_condition: "TESTING FINISHED: 0 failures")
       end
