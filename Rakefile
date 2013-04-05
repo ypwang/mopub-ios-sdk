@@ -124,7 +124,7 @@ desc "Build MoPubSDK on all SDKs and run all unit tests"
 task :unit_specs => ["mopubsdk:build", "mopubsample:build", "mopubsdk:spec", "mopubsample:spec"]
 
 desc "Run KIF integration tests (skip flaky tests)"
-task :integration_specs => ["mopubsample:bump_server", 'mopubsample:kif["not-flaky","record"]']
+task :integration_specs => ["mopubsample:bump_server", "mopubsample:kif"]
 
 desc "Run All KIF integration tests (including flaky tests)"
 task :flaky_integration_specs do
@@ -232,7 +232,7 @@ namespace :mopubsample do
     environment = { }
     environment["KIF_FLAKY_TESTS"] = '1' if args.flaky == 'flaky'
 
-    video_path = args.record ? File.join(SCRIPTS_DIR, "KIF_RUN_#{Time.new.strftime("%Y_%m_%d_%H_%M")}.mov") : nil
+    video_path = ENV['IS_CI_BOX'] ? File.join(SCRIPTS_DIR, "KIF_RUN_#{Time.new.strftime("%Y_%m_%d_%H_%M")}.mov") : nil
     kif_log_file = nil
     run_with_video_recording(video_path) do
       run_with_proxy do
