@@ -124,7 +124,7 @@ desc "Build MoPubSDK on all SDKs and run all unit tests"
 task :unit_specs => ["mopubsdk:build", "mopubsample:build", "mopubsdk:spec", "mopubsample:spec"]
 
 desc "Run KIF integration tests (skip flaky tests)"
-task :integration_specs => ["mopubsample:bump_server", "mopubsample:kif"]
+task :integration_specs => ["mopubsample:bump_server", "mopubsample:kif['not-flaky','record']"]
 
 desc "Run All KIF integration tests (including flaky tests)"
 task :flaky_integration_specs do
@@ -190,6 +190,22 @@ def run_with_proxy
   end
 end
 
+def run_with_video_recording(video_path)
+  if video_path
+    begin
+      `osascript ./Scripts/start_recording.applescript`
+      yield
+    rescue SystemExit => e
+      exit(1)
+    ensure
+      `osascript ./Scripts/stop_recording.applescript #{video_path}`
+      puts "Saved simulator recording to #{video_path}"
+    end
+  else
+    yield
+  end
+end
+
 namespace :mopubsample do
   desc "Build MoPub Sample App"
   task :build do
@@ -207,18 +223,21 @@ namespace :mopubsample do
   end
 
   desc "Run MoPub Sample App Integration Specs"
-  task :kif, :flaky do |t, args|
+  task :kif, :flaky, :record do |t, args|
     head "Building KIF Integration Suite"
     build project: "MoPubSampleApp", target: "SampleAppKIF"
 
     head "Running KIF Integration Suite"
 
     environment = { }
-    environment["KIF_FLAKY_TESTS"] = '1' if args.flaky
+    environment["KIF_FLAKY_TESTS"] = '1' if args.flaky == 'flaky'
 
+    video_path = args.record ? File.join(SCRIPTS_DIR, "KIF_RUN_#{Time.new.strftime("%Y_%m_%d_%H_%M")}.mov") : nil
     kif_log_file = nil
-    run_with_proxy do
-      kif_log_file = run_in_simulator(project: "MoPubSampleApp", target: "SampleAppKIF", environment:environment, success_condition: "TESTING FINISHED: 0 failures")
+    run_with_video_recording(video_path) do
+      run_with_proxy do
+        kif_log_file = run_in_simulator(project: "MoPubSampleApp", target: "SampleAppKIF", environment:environment, success_condition: "TESTING FINISHED: 0 failures")
+      end
     end
 
     head "Verifying Conversion Tracking"
