@@ -22,6 +22,7 @@
                         @"return anchorWithLink.innerHTML;})()",
                         link];
         NSString *foundLink = [webView stringByEvaluatingJavaScriptFromString:JS];
+        NSLog(@"================> KIF CLICK STEP FOUND: %@", foundLink);
         KIFTestCondition(![foundLink isEqualToString:@""], error, @"Could not find link '%@'", link);
         return KIFTestStepResultSuccess;
     }];

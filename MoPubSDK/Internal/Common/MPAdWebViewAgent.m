@@ -136,6 +136,8 @@ NSString * const kMoPubCustomHost = @"custom";
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType
 {
+    NSLog(@"================> %@", request.URL.absoluteString);
+    
     if (!self.shouldHandleRequests) {
         return NO;
     }
