@@ -190,7 +190,7 @@ def run_with_proxy
   end
 end
 
-def run_with_video_recording(video_path)
+def run_with_video_recording
   if ENV['IS_CI_BOX']
     video_file_name = "KIF_RUN_#{Time.new.strftime("%Y_%m_%d_%H_%M")}.mov"
     video_path = File.join(SCRIPTS_DIR, video_file_name)
