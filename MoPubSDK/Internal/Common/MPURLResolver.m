@@ -47,7 +47,6 @@
 
 - (void)startResolvingWithURL:(NSURL *)URL delegate:(id<MPURLResolverDelegate>)delegate
 {
-    NSLog(@"================> RESOLVING %@", URL.absoluteString);
     [self.connection cancel];
 
     self.URL = URL;
@@ -70,7 +69,6 @@
 - (BOOL)handleURL:(NSURL *)URL
 {
     if ([self storeItemIdentifierForURL:URL]) {
-        NSLog(@"================> WANT STORE KIT FOR %@", URL.absoluteString);
         [self.delegate showStoreKitProductWithParameter:[self storeItemIdentifierForURL:URL] fallbackURL:URL];
     } else if ([self URLShouldOpenInApplication:URL]) {
         if ([[UIApplication sharedApplication] canOpenURL:URL]) {

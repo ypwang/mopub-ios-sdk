@@ -44,7 +44,6 @@
 
 - (void)displayDestinationForURL:(NSURL *)URL
 {
-    NSLog(@"================> WILL PROCESS %@", URL.absoluteString);
     if (self.inUse) return;
     self.inUse = YES;
 
