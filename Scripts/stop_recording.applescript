@@ -16,13 +16,13 @@ on run argv
 			delay 1 # Wait for the above to instantiate.
 			tell window 1
 				keystroke "s" using {command down, shift down}
-				delay 0.5 # Wait for the Save As sheet to appear.
+				delay 5 # Wait for the Save As sheet to appear.
 				keystroke outfile
-				delay 3 # Wait for the paste to happen corrctly.
+				delay 5 # Wait for the paste to happen corrctly.
 				key code 36 # Hit enter
-				delay 0.5 # Wait for the "Go" sheet
+				delay 5 # Wait for the "Go" sheet
 				key code 36 # Hit enter
-				delay 3 #wait for export    # Wait for export to complete exporting movie.
+				delay 5 #wait for export    # Wait for export to complete exporting movie.
 			end tell
 		end tell
 	end tell
