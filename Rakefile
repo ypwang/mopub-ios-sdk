@@ -124,7 +124,7 @@ desc "Build MoPubSDK on all SDKs and run all unit tests"
 task :unit_specs => ["mopubsdk:build", "mopubsample:build", "mopubsdk:spec", "mopubsample:spec"]
 
 desc "Run KIF integration tests (skip flaky tests)"
-task :integration_specs => ["mopubsample:bump_server", "mopubsample:kif['not-flaky','record']"]
+task :integration_specs => ["mopubsample:bump_server", 'mopubsample:kif["not-flaky","record"]']
 
 desc "Run All KIF integration tests (including flaky tests)"
 task :flaky_integration_specs do
