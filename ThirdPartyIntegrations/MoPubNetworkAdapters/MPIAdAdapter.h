@@ -1,18 +1,18 @@
+////
+////  MPIAdAdapter.h
+////  MoPub
+////
+////  Created by Nafis Jamal on 1/19/11.
+////  Copyright 2011 MoPub, Inc. All rights reserved.
+////
 //
-//  MPIAdAdapter.h
-//  MoPub
+//#import <Foundation/Foundation.h>
+//#import "MPBaseAdapter.h"
+//#import <iAd/iAd.h>
 //
-//  Created by Nafis Jamal on 1/19/11.
-//  Copyright 2011 MoPub, Inc. All rights reserved.
+//@interface MPIAdAdapter : MPBaseAdapter <ADBannerViewDelegate> 
+//{
+//	ADBannerView *_adBannerView;
+//}
 //
-
-#import <Foundation/Foundation.h>
-#import "MPBaseAdapter.h"
-#import <iAd/iAd.h>
-
-@interface MPIAdAdapter : MPBaseAdapter <ADBannerViewDelegate> 
-{
-	ADBannerView *_adBannerView;
-}
-
-@end
+//@end

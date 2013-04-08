@@ -14,6 +14,7 @@
 @property (nonatomic, assign) BOOL didUnload;
 @property (nonatomic, assign) UIView *view;
 @property (nonatomic, assign) UIViewController *presentingViewController;
+@property (nonatomic, assign) UIInterfaceOrientation orientation;
 
 - (id)initWithFrame:(CGRect)frame;
 - (void)simulateLoadingAd;

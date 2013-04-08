@@ -17,6 +17,11 @@
     // and implement code to load a banner here.
 }
 
+- (void)rotateToOrientation:(UIInterfaceOrientation)newOrientation
+{
+    // TODO: DOCUMENT ME!
+}
+
 - (void)customEventDidUnload
 {
     // Your subclass can implement this method if it needs to perform any cleanup, or simply do

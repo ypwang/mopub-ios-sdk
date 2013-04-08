@@ -6,7 +6,7 @@ using namespace Cedar::Doubles;
 
 SPEC_BEGIN(CustomEventBannerIntegrationSuiteSpec)
 
-describe(@"CustomEventBannerIntegrationSuite", ^{
+fdescribe(@"CustomEventBannerIntegrationSuite", ^{
     __block FakeBannerCustomEvent *event;
     __block MPAdView *banner;
     __block id<CedarDouble, MPAdViewDelegate> delegate;
@@ -307,8 +307,12 @@ describe(@"CustomEventBannerIntegrationSuite", ^{
             });
             
             context(@"when told to rotate", ^{
-                xit(@"should tell the custom event", ^{
-                    
+                beforeEach(^{
+                    [banner rotateToOrientation:UIInterfaceOrientationLandscapeRight];
+                });
+                
+                it(@"should tell the custom event", ^{
+                    event.orientation should equal(UIInterfaceOrientationLandscapeRight);
                 });
             });
             
@@ -538,8 +542,13 @@ describe(@"CustomEventBannerIntegrationSuite", ^{
             });
             
             context(@"when told to rotate", ^{
-                xit(@"should tell the custom event", ^{
-                    
+                beforeEach(^{
+                    [banner rotateToOrientation:UIInterfaceOrientationLandscapeRight];
+                });
+                
+                it(@"should tell both the onscreen and the offscreen custom event", ^{
+                    event.orientation should equal(UIInterfaceOrientationLandscapeRight);
+                    onscreenEvent.orientation should equal(UIInterfaceOrientationLandscapeRight);
                 });
             });
             

@@ -131,6 +131,7 @@
 
 - (void)rotateToOrientation:(UIInterfaceOrientation)orientation
 {
+    [self.requestingAdapter rotateToOrientation:orientation];
     [self.currentOnscreenAdapter rotateToOrientation:orientation];
 }
 

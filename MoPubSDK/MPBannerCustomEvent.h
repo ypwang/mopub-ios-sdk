@@ -35,6 +35,10 @@
  */
 - (void)requestAdWithSize:(CGSize)size customEventInfo:(NSDictionary *)info;
 
+/*
+ * TODO: DOCUMENT ME!
+ */
+- (void)rotateToOrientation:(UIInterfaceOrientation)newOrientation;
 
 /*
  * This message is sent when the MoPub SDK is about to deallocate your custom event instance.
@@ -42,6 +46,7 @@
  * [super customEventDidUnload].
  */
 - (void)customEventDidUnload;
+
 
 /*
  * The `delegate` object defines several methods that you should call in order to inform both MoPub

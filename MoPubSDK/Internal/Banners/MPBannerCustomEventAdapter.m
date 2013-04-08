@@ -54,6 +54,11 @@
     [self.bannerCustomEvent requestAdWithSize:configuration.adSize customEventInfo:configuration.customEventClassData];
 }
 
+- (void)rotateToOrientation:(UIInterfaceOrientation)newOrientation
+{
+    [self.bannerCustomEvent rotateToOrientation:newOrientation];
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma mark - MPBannerCustomEventDelegate

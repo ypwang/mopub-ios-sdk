@@ -25,6 +25,11 @@
     self.presentingViewController = self.delegate.viewControllerForPresentingModalView;
 }
 
+- (void)rotateToOrientation:(UIInterfaceOrientation)newOrientation
+{
+    self.orientation = newOrientation;
+}
+
 - (void)customEventDidUnload
 {
     self.didUnload = YES;
