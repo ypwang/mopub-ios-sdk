@@ -31,6 +31,21 @@
     return [self defaultBannerConfigurationWithHeaders:nil HTMLString:nil];
 }
 
++ (MPAdConfiguration *)defaultBannerConfigurationWithNetworkType:(NSString *)type
+{
+    return [self defaultBannerConfigurationWithHeaders:@{kAdTypeHeaderKey: type}
+                                            HTMLString:nil];
+}
+
++ (MPAdConfiguration *)defaultBannerConfigurationWithCustomEventClassName:(NSString *)eventClassName
+{
+    return [MPAdConfigurationFactory defaultBannerConfigurationWithHeaders:@{
+                                            kCustomEventClassNameHeaderKey: eventClassName,
+                                                          kAdTypeHeaderKey: @"custom"}
+                                                                HTMLString:nil];
+}
+
+
 + (MPAdConfiguration *)defaultBannerConfigurationWithHeaders:(NSDictionary *)dictionary
                                                   HTMLString:(NSString *)HTMLString
 {
@@ -41,14 +56,6 @@
 
     return [[[MPAdConfiguration alloc] initWithHeaders:headers
                                                   data:[HTMLString dataUsingEncoding:NSUTF8StringEncoding]] autorelease];
-}
-
-+ (MPAdConfiguration *)defaultBannerConfigurationWithCustomEventClassName:(NSString *)eventClassName
-{
-    return [MPAdConfigurationFactory defaultBannerConfigurationWithHeaders:@{
-                                            kCustomEventClassNameHeaderKey: eventClassName,
-                                                          kAdTypeHeaderKey: @"custom"}
-                                                                HTMLString:nil];
 }
 
 #pragma mark - Interstitials

@@ -11,10 +11,13 @@
 #import "MPAdConfiguration.h"
 #import "MPLogging.h"
 #import "MPInstanceProvider.h"
+#import "MPAnalyticsTracker.h"
 
 @interface MPBaseAdapter ()
 
 @property (nonatomic, retain) NSMutableURLRequest *metricsURLRequest;
+@property (nonatomic, retain) MPAnalyticsTracker *analyticsTracker;
+@property (nonatomic, retain) MPAdConfiguration *configuration;
 
 @end
 
@@ -23,17 +26,14 @@
 @implementation MPBaseAdapter
 
 @synthesize delegate = _delegate;
-@synthesize impressionTrackingURL = _impressionTrackingURL;
-@synthesize clickTrackingURL = _clickTrackingURL;
-@synthesize metricsURLRequest = _metricsURLRequest;
+@synthesize analyticsTracker = _analyticsTracker;
+@synthesize configuration = _configuration;
 
 - (id)initWithAdapterDelegate:(id<MPAdapterDelegate>)delegate
 {
     if (self = [super init]) {
-        _delegate = delegate;
-
-        _metricsURLRequest = [[[MPInstanceProvider sharedProvider] buildConfiguredURLRequestWithURL:nil] retain];
-        [_metricsURLRequest setCachePolicy:NSURLRequestReloadIgnoringCacheData];
+        self.delegate = delegate;
+        self.analyticsTracker = [[MPInstanceProvider sharedProvider] buildMPAnalyticsTracker];
     }
     return self;
 }
@@ -41,15 +41,16 @@
 - (void)dealloc
 {
     [self unregisterDelegate];
-    [_impressionTrackingURL release];
-    [_clickTrackingURL release];
+    self.analyticsTracker = nil;
+    self.configuration = nil;
+    
     [_metricsURLRequest release];
     [super dealloc];
 }
 
 - (void)unregisterDelegate
 {
-    _delegate = nil;
+    self.delegate = nil;
 }
 
 #pragma mark - Requesting Ads
@@ -62,8 +63,7 @@
 
 - (void)_getAdWithConfiguration:(MPAdConfiguration *)configuration
 {
-    self.impressionTrackingURL = [configuration impressionTrackingURL];
-    self.clickTrackingURL = [configuration clickTrackingURL];
+    self.configuration = configuration;
 
     [self retain];
     [self getAdWithConfiguration:configuration];
@@ -83,16 +83,12 @@
 
 - (void)trackImpression
 {
-    MPLogDebug(@"Tracking banner impression: %@", self.impressionTrackingURL);
-    [_metricsURLRequest setURL:self.impressionTrackingURL];
-    [NSURLConnection connectionWithRequest:_metricsURLRequest delegate:nil];
+    [self.analyticsTracker trackImpressionForConfiguration:self.configuration];
 }
 
 - (void)trackClick
 {
-    MPLogDebug(@"Tracking banner click: %@", self.clickTrackingURL);
-    [_metricsURLRequest setURL:self.clickTrackingURL];
-    [NSURLConnection connectionWithRequest:_metricsURLRequest delegate:nil];
+    [self.analyticsTracker trackClickForConfiguration:self.configuration];
 }
 
 @end

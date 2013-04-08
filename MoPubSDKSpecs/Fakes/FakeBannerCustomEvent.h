@@ -11,5 +11,15 @@
 
 @property (nonatomic, assign) CGSize size;
 @property (nonatomic, assign) NSDictionary *customEventInfo;
+@property (nonatomic, assign) BOOL didUnload;
+@property (nonatomic, assign) UIView *view;
+@property (nonatomic, assign) UIViewController *presentingViewController;
+
+- (id)initWithFrame:(CGRect)frame;
+- (void)simulateLoadingAd;
+- (void)simulateFailingToLoad;
+- (void)simulateUserTap;
+- (void)simulateUserEndingInteraction;
+- (void)simulateUserLeavingApplication;
 
 @end

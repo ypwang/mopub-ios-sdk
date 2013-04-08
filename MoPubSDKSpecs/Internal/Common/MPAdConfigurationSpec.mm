@@ -16,7 +16,7 @@ describe(@"MPAdConfiguration", ^{
             configuration.adResponseData should be_nil;
             configuration.adType should equal(MPAdTypeUnknown);
             configuration.networkType should equal(@"");
-            CGSizeEqualToSize(configuration.preferredSize, CGSizeZero) should equal(YES);
+            configuration.preferredSize should equal(CGSizeZero);
             configuration.clickTrackingURL should be_nil;
             configuration.impressionTrackingURL should be_nil;
             configuration.failoverURL should be_nil;
@@ -95,27 +95,27 @@ describe(@"MPAdConfiguration", ^{
     it(@"should process the preferred size", ^{
         headers = @{kWidthHeaderKey:@"10"};
         configuration = [[[MPAdConfiguration alloc] initWithHeaders:headers data:nil] autorelease];
-        CGSizeEqualToSize(configuration.preferredSize, CGSizeMake(10, 0)) should equal(YES);
+        configuration.preferredSize should equal(CGSizeMake(10,0));
         configuration.hasPreferredSize should equal(NO);
 
         headers = @{kHeightHeaderKey:@"10"};
         configuration = [[[MPAdConfiguration alloc] initWithHeaders:headers data:nil] autorelease];
-        CGSizeEqualToSize(configuration.preferredSize, CGSizeMake(0, 10)) should equal(YES);
+        configuration.preferredSize should equal(CGSizeMake(0,10));
         configuration.hasPreferredSize should equal(NO);
 
         headers = @{kWidthHeaderKey:@"0", kHeightHeaderKey:@"0"};
         configuration = [[[MPAdConfiguration alloc] initWithHeaders:headers data:nil] autorelease];
-        CGSizeEqualToSize(configuration.preferredSize, CGSizeZero) should equal(YES);
+        configuration.preferredSize should equal(CGSizeZero);
         configuration.hasPreferredSize should equal(NO);
 
         headers = @{kWidthHeaderKey:@"10", kHeightHeaderKey:@"20"};
         configuration = [[[MPAdConfiguration alloc] initWithHeaders:headers data:nil] autorelease];
-        CGSizeEqualToSize(configuration.preferredSize, CGSizeMake(10, 20)) should equal(YES);
+        configuration.preferredSize should equal(CGSizeMake(10,20));
         configuration.hasPreferredSize should equal(YES);
 
         headers = @{};
         configuration = [[[MPAdConfiguration alloc] initWithHeaders:headers data:nil] autorelease];
-        CGSizeEqualToSize(configuration.preferredSize, CGSizeZero) should equal(YES);
+        configuration.preferredSize should equal(CGSizeZero);
         configuration.hasPreferredSize should equal(NO);
     });
 

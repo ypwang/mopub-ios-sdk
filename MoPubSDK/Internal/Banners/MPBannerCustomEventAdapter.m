@@ -9,11 +9,13 @@
 
 #import "MPAdConfiguration.h"
 #import "MPBannerCustomEvent.h"
+#import "MPInstanceProvider.h"
 
 @interface MPBannerCustomEventAdapter ()
 
-- (void)loadAdWithConfiguration:(MPAdConfiguration *)configuration
-                fromCustomClass:(Class)customClass;
+@property (nonatomic, retain) MPBannerCustomEvent *bannerCustomEvent;
+
+- (void)loadAdFromCustomClass:(Class)customClass configuration:(MPAdConfiguration *)configuration;
 
 @end
 
@@ -21,8 +23,9 @@
 
 - (void)dealloc
 {
-    _bannerCustomEvent.delegate = nil;
-    [_bannerCustomEvent release];
+    [self.bannerCustomEvent customEventDidUnload];
+    self.bannerCustomEvent.delegate = nil;
+    self.bannerCustomEvent = nil;
     
     [super dealloc];
 }
@@ -36,30 +39,7 @@
     MPLogInfo(@"Looking for custom event class named %@.", configuration.customEventClass);
     
     if (customEventClass) {
-        [self loadAdWithConfiguration:configuration fromCustomClass:customEventClass];
-        return;
-    }
-    
-    MPLogInfo(@"Could not find custom event class named %@.", configuration.customEventClass);
-    MPLogInfo(@"Looking for custom event selector named %@.", configuration.customSelectorName);
-    
-    SEL customEventSelector = NSSelectorFromString(configuration.customSelectorName);
-    if ([[self.delegate adViewDelegate] respondsToSelector:customEventSelector]) {
-        [[self.delegate adViewDelegate] performSelector:customEventSelector];
-        return;
-    }
-    
-    NSString *oneArgumentSelectorName = [configuration.customSelectorName
-                                         stringByAppendingString:@":"];
-    
-    MPLogInfo(@"Could not find custom event selector named %@.",
-              configuration.customSelectorName);
-    MPLogInfo(@"Looking for custom event selector named %@.", oneArgumentSelectorName);
-    
-    SEL customEventOneArgumentSelector = NSSelectorFromString(oneArgumentSelectorName);
-    if ([[self.delegate adViewDelegate] respondsToSelector:customEventOneArgumentSelector]) {
-        [[self.delegate adViewDelegate] performSelector:customEventOneArgumentSelector
-                                             withObject:[self.delegate adView]];
+        [self loadAdFromCustomClass:customEventClass configuration:configuration];
         return;
     }
     
@@ -68,13 +48,10 @@
     [self.delegate adapter:self didFailToLoadAdWithError:nil];
 }
 
-- (void)loadAdWithConfiguration:(MPAdConfiguration *)configuration
-                fromCustomClass:(Class)customClass
+- (void)loadAdFromCustomClass:(Class)customClass configuration:(MPAdConfiguration *)configuration
 {
-    _bannerCustomEvent = [[customClass alloc] init];
-    _bannerCustomEvent.delegate = self;
-    [_bannerCustomEvent requestAdWithSize:configuration.adSize
-                          customEventInfo:configuration.customEventClassData];
+    self.bannerCustomEvent = [[MPInstanceProvider sharedProvider] buildBannerCustomEventFromCustomClass:customClass delegate:self];
+    [self.bannerCustomEvent requestAdWithSize:configuration.adSize customEventInfo:configuration.customEventClassData];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

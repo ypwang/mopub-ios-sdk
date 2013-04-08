@@ -60,12 +60,11 @@
     }
 }
 
-- (void)dealloc
+- (void)customEventDidUnload
 {
     [_inmobiAdView setDelegate:nil];
     [_inmobiAdView release];
-    
-    [super dealloc];
+    [super customEventDidUnload];
 }
 
 #pragma mark - IMAdDelegate

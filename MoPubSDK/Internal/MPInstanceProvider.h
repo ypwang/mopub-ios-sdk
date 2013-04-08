@@ -14,6 +14,8 @@
 @class MPURLResolver;
 @class MPInterstitialAdManager;
 @class MPAdServerCommunicator;
+@class MPBaseAdapter;
+@class MPBannerCustomEvent;
 @class MPBaseInterstitialAdapter;
 @class MPInterstitialCustomEvent;
 @class MPAdConfiguration;
@@ -31,6 +33,8 @@
 @protocol MPHTMLInterstitialViewControllerDelegate;
 @protocol MPMRAIDInterstitialViewControllerDelegate;
 @protocol MPInterstitialCustomEventDelegate;
+@protocol MPAdapterDelegate;
+@protocol MPBannerCustomEventDelegate;
 
 @interface MPInstanceProvider : NSObject
 
@@ -51,6 +55,12 @@
 - (MPURLResolver *)buildMPURLResolver;
 - (MPInterstitialAdManager *)buildMPInterstitialAdManagerWithDelegate:(id<MPInterstitialAdManagerDelegate>)delegate;
 - (MPAdServerCommunicator *)buildMPAdServerCommunicatorWithDelegate:(id<MPAdServerCommunicatorDelegate>)delegate;
+
+
+- (MPBaseAdapter *)buildBannerAdapterForConfiguration:(MPAdConfiguration *)configuration
+                                             delegate:(id<MPAdapterDelegate>)delegate;
+- (MPBannerCustomEvent *)buildBannerCustomEventFromCustomClass:(Class)customClass
+                                                      delegate:(id<MPBannerCustomEventDelegate>)delegate;
 
 - (MPBaseInterstitialAdapter *)buildInterstitialAdapterForConfiguration:(MPAdConfiguration *)configuration
                                                                delegate:(id<MPBaseInterstitialAdapterDelegate>)delegate;

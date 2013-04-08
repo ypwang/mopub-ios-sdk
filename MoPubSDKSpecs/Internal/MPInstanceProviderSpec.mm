@@ -5,6 +5,9 @@
 #import "MPInterstitialCustomEventAdapter.h"
 #import "MPLegacyInterstitialCustomEventAdapter.h"
 #import "MPReachability.h"
+#import "MPHTMLBannerAdapter.h"
+#import "MPBannerCustomEventAdapter.h"
+#import "MPLegacyBannerCustomEventAdapter.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -77,6 +80,61 @@ describe(@"MPInstanceProvider", ^{
                 configuration = [MPAdConfigurationFactory defaultInterstitialConfigurationWithNetworkType:@"no_chance"];
                 [provider buildInterstitialAdapterForConfiguration:configuration
                                                           delegate:nil] should be_nil;
+            });
+        });
+    });
+    
+    describe(@"providing banner adapters", ^{
+        context(@"when the configuration network type is one of the supported networks", ^{
+            it(@"should return an adapter of the right type", ^{
+                configuration = [MPAdConfigurationFactory defaultBannerConfigurationWithNetworkType:@"html"];
+                [provider buildBannerAdapterForConfiguration:configuration
+                                                    delegate:nil] should be_instance_of([MPHTMLBannerAdapter class]);
+            });
+        });
+        
+        context(@"when the configuration network type is 'custom'", ^{
+            context(@"when the configuration has a custom event class", ^{
+                context(@"when the class exists", ^{
+                    it(@"should return an MPInterstitialCustomEventAdapter", ^{
+                        configuration = [MPAdConfigurationFactory defaultBannerConfigurationWithCustomEventClassName:@"FakeBannerCustomEvent"];
+                        [provider buildBannerAdapterForConfiguration:configuration
+                                                            delegate:nil] should be_instance_of([MPBannerCustomEventAdapter class]);
+                    });
+                });
+                
+                context(@"when the class does not exist", ^{
+                    it(@"should return nil", ^{
+                        configuration = [MPAdConfigurationFactory defaultBannerConfigurationWithCustomEventClassName:@"NSMonkeyToastEndocrineParadigmBean"];
+                        [provider buildBannerAdapterForConfiguration:configuration
+                                                            delegate:nil] should be_nil;
+                    });
+                });
+            });
+            
+            context(@"when the configuration has a custom selector name", ^{
+                it(@"should return an MPLegacyInterstitialCustomEventAdapter", ^{
+                    configuration = [MPAdConfigurationFactory defaultBannerConfigurationWithNetworkType:@"custom"];
+                    configuration.customSelectorName = @"buildTheThing";
+                    [provider buildBannerAdapterForConfiguration:configuration
+                                                        delegate:nil] should be_instance_of([MPLegacyBannerCustomEventAdapter class]);
+                });
+            });
+            
+            context(@"when the configuration has neither", ^{
+                it(@"should return nil", ^{
+                    configuration = [MPAdConfigurationFactory defaultInterstitialConfigurationWithNetworkType:@"custom"];
+                    [provider buildBannerAdapterForConfiguration:configuration
+                                                        delegate:nil] should be_nil;
+                });
+            });
+        });
+        
+        context(@"when the configuration network type is invalid", ^{
+            it(@"should return nil", ^{
+                configuration = [MPAdConfigurationFactory defaultBannerConfigurationWithNetworkType:@"no_chance"];
+                [provider buildBannerAdapterForConfiguration:configuration
+                                                    delegate:nil] should be_nil;
             });
         });
     });

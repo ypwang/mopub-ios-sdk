@@ -22,6 +22,10 @@
 #import "MPReachability.h"
 #import "MPTimer.h"
 #import "MPInterstitialCustomEvent.h"
+#import "MPBaseAdapter.h"
+#import "MPBannerCustomEventAdapter.h"
+#import "MPLegacyBannerCustomEventAdapter.h"
+#import "MPBannerCustomEvent.h"
 
 @interface MPInstanceProvider ()
 
@@ -117,6 +121,32 @@ static MPInstanceProvider *sharedProvider = nil;
     return [[(MPAdServerCommunicator *)[MPAdServerCommunicator alloc] initWithDelegate:delegate] autorelease];
 }
 
+- (MPBaseAdapter *)buildBannerAdapterForConfiguration:(MPAdConfiguration *)configuration
+                                             delegate:(id<MPAdapterDelegate>)delegate
+{
+    if ([configuration.networkType isEqualToString:@"custom"]) {
+        if (configuration.customEventClass) {
+            return [[(MPBannerCustomEventAdapter *)[MPBannerCustomEventAdapter alloc] initWithAdapterDelegate:delegate] autorelease];
+        } else if (configuration.customSelectorName) {
+            return [[(MPLegacyBannerCustomEventAdapter *)[MPLegacyBannerCustomEventAdapter alloc] initWithAdapterDelegate:delegate] autorelease];
+        } else {
+            return nil;
+        }
+    } else {
+        Class adapterClass = [[MPAdapterMap sharedAdapterMap] bannerAdapterClassForNetworkType:configuration.networkType];
+        return [[[adapterClass alloc] initWithAdapterDelegate:delegate] autorelease];
+    }
+}
+
+- (MPBannerCustomEvent *)buildBannerCustomEventFromCustomClass:(Class)customClass
+                                                      delegate:(id<MPBannerCustomEventDelegate>)delegate
+{
+    MPBannerCustomEvent *customEvent = [[[customClass alloc] init] autorelease];
+    customEvent.delegate = delegate;
+    return customEvent;
+}
+
+
 - (MPBaseInterstitialAdapter *)buildInterstitialAdapterForConfiguration:(MPAdConfiguration *)configuration
                                                                delegate:(id<MPBaseInterstitialAdapterDelegate>)delegate
 {
@@ -134,7 +164,7 @@ static MPInstanceProvider *sharedProvider = nil;
     }
 }
 
-- (MPInterstitialCustomEvent *)buildInterstitialCustomEventFromCustomClass:customClass
+- (MPInterstitialCustomEvent *)buildInterstitialCustomEventFromCustomClass:(Class)customClass
                                                                   delegate:(id<MPInterstitialCustomEventDelegate>)delegate
 {
     MPInterstitialCustomEvent *customEvent = [[[customClass alloc] init] autorelease];

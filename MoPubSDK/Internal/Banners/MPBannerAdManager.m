@@ -100,6 +100,8 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
         return;
     }
     
+    [self cancelPendingAutorefreshTimer];
+    
     _loading = YES;
     
     URL = (URL) ? URL : [MPAdServerURLBuilder URLWithAdUnitID:[self adUnitID]
@@ -112,21 +114,18 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
     [_communicator loadURL:URL];
 }
 
-- (void)refreshAd
-{
-    [self cancelPendingAutorefreshTimer];
-    [self loadAdWithURL:nil];
-}
-
 - (void)forceRefreshAd
 {
     [self cancelAd];
-    [self refreshAd];
+    [self loadAdWithURL:nil];
 }
 
 - (void)cancelAd
 {
-    _loading = NO;
+    if (_loading) {
+        _loading = NO;
+        [_adapterManager cancelRequestingAdapter];
+    }
     [_communicator cancel];
 }
 
@@ -228,7 +227,6 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
 
 - (void)applicationWillEnterForeground
 {
-    _autorefreshTimerNeedsScheduling = NO;
     if (!_ignoresAutorefresh) {
         [self forceRefreshAd];
     }
@@ -287,10 +285,7 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
 
 - (void)scheduleAutorefreshTimer
 {
-    if (_adActionInProgress) {
-        _autorefreshTimerNeedsScheduling = YES;
-        MPLogDebug(@"Ad action in progress: MPTimer will be scheduled after action ends.");
-    } else if ([self.autorefreshTimer isScheduled]) {
+    if ([self.autorefreshTimer isScheduled]) {
         MPLogDebug(@"Tried to schedule the autorefresh timer, but it was already scheduled.");
     } else if (self.autorefreshTimer == nil) {
         MPLogDebug(@"Tried to schedule the autorefresh timer, but it was nil.");
@@ -334,11 +329,11 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
 
 - (void)adapterManager:(MPBannerAdapterManager *)manager didLoadAd:(UIView *)ad
 {
-    _loading = NO;
     
     if (_adActionInProgress) {
         self.nextAdContentView = ad;
     } else {
+        _loading = NO;
         [self.adView setAdContentView:ad];
         [manager requestedAdDidBecomeVisible];
         [self scheduleAutorefreshTimerIfEnabled];
@@ -390,24 +385,29 @@ const CGFloat kMoPubRequestRetryInterval = 60.0;
 {
     _adActionInProgress = NO;
     
+    if ([[self adViewDelegate] respondsToSelector:@selector(didDismissModalViewForAd:)]) {
+        [[self adViewDelegate] didDismissModalViewForAd:[self adView]];
+    }
+
     if (self.nextAdContentView) {
+        _loading = NO;
         [self.adView setAdContentView:self.nextAdContentView];
         self.nextAdContentView = nil;
         [manager requestedAdDidBecomeVisible];
         [self scheduleAutorefreshTimerIfEnabled];
+        
+        if ([[self adViewDelegate] respondsToSelector:@selector(adViewDidLoadAd:)]) {
+            [[self adViewDelegate] adViewDidLoadAd:[self adView]];
+        }
     } else if ([self.autorefreshTimer isScheduled] && [self.autorefreshTimer isValid]) {
         [self.autorefreshTimer resume];
-    }
-    
-    if ([[self adViewDelegate] respondsToSelector:@selector(didDismissModalViewForAd:)]) {
-        [[self adViewDelegate] didDismissModalViewForAd:[self adView]];
     }
 }
 
 - (void)adapterManagerUserWillLeaveApplication:(MPBannerAdapterManager *)manager
 {
     // XXX:
-    _adActionInProgress = NO;
+//    _adActionInProgress = NO;
     
     if ([[self adViewDelegate] respondsToSelector:@selector(willLeaveApplicationFromAd:)]) {
         [[self adViewDelegate] willLeaveApplicationFromAd:[self adView]];

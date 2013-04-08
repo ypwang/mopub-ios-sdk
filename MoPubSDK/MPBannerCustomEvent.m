@@ -17,12 +17,13 @@
     // and implement code to load a banner here.
 }
 
-- (void)dealloc
+- (void)customEventDidUnload
 {
-    // Your subclass should implement -dealloc if it needs to perform any cleanup.
+    // Your subclass can implement this method if it needs to perform any cleanup, or simply do
+    // the cleanup work in -dealloc. If you override this method, make sure to call
+    // [super customEventDidUnload].
     
-    delegate = nil;
-    [super dealloc];
+    self.delegate = nil;
 }
 
 @end

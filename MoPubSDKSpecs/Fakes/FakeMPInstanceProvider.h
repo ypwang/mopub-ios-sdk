@@ -22,6 +22,8 @@
 #import "FakeMMBannerAdView.h"
 #import "FakeMPReachability.h"
 #import "FakeMPTimer.h"
+#import "MPBaseAdapter.h"
+#import "FakeBannerCustomEvent.h"
 
 @interface FakeMPInstanceProvider : MPInstanceProvider
 
@@ -31,8 +33,12 @@
 @property (nonatomic, assign) MPURLResolver *fakeMPURLResolver;
 @property (nonatomic, assign) MPHTMLInterstitialViewController *fakeMPHTMLInterstitialViewController;
 @property (nonatomic, assign) MPMRAIDInterstitialViewController *fakeMPMRAIDInterstitialViewController;
-@property (nonatomic, assign) MPBaseInterstitialAdapter *fakeInterstitialAdapter;
 @property (nonatomic, assign) MPInterstitialAdManager *fakeMPInterstitialAdManager;
+
+@property (nonatomic, assign) MPBaseAdapter *fakeBannerAdapter;
+@property (nonatomic, assign) FakeBannerCustomEvent *fakeBannerCustomEvent;
+@property (nonatomic, assign) MPBaseInterstitialAdapter *fakeInterstitialAdapter;
+@property (nonatomic, assign) FakeInterstitialCustomEvent *fakeInterstitialCustomEvent;
 
 @property (nonatomic, assign) ADInterstitialAd *fakeADInterstitialAd;
 @property (nonatomic, assign) GADInterstitial *fakeGADInterstitial;
@@ -41,7 +47,6 @@
 
 @property (nonatomic, assign) FakeMMInterstitialAdView *fakeMMAdViewInterstitial;
 @property (nonatomic, assign) FakeMMBannerAdView *fakeMMAdViewBanner;
-@property (nonatomic, assign) FakeInterstitialCustomEvent *fakeInterstitialCustomEvent;
 @property (nonatomic, assign) Chartboost *fakeChartboost;
 @property (nonatomic, assign) FakeGSFullscreenAd *fakeGSFullscreenAd;
 @property (nonatomic, assign) IMAdInterstitial *fakeIMAdInterstitial;

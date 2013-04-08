@@ -134,6 +134,30 @@
     return self.lastFakeMPAdServerCommunicator;
 }
 
+- (MPBaseAdapter *)buildBannerAdapterForConfiguration:(MPAdConfiguration *)configuration
+                                             delegate:(id<MPAdapterDelegate>)delegate
+{
+    if (self.fakeBannerAdapter) {
+        self.fakeBannerAdapter.delegate = delegate;
+        return self.fakeBannerAdapter;
+    } else {
+        return [super buildBannerAdapterForConfiguration:configuration
+                                                delegate:delegate];
+    }
+}
+
+- (MPBannerCustomEvent *)buildBannerCustomEventFromCustomClass:(Class)customClass
+                                                      delegate:(id<MPBannerCustomEventDelegate>)delegate
+{
+    if (self.fakeBannerCustomEvent) {
+        self.fakeBannerCustomEvent.delegate = delegate;
+        return self.fakeBannerCustomEvent;
+    }
+    
+    return [super buildBannerCustomEventFromCustomClass:customClass delegate:delegate];
+}
+
+
 - (MPBaseInterstitialAdapter *)buildInterstitialAdapterForConfiguration:(MPAdConfiguration *)configuration
                                                                delegate:(id<MPBaseInterstitialAdapterDelegate>)delegate
 {
@@ -145,6 +169,18 @@
                                                       delegate:delegate];
     }
 }
+
+- (MPInterstitialCustomEvent *)buildInterstitialCustomEventFromCustomClass:(Class)customClass
+                                                                  delegate:(id<MPInterstitialCustomEventDelegate>)delegate
+{
+    if (self.fakeInterstitialCustomEvent) {
+        self.fakeInterstitialCustomEvent.delegate = delegate;
+        return self.fakeInterstitialCustomEvent;
+    }
+    
+    return [super buildInterstitialCustomEventFromCustomClass:customClass delegate:delegate];
+}
+
 
 - (MPInterstitialAdManager *)buildMPInterstitialAdManagerWithDelegate:(id<MPInterstitialAdManagerDelegate>)delegate
 {
@@ -212,17 +248,6 @@
     }
 
     return [super buildMMAdViewWithFrame:frame type:type apid:apid delegate:delegate];
-}
-
-- (MPInterstitialCustomEvent *)buildInterstitialCustomEventFromCustomClass:(Class)customClass
-                                                                  delegate:(id<MPInterstitialCustomEventDelegate>)delegate
-{
-    if (self.fakeInterstitialCustomEvent) {
-        self.fakeInterstitialCustomEvent.delegate = delegate;
-        return self.fakeInterstitialCustomEvent;
-    }
-
-    return [super buildInterstitialCustomEventFromCustomClass:customClass delegate:delegate];
 }
 
 - (Chartboost *)buildChartboost

@@ -26,6 +26,12 @@ void verify_fake_received_selectors(id<CedarDouble> fake, NSArray *selectors)
     [fake reset_sent_messages];
 }
 
+void log_sent_messages(id<CedarDouble> fake)
+{
+    for (NSInvocation *invocation in fake.sent_messages) {
+        NSLog(@"================> %@", NSStringFromSelector(invocation.selector));
+    }
+}
 
 @implementation MPSpecHelper
 

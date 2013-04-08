@@ -66,12 +66,11 @@
     [self.inMobiInterstitial presentFromRootViewController:rootViewController animated:YES];
 }
 
-- (void)dealloc
+- (void)customEventDidUnload
 {
     [self.inMobiInterstitial setDelegate:nil];
     self.inMobiInterstitial = nil;
-
-    [super dealloc];
+    [super customEventDidUnload];
 }
 
 #pragma mark - IMAdInterstitialDelegate

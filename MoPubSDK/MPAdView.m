@@ -235,7 +235,7 @@ static NSString * const kNewContentViewKey = @"NewContentView";
 
 - (void)refreshAd
 {
-    [_adManager refreshAd];
+    [self loadAd];
 }
 
 - (void)forceRefreshAd

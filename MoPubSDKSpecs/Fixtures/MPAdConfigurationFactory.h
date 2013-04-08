@@ -12,9 +12,10 @@
 
 + (NSMutableDictionary *)defaultBannerHeaders;
 + (MPAdConfiguration *)defaultBannerConfiguration;
++ (MPAdConfiguration *)defaultBannerConfigurationWithNetworkType:(NSString *)type;
++ (MPAdConfiguration *)defaultBannerConfigurationWithCustomEventClassName:(NSString *)eventClassName;
 + (MPAdConfiguration *)defaultBannerConfigurationWithHeaders:(NSDictionary *)dictionary
                                                   HTMLString:(NSString *)HTMLString;
-+ (MPAdConfiguration *)defaultBannerConfigurationWithCustomEventClassName:(NSString *)eventClassName;
 
 + (NSMutableDictionary *)defaultInterstitialHeaders;
 + (MPAdConfiguration *)defaultInterstitialConfiguration;

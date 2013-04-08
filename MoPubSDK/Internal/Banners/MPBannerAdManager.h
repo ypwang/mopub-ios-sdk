@@ -37,7 +37,6 @@ extern const CGFloat kMoPubRequestRetryInterval;
     MPTimer *_autorefreshTimer;
     BOOL _ignoresAutorefresh;
     BOOL _previousIgnoresAutorefresh;
-    BOOL _autorefreshTimerNeedsScheduling;
 }
 
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
@@ -48,7 +47,6 @@ extern const CGFloat kMoPubRequestRetryInterval;
 @property (nonatomic, assign) BOOL ignoresAutorefresh;
 
 - (void)loadAdWithURL:(NSURL *)URL;
-- (void)refreshAd;
 - (void)forceRefreshAd;
 - (void)cancelAd;
 

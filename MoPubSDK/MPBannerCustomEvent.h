@@ -35,6 +35,14 @@
  */
 - (void)requestAdWithSize:(CGSize)size customEventInfo:(NSDictionary *)info;
 
+
+/*
+ * This message is sent when the MoPub SDK is about to deallocate your custom event instance.
+ * You may override this method to perform any necessary cleanup.  Your implementation must call
+ * [super customEventDidUnload].
+ */
+- (void)customEventDidUnload;
+
 /*
  * The `delegate` object defines several methods that you should call in order to inform both MoPub
  * and your MPAdView's delegate of the progress of your custom event. At a minimum, the MoPub SDK

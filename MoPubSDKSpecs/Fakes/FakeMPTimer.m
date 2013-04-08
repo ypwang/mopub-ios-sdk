@@ -25,6 +25,11 @@
     return timer;
 }
 
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"<MPTimer %p: TimeInterval:%.1f, Target:%@, Selector:%@>", self, self.timeInterval, self.target, NSStringFromSelector(self.selector)];
+}
+
 - (BOOL)scheduleNow
 {
     self.isScheduled = YES;

@@ -35,6 +35,8 @@
     [super dealloc];
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 - (void)getAdWithConfiguration:(MPAdConfiguration *)configuration
 {
     Class customEventClass = configuration.customEventClass;
@@ -62,6 +64,8 @@
 {
     [self.interstitialCustomEvent showInterstitialFromRootViewController:controller];
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma mark - MPInterstitialCustomEventDelegate
 

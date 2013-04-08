@@ -16,11 +16,9 @@
 @interface MPBaseAdapter : NSObject
 {
     id<MPAdapterDelegate> _delegate;
-    NSURL *_impressionTrackingURL;
-    NSURL *_clickTrackingURL;
 }
 
-@property (nonatomic, readonly) id<MPAdapterDelegate> delegate;
+@property (nonatomic, assign) id<MPAdapterDelegate> delegate;
 @property (nonatomic, copy) NSURL *impressionTrackingURL;
 @property (nonatomic, copy) NSURL *clickTrackingURL;
 

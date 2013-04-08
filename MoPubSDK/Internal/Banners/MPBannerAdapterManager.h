@@ -25,6 +25,7 @@
 - (id)initWithDelegate:(id<MPBannerAdapterManagerDelegate>)delegate;
 - (void)loadAdapterForConfig:(MPAdConfiguration *)config;
 - (void)requestedAdDidBecomeVisible;
+- (void)cancelRequestingAdapter;
 
 - (void)rotateToOrientation:(UIInterfaceOrientation)orientation;
 

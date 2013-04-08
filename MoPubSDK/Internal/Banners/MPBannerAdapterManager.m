@@ -12,6 +12,7 @@
 #import "MPAdapterMap.h"
 #import "MPBannerCustomEventAdapter.h"
 #import "MPError.h"
+#import "MPInstanceProvider.h"
 
 @interface MPBannerAdapterManager ()
 
@@ -72,9 +73,8 @@
 
     MPLogInfo(@"Fetching banner ad network type: %@", [config networkType]);
 
-    Class adapterClass = [[MPAdapterMap sharedAdapterMap] bannerAdapterClassForNetworkType:
-                          [config networkType]];
-    MPBaseAdapter *adapter = [[[adapterClass alloc] initWithAdapterDelegate:self] autorelease];
+    MPBaseAdapter *adapter = [[MPInstanceProvider sharedProvider] buildBannerAdapterForConfiguration:config
+                                                                                            delegate:self];
 
     if (!adapter) {
         MPLogInfo(@"Could not create adapter for banner network type: %@.", [config networkType]);
@@ -119,6 +119,12 @@
     self.requestedAd = nil;
 
     [self.currentOnscreenAdapter trackImpression];
+}
+
+- (void)cancelRequestingAdapter
+{
+    [self.requestingAdapter unregisterDelegate];
+    self.requestingAdapter = nil;
 }
 
 #pragma mark - Rotation

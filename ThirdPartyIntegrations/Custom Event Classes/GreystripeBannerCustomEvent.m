@@ -44,12 +44,11 @@
     return [self.delegate viewControllerForPresentingModalView];
 }
 
-- (void)dealloc
+- (void)customEventDidUnload
 {
     _greystripeBannerAdView.delegate = nil;
     [_greystripeBannerAdView release];
-    
-    [super dealloc];
+    [super customEventDidUnload];
 }
 
 #pragma mark - GSAdDelegate

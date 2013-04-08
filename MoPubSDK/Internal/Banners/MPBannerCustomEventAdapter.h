@@ -12,8 +12,5 @@
 @class MPBannerCustomEvent;
 
 @interface MPBannerCustomEventAdapter : MPBaseAdapter <MPBannerCustomEventDelegate>
-{
-    MPBannerCustomEvent *_bannerCustomEvent;
-}
 
 @end

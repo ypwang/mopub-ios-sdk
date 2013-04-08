@@ -21,6 +21,7 @@ typedef void (^NoArgBlock)();
 typedef id (^IDReturningBlock)();
 
 void verify_fake_received_selectors(id<CedarDouble> fake, NSArray *selectors);
+void log_sent_messages(id<CedarDouble> fake);
 
 extern FakeMPInstanceProvider *fakeProvider;
 

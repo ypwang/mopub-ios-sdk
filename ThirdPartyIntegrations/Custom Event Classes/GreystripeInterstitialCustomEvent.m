@@ -58,12 +58,11 @@
     }
 }
 
-- (void)dealloc
+- (void)customEventDidUnload
 {
     [self.greystripeFullscreenAd setDelegate:nil];
     self.greystripeFullscreenAd = nil;
-
-    [super dealloc];
+    [super customEventDidUnload];
 }
 
 #pragma mark - GSAdDelegate

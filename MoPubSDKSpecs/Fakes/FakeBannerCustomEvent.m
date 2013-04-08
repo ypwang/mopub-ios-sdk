@@ -9,10 +9,51 @@
 
 @implementation FakeBannerCustomEvent
 
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super init];
+    if (self) {
+        self.view = [[[UIView alloc] initWithFrame:frame] autorelease];
+    }
+    return self;
+}
+
 - (void)requestAdWithSize:(CGSize)size customEventInfo:(NSDictionary *)info
 {
     self.size = size;
     self.customEventInfo = info;
+    self.presentingViewController = self.delegate.viewControllerForPresentingModalView;
+}
+
+- (void)customEventDidUnload
+{
+    self.didUnload = YES;
+    [super customEventDidUnload];
+}
+
+- (void)simulateLoadingAd
+{
+    [self.delegate bannerCustomEvent:self didLoadAd:self.view];
+}
+
+- (void)simulateFailingToLoad
+{
+    [self.delegate bannerCustomEvent:self didFailToLoadAdWithError:nil];
+}
+
+- (void)simulateUserTap
+{
+    [self.delegate bannerCustomEventWillBeginAction:self];
+}
+
+- (void)simulateUserEndingInteraction
+{
+    [self.delegate bannerCustomEventDidFinishAction:self];
+}
+
+- (void)simulateUserLeavingApplication
+{
+    [self.delegate bannerCustomEventWillLeaveApplication:self];
 }
 
 @end

@@ -13,6 +13,7 @@
 {
     self.loading = YES;
     self.loadedURL = URL;
+    self.cancelled = NO;
 }
 
 - (void)cancel
