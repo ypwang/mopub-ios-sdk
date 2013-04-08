@@ -36,6 +36,8 @@
 - (void)getAdWithConfiguration:(MPAdConfiguration *)configuration;
 - (void)_getAdWithConfiguration:(MPAdConfiguration *)configuration;
 
+- (void)didStopLoading;
+
 /*
  * Your subclass should implement this method if your native ads vary depending on orientation.
  */

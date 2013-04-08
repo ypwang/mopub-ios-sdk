@@ -6,7 +6,7 @@ using namespace Cedar::Doubles;
 
 SPEC_BEGIN(CustomEventBannerIntegrationSuiteSpec)
 
-fdescribe(@"CustomEventBannerIntegrationSuite", ^{
+describe(@"CustomEventBannerIntegrationSuite", ^{
     __block FakeBannerCustomEvent *event;
     __block MPAdView *banner;
     __block id<CedarDouble, MPAdViewDelegate> delegate;
@@ -19,12 +19,10 @@ fdescribe(@"CustomEventBannerIntegrationSuite", ^{
     sharedExamplesFor(@"a banner that ignores loads", ^(NSDictionary *sharedContext) {
         __block BOOL hasRefreshTimer;
         __block BOOL initialRefreshTimerState;
-        __block BOOL hasTimeoutTimer;
         
         beforeEach(^{
             hasRefreshTimer = !!refreshTimer;
             initialRefreshTimerState = refreshTimer.isValid;
-            // hasTimeoutTimer = !
             [communicator reset];
             [banner loadAd];
         });
@@ -36,12 +34,6 @@ fdescribe(@"CustomEventBannerIntegrationSuite", ^{
         it(@"should leave the refresh timer alone (if present)", ^{
             if (hasRefreshTimer) {
                 refreshTimer.isValid should equal(initialRefreshTimerState);
-            }
-        });
-        
-        xit(@"should leave the adapter timeout timer alone (if present)", ^{
-            if (hasTimeoutTimer) {
-                // timeoutTimer.isValid should equal(YES);
             }
         });
     });
@@ -81,12 +73,6 @@ fdescribe(@"CustomEventBannerIntegrationSuite", ^{
                     refreshTimer.isValid should equal(NO);
                 }
             });
-            
-            xit(@"should invalidate the timeout timer (if present)", ^{
-//                if (timeoutTimer) {
-//                    timeoutTimer.isValid should equal(NO);
-//                }
-            });
         });
 
         context(@"when the user backgrounds/foregrounds", ^{
@@ -106,12 +92,6 @@ fdescribe(@"CustomEventBannerIntegrationSuite", ^{
                 if (refreshTimer) {
                     refreshTimer.isValid should equal(NO);
                 }
-            });
-            
-            xit(@"should invalidate the timeout timer (if present)", ^{
-//                if (timeoutTimer) {
-//                    timeoutTimer.isValid should equal(NO);
-//                }
             });
         });
     });
@@ -219,9 +199,9 @@ fdescribe(@"CustomEventBannerIntegrationSuite", ^{
                 [communicator receiveConfiguration:newConfiguration];
                 [communicator reset];
                 
-                fakeProvider.fakeTimers.lastObject should_not be_same_instance_as(refreshTimer);
+                [fakeProvider lastFakeMPTimerWithSelector:@selector(forceRefreshAd)] should_not be_same_instance_as(refreshTimer);
                 refreshTimer.isValid should equal(NO);
-                refreshTimer = fakeProvider.fakeTimers.lastObject;
+                refreshTimer = [fakeProvider lastFakeMPTimerWithSelector:@selector(forceRefreshAd)];
             });
             
             it(@"should tell the delegate that it failed", ^{
@@ -250,10 +230,6 @@ fdescribe(@"CustomEventBannerIntegrationSuite", ^{
         it(@"should track an impression", ^{
             fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
             fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.lastObject should equal(configuration);
-        });
-        
-        xit(@"should cancel the adapter timeout timer", ^{
-            
         });
         
         it(@"should start the refresh timer", ^{
@@ -291,7 +267,7 @@ fdescribe(@"CustomEventBannerIntegrationSuite", ^{
         context(@"when the communicator fails", ^{
             beforeEach(^{
                 [communicator failWithError:[NSErrorFactory genericError]];
-                refreshTimer = fakeProvider.fakeTimers.lastObject;
+                refreshTimer = [fakeProvider lastFakeMPTimerWithSelector:@selector(forceRefreshAd)];
             });
             
             it(@"should schedule the default refresh timer", ^{
@@ -317,7 +293,7 @@ fdescribe(@"CustomEventBannerIntegrationSuite", ^{
                 configuration.customEventClassData = @{@"why": @"not"};
                 configuration.refreshInterval = 12;
                 [communicator receiveConfiguration:configuration];
-                refreshTimer = fakeProvider.fakeTimers.lastObject;
+                refreshTimer = [fakeProvider lastFakeMPTimerWithSelector:@selector(forceRefreshAd)];
             });
             
             it(@"should tell the custom event to load the ad, with the appropriate size", ^{
@@ -328,10 +304,6 @@ fdescribe(@"CustomEventBannerIntegrationSuite", ^{
             it(@"should have a refresh timer with the configuration's interval, but not schedule it yet", ^{
                 refreshTimer.timeInterval should equal(12);
                 refreshTimer.isScheduled should equal(NO);
-            });
-            
-            xit(@"should schedule an adapter timeout timer", ^{
-                
             });
             
             context(@"when told to rotate", ^{
@@ -346,14 +318,6 @@ fdescribe(@"CustomEventBannerIntegrationSuite", ^{
                 itShouldBehaveLike(@"a banner that cancels the loading ad when forced to refresh");
             });
             
-            xcontext(@"when the adapter times out", ^{
-                beforeEach(^{
-                    
-                });
-                
-                itShouldBehaveLike(@"a banner that loads the failover URL");
-            });
-
             context(@"when the ad fails to load", ^{
                 beforeEach(^{
                     [delegate reset_sent_messages];
@@ -363,7 +327,6 @@ fdescribe(@"CustomEventBannerIntegrationSuite", ^{
                 
                 itShouldBehaveLike(@"a banner that loads the failover URL");                
             });
-
             
             context(@"when the ad loads successfully", ^{
                 beforeEach(^{
@@ -371,7 +334,7 @@ fdescribe(@"CustomEventBannerIntegrationSuite", ^{
                     [event simulateLoadingAd];
                     onscreenEvent = event;
                 });
-                
+                                
                 it(@"should tell the ad view delegate", ^{
                     verify_fake_received_selectors(delegate, @[@"adViewDidLoadAd:"]);
                 });
@@ -498,7 +461,7 @@ fdescribe(@"CustomEventBannerIntegrationSuite", ^{
             onscreenEvent = event;
             
             [communicator reset];
-            [fakeProvider.fakeTimers.lastObject trigger];
+            [[fakeProvider lastFakeMPTimerWithSelector:@selector(forceRefreshAd)] trigger];
             
             configuration = [MPAdConfigurationFactory defaultBannerConfigurationWithCustomEventClassName:@"FakeBannerCustomEvent"];
             configuration.customEventClassData = @{@"fruit": @"loops"};
@@ -538,7 +501,7 @@ fdescribe(@"CustomEventBannerIntegrationSuite", ^{
         context(@"when the communicator fails", ^{
             beforeEach(^{
                 [communicator failWithError:[NSErrorFactory genericError]];
-                refreshTimer = fakeProvider.fakeTimers.lastObject;
+                refreshTimer = [fakeProvider lastFakeMPTimerWithSelector:@selector(forceRefreshAd)];
             });
             
             it(@"should schedule the default refresh timer", ^{
@@ -561,7 +524,7 @@ fdescribe(@"CustomEventBannerIntegrationSuite", ^{
         context(@"when the communicator succeeds", ^{
             beforeEach(^{
                 [communicator receiveConfiguration:configuration];
-                refreshTimer = fakeProvider.fakeTimers.lastObject;
+                refreshTimer = [fakeProvider lastFakeMPTimerWithSelector:@selector(forceRefreshAd)];
             });
             
             it(@"should tell the new custom event to load", ^{
@@ -572,10 +535,6 @@ fdescribe(@"CustomEventBannerIntegrationSuite", ^{
             it(@"should have a refresh timer, but not schedule it", ^{
                 refreshTimer.isScheduled should equal(NO);
                 refreshTimer.initialTimeInterval should equal(17);
-            });
-            
-            xit(@"should schedule an adapter timeout timer", ^{
-                
             });
             
             context(@"when told to rotate", ^{
@@ -589,14 +548,6 @@ fdescribe(@"CustomEventBannerIntegrationSuite", ^{
                 itShouldBehaveLike(@"a banner that immediately refreshes");
                 itShouldBehaveLike(@"a banner that cancels the loading ad when forced to refresh");
                 itShouldBehaveLike(@"a banner that continues to listen to the onscreen ad when forced to refresh");
-            });
-            
-            xcontext(@"when the adapter times out", ^{
-                beforeEach(^{
-                    
-                });
-                
-                itShouldBehaveLike(@"a banner that loads the failover URL");
             });
             
             context(@"when the user has not interacted with the onscreen ad", ^{
@@ -653,11 +604,8 @@ fdescribe(@"CustomEventBannerIntegrationSuite", ^{
                         banner.subviews should equal(@[onscreenEvent.view]);
                         banner.adContentViewSize should equal(onscreenEvent.view.frame.size);
                         fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations should be_empty;
-                        //cancel the adapter timeout timer
                         refreshTimer.isScheduled should equal(NO);
                     });
-                    
-                    xit(@"cancel the adapter timeout timer ----^", ^{});
                     
                     context(@"when the user tries to load", ^{itShouldBehaveLike(@"a banner that ignores loads");});
                     context(@"when the user backgrounds or forcibly refreshes the ad", ^{
@@ -713,7 +661,7 @@ fdescribe(@"CustomEventBannerIntegrationSuite", ^{
                                     event = [[[FakeBannerCustomEvent alloc] initWithFrame:CGRectMake(0, 0, 100, 30)] autorelease];
                                     fakeProvider.fakeBannerCustomEvent = event;
                                     [communicator receiveConfiguration:configuration];
-                                    refreshTimer = fakeProvider.fakeTimers.lastObject;
+                                    refreshTimer = [fakeProvider lastFakeMPTimerWithSelector:@selector(forceRefreshAd)];
                                     [delegate reset_sent_messages];
                                     [event simulateLoadingAd];
                                 });

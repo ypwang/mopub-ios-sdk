@@ -12,12 +12,14 @@
 #import "MPLogging.h"
 #import "MPInstanceProvider.h"
 #import "MPAnalyticsTracker.h"
+#import "MPTimer.h"
 
 @interface MPBaseAdapter ()
 
 @property (nonatomic, retain) NSMutableURLRequest *metricsURLRequest;
 @property (nonatomic, retain) MPAnalyticsTracker *analyticsTracker;
 @property (nonatomic, retain) MPAdConfiguration *configuration;
+@property (nonatomic, retain) MPTimer *timeoutTimer;
 
 @end
 
@@ -28,6 +30,7 @@
 @synthesize delegate = _delegate;
 @synthesize analyticsTracker = _analyticsTracker;
 @synthesize configuration = _configuration;
+@synthesize timeoutTimer = _timeoutTimer;
 
 - (id)initWithAdapterDelegate:(id<MPAdapterDelegate>)delegate
 {
@@ -43,6 +46,9 @@
     [self unregisterDelegate];
     self.analyticsTracker = nil;
     self.configuration = nil;
+    
+    [self.timeoutTimer invalidate];
+    self.timeoutTimer = nil;
     
     [_metricsURLRequest release];
     [super dealloc];
@@ -64,10 +70,27 @@
 - (void)_getAdWithConfiguration:(MPAdConfiguration *)configuration
 {
     self.configuration = configuration;
-
+    
+    self.timeoutTimer = [[MPInstanceProvider sharedProvider] buildMPTimerWithTimeInterval:10
+                                                                                   target:self
+                                                                                 selector:@selector(timeout)
+                                                                                  repeats:NO];
+    [self.timeoutTimer scheduleNow];
+    
     [self retain];
     [self getAdWithConfiguration:configuration];
     [self release];
+}
+
+- (void)didStopLoading
+{
+    [self.timeoutTimer invalidate];
+}
+
+- (void)timeout
+{
+    [self.delegate adapter:self didFailToLoadAdWithError:nil];
+    [self unregisterDelegate];
 }
 
 #pragma mark - Rotation

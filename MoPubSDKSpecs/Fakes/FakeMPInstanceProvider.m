@@ -30,6 +30,13 @@
 
 @end
 
+////////////////////////
+
+@interface FakeMPInstanceProvider ()
+
+@property (nonatomic, assign) NSMutableArray *fakeTimers;
+
+@end
 
 @implementation FakeMPInstanceProvider
 
@@ -69,6 +76,18 @@
     MPTimer *fakeTimer = [FakeMPTimer timerWithTimeInterval:seconds target:target selector:selector repeats:repeats];
     [self.fakeTimers addObject:fakeTimer];
     return fakeTimer;
+}
+
+- (FakeMPTimer *)lastFakeMPTimerWithSelector:(SEL)selector
+{
+    int numTimers = [self.fakeTimers count];
+    for (int i = numTimers - 1; i >= 0; i--) {
+        if ([self.fakeTimers[i] selector] == selector) {
+            return self.fakeTimers[i];
+        }
+    }
+    
+    return nil;
 }
 
 - (MPAdWebViewAgent *)buildMPAdWebViewAgentWithAdWebViewFrame:(CGRect)frame delegate:(id<MPAdWebViewAgentDelegate>)delegate customMethodDelegate:(id)customMethodDelegate

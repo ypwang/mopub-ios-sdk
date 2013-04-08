@@ -55,6 +55,7 @@
 
 @property (nonatomic, assign) FakeMPAdServerCommunicator *lastFakeMPAdServerCommunicator;
 @property (nonatomic, assign) FakeMPAnalyticsTracker *lastFakeMPAnalyticsTracker;
-@property (nonatomic, assign) NSMutableArray *fakeTimers;
+
+- (FakeMPTimer *)lastFakeMPTimerWithSelector:(SEL)selector;
 
 @end
