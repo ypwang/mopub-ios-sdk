@@ -2,60 +2,29 @@
 //  MPBannerAdManager.h
 //  MoPub
 //
-//  Copyright (c) 2012 MoPub, Inc. All rights reserved.
+//  Copyright (c) 2013 MoPub. All rights reserved.
 //
 
-#import "MPAdBrowserController.h"
+#import <Foundation/Foundation.h>
 #import "MPAdServerCommunicator.h"
-#import "MPBannerAdapterManager.h"
 #import "MPBaseAdapter.h"
-#import "MPProgressOverlayView.h"
-
-extern const CGFloat kMoPubRequestRetryInterval;
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @protocol MPBannerAdManagerDelegate;
-@class MPAdView, MPBaseAdapter, MPBannerDelegateHelper, MPTimer;
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+@interface MPBannerAdManager : NSObject <MPAdServerCommunicatorDelegate, MPAdapterDelegate>
 
-@interface MPBannerAdManager : NSObject <MPAdServerCommunicatorDelegate,
-    MPBannerAdapterManagerDelegate>
-{
-    MPAdServerCommunicator *_communicator;
-    BOOL _loading;
+@property (nonatomic, assign) id<MPBannerAdManagerDelegate> delegate;
 
-    MPBannerAdapterManager *_adapterManager;
-    MPBannerDelegateHelper *_delegateHelper;
+- (id)initWithDelegate:(id<MPBannerAdManagerDelegate>)delegate;
 
-    MPAdView *_adView;
-
-    BOOL _adActionInProgress;
-    UIView *_nextAdContentView;
-
-    MPTimer *_autorefreshTimer;
-    BOOL _ignoresAutorefresh;
-    BOOL _previousIgnoresAutorefresh;
-}
-
-@property (nonatomic, assign, getter=isLoading) BOOL loading;
-
-@property (nonatomic, assign) MPAdView *adView;
-
-@property (nonatomic, retain) MPTimer *autorefreshTimer;
-@property (nonatomic, assign) BOOL ignoresAutorefresh;
-
-- (void)loadAdWithURL:(NSURL *)URL;
+- (void)loadAd;
 - (void)forceRefreshAd;
-- (void)cancelAd;
-
 - (void)rotateToOrientation:(UIInterfaceOrientation)orientation;
+
+// Deprecated.
 - (void)customEventDidLoadAd;
 - (void)customEventDidFailToLoadAd;
 - (void)customEventActionWillBegin;
 - (void)customEventActionDidEnd;
-
-- (NSTimeInterval)refreshInterval;
 
 @end

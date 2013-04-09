@@ -48,7 +48,7 @@
 //    [_adBannerView release];
 //}
 //
-//- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration
+//- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration containerSize:(CGSize)size
 //{
 //    Class cls = NSClassFromString(@"ADBannerView");
 //    if (cls != nil)

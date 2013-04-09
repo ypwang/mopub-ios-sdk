@@ -62,7 +62,7 @@
     [super dealloc];
 }
 
-- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration
+- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration containerSize:(CGSize)size
 {
     self.adBannerView.frame = [self frameForConfiguration:configuration];
     self.adBannerView.adUnitID = [configuration.nativeSDKParameters objectForKey:@"adUnitID"];
@@ -104,7 +104,7 @@
 
 - (void)adViewDidReceiveAd:(GADBannerView *)bannerView
 {
-    [self.delegate adapter:self didFinishLoadingAd:bannerView shouldTrackImpression:YES];
+    [self.delegate adapter:self didFinishLoadingAd:bannerView];
 }
 
 - (void)adView:(GADBannerView *)bannerView

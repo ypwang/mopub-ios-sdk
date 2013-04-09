@@ -34,7 +34,7 @@ describe(@"LegacyCustomEventInterstitialIntegrationSuite", ^{
         [communicator receiveConfiguration:configuration];
 
         // clear out the communicator so we can make future assertions about it
-        [communicator reset];
+        [communicator resetLoadedURL];
 
         // Just to make the compiler happy.
 

@@ -2,444 +2,300 @@
 //  MPBannerAdManager.m
 //  MoPub
 //
-//  Copyright (c) 2012 MoPub, Inc. All rights reserved.
+//  Copyright (c) 2013 MoPub. All rights reserved.
 //
 
-#import <objc/runtime.h>
-
 #import "MPBannerAdManager.h"
-
-#import "MPAdapterMap.h"
 #import "MPAdServerURLBuilder.h"
-#import "MPBannerDelegateHelper.h"
-#import "MPKeywordProvider.h"
-#import "MPTimer.h"
-
-#import "MPAdConfiguration.h"
 #import "MPInstanceProvider.h"
-
-NSString * const kTimerNotificationName = @"Autorefresh";
-const CGFloat kMoPubRequestRetryInterval = 60.0;
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
+#import "MPBannerAdManagerDelegate.h"
+#import "MPError.h"
+#import "MPTimer.h"
 
 @interface MPBannerAdManager ()
 
-@property (nonatomic, retain) MPBannerDelegateHelper *delegateHelper;
-@property (nonatomic, readwrite, copy) NSURL *failoverURL;
-@property (nonatomic, retain) UIView *nextAdContentView;
+@property (nonatomic, retain) MPAdServerCommunicator *communicator;
+@property (nonatomic, retain) MPBaseAdapter *onscreenAdapter;
+@property (nonatomic, retain) MPBaseAdapter *requestingAdapter;
+@property (nonatomic, retain) UIView *requestingAdapterAdContentView;
+@property (nonatomic, retain) MPAdConfiguration *requestingConfiguration;
+@property (nonatomic, retain) MPTimer *refreshTimer;
+@property (nonatomic, assign) BOOL adActionInProgress;
 
-- (void)registerForApplicationStateTransitionNotifications;
-- (void)scheduleAutorefreshTimerIfEnabled;
-- (void)scheduleAutorefreshTimer;
-- (void)cancelPendingAutorefreshTimer;
-- (void)rotateToOrientation:(UIInterfaceOrientation)orientation;
-- (void)scheduleDefaultAutorefreshTimer;
-
-- (NSString *)adUnitID;
-- (NSString *)keywords;
-- (CLLocation *)location;
-- (BOOL)isTesting;
+- (void)loadAdWithURL:(NSURL *)URL;
+- (void)scheduleRefreshTimer;
+- (void)refreshTimerDidFire;
 
 @end
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
 @implementation MPBannerAdManager
 
-@synthesize loading = _loading;
-@synthesize adView = _adView;
-@synthesize delegateHelper = _delegateHelper;
-@synthesize failoverURL = _failoverURL;
-@synthesize nextAdContentView = _nextAdContentView;
-@synthesize autorefreshTimer = _autorefreshTimer;
-@synthesize ignoresAutorefresh = _ignoresAutorefresh;
+@synthesize delegate = _delegate;
+@synthesize communicator = _communicator;
+@synthesize onscreenAdapter = _onscreenAdapter;
+@synthesize requestingAdapter = _requestingAdapter;
+@synthesize refreshTimer = _refreshTimer;
+@synthesize adActionInProgress = _adActionInProgress;
 
-- (id)init
+- (id)initWithDelegate:(id<MPBannerAdManagerDelegate>)delegate
 {
     self = [super init];
     if (self) {
-        [self registerForApplicationStateTransitionNotifications];
-        
-        _communicator = [[[MPInstanceProvider sharedProvider] buildMPAdServerCommunicatorWithDelegate:self] retain];
-        
-        _adapterManager = [[MPBannerAdapterManager alloc] initWithDelegate:self];
+        self.delegate = delegate;
+
+        self.communicator = [[MPInstanceProvider sharedProvider] buildMPAdServerCommunicatorWithDelegate:self];
+
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(forceRefreshAd)
+                                                     name:UIApplicationWillEnterForegroundNotification
+                                                   object:[UIApplication sharedApplication]];
     }
     return self;
 }
 
 - (void)dealloc
 {
-    _adView = nil;
-    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
-    [_autorefreshTimer invalidate];
-    [_autorefreshTimer release];
-    
-    [_communicator cancel];
-    [_communicator setDelegate:nil];
-    [_communicator release];
-    
-    [_adapterManager setDelegate:nil];
-    [_adapterManager release];
-    
-    [_delegateHelper release];
-    
-    [_failoverURL release];
-    
+
+    [self.communicator cancel];
+    self.communicator = nil;
+
+    [self.refreshTimer invalidate];
+    self.refreshTimer = nil;
+
+    [self.onscreenAdapter unregisterDelegate];
+    self.onscreenAdapter = nil;
+
+    [self.requestingAdapter unregisterDelegate];
+    self.requestingAdapter = nil;
+    self.requestingAdapterAdContentView = nil;
+    self.requestingConfiguration = nil;
+
     [super dealloc];
 }
 
-#pragma mark - Public
-
-- (void)loadAdWithURL:(NSURL *)URL
+- (BOOL)loading
 {
-    if (_loading) {
-        MPLogWarn(@"Banner view is already loading an ad. Wait for previous load to finish.");
+    return self.communicator.loading || self.requestingAdapter;
+}
+
+- (void)loadAd
+{
+    if (self.loading) {
+        MPLogWarn(@"Banner view (%@) is already loading an ad. Wait for previous load to finish.", [self.delegate adUnitId]);
         return;
     }
-    
-    [self cancelPendingAutorefreshTimer];
-    
-    _loading = YES;
-    
-    URL = (URL) ? URL : [MPAdServerURLBuilder URLWithAdUnitID:[self adUnitID]
-                                                     keywords:[self keywords]
-                                                     location:[self location]
-                                                      testing:[self isTesting]];
-    
-    MPLogInfo(@"Banner view (%p) loading ad with MoPub server URL: %@", self.adView, URL);
-    
-    [_communicator loadURL:URL];
+
+    [self loadAdWithURL:nil];
 }
 
 - (void)forceRefreshAd
 {
-    [self cancelAd];
     [self loadAdWithURL:nil];
 }
 
-- (void)cancelAd
+- (void)loadAdWithURL:(NSURL *)URL
 {
-    if (_loading) {
-        _loading = NO;
-        [_adapterManager cancelRequestingAdapter];
-    }
-    [_communicator cancel];
+    // Cancel the current request/requesting adapter
+    self.requestingConfiguration = nil;
+    [self.requestingAdapter unregisterDelegate];
+    self.requestingAdapter = nil;
+    self.requestingAdapterAdContentView = nil;
+
+    [self.communicator cancel];
+
+    URL = (URL) ? URL : [MPAdServerURLBuilder URLWithAdUnitID:[self.delegate adUnitId]
+                                                     keywords:[self.delegate keywords]
+                                                     location:[self.delegate location]
+                                                      testing:[self.delegate isTesting]];
+
+    MPLogInfo(@"Banner view (%@) loading ad with MoPub server URL: %@", [self.delegate adUnitId], URL);
+
+    [self.communicator loadURL:URL];
 }
-
-#pragma mark - Request data
-
-- (NSString *)adUnitID
-{
-    return [self.adView adUnitId];
-}
-
-- (NSString *)keywords
-{
-    return [self.adView keywords];
-}
-
-- (CLLocation *)location
-{
-    return [self.adView location];
-}
-
-- (BOOL)isTesting
-{
-    return [self.adView isTesting];
-}
-
-#pragma mark - MPAdServerCommunicatorDelegate
-
-- (void)communicatorDidReceiveAdConfiguration:(MPAdConfiguration *)configuration
-{
-    if (configuration.adType == MPAdTypeUnknown) {
-        [self communicatorDidFailWithError:nil];
-        return;
-    }
-    
-    configuration.adSize = _adView.originalSize;
-    
-    if (configuration.refreshInterval != -1) {
-        self.autorefreshTimer = [[MPInstanceProvider sharedProvider] buildMPTimerWithTimeInterval:configuration.refreshInterval
-                                                                                           target:self
-                                                                                         selector:@selector(forceRefreshAd)
-                                                                                          repeats:NO];
-    } else {
-        [self.autorefreshTimer invalidate];
-        self.autorefreshTimer = nil;
-    }
-    
-    self.failoverURL = configuration.failoverURL;
-    
-    [_adapterManager loadAdapterForConfig:configuration];
-}
-
-- (void)communicatorDidFailWithError:(NSError *)error
-{
-    _loading = NO;
-    
-    if (!self.autorefreshTimer || ![self.autorefreshTimer isValid]) {
-        [self scheduleDefaultAutorefreshTimer];
-    } else {
-        [self scheduleAutorefreshTimerIfEnabled];
-    }
-    
-    if ([[self adViewDelegate] respondsToSelector:@selector(adViewDidFailToLoadAd:)]) {
-        [[self adViewDelegate] adViewDidFailToLoadAd:[self adView]];
-    }
-    
-    MPLogError(@"Ad view (%p) failed to get a valid response from MoPub server. Error: %@",
-               self.adView, error);
-}
-
-#pragma mark - Initialization helpers
-
-- (void)registerForApplicationStateTransitionNotifications
-{
-    NSNotificationCenter *defaultNotificationCenter = [NSNotificationCenter defaultCenter];
-    
-    // iOS version > 4.0: Register for relevant application state transition notifications.
-    if (&UIApplicationDidEnterBackgroundNotification != nil)
-    {
-        [defaultNotificationCenter addObserver:self
-                                      selector:@selector(applicationDidEnterBackground)
-                                          name:UIApplicationDidEnterBackgroundNotification
-                                        object:[UIApplication sharedApplication]];
-    }
-    if (&UIApplicationWillEnterForegroundNotification != nil)
-    {
-        [defaultNotificationCenter addObserver:self
-                                      selector:@selector(applicationWillEnterForeground)
-                                          name:UIApplicationWillEnterForegroundNotification
-                                        object:[UIApplication sharedApplication]];
-    }
-}
-
-#pragma mark - UIApplication notification listeners
-
-- (void)applicationDidEnterBackground
-{
-    [self.autorefreshTimer pause];
-}
-
-- (void)applicationWillEnterForeground
-{
-    if (!_ignoresAutorefresh) {
-        [self forceRefreshAd];
-    }
-}
-
-#pragma mark - Setters
-
-- (void)setAdView:(MPAdView *)adView {
-    _adView = adView;
-    
-    self.delegateHelper = [[[MPBannerDelegateHelper alloc] initWithAdView:adView] autorelease];
-    self.ignoresAutorefresh = adView.ignoresAutorefresh;
-}
-
-- (void)setIgnoresAutorefresh:(BOOL)ignoresAutorefresh
-{
-    _ignoresAutorefresh = ignoresAutorefresh;
-    if (_ignoresAutorefresh) {
-        MPLogDebug(@"Ad view (%p) is now ignoring autorefresh.", self.adView);
-        if ([self.autorefreshTimer isScheduled]) [self.autorefreshTimer pause];
-    } else {
-        MPLogDebug(@"Ad view (%p) is no longer ignoring autorefresh.", self.adView);
-        if ([self.autorefreshTimer isScheduled]) [self.autorefreshTimer resume];
-    }
-}
-
-#pragma mark - Rotation
 
 - (void)rotateToOrientation:(UIInterfaceOrientation)orientation
 {
-    [_adapterManager rotateToOrientation:orientation];
+    [self.requestingAdapter rotateToOrientation:orientation];
+    [self.onscreenAdapter rotateToOrientation:orientation];
 }
 
-#pragma mark - Autorefresh timer
-
-- (BOOL)hasInvalidOrNilAutorefreshTimer
-{
-    return ![self.autorefreshTimer isValid];
-}
-
-- (void)scheduleDefaultAutorefreshTimer
-{
-    [self.autorefreshTimer invalidate];
-    self.autorefreshTimer = [[MPInstanceProvider sharedProvider] buildMPTimerWithTimeInterval:kMoPubRequestRetryInterval
-                                                                                       target:self
-                                                                                     selector:@selector(forceRefreshAd)
-                                                                                      repeats:NO];
-    [self scheduleAutorefreshTimerIfEnabled];
-}
-
-- (void)scheduleAutorefreshTimerIfEnabled
-{
-    if (_ignoresAutorefresh) return;
-    else [self scheduleAutorefreshTimer];
-}
-
-- (void)scheduleAutorefreshTimer
-{
-    if ([self.autorefreshTimer isScheduled]) {
-        MPLogDebug(@"Tried to schedule the autorefresh timer, but it was already scheduled.");
-    } else if (self.autorefreshTimer == nil) {
-        MPLogDebug(@"Tried to schedule the autorefresh timer, but it was nil.");
-    } else {
-        [self.autorefreshTimer scheduleNow];
-    }
-}
-
-- (void)cancelPendingAutorefreshTimer
-{
-    [self.autorefreshTimer invalidate];
-}
-
-- (void)pauseAutorefresh
-{
-    _previousIgnoresAutorefresh = _ignoresAutorefresh;
-    [self setIgnoresAutorefresh:YES];
-}
-
-- (void)resumeAutorefreshIfEnabled
-{
-    [self setIgnoresAutorefresh:_previousIgnoresAutorefresh];
-}
-
-- (NSTimeInterval)refreshInterval
-{
-    return [self.autorefreshTimer initialTimeInterval];
-}
-
-#pragma mark - MPBannerAdapterManagerDelegate
-
-- (id<MPAdViewDelegate>)adViewDelegate
-{
-    return [self.delegateHelper adViewDelegate];
-}
-
-- (UIViewController *)rootViewController
-{
-    return [self.delegateHelper rootViewController];
-}
-
-- (void)adapterManager:(MPBannerAdapterManager *)manager didLoadAd:(UIView *)ad
-{
-    
-    if (_adActionInProgress) {
-        self.nextAdContentView = ad;
-    } else {
-        _loading = NO;
-        [self.adView setAdContentView:ad];
-        [manager requestedAdDidBecomeVisible];
-        [self scheduleAutorefreshTimerIfEnabled];
-        
-        if ([[self adViewDelegate] respondsToSelector:@selector(adViewDidLoadAd:)]) {
-            [[self adViewDelegate] adViewDidLoadAd:[self adView]];
-        }
-    }
-}
-
-- (void)adapterManager:(MPBannerAdapterManager *)manager didRefreshAd:(UIView *)ad
-{
-    [self.adView setAdContentView:ad];
-    [self scheduleAutorefreshTimerIfEnabled];
-    
-    if ([[self adViewDelegate] respondsToSelector:@selector(adViewDidLoadAd:)]) {
-        [[self adViewDelegate] adViewDidLoadAd:[self adView]];
-    }
-}
-
-- (void)adapterManager:(MPBannerAdapterManager *)manager didFailToLoadAdWithError:(MPError *)error
-{
-    _loading = NO;
-    
-    if ([error code] == MPErrorNoInventory) {
-        [self scheduleAutorefreshTimerIfEnabled];
-        if ([[self adViewDelegate] respondsToSelector:@selector(adViewDidFailToLoadAd:)]) {
-            [[self adViewDelegate] adViewDidFailToLoadAd:[self adView]];
-        }
-    } else {
-        [self loadAdWithURL:self.failoverURL];
-    }
-}
-
-- (void)adapterManagerUserActionWillBegin:(MPBannerAdapterManager *)manager
-{
-    _adActionInProgress = YES;
-    
-    if ([self.autorefreshTimer isScheduled] && [self.autorefreshTimer isValid]) {
-        [self.autorefreshTimer pause];
-    }
-    
-    if ([[self adViewDelegate] respondsToSelector:@selector(willPresentModalViewForAd:)]) {
-        [[self adViewDelegate] willPresentModalViewForAd:[self adView]];
-    }
-}
-
-- (void)adapterManagerUserActionDidFinish:(MPBannerAdapterManager *)manager
-{
-    _adActionInProgress = NO;
-    
-    if ([[self adViewDelegate] respondsToSelector:@selector(didDismissModalViewForAd:)]) {
-        [[self adViewDelegate] didDismissModalViewForAd:[self adView]];
-    }
-
-    if (self.nextAdContentView) {
-        _loading = NO;
-        [self.adView setAdContentView:self.nextAdContentView];
-        self.nextAdContentView = nil;
-        [manager requestedAdDidBecomeVisible];
-        [self scheduleAutorefreshTimerIfEnabled];
-        
-        if ([[self adViewDelegate] respondsToSelector:@selector(adViewDidLoadAd:)]) {
-            [[self adViewDelegate] adViewDidLoadAd:[self adView]];
-        }
-    } else if ([self.autorefreshTimer isScheduled] && [self.autorefreshTimer isValid]) {
-        [self.autorefreshTimer resume];
-    }
-}
-
-- (void)adapterManagerUserWillLeaveApplication:(MPBannerAdapterManager *)manager
-{
-    // XXX:
-//    _adActionInProgress = NO;
-    
-    if ([[self adViewDelegate] respondsToSelector:@selector(willLeaveApplicationFromAd:)]) {
-        [[self adViewDelegate] willLeaveApplicationFromAd:[self adView]];
-    }
-}
-
-#pragma mark - Custom Events (Deprecated)
+#pragma mark - Deprecated Public Interface
 
 - (void)customEventDidLoadAd
 {
-    [_adapterManager customEventDidLoadAd];
-    
-    _loading = NO;
-    [self scheduleAutorefreshTimerIfEnabled];
+    // the requesting adapter will send this message
+    // nil out the requesting adapter (signifies load is done)
+    // don't tell the delegate
+    // start the refresh timer
 }
 
 - (void)customEventDidFailToLoadAd
 {
-    [_adapterManager customEventDidFailToLoadAd];
-    
-    _loading = NO;
-    [self loadAdWithURL:self.failoverURL];
+    // waterfall
 }
 
 - (void)customEventActionWillBegin
 {
-    [_adapterManager customEventActionWillBegin];
+    //ad action in progress
 }
 
 - (void)customEventActionDidEnd
 {
-    [_adapterManager customEventActionDidEnd];
+    //ad action not in progress
+    //presentRequestingAdapter
+}
+
+#pragma mark - Internal
+
+- (void)scheduleRefreshTimer
+{
+    [self.refreshTimer invalidate];
+    NSTimeInterval timeInterval = self.requestingConfiguration ? self.requestingConfiguration.refreshInterval : 60;
+
+    if (timeInterval > 0) {
+        self.refreshTimer = [[MPInstanceProvider sharedProvider] buildMPTimerWithTimeInterval:timeInterval
+                                                                                       target:self
+                                                                                     selector:@selector(refreshTimerDidFire)
+                                                                                      repeats:NO];
+        [self.refreshTimer scheduleNow];
+    }
+}
+
+- (void)refreshTimerDidFire
+{
+    if (!self.loading) {
+        [self loadAd];
+    }
+}
+
+#pragma mark - <MPAdServerCommunicatorDelegate>
+
+- (void)communicatorDidReceiveAdConfiguration:(MPAdConfiguration *)configuration
+{
+    self.requestingConfiguration = configuration;
+
+    if (configuration.adType == MPAdTypeUnknown) {
+        [self didFailToLoadAdapterWithError:[MPError errorWithCode:MPErrorServerError]];
+        return;
+    }
+
+    if (configuration.adType == MPAdTypeInterstitial) {
+        [self didFailToLoadAdapterWithError:[MPError errorWithCode:MPErrorAdapterInvalid]];
+        return;
+    }
+
+    if ([configuration.networkType isEqualToString:kAdTypeClear]) {
+        [self didFailToLoadAdapterWithError:[MPError errorWithCode:MPErrorNoInventory]];
+        return;
+    }
+
+    self.requestingAdapter = [[MPInstanceProvider sharedProvider] buildBannerAdapterForConfiguration:configuration
+                                                                                            delegate:self];
+    if (!self.requestingAdapter) {
+        [self loadAdWithURL:self.requestingConfiguration.failoverURL];
+        return;
+    }
+
+    [self.requestingAdapter _getAdWithConfiguration:configuration containerSize:self.delegate.containerSize];
+}
+
+- (void)communicatorDidFailWithError:(NSError *)error
+{
+    [self didFailToLoadAdapterWithError:error];
+}
+
+- (void)didFailToLoadAdapterWithError:(NSError *)error
+{
+    [self.delegate managerDidFailToLoadAd];
+    [self scheduleRefreshTimer];
+
+    MPLogError(@"Banner view (%@) failed. Error: %@", [self.delegate adUnitId], error);
+}
+
+#pragma mark - <MPAdapterDelegate>
+
+- (MPAdView *)banner
+{
+    return [self.delegate banner];
+}
+
+- (id<MPAdViewDelegate>)bannerDelegate
+{
+    return [self.delegate bannerDelegate];
+}
+
+- (UIViewController *)viewControllerForPresentingModalView
+{
+    return [self.delegate viewControllerForPresentingModalView];
+}
+
+- (MPNativeAdOrientation)allowedNativeAdsOrientation
+{
+    return [self.delegate allowedNativeAdsOrientation];
+}
+
+- (CLLocation *)location
+{
+    return [self.delegate location];
+}
+
+- (void)presentRequestingAdapter
+{
+    if (!self.adActionInProgress && self.requestingAdapterAdContentView) {
+        [self.onscreenAdapter unregisterDelegate];
+        self.onscreenAdapter = self.requestingAdapter;
+        self.requestingAdapter = nil;
+
+        [self.delegate managerDidLoadAd:self.requestingAdapterAdContentView];
+        [self.onscreenAdapter didDisplayAd];
+
+        self.requestingAdapterAdContentView = nil;
+        if (![self.delegate ignoresAutorefresh]) {
+            [self scheduleRefreshTimer];
+        }
+    }
+}
+
+- (void)adapter:(MPBaseAdapter *)adapter didFinishLoadingAd:(UIView *)ad
+{
+    if (self.requestingAdapter == adapter) {
+        self.requestingAdapterAdContentView = ad;
+        [self presentRequestingAdapter];
+    }
+}
+
+- (void)adapter:(MPBaseAdapter *)adapter didFailToLoadAdWithError:(NSError *)error
+{
+    if (self.requestingAdapter == adapter) {
+        [self loadAdWithURL:self.requestingConfiguration.failoverURL];
+    }
+}
+
+- (void)userActionWillBeginForAdapter:(MPBaseAdapter *)adapter
+{
+    if (self.onscreenAdapter == adapter) {
+        self.adActionInProgress = YES;
+        [self.delegate userActionWillBegin];
+    }
+}
+
+- (void)userActionDidFinishForAdapter:(MPBaseAdapter *)adapter
+{
+    if (self.onscreenAdapter == adapter) {
+        [self.delegate userActionDidFinish];
+        self.adActionInProgress = NO;
+        [self presentRequestingAdapter];
+    }
+}
+
+- (void)userWillLeaveApplicationFromAdapter:(MPBaseAdapter *)adapter
+{
+    if (self.onscreenAdapter == adapter) {
+        [self.delegate userWillLeaveApplication];
+    }
 }
 
 @end
+
+

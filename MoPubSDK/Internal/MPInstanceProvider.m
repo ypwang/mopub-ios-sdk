@@ -26,6 +26,7 @@
 #import "MPBannerCustomEventAdapter.h"
 #import "MPLegacyBannerCustomEventAdapter.h"
 #import "MPBannerCustomEvent.h"
+#import "MPBannerAdManager.h"
 
 @interface MPInstanceProvider ()
 
@@ -119,6 +120,11 @@ static MPInstanceProvider *sharedProvider = nil;
 - (MPAdServerCommunicator *)buildMPAdServerCommunicatorWithDelegate:(id<MPAdServerCommunicatorDelegate>)delegate
 {
     return [[(MPAdServerCommunicator *)[MPAdServerCommunicator alloc] initWithDelegate:delegate] autorelease];
+}
+
+- (MPBannerAdManager *)buildMPBannerAdManagerWithDelegate:(id<MPBannerAdManagerDelegate>)delegate
+{
+    return [[(MPBannerAdManager *)[MPBannerAdManager alloc] initWithDelegate:delegate] autorelease];
 }
 
 - (MPBaseAdapter *)buildBannerAdapterForConfiguration:(MPAdConfiguration *)configuration

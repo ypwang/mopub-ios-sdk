@@ -50,7 +50,7 @@ describe(@"ChartboostInterstitialIntegrationSuite", ^{
         [communicator receiveConfiguration:configuration];
 
         // clear out the communicator so we can make future assertions about it
-        [communicator reset];
+        [communicator resetLoadedURL];
 
         setUpInterstitialSharedContext(communicator, delegate, interstitial, @"chartboost_interstitial", chartboost, configuration.failoverURL);
     });
@@ -251,7 +251,7 @@ describe(@"handling multiple Chartboost requests (and locations)", ^{
 
         context(@"when an interstitial request fails", ^{
             it(@"should allow a subsequent request to the same location to load", ^{
-                [nullCommunicator reset];
+                [nullCommunicator resetLoadedURL];
                 [chartboost simulateFailingToLoadLocation:@"Default"];
                 nullCommunicator.loadedURL should equal([NSURL URLWithString:@"http://null.com"]);
 

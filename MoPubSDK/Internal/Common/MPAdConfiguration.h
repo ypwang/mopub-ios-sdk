@@ -38,12 +38,12 @@ extern NSString * const kOrientationTypeHeaderKey;
 extern NSString * const kAdTypeHtml;
 extern NSString * const kAdTypeInterstitial;
 extern NSString * const kAdTypeMraid;
+extern NSString * const kAdTypeClear;
 
 @interface MPAdConfiguration : NSObject
 
 @property (nonatomic, assign) MPAdType adType;
 @property (nonatomic, copy) NSString *networkType;
-@property (nonatomic, assign) CGSize adSize;
 @property (nonatomic, assign) CGSize preferredSize;
 @property (nonatomic, retain) NSURL *clickTrackingURL;
 @property (nonatomic, retain) NSURL *impressionTrackingURL;

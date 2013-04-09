@@ -23,14 +23,14 @@ describe(@"MPHTMLBannerAdapter", ^{
 
     subjectAction(^{
         adapter = [[[MPHTMLBannerAdapter alloc] initWithAdapterDelegate:delegate] autorelease];
-        [adapter getAdWithConfiguration:configuration];
+        [adapter _getAdWithConfiguration:configuration containerSize:CGSizeZero];
     });
 
     describe(@"setting up the bannerAgent", ^{
         __block NSObject *customMethodDelegatePlaceholder;
         beforeEach(^{
             customMethodDelegatePlaceholder = [[[NSObject alloc] init] autorelease];
-            delegate stub_method(@selector(adViewDelegate)).and_return(customMethodDelegatePlaceholder);
+            delegate stub_method(@selector(bannerDelegate)).and_return(customMethodDelegatePlaceholder);
         });
 
         it(@"should set up the bannerAgent and banner with the ad configuration", ^{
@@ -59,7 +59,7 @@ describe(@"MPHTMLBannerAdapter", ^{
                 UIView *view = [[[UIView alloc] init] autorelease];
                 bannerAgent stub_method("view").and_return(view);
                 [adapter adDidFinishLoadingAd:nil];
-                delegate should have_received(@selector(adapter:didFinishLoadingAd:shouldTrackImpression:)).with(adapter).and_with(view).and_with(NO);
+                delegate should have_received(@selector(adapter:didFinishLoadingAd:)).with(adapter).and_with(view);
             });
         });
 

@@ -34,6 +34,7 @@ NSString * const kOrientationTypeHeaderKey = @"X-Orientation";
 NSString * const kAdTypeHtml = @"html";
 NSString * const kAdTypeInterstitial = @"interstitial";
 NSString * const kAdTypeMraid = @"mraid";
+NSString * const kAdTypeClear = @"clear";
 
 @interface MPAdConfiguration ()
 
@@ -67,7 +68,6 @@ NSString * const kAdTypeMraid = @"mraid";
 @synthesize orientationType = _orientationType;
 @synthesize customEventClass = _customEventClass;
 @synthesize customEventClassData = _customEventClassData;
-@synthesize adSize = _adSize;
 @synthesize customSelectorName = _customSelectorName;
 
 - (id)initWithHeaders:(NSDictionary *)headers data:(NSData *)data

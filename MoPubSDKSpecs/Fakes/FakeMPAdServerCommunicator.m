@@ -34,10 +34,8 @@
     [self.delegate communicatorDidFailWithError:error];
 }
 
-- (void)reset
+- (void)resetLoadedURL
 {
-    self.cancelled = NO;
-    self.loading = NO;
     self.loadedURL = nil;
 }
 

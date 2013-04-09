@@ -44,7 +44,7 @@ describe(@"MPGoogleAdMobAdapter", ^{
         viewController = [[[UIViewController alloc] init] autorelease];
         delegate stub_method("viewControllerForPresentingModalView").and_return(viewController);
 
-        [adapter _getAdWithConfiguration:configuration];
+        [adapter _getAdWithConfiguration:configuration containerSize:CGSizeZero];
     });
 
     context(@"when asked to fetch a banner", ^{
@@ -73,7 +73,7 @@ describe(@"MPGoogleAdMobAdapter", ^{
                                           };
                 configuration = [MPAdConfigurationFactory defaultBannerConfigurationWithHeaders:headers
                                                                                      HTMLString:nil];
-                [adapter _getAdWithConfiguration:configuration];
+                [adapter _getAdWithConfiguration:configuration containerSize:CGSizeZero];
                 CGRectEqualToRect(banner.frame, CGRectMake(0, 0, 320, 50)) should equal(YES);
             });
         });
@@ -86,7 +86,7 @@ describe(@"MPGoogleAdMobAdapter", ^{
                                           };
                 configuration = [MPAdConfigurationFactory defaultBannerConfigurationWithHeaders:headers
                                                                                      HTMLString:nil];
-                [adapter _getAdWithConfiguration:configuration];
+                [adapter _getAdWithConfiguration:configuration containerSize:CGSizeZero];
                 CGRectEqualToRect(banner.frame, CGRectMake(0, 0, 320, 50)) should equal(YES);
             });
         });

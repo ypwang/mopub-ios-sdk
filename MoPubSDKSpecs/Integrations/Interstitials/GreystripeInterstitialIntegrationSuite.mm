@@ -37,7 +37,7 @@ describe(@"GreystripeInterstitialIntegrationSuite", ^{
         [communicator receiveConfiguration:configuration];
 
         // clear out the communicator so we can make future assertions about it
-        [communicator reset];
+        [communicator resetLoadedURL];
 
         setUpInterstitialSharedContext(communicator, delegate, interstitial, @"greystripe_interstitial", greystripeAd, configuration.failoverURL);
     });

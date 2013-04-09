@@ -16,6 +16,6 @@
 - (void)receiveConfiguration:(MPAdConfiguration *)configuration;
 - (void)failWithError:(NSError *)error;
 
-- (void)reset;
+- (void)resetLoadedURL;
 
 @end

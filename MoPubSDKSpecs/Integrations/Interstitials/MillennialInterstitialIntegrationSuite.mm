@@ -55,7 +55,7 @@ describe(@"MillennialInterstitialIntegrationSuite", ^{
                 fakeMMInterstitialAdView.hasCachedAd = YES;
 
                 [communicator receiveConfiguration:configuration];
-                [communicator reset];
+                [communicator resetLoadedURL];
             });
 
             it(@"should tell the delegate that it has loaded an ad, and it should be ready", ^{
@@ -74,7 +74,7 @@ describe(@"MillennialInterstitialIntegrationSuite", ^{
                 fakeMMInterstitialAdView.hasCachedAd = NO;
 
                 [communicator receiveConfiguration:configuration];
-                [communicator reset];
+                [communicator resetLoadedURL];
             });
 
             it(@"should tell the ad to fetch, not tell the delegate anything, and should not be ready", ^{
@@ -118,7 +118,7 @@ describe(@"MillennialInterstitialIntegrationSuite", ^{
                 [delegate reset_sent_messages];
                 fakeMMInterstitialAdView.hasCachedAd = YES;
                 [communicator receiveConfiguration:configuration];
-                [communicator reset];
+                [communicator resetLoadedURL];
 
                 verify_fake_received_selectors(delegate, @[@"interstitialDidLoadAd:"]);
                 interstitial.ready should equal(YES);

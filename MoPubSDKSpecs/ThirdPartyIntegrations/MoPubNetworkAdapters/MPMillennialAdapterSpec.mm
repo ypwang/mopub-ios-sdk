@@ -46,7 +46,7 @@ describe(@"MPMillennialAdapter", ^{
         configuration = [MPAdConfigurationFactory defaultBannerConfigurationWithHeaders:headers
                                                                              HTMLString:nil];
 
-        [adapter _getAdWithConfiguration:configuration];
+        [adapter _getAdWithConfiguration:configuration containerSize:CGSizeZero];
     });
 
     context(@"when asked to fetch a banner", ^{

@@ -24,6 +24,7 @@
 @class MPReachability;
 @class MPMRAIDInterstitialViewController;
 @class MPTimer;
+@class MPBannerAdManager;
 
 @protocol MPAdWebViewAgentDelegate;
 @protocol MPAdDestinationDisplayAgentDelegate;
@@ -35,6 +36,7 @@
 @protocol MPInterstitialCustomEventDelegate;
 @protocol MPAdapterDelegate;
 @protocol MPBannerCustomEventDelegate;
+@protocol MPBannerAdManagerDelegate;
 
 @interface MPInstanceProvider : NSObject
 
@@ -55,7 +57,7 @@
 - (MPURLResolver *)buildMPURLResolver;
 - (MPInterstitialAdManager *)buildMPInterstitialAdManagerWithDelegate:(id<MPInterstitialAdManagerDelegate>)delegate;
 - (MPAdServerCommunicator *)buildMPAdServerCommunicatorWithDelegate:(id<MPAdServerCommunicatorDelegate>)delegate;
-
+- (MPBannerAdManager *)buildMPBannerAdManagerWithDelegate:(id<MPBannerAdManagerDelegate>)delegate;
 
 - (MPBaseAdapter *)buildBannerAdapterForConfiguration:(MPAdConfiguration *)configuration
                                              delegate:(id<MPAdapterDelegate>)delegate;

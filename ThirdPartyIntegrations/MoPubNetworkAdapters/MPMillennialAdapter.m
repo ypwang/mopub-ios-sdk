@@ -60,7 +60,7 @@
     [super dealloc];
 }
 
-- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration
+- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration containerSize:(CGSize)size
 {
     CGRect frame = [self frameFromConfiguration:configuration];
     MMAdType type = [self typeFromConfiguration:configuration];
@@ -116,7 +116,7 @@
 
 - (void)adRequestSucceeded:(MMAdView *)adView
 {
-    [self.delegate adapter:self didFinishLoadingAd:adView shouldTrackImpression:YES];
+    [self.delegate adapter:self didFinishLoadingAd:adView];
 }
 
 - (void)adRequestFailed:(MMAdView *)adView

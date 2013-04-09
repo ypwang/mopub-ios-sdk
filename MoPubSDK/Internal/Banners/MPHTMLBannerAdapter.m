@@ -22,13 +22,13 @@
 
 @synthesize bannerAgent = _bannerAgent;
 
-- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration
+- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration containerSize:(CGSize)size
 {
     MPLogTrace(@"Loading banner with HTML source: %@", [configuration adResponseHTMLString]);
 
     self.bannerAgent = [[MPInstanceProvider sharedProvider] buildMPAdWebViewAgentWithAdWebViewFrame:CGRectMake(0, 0, 1, 1)
                                                                                            delegate:self
-                                                                               customMethodDelegate:[self.delegate adViewDelegate]];
+                                                                               customMethodDelegate:[self.delegate bannerDelegate]];
     [self.bannerAgent loadConfiguration:configuration];
 }
 
@@ -44,6 +44,11 @@
     [self.bannerAgent rotateToOrientation:newOrientation];
 }
 
+- (void)didDisplayAd
+{
+    //don't track impression
+}
+
 #pragma mark - MPAdWebViewAgentDelegate
 
 - (UIViewController *)viewControllerForPresentingModalView
@@ -54,8 +59,7 @@
 - (void)adDidFinishLoadingAd:(MPAdWebView *)ad
 {
     [self.delegate adapter:self
-        didFinishLoadingAd:self.bannerAgent.view
-     shouldTrackImpression:NO];
+        didFinishLoadingAd:self.bannerAgent.view];
 }
 
 - (void)adDidFailToLoadAd:(MPAdWebView *)ad

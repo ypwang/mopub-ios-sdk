@@ -35,7 +35,7 @@ describe(@"CustomEventInterstitialIntegrationSuite", ^{
         [communicator receiveConfiguration:configuration];
 
         // clear out the communicator so we can make future assertions about it
-        [communicator reset];
+        [communicator resetLoadedURL];
 
         setUpInterstitialSharedContext(communicator, delegate, interstitial, @"custom_event_interstitial", fakeInterstitialCustomEvent, configuration.failoverURL);
     });

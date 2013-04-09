@@ -46,10 +46,10 @@
     [self unregisterDelegate];
     self.analyticsTracker = nil;
     self.configuration = nil;
-    
+
     [self.timeoutTimer invalidate];
     self.timeoutTimer = nil;
-    
+
     [_metricsURLRequest release];
     [super dealloc];
 }
@@ -61,30 +61,35 @@
 
 #pragma mark - Requesting Ads
 
-- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration
+- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration containerSize:(CGSize)size
 {
     // To be implemented by subclasses.
     [self doesNotRecognizeSelector:_cmd];
 }
 
-- (void)_getAdWithConfiguration:(MPAdConfiguration *)configuration
+- (void)_getAdWithConfiguration:(MPAdConfiguration *)configuration containerSize:(CGSize)size
 {
     self.configuration = configuration;
-    
+
     self.timeoutTimer = [[MPInstanceProvider sharedProvider] buildMPTimerWithTimeInterval:10
                                                                                    target:self
                                                                                  selector:@selector(timeout)
                                                                                   repeats:NO];
     [self.timeoutTimer scheduleNow];
-    
+
     [self retain];
-    [self getAdWithConfiguration:configuration];
+    [self getAdWithConfiguration:configuration containerSize:size];
     [self release];
 }
 
 - (void)didStopLoading
 {
     [self.timeoutTimer invalidate];
+}
+
+- (void)didDisplayAd
+{
+    [self trackImpression];
 }
 
 - (void)timeout

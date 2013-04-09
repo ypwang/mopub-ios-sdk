@@ -13,6 +13,8 @@
 #import "MPBannerAdManager.h"
 #import <stdlib.h>
 #import <time.h>
+#import "MPInstanceProvider.h"
+#import "MPBannerAdManagerDelegate.h"
 
 #define kDefaultLocationPrecision 6
 
@@ -20,11 +22,10 @@ static NSString * const kAdAnimationId = @"MPAdTransition";
 static NSString * const kOldContentViewKey = @"OldContentView";
 static NSString * const kNewContentViewKey = @"NewContentView";
 
-@interface MPAdView ()
+@interface MPAdView () <MPBannerAdManagerDelegate>
 
 @property (nonatomic, retain) MPBannerAdManager *adManager;
 
-- (id)initWithAdUnitId:(NSString *)adUnitId size:(CGSize)size adManager:(MPBannerAdManager *)adManager;
 - (void)setScrollable:(BOOL)scrollable forView:(UIView *)view;
 - (void)animateTransitionToAdView:(UIView *)view;
 - (void)animationDidStop:(NSString *)animationID finished:(NSNumber *)finished
@@ -55,12 +56,6 @@ static NSString * const kNewContentViewKey = @"NewContentView";
 
 - (id)initWithAdUnitId:(NSString *)adUnitId size:(CGSize)size
 {
-    MPBannerAdManager *adManager = [[[MPBannerAdManager alloc] init] autorelease];
-    return [self initWithAdUnitId:adUnitId size:size adManager:adManager];
-}
-
-- (id)initWithAdUnitId:(NSString *)adUnitId size:(CGSize)size adManager:(MPBannerAdManager *)adManager
-{
     CGRect f = (CGRect){{0, 0}, size};
     if (self = [super initWithFrame:f])
     {
@@ -70,8 +65,7 @@ static NSString * const kNewContentViewKey = @"NewContentView";
         _originalSize = size;
         _allowedNativeAdOrientation = MPNativeAdOrientationAny;
         _adUnitId = (adUnitId) ? [adUnitId copy] : [[NSString alloc] initWithString:DEFAULT_PUB_ID];
-        _adManager = [adManager retain];
-        _adManager.adView = self;
+        _adManager = [[[MPInstanceProvider sharedProvider] buildMPBannerAdManagerWithDelegate:self] retain];
     }
     return self;
 }
@@ -87,8 +81,7 @@ static NSString * const kNewContentViewKey = @"NewContentView";
         [_adContentView performSelector:@selector(setDelegate:) withObject:nil];
     [_adContentView release];
 
-    _adManager.adView = nil;
-    [_adManager cancelAd];
+    _adManager.delegate = nil;
     [_adManager release];
 
     [_location release];
@@ -96,11 +89,6 @@ static NSString * const kNewContentViewKey = @"NewContentView";
 }
 
 #pragma mark -
-
-- (void)setIgnoresAutorefresh:(BOOL)ignoresAutorefresh {
-    _ignoresAutorefresh = ignoresAutorefresh;
-    _adManager.ignoresAutorefresh = ignoresAutorefresh;
-}
 
 - (void)setAdContentView:(UIView *)view
 {
@@ -230,7 +218,7 @@ static NSString * const kNewContentViewKey = @"NewContentView";
 
 - (void)loadAd
 {
-    [_adManager loadAdWithURL:nil];
+    [_adManager loadAd];
 }
 
 - (void)refreshAd
@@ -241,11 +229,6 @@ static NSString * const kNewContentViewKey = @"NewContentView";
 - (void)forceRefreshAd
 {
     [_adManager forceRefreshAd];
-}
-
-- (void)loadAdWithURL:(NSURL *)URL
-{
-    [_adManager loadAdWithURL:URL];
 }
 
 - (void)lockNativeAdsToOrientation:(MPNativeAdOrientation)orientation
@@ -261,6 +244,64 @@ static NSString * const kNewContentViewKey = @"NewContentView";
 - (MPNativeAdOrientation)allowedNativeAdsOrientation
 {
     return _allowedNativeAdOrientation;
+}
+
+#pragma mark - <MPBannerAdManagerDelegate>
+
+- (MPAdView *)banner
+{
+    return self;
+}
+
+- (id<MPAdViewDelegate>)bannerDelegate
+{
+    return self.delegate;
+}
+
+- (CGSize)containerSize
+{
+    return self.originalSize;
+}
+
+- (UIViewController *)viewControllerForPresentingModalView
+{
+    return [self.delegate viewControllerForPresentingModalView];
+}
+
+- (void)managerDidFailToLoadAd
+{
+    if ([self.delegate respondsToSelector:@selector(adViewDidFailToLoadAd:)]) {
+        [self.delegate adViewDidFailToLoadAd:self];
+    }
+}
+
+- (void)managerDidLoadAd:(UIView *)ad
+{
+    [self setAdContentView:ad];
+    if ([self.delegate respondsToSelector:@selector(adViewDidLoadAd:)]) {
+        [self.delegate adViewDidLoadAd:self];
+    }
+}
+
+- (void)userActionWillBegin
+{
+    if ([self.delegate respondsToSelector:@selector(willPresentModalViewForAd:)]) {
+        [self.delegate willPresentModalViewForAd:self];
+    }
+}
+
+- (void)userActionDidFinish
+{
+    if ([self.delegate respondsToSelector:@selector(didDismissModalViewForAd:)]) {
+        [self.delegate didDismissModalViewForAd:self];
+    }
+}
+
+- (void)userWillLeaveApplication
+{
+    if ([self.delegate respondsToSelector:@selector(willLeaveApplicationFromAd:)]) {
+        [self.delegate willLeaveApplicationFromAd:self];
+    }
 }
 
 # pragma mark - Deprecated Custom Events Mechanism

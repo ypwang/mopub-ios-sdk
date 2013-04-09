@@ -11,14 +11,14 @@
 
 @implementation MPMRAIDBannerAdapter
 
-- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration
+- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration containerSize:(CGSize)size
 {
     CGRect adViewFrame = CGRectZero;
     if ([configuration hasPreferredSize]) {
         adViewFrame = CGRectMake(0, 0, configuration.preferredSize.width,
                                  configuration.preferredSize.height);
     }
-    
+
     _adView = [[MRAdView alloc] initWithFrame:adViewFrame
                               allowsExpansion:YES
                              closeButtonStyle:MRAdViewCloseButtonStyleAdControlled
@@ -49,7 +49,7 @@
 
 - (void)adDidLoad:(MRAdView *)adView
 {
-    [self.delegate adapter:self didFinishLoadingAd:adView shouldTrackImpression:YES];
+    [self.delegate adapter:self didFinishLoadingAd:adView];
 }
 
 - (void)adDidFailToLoad:(MRAdView *)adView
@@ -69,7 +69,7 @@
 
 - (void)closeButtonPressed
 {
-    
+
 }
 
 @end

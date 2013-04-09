@@ -33,10 +33,11 @@
  * -_getAdWithConfiguration wraps -getAdWithConfiguration in retain/release calls to prevent the
  * adapter from being prematurely deallocated.
  */
-- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration;
-- (void)_getAdWithConfiguration:(MPAdConfiguration *)configuration;
+- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration containerSize:(CGSize)size;
+- (void)_getAdWithConfiguration:(MPAdConfiguration *)configuration containerSize:(CGSize)size;
 
 - (void)didStopLoading;
+- (void)didDisplayAd;
 
 /*
  * Your subclass should implement this method if your native ads vary depending on orientation.
@@ -55,22 +56,17 @@
 
 @required
 
-- (MPAdView *)adView;
-- (id<MPAdViewDelegate>)adViewDelegate;
-- (CGSize)maximumAdSize;
+- (MPAdView *)banner;
+- (id<MPAdViewDelegate>)bannerDelegate;
 - (UIViewController *)viewControllerForPresentingModalView;
 - (MPNativeAdOrientation)allowedNativeAdsOrientation;
 - (CLLocation *)location;
-
-- (void)pauseAutorefresh;
-- (void)resumeAutorefreshIfEnabled;
 
 /*
  * These callbacks notify you that the adapter (un)successfully loaded an ad.
  */
 - (void)adapter:(MPBaseAdapter *)adapter didFailToLoadAdWithError:(NSError *)error;
-- (void)adapter:(MPBaseAdapter *)adapter didFinishLoadingAd:(UIView *)ad
-        shouldTrackImpression:(BOOL)shouldTrack;
+- (void)adapter:(MPBaseAdapter *)adapter didFinishLoadingAd:(UIView *)ad;
 
 /*
  * These callbacks notify you that the user interacted (or stopped interacting) with the native ad.

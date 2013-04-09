@@ -15,8 +15,6 @@
 
 @property (nonatomic, retain) MPBannerCustomEvent *bannerCustomEvent;
 
-- (void)loadAdFromCustomClass:(Class)customClass configuration:(MPAdConfiguration *)configuration;
-
 @end
 
 @implementation MPBannerCustomEventAdapter
@@ -26,32 +24,28 @@
     [self.bannerCustomEvent customEventDidUnload];
     self.bannerCustomEvent.delegate = nil;
     self.bannerCustomEvent = nil;
-    
+
     [super dealloc];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration
+- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration containerSize:(CGSize)size
 {
     Class customEventClass = configuration.customEventClass;
-    
+
     MPLogInfo(@"Looking for custom event class named %@.", configuration.customEventClass);
-    
+
     if (customEventClass) {
-        [self loadAdFromCustomClass:customEventClass configuration:configuration];
+        self.bannerCustomEvent = [[MPInstanceProvider sharedProvider] buildBannerCustomEventFromCustomClass:customEventClass
+                                                                                                   delegate:self];
+        [self.bannerCustomEvent requestAdWithSize:size customEventInfo:configuration.customEventClassData];
         return;
     }
-    
-    MPLogInfo(@"Could not handle custom event request.");
-    
-    [self.delegate adapter:self didFailToLoadAdWithError:nil];
-}
 
-- (void)loadAdFromCustomClass:(Class)customClass configuration:(MPAdConfiguration *)configuration
-{
-    self.bannerCustomEvent = [[MPInstanceProvider sharedProvider] buildBannerCustomEventFromCustomClass:customClass delegate:self];
-    [self.bannerCustomEvent requestAdWithSize:configuration.adSize customEventInfo:configuration.customEventClassData];
+    MPLogInfo(@"Could not handle custom event request.");
+
+    [self.delegate adapter:self didFailToLoadAdWithError:nil];
 }
 
 - (void)rotateToOrientation:(UIInterfaceOrientation)newOrientation
@@ -70,7 +64,7 @@
 
 - (void)bannerCustomEvent:(MPBannerCustomEvent *)event didLoadAd:(UIView *)ad
 {
-    [self.delegate adapter:self didFinishLoadingAd:ad shouldTrackImpression:YES];
+    [self.delegate adapter:self didFinishLoadingAd:ad];
 }
 
 - (void)bannerCustomEvent:(MPBannerCustomEvent *)event didFailToLoadAdWithError:(NSError *)error
@@ -80,6 +74,7 @@
 
 - (void)bannerCustomEventWillBeginAction:(MPBannerCustomEvent *)event
 {
+    [self trackClick];
     [self.delegate userActionWillBeginForAdapter:self];
 }
 

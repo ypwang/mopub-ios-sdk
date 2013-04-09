@@ -44,7 +44,7 @@ sharedExamplesFor(anInterstitialThatStartsLoadingAnAdUnit, ^(NSDictionary *share
     beforeEach(^{
         INITIALIZE_BLOCK_VARIABLES
 
-        [communicator reset];
+        [communicator resetLoadedURL];
         [delegate reset_sent_messages];
     });
 
@@ -62,7 +62,7 @@ sharedExamplesFor(anInterstitialThatHasAlreadyLoaded, ^(NSDictionary *sharedCont
     beforeEach(^{
         INITIALIZE_BLOCK_VARIABLES
 
-        [communicator reset];
+        [communicator resetLoadedURL];
         [delegate reset_sent_messages];
     });
 
@@ -80,7 +80,7 @@ sharedExamplesFor(anInterstitialThatPreventsLoading, ^(NSDictionary *sharedConte
     beforeEach(^{
         INITIALIZE_BLOCK_VARIABLES
 
-        [communicator reset];
+        [communicator resetLoadedURL];
         [delegate reset_sent_messages];
     });
 
@@ -99,7 +99,7 @@ sharedExamplesFor(anInterstitialThatPreventsShowing, ^(NSDictionary *sharedConte
         presentingController = [[[UIViewController alloc] init] autorelease];
         INITIALIZE_BLOCK_VARIABLES
 
-        [communicator reset];
+        [communicator resetLoadedURL];
         [delegate reset_sent_messages];
         [fakeProvider.lastFakeMPAnalyticsTracker reset];
     });
@@ -134,7 +134,7 @@ sharedExamplesFor(anInterstitialThatLoadsTheFailoverURL, ^(NSDictionary *sharedC
 
             MPAdConfiguration *configuration = [MPAdConfigurationFactory defaultInterstitialConfigurationWithNetworkType:@"clear"];
             [communicator receiveConfiguration:configuration];
-            [communicator reset];
+            [communicator resetLoadedURL];
         });
 
         it(@"should notify the delegate that the ad failed to load and should not be ready", ^{
