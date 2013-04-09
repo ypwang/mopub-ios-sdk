@@ -17,69 +17,56 @@ describe(@"MPAdViewIntegrationSuite", ^{
     __block FakeMPTimer *refreshTimer;
 
     sharedExamplesFor(@"a banner that ignores loads", ^(NSDictionary *sharedContext) {
-        beforeEach(^{
+        it(@"should ignore load", ^{
             [communicator resetLoadedURL];
             [banner loadAd];
-        });
 
-        it(@"should ignore load", ^{
             fakeProvider.lastFakeMPAdServerCommunicator.loadedURL should be_nil;
         });
     });
 
     sharedExamplesFor(@"a banner that starts loading immediately", ^(NSDictionary *sharedContext) {
-        beforeEach(^{
+        it(@"should allow the ad to load", ^{
             [communicator resetLoadedURL];
             [banner loadAd];
-        });
 
-        it(@"should allow the ad to load", ^{
             fakeProvider.lastFakeMPAdServerCommunicator.loadedURL.absoluteString should contain(@"custom_event");
         });
     });
 
     sharedExamplesFor(@"a banner that immediately refreshes", ^(NSDictionary *sharedContext) {
-        beforeEach(^{
+        it(@"should allow forcibly refreshing", ^{
             [delegate reset_sent_messages];
             [communicator resetLoadedURL];
             [[NSNotificationCenter defaultCenter] postNotificationName:UIApplicationWillEnterForegroundNotification
                                                                 object:[UIApplication sharedApplication]];
-        });
 
-        it(@"should allow forcibly refreshing", ^{
             fakeProvider.lastFakeMPAdServerCommunicator.loadedURL.absoluteString should contain(@"custom_event");
         });
     });
 
     sharedExamplesFor(@"a banner that cancels the loading ad when forced to refresh", ^(NSDictionary *sharedContext) {
-        beforeEach(^{
+        it(@"should not inform the delegate, or display the ad, if the 'canceled' adapter successfully loads", ^{
             [delegate reset_sent_messages];
             [communicator resetLoadedURL];
             [[NSNotificationCenter defaultCenter] postNotificationName:UIApplicationWillEnterForegroundNotification
                                                                 object:[UIApplication sharedApplication]];
-        });
 
-        it(@"should not inform the delegate, or display the ad, if the 'canceled' adapter successfully loads", ^{
             [event simulateLoadingAd];
             delegate.sent_messages should be_empty;
-            if (onscreenEvent) {
-                banner.subviews should equal(@[onscreenEvent.view]);
-            } else {
-                banner.subviews should be_empty;
-            }
+            banner.subviews.lastObject should_not equal(event.view);
         });
     });
 
     sharedExamplesFor(@"a banner that continues to listen to the onscreen ad when forced to refresh", ^(NSDictionary *sharedContext) {
-        beforeEach(^{
+        it(@"should not 'cancel' the onscreen adapter", ^{
             [delegate reset_sent_messages];
             [communicator resetLoadedURL];
             [[NSNotificationCenter defaultCenter] postNotificationName:UIApplicationWillEnterForegroundNotification
                                                                 object:[UIApplication sharedApplication]];
-        });
 
-        it(@"should not 'cancel' the onscreen adapter", ^{
             [onscreenEvent simulateUserTap];
+            banner.subviews.lastObject should equal(onscreenEvent.view);
             verify_fake_received_selectors(delegate, @[@"willPresentModalViewForAd:"]);
         });
     });

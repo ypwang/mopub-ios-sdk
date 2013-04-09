@@ -14,19 +14,6 @@
 
 typedef enum
 {
-    MPAdAnimationTypeNone,
-    MPAdAnimationTypeRandom,
-    MPAdAnimationTypeFlipFromLeft,
-    MPAdAnimationTypeFlipFromRight,
-    MPAdAnimationTypeCurlUp,
-    MPAdAnimationTypeCurlDown,
-    MPAdAnimationTypeFade,
-    // Important: additional types must be added here to maintain backwards compatibility.
-    MPAdAnimationTypeCount
-} MPAdAnimationType;
-
-typedef enum
-{
     MPNativeAdOrientationAny,
     MPNativeAdOrientationPortrait,
     MPNativeAdOrientationLandscape
@@ -36,53 +23,13 @@ typedef enum
 @class MPBannerAdManager;
 
 @interface MPAdView : UIView
-{
-    // Delegate object for the ad view.
-    id<MPAdViewDelegate> _delegate;
-
-    // "Business-logic" object for the ad view.
-    MPBannerAdManager *_adManager;
-
-    // Ad unit identifier for the ad view.
-    NSString *_adUnitId;
-
-    // Location data which may be used for targeting.
-    CLLocation *_location;
-
-    // Subview that represents the actual ad content. Set via -setAdContentView.
-    UIView *_adContentView;
-
-    // Stores the initial size of the ad view.
-    CGSize _originalSize;
-
-    // Stores the size of the ad creative (handed down from the server). If the server does not
-    // pass back size information, this value will be equal to _originalSize.
-    CGSize _creativeSize;
-
-    // Whether scrolling is enabled for the ad view.
-    BOOL _scrollable;
-
-    // Specifies the transition used for bringing an ad into view. You can specify an
-    // animation type for any ad unit using the MoPub web interface.
-    MPAdAnimationType _animationType;
-
-    MPNativeAdOrientation _allowedNativeAdOrientation;
-
-    // Whether the ad view ignores autorefresh values sent down from the server. If YES,
-    // the ad view will never refresh once it has an ad.
-    BOOL _ignoresAutorefresh;
-}
 
 @property (nonatomic, assign) id<MPAdViewDelegate> delegate;
 @property (nonatomic, copy) NSString *adUnitId;
 @property (nonatomic, copy) CLLocation *location;
 @property (nonatomic, retain) NSString *keywords;
-@property (nonatomic, assign) BOOL scrollable;
-@property (nonatomic, assign) MPAdAnimationType animationType;
 @property (nonatomic, assign) BOOL ignoresAutorefresh;
 @property (nonatomic, assign, getter = isTesting) BOOL testing;
-@property (nonatomic, retain) UIView *adContentView;
-@property (nonatomic, assign) CGSize originalSize;
 
 /*
  * Returns an MPAdView with the given ad unit ID.
