@@ -139,6 +139,11 @@
     return [self.delegate viewControllerForPresentingModalView];
 }
 
+- (void)invalidateContentView
+{
+    [self setAdContentView:nil];
+}
+
 - (void)managerDidFailToLoadAd
 {
     if ([self.delegate respondsToSelector:@selector(adViewDidFailToLoadAd:)]) {

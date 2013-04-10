@@ -23,6 +23,8 @@
 - (BOOL)isTesting;
 - (UIViewController *)viewControllerForPresentingModalView;
 
+- (void)invalidateContentView;
+
 - (void)managerDidLoadAd:(UIView *)ad;
 - (void)managerDidFailToLoadAd;
 - (void)userActionWillBegin;

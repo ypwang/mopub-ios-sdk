@@ -12,6 +12,8 @@
 @interface MPInstanceProvider (ThirdPartyAdditions)
 
 - (ADInterstitialAd *)buildADInterstitialAd;
+- (ADBannerView *)buildADBannerView;
+
 - (GADInterstitial *)buildGADInterstitialAd;
 - (GADBannerView *)buildGADBannerViewWithFrame:(CGRect)frame;
 - (GADRequest *)buildGADRequest;
@@ -86,7 +88,7 @@
             return self.fakeTimers[i];
         }
     }
-    
+
     return nil;
 }
 
@@ -172,7 +174,7 @@
         self.fakeBannerCustomEvent.delegate = delegate;
         return self.fakeBannerCustomEvent;
     }
-    
+
     return [super buildBannerCustomEventFromCustomClass:customClass delegate:delegate];
 }
 
@@ -196,7 +198,7 @@
         self.fakeInterstitialCustomEvent.delegate = delegate;
         return self.fakeInterstitialCustomEvent;
     }
-    
+
     return [super buildInterstitialCustomEventFromCustomClass:customClass delegate:delegate];
 }
 
@@ -214,6 +216,14 @@
     return [self returnFake:self.fakeADInterstitialAd
                      orCall:^{
                          return [super buildADInterstitialAd];
+                     }];
+}
+
+- (ADBannerView *)buildADBannerView
+{
+    return [self returnFake:self.fakeADBannerView
+                     orCall:^{
+                         return [super buildADBannerView];
                      }];
 }
 

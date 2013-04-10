@@ -270,6 +270,14 @@
     if (self.requestingAdapter == adapter) {
         [self loadAdWithURL:self.requestingConfiguration.failoverURL];
     }
+
+    if (self.onscreenAdapter == adapter) {
+        [self.delegate managerDidFailToLoadAd];
+        [self.delegate invalidateContentView];
+        [self.onscreenAdapter unregisterDelegate];
+        self.onscreenAdapter = nil;
+        [self loadAd];
+    }
 }
 
 - (void)userActionWillBeginForAdapter:(MPBaseAdapter *)adapter

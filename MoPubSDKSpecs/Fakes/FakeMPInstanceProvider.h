@@ -41,6 +41,8 @@
 @property (nonatomic, assign) FakeInterstitialCustomEvent *fakeInterstitialCustomEvent;
 
 @property (nonatomic, assign) ADInterstitialAd *fakeADInterstitialAd;
+@property (nonatomic, assign) ADBannerView *fakeADBannerView;
+
 @property (nonatomic, assign) GADInterstitial *fakeGADInterstitial;
 @property (nonatomic, assign) GADBannerView *fakeGADBannerView;
 @property (nonatomic, assign) GADRequest *fakeGADRequest;
