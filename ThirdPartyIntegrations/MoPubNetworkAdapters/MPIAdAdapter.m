@@ -201,6 +201,11 @@ static MPADBannerViewManager *sharedManager = nil;
     [super unregisterDelegate];
 }
 
+- (void)rotateToOrientation:(UIInterfaceOrientation)orientation
+{
+    [MPADBannerViewManager sharedManager].bannerView.currentContentSizeIdentifier = UIInterfaceOrientationIsPortrait(orientation) ? ADBannerContentSizeIdentifierPortrait : ADBannerContentSizeIdentifierLandscape;
+}
+
 - (void)didDisplayAd
 {
     self.onScreen = YES;

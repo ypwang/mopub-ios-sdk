@@ -40,6 +40,7 @@
                                                                                      size:MOPUB_BANNER_SIZE];
     self.adView.delegate = self;
     self.adView.accessibilityLabel = @"banner";
+    self.adView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [self.adViewContainer addSubview:self.adView];
 
     [self.spinner startAnimating];
@@ -54,6 +55,12 @@
         [self.adView loadAd];
         self.didLoadAd = YES;
     }
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self.adView rotateToOrientation:toInterfaceOrientation];
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 #pragma mark - <MPAdViewDelegate>

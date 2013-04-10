@@ -14,4 +14,9 @@
     self.wasLoaded = YES;
 }
 
+- (void)rotateToOrientation:(UIInterfaceOrientation)newOrientation
+{
+    self.orientation = newOrientation;
+}
+
 @end

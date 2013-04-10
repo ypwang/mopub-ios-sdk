@@ -27,7 +27,6 @@ describe(@"iAdBannerIntegrationSuite", ^{
     __block MPAdConfiguration *configuration;
     __block FakeADBannerView *fakeADBannerView;
 
-
     beforeEach(^{
         delegate = nice_fake_for(@protocol(MPAdViewDelegate));
         banner = [[[MPAdView alloc] initWithAdUnitId:@"iAd" size:MOPUB_BANNER_SIZE] autorelease];
@@ -84,6 +83,22 @@ describe(@"iAdBannerIntegrationSuite", ^{
             fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations should contain(configuration);
             delegate should have_received(@selector(adViewDidLoadAd:)).with(banner);
             refreshTimer.isScheduled should equal(YES);
+        });
+
+        context(@"when informed of an orientation change", ^{
+            it(@"should use the proper content size identifier for that orientation", ^{
+                [banner rotateToOrientation:UIInterfaceOrientationPortrait];
+                fakeADBannerView.currentContentSizeIdentifier should equal(ADBannerContentSizeIdentifierPortrait);
+
+                [banner rotateToOrientation:UIInterfaceOrientationLandscapeLeft];
+                fakeADBannerView.currentContentSizeIdentifier should equal(ADBannerContentSizeIdentifierLandscape);
+
+                [banner rotateToOrientation:UIInterfaceOrientationPortraitUpsideDown];
+                fakeADBannerView.currentContentSizeIdentifier should equal(ADBannerContentSizeIdentifierPortrait);
+
+                [banner rotateToOrientation:UIInterfaceOrientationLandscapeRight];
+                fakeADBannerView.currentContentSizeIdentifier should equal(ADBannerContentSizeIdentifierLandscape);
+            });
         });
 
         context(@"when the user interacts with the ad", ^{

@@ -10,5 +10,6 @@
 @interface FakeMPAdView : MPAdView
 
 @property (nonatomic, assign) BOOL wasLoaded;
+@property (nonatomic, assign) UIInterfaceOrientation orientation;
 
 @end

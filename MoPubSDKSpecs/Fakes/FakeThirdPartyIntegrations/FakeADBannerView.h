@@ -14,6 +14,7 @@
 
 @property (nonatomic, assign) id<ADBannerViewDelegate> delegate;
 @property (nonatomic, assign, getter=isBannerLoaded) BOOL bannerLoaded;
+@property (nonatomic, assign) NSString *currentContentSizeIdentifier;
 
 - (void)simulateLoadingAd;
 - (void)simulateFailingToLoad;

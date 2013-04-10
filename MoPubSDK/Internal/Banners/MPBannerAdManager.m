@@ -21,6 +21,7 @@
 @property (nonatomic, retain) MPAdConfiguration *requestingConfiguration;
 @property (nonatomic, retain) MPTimer *refreshTimer;
 @property (nonatomic, assign) BOOL adActionInProgress;
+@property (nonatomic, assign) UIInterfaceOrientation currentOrientation;
 
 - (void)loadAdWithURL:(NSURL *)URL;
 - (void)scheduleRefreshTimer;
@@ -36,6 +37,7 @@
 @synthesize requestingAdapter = _requestingAdapter;
 @synthesize refreshTimer = _refreshTimer;
 @synthesize adActionInProgress = _adActionInProgress;
+@synthesize currentOrientation = _currentOrientation;
 
 - (id)initWithDelegate:(id<MPBannerAdManagerDelegate>)delegate
 {
@@ -49,6 +51,8 @@
                                                  selector:@selector(forceRefreshAd)
                                                      name:UIApplicationWillEnterForegroundNotification
                                                    object:[UIApplication sharedApplication]];
+
+        self.currentOrientation = MPInterfaceOrientation();
     }
     return self;
 }
@@ -117,6 +121,7 @@
 
 - (void)rotateToOrientation:(UIInterfaceOrientation)orientation
 {
+    self.currentOrientation = orientation;
     [self.requestingAdapter rotateToOrientation:orientation];
     [self.onscreenAdapter rotateToOrientation:orientation];
 }
@@ -248,6 +253,7 @@
         self.onscreenAdapter = self.requestingAdapter;
         self.requestingAdapter = nil;
 
+        [self.onscreenAdapter rotateToOrientation:self.currentOrientation];
         [self.delegate managerDidLoadAd:self.requestingAdapterAdContentView];
         [self.onscreenAdapter didDisplayAd];
 

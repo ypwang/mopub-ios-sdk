@@ -42,6 +42,13 @@ describe(@"MPBannerAdDetailViewController", ^{
         });
     });
 
+    context(@"when its orientation changes", ^{
+        it(@"should tell the ad view", ^{
+            [controller willRotateToInterfaceOrientation:UIInterfaceOrientationLandscapeLeft duration:1.0];
+            adView.orientation should equal(UIInterfaceOrientationLandscapeLeft);
+        });
+    });
+
     context(@"when its view has appeared", ^{
         beforeEach(^{
             adView.wasLoaded should equal(NO);

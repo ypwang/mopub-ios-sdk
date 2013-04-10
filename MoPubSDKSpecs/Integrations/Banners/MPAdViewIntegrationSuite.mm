@@ -15,6 +15,7 @@ describe(@"MPAdViewIntegrationSuite", ^{
     __block UIViewController *presentingController;
     __block FakeBannerCustomEvent *onscreenEvent;
     __block FakeMPTimer *refreshTimer;
+    __block UIInterfaceOrientation currentOrientation;
 
     sharedExamplesFor(@"a banner that ignores loads", ^(NSDictionary *sharedContext) {
         it(@"should ignore load", ^{
@@ -131,12 +132,17 @@ describe(@"MPAdViewIntegrationSuite", ^{
             refreshTimer.isValid should equal(YES);
             refreshTimer.isPaused should equal(NO);
         });
+
+        it(@"should set the orientation on the ad", ^{
+            event.orientation should equal(currentOrientation);
+        });
     });
 
 ////////////////////////////////////////////////////////////////////////
 
     context(@"when loading an ad for the first time", ^{
         beforeEach(^{
+            currentOrientation = UIInterfaceOrientationLandscapeRight;
             onscreenEvent = nil;
             event = [[[FakeBannerCustomEvent alloc] initWithFrame:CGRectMake(0, 0, 20, 30)] autorelease];
             fakeProvider.fakeBannerCustomEvent = event;
@@ -147,6 +153,7 @@ describe(@"MPAdViewIntegrationSuite", ^{
 
             banner = [[[MPAdView alloc] initWithAdUnitId:@"custom_event" size:MOPUB_BANNER_SIZE] autorelease];
             banner.delegate = delegate;
+            [banner rotateToOrientation:currentOrientation];
 
             [banner loadAd];
 
@@ -195,11 +202,11 @@ describe(@"MPAdViewIntegrationSuite", ^{
 
             context(@"when told to rotate", ^{
                 beforeEach(^{
-                    [banner rotateToOrientation:UIInterfaceOrientationLandscapeRight];
+                    [banner rotateToOrientation:UIInterfaceOrientationPortrait];
                 });
 
                 it(@"should tell the custom event", ^{
-                    event.orientation should equal(UIInterfaceOrientationLandscapeRight);
+                    event.orientation should equal(UIInterfaceOrientationPortrait);
                 });
             });
 
@@ -323,6 +330,7 @@ describe(@"MPAdViewIntegrationSuite", ^{
 
     context(@"when an ad is already loaded, and the refresh timer fires", ^{
         beforeEach(^{
+            currentOrientation = UIInterfaceOrientationLandscapeLeft;
             onscreenEvent = nil;
             event = [[[FakeBannerCustomEvent alloc] initWithFrame:CGRectMake(0, 0, 20, 30)] autorelease];
             fakeProvider.fakeBannerCustomEvent = event;
@@ -333,6 +341,7 @@ describe(@"MPAdViewIntegrationSuite", ^{
 
             banner = [[[MPAdView alloc] initWithAdUnitId:@"custom_event" size:MOPUB_BANNER_SIZE] autorelease];
             banner.delegate = delegate;
+            [banner rotateToOrientation:UIInterfaceOrientationLandscapeLeft];
 
             [banner loadAd];
 
