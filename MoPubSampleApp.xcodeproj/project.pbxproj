@@ -155,10 +155,8 @@
 		AEEA5E6916F940EC003D48F4 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E5116F940EC003D48F4 /* iAd.framework */; };
 		AEEA5E7316F94102003D48F4 /* libGoogleAdMobAds.a in Resources */ = {isa = PBXBuildFile; fileRef = AEEA5E7116F94102003D48F4 /* libGoogleAdMobAds.a */; };
 		AEEA5E7416F94102003D48F4 /* libGoogleAdMobAds.a in Resources */ = {isa = PBXBuildFile; fileRef = AEEA5E7116F94102003D48F4 /* libGoogleAdMobAds.a */; };
-		AEEA5E7516F94102003D48F4 /* libGoogleAdMobAds.a in Resources */ = {isa = PBXBuildFile; fileRef = AEEA5E7116F94102003D48F4 /* libGoogleAdMobAds.a */; };
 		AEEA5E7616F94102003D48F4 /* libMMSDK_4.6.2.a in Resources */ = {isa = PBXBuildFile; fileRef = AEEA5E7216F94102003D48F4 /* libMMSDK_4.6.2.a */; };
 		AEEA5E7716F94102003D48F4 /* libMMSDK_4.6.2.a in Resources */ = {isa = PBXBuildFile; fileRef = AEEA5E7216F94102003D48F4 /* libMMSDK_4.6.2.a */; };
-		AEEA5E7816F94102003D48F4 /* libMMSDK_4.6.2.a in Resources */ = {isa = PBXBuildFile; fileRef = AEEA5E7216F94102003D48F4 /* libMMSDK_4.6.2.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1081,8 +1079,6 @@
 				AED9E50816F7B8A600EA71A7 /* MPAdBrowserController.xib in Resources */,
 				AED9E50916F7B8A600EA71A7 /* MPBannerAdDetailViewController.xib in Resources */,
 				AE43414C16F9068000B73710 /* MPInterstitialAdDetailViewController.xib in Resources */,
-				AEEA5E7516F94102003D48F4 /* libGoogleAdMobAds.a in Resources */,
-				AEEA5E7816F94102003D48F4 /* libMMSDK_4.6.2.a in Resources */,
 				AE0021EB1704C46400A220F0 /* MPManualAdViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1300,6 +1296,7 @@
 					"$(SRCROOT)/Externals/**",
 				);
 				INFOPLIST_FILE = "MoPubSampleApp/MoPubSampleApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/build/Release-iphoneos\"",
@@ -1321,6 +1318,7 @@
 					"$(SRCROOT)/Externals/**",
 				);
 				INFOPLIST_FILE = "MoPubSampleApp/MoPubSampleApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/build/Release-iphoneos\"",
@@ -1401,6 +1399,7 @@
 					"$(SRCROOT)/Externals/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/MoPubSampleAppSpecs/SampleAppKIF/SampleAppKIF-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/build/Release-iphoneos\"",
@@ -1426,6 +1425,7 @@
 					"$(SRCROOT)/Externals/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/MoPubSampleAppSpecs/SampleAppKIF/SampleAppKIF-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/build/Release-iphoneos\"",

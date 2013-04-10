@@ -95,7 +95,6 @@
 - (void)timeout
 {
     [self.delegate adapter:self didFailToLoadAdWithError:nil];
-    [self unregisterDelegate];
 }
 
 #pragma mark - Rotation

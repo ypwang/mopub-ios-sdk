@@ -141,21 +141,21 @@ static MPADBannerViewManager *sharedManager = nil;
     self.hasTrackedImpression = NO;
     self.hasTrackedClick = NO;
 
-    for (MPIAdAdapter *adapter in self.observers) {
+    for (MPIAdAdapter *adapter in [self.observers copy]) {
         [adapter bannerDidLoad];
     }
 }
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
 {
-    for (MPIAdAdapter *adapter in self.observers) {
+    for (MPIAdAdapter *adapter in [self.observers copy]) {
         [adapter bannerDidFail];
     }
 }
 
 - (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave
 {
-    for (MPIAdAdapter *adapter in self.observers) {
+    for (MPIAdAdapter *adapter in [self.observers copy]) {
         [adapter bannerActionWillBeginAndWillLeaveApplication:willLeave];
     }
     return YES;
@@ -163,7 +163,7 @@ static MPADBannerViewManager *sharedManager = nil;
 
 - (void)bannerViewActionDidFinish:(ADBannerView *)banner
 {
-    for (MPIAdAdapter *adapter in self.observers) {
+    for (MPIAdAdapter *adapter in [self.observers copy]) {
         [adapter bannerActionDidFinish];
     }
 }

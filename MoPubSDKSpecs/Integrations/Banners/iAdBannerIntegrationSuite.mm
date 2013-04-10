@@ -176,6 +176,46 @@ describe(@"iAdBannerIntegrationSuite", ^{
             });
         });
 
+        context(@"(regression test) when the refresh timer fires while the user is playing with the ad", ^{
+            beforeEach(^{
+                [fakeADBannerView simulateUserInteraction];
+                [refreshTimer trigger];
+                [communicator receiveConfiguration:configuration];
+            });
+
+            it(@"should not blow up", ^{
+                [fakeADBannerView simulateUserDismissingAd]; //was mutating a set while enumerating it
+            });
+        });
+
+        // iAD queues up its failure/success messages while presenting a modal
+        // when the modal is finally dismissed, these failure messages come through *before* the
+        // modal dismissal message comes through
+        // we need to make sure future requests succeed
+
+        context(@"(regression test) when iAd indicates failure immediately upon dismissing its modal content", ^{
+            beforeEach(^{
+                [fakeADBannerView simulateUserInteraction];
+                [refreshTimer trigger];
+                [communicator receiveConfiguration:configuration];
+                [delegate reset_sent_messages];
+                [fakeADBannerView simulateFailingToLoad];
+                [fakeADBannerView simulateUserDismissingAd];
+            });
+
+            it(@"should tell the delegate the user action did finish", ^{
+                delegate should have_received(@selector(didDismissModalViewForAd:)).with(banner);
+            });
+
+            it(@"should be able to load a new ad", ^{
+                [banner loadAd];
+                [communicator receiveConfiguration:configuration];
+                [fakeADBannerView simulateLoadingAd];
+                banner.subviews.lastObject should equal(fakeADBannerView);
+            });
+        });
+
+
         context(@"when our refresh timer fires", ^{
             __block MPAdConfiguration *anotherConfiguration;
 

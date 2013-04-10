@@ -69,14 +69,6 @@ describe(@"MPBaseAdapter", ^{
                 it(@"should tell its delegate that the request failed", ^{
                     delegate should have_received(@selector(adapter:didFailToLoadAdWithError:));
                 });
-
-                context(@"when told later that the request has finished", ^{
-                    it(@"should not tell its delegate", ^{
-                        [delegate reset_sent_messages];
-                        [adapter simulateLoadingFinished];
-                        delegate.sent_messages should be_empty;
-                    });
-                });
             });
 
         });

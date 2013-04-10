@@ -96,6 +96,7 @@
 
 - (void)loadAdWithURL:(NSURL *)URL
 {
+    URL = [URL copy]; //if this is the URL from the requestingConfiguration, it's about to die...
     // Cancel the current request/requesting adapter
     self.requestingConfiguration = nil;
     [self.requestingAdapter unregisterDelegate];
@@ -272,10 +273,18 @@
     }
 
     if (self.onscreenAdapter == adapter) {
+        // the onscreen adapter has failed.  we need to:
+        // 1) remove it
+        // 2) tell the delegate
+        // 3) and note that there can't possibly be a modal on display any more
         [self.delegate managerDidFailToLoadAd];
         [self.delegate invalidateContentView];
         [self.onscreenAdapter unregisterDelegate];
         self.onscreenAdapter = nil;
+        if (self.adActionInProgress) {
+            [self.delegate userActionDidFinish];
+        }
+        self.adActionInProgress = NO;
         [self loadAd];
     }
 }
