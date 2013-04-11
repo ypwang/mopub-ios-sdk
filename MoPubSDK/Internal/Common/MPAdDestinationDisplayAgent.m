@@ -89,9 +89,9 @@
 
 - (void)failedToResolveURLWithError:(NSError *)error
 {
+    self.inUse = NO;
     [self hideOverlay];
     [self.delegate displayAgentDidDismissModal];
-    self.inUse = NO;
 }
 
 - (void)presentStoreKitControllerWithItemIdentifier:(NSString *)identifier fallbackURL:(NSURL *)URL
@@ -113,24 +113,24 @@
 #pragma mark - <MPSKStoreProductViewControllerDelegate>
 - (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController
 {
-    [self hideModalAndNotifyDelegate];
     self.inUse = NO;
+    [self hideModalAndNotifyDelegate];
 }
 
 #pragma mark - <MPAdBrowserControllerDelegate>
 - (void)dismissBrowserController:(MPAdBrowserController *)browserController animated:(BOOL)animated
 {
-    [self hideModalAndNotifyDelegate];
     self.inUse = NO;
+    [self hideModalAndNotifyDelegate];
 }
 
 #pragma mark - <MPProgressOverlayViewDelegate>
 - (void)overlayCancelButtonPressed
 {
+    self.inUse = NO;
     [self.resolver cancel];
     [self hideOverlay];
     [self.delegate displayAgentDidDismissModal];
-    self.inUse = NO;
 }
 
 #pragma mark - Convenience Methods
