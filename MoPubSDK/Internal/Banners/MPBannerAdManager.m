@@ -100,7 +100,7 @@
 
 - (void)loadAdWithURL:(NSURL *)URL
 {
-    URL = [URL copy]; //if this is the URL from the requestingConfiguration, it's about to die...
+    URL = [[URL copy] autorelease]; //if this is the URL from the requestingConfiguration, it's about to die...
     // Cancel the current request/requesting adapter
     self.requestingConfiguration = nil;
     [self.requestingAdapter unregisterDelegate];
