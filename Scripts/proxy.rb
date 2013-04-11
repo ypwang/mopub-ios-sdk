@@ -6,11 +6,13 @@
 
 require 'webrick/httpproxy'
 
-network = ARGV[0] || 'Wi-Fi'
+networks = ['Wi-Fi', 'Ethernet']
 
-puts "Starting proxy on #{network}"
-`sudo networksetup -setwebproxy #{network} 127.0.0.1 9999 off`
-`sudo networksetup -setwebproxystate #{network} on`
+networks.each do |network|
+  puts "Starting proxy on #{network}"
+  `sudo networksetup -setwebproxy #{network} 127.0.0.1 9999 off`
+  `sudo networksetup -setwebproxystate #{network} on`
+end
 
 $stderr = StringIO.new
 
@@ -28,7 +30,9 @@ trap("INT") { s.shutdown }
 s.start
 
 at_exit do
-  puts "Stopping proxy"
   f.close
-  `sudo networksetup -setwebproxystate #{network} off`
+  networks.each do |network|
+    puts "Stopping proxy on #{network}"
+    `sudo networksetup -setwebproxystate #{network} off`
+  end
 end

@@ -182,7 +182,7 @@ end
 
 def run_with_proxy
   pid = fork do
-    exec "#{SCRIPTS_DIR}/proxy.rb Wi-Fi"
+    exec "#{SCRIPTS_DIR}/proxy.rb"
   end
 
   begin
