@@ -7,6 +7,7 @@
 //
 
 #import "MPBaseAdapter.h"
+#import "MPConstants.h"
 
 #import "MPAdConfiguration.h"
 #import "MPLogging.h"
@@ -67,7 +68,7 @@
 {
     self.configuration = configuration;
 
-    self.timeoutTimer = [[MPInstanceProvider sharedProvider] buildMPTimerWithTimeInterval:10
+    self.timeoutTimer = [[MPInstanceProvider sharedProvider] buildMPTimerWithTimeInterval:BANNER_TIMEOUT_INTERVAL
                                                                                    target:self
                                                                                  selector:@selector(timeout)
                                                                                   repeats:NO];

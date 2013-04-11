@@ -16,6 +16,7 @@
 {
     FakeMPTimer *timer = [[[FakeMPTimer alloc] init] autorelease];
     timer.timeInterval = seconds;
+    timer.timeToNextTrigger = seconds;
     timer.target = target;
     timer.selector = aSelector;
     timer.repeats = repeats;
@@ -56,6 +57,19 @@
     self.selector = nil;
 }
 
+- (void)advanceTime:(NSTimeInterval)timeInterval
+{
+    if (self.isValid && self.isScheduled && !self.isPaused) {
+        self.timeToNextTrigger -= timeInterval;
+        if (self.timeToNextTrigger <= 0) {
+            [self trigger];
+            if (self.repeats) {
+                self.timeToNextTrigger = self.initialTimeInterval + self.timeToNextTrigger;
+            }
+        }
+    }
+}
+
 - (void)trigger
 {
     if (self.isValid && self.isScheduled && !self.isPaused) {
@@ -63,8 +77,6 @@
         if (!self.repeats) {
             [self invalidate];
         }
-    } else {
-        NSLog(@"================> NO TRIGGER FOR YOU!");
     }
 }
 

@@ -21,9 +21,9 @@
 #import "GADRequest.h"
 #import "FakeMMBannerAdView.h"
 #import "FakeMPReachability.h"
-#import "FakeMPTimer.h"
 #import "MPBaseAdapter.h"
 #import "FakeBannerCustomEvent.h"
+#import "FakeMPTimer.h"
 
 @interface FakeMPInstanceProvider : MPInstanceProvider
 
@@ -58,6 +58,8 @@
 @property (nonatomic, assign) FakeMPAdServerCommunicator *lastFakeMPAdServerCommunicator;
 
 - (FakeMPAnalyticsTracker *)sharedFakeMPAnalyticsTracker;
+- (void)advanceMPTimers:(NSTimeInterval)timeInterval;
+- (NSMutableArray *)fakeTimers;
 - (FakeMPTimer *)lastFakeMPTimerWithSelector:(SEL)selector;
 
 @end

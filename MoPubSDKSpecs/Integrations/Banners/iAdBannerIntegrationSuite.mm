@@ -182,7 +182,7 @@ describe(@"iAdBannerIntegrationSuite", ^{
         context(@"(regression test) when the refresh timer fires while the user is playing with the ad", ^{
             beforeEach(^{
                 [fakeADBannerView simulateUserInteraction];
-                [refreshTimer trigger];
+                [fakeProvider advanceMPTimers:configuration.refreshInterval];
                 [communicator receiveConfiguration:configuration];
             });
 
@@ -199,7 +199,7 @@ describe(@"iAdBannerIntegrationSuite", ^{
         context(@"(regression test) when iAd indicates failure immediately upon dismissing its modal content", ^{
             beforeEach(^{
                 [fakeADBannerView simulateUserInteraction];
-                [refreshTimer trigger];
+                [fakeProvider advanceMPTimers:configuration.refreshInterval];
                 [communicator receiveConfiguration:configuration];
                 [delegate reset_sent_messages];
                 [fakeADBannerView simulateFailingToLoad];
@@ -227,7 +227,7 @@ describe(@"iAdBannerIntegrationSuite", ^{
                 anotherConfiguration = [MPAdConfigurationFactory defaultBannerConfigurationWithNetworkType:@"iAd"];
                 anotherConfiguration.failoverURL = [NSURL URLWithString:@"http://failover2"];
 
-                [refreshTimer trigger];
+                [fakeProvider advanceMPTimers:configuration.refreshInterval];
             });
 
             context(@"and then the iAd configuration arrives", ^{
@@ -271,15 +271,16 @@ describe(@"iAdBannerIntegrationSuite", ^{
                 });
 
                 context(@"and fails", ^{
+                    __block NSURL *originalURL;
                     beforeEach(^{
-                        [communicator resetLoadedURL];
+                        originalURL = communicator.loadedURL;
                         [fakeADBannerView simulateFailingToLoad];
                     });
 
                     it(@"should remove the ad view, and tell the delegate that it failed", ^{
                         banner.subviews should be_empty;
                         delegate should have_received(@selector(adViewDidFailToLoadAd:)).with(banner);
-                        communicator.loadedURL should be_nil;
+                        communicator.loadedURL should be_same_instance_as(originalURL);
                     });
 
                     context(@"and then the iAd configuration arrives", ^{

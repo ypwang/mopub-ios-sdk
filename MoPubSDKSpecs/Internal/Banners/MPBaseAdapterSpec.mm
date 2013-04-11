@@ -1,5 +1,4 @@
 #import "MPBaseAdapter.h"
-#import "FakeMPTimer.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -37,40 +36,27 @@ describe(@"MPBaseAdapter", ^{
 
     describe(@"timing out requests", ^{
         context(@"when beginning a request", ^{
-            __block FakeMPTimer *timeoutTimer;
-
             beforeEach(^{
                 [adapter _getAdWithConfiguration:nil containerSize:CGSizeZero];
-                timeoutTimer = [fakeProvider lastFakeMPTimerWithSelector:@selector(timeout)];
             });
 
-            it(@"should schedule a timeout timer", ^{
-                timeoutTimer.initialTimeInterval should equal(10);
-                timeoutTimer.isScheduled should equal(YES);
+            it(@"should timeout and tell the delegate about the failure after 10 seconds", ^{
+                [fakeProvider advanceMPTimers:10];
+                delegate should have_received(@selector(adapter:didFailToLoadAdWithError:));
             });
 
-            context(@"before the timeout has elapsed", ^{
-                context(@"when told that the request has finished (either successfully or not)", ^{
-                    beforeEach(^{
-                        [adapter simulateLoadingFinished];
-                    });
-
-                    it(@"should invalidate the timeout timer", ^{
-                        timeoutTimer.isValid should equal(NO);
-                    });
-                });
-            });
-
-            context(@"after the timeout has elapsed (without the timer being invalidated)", ^{
+            context(@"when the request finishes before the timeout", ^{
                 beforeEach(^{
-                    [timeoutTimer trigger];
+                    [fakeProvider advanceMPTimers:5];
+                    [adapter simulateLoadingFinished];
                 });
 
-                it(@"should tell its delegate that the request failed", ^{
-                    delegate should have_received(@selector(adapter:didFailToLoadAdWithError:));
+                it(@"should not, later, fire the timeout", ^{
+                    [delegate reset_sent_messages];
+                    [fakeProvider advanceMPTimers:5];
+                    delegate should_not have_received(@selector(adapter:didFailToLoadAdWithError:));
                 });
             });
-
         });
     });
 });

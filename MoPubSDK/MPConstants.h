@@ -24,6 +24,8 @@
 
 // Miscellaneous constants.
 #define MINIMUM_REFRESH_INTERVAL    5.0
+#define DEFAULT_BANNER_REFRESH_INTERVAL 60
+#define BANNER_TIMEOUT_INTERVAL     10
 
 // Feature Flags
 #define SESSION_TRACKING_ENABLED    1

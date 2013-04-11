@@ -26,7 +26,11 @@ describe(@"MPInterstitialAdManager", ^{
             it(@"should not make a new request", ^{
                 NSURL *originalURL = communicator.loadedURL;
                 [manager loadInterstitialWithAdUnitID:@"ad_unit_to_load_when_your_already_loading_something" keywords:@"" location:nil testing:YES];
-                communicator.loadedURL should equal(originalURL);
+                if (originalURL) {
+                    communicator.loadedURL should equal(originalURL);
+                } else {
+                    communicator.loadedURL should be_nil;
+                }
             });
         });
     });
@@ -145,9 +149,9 @@ describe(@"MPInterstitialAdManager", ^{
                         [manager loadInterstitialWithAdUnitID:@"different_guy" keywords:@"" location:nil testing:YES];
                     });
 
-                    it(@"should immediately tell its delegate that it did load an ad", ^{
-                        communicator.loadedURL should equal([MPAdServerURLBuilder URLWithAdUnitID:@"gimme_adapter" keywords:@"" location:nil testing:YES]); //original url
+                    it(@"should immediately tell its delegate that it did load an ad, and not try to load again", ^{
                         delegate should have_received(@selector(managerDidLoadInterstitial:)).with(manager);
+                        communicator.loadedURL should be_nil;
                     });
                 });
             });

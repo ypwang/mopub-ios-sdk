@@ -126,20 +126,22 @@ describe(@"MPBannerCustomEventAdapter", ^{
             });
         });
 
-        describe(@"the adapter timeout timer", ^{
+        describe(@"the adapter timeout", ^{
             context(@"when the custom event successfully loads", ^{
-                it(@"should invalidate the timer", ^{
-                    [fakeProvider lastFakeMPTimerWithSelector:@selector(timeout)].isValid should equal(YES);
+                it(@"should no longer trigger a timeout", ^{
                     [event simulateLoadingAd];
-                    [fakeProvider lastFakeMPTimerWithSelector:@selector(timeout)].isValid should equal(NO);
+                    [delegate reset_sent_messages];
+                    [fakeProvider advanceMPTimers:BANNER_TIMEOUT_INTERVAL];
+                    delegate.sent_messages should be_empty;
                 });
             });
 
             context(@"when the custom event fails to load", ^{
                 it(@"should invalidate the timer", ^{
-                    [fakeProvider lastFakeMPTimerWithSelector:@selector(timeout)].isValid should equal(YES);
-                    [event simulateFailingToLoad];
-                    [fakeProvider lastFakeMPTimerWithSelector:@selector(timeout)].isValid should equal(NO);
+                    [event simulateLoadingAd];
+                    [delegate reset_sent_messages];
+                    [fakeProvider advanceMPTimers:BANNER_TIMEOUT_INTERVAL];
+                    delegate.sent_messages should be_empty;
                 });
             });
         });

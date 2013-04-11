@@ -2,6 +2,7 @@
 #import "MPBannerAdManagerDelegate.h"
 #import "MPAdConfigurationFactory.h"
 #import "FakeBannerCustomEvent.h"
+#import "MPConstants.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -11,10 +12,12 @@ SPEC_BEGIN(MPBannerAdManagerSpec)
 describe(@"MPBannerAdManager", ^{
     __block MPBannerAdManager *manager;
     __block id<CedarDouble, MPBannerAdManagerDelegate> delegate;
+    __block FakeMPAdServerCommunicator *communicator;
 
     beforeEach(^{
         delegate = nice_fake_for(@protocol(MPBannerAdManagerDelegate));
         manager = [[[MPBannerAdManager alloc] initWithDelegate:delegate] autorelease];
+        communicator = fakeProvider.lastFakeMPAdServerCommunicator;
     });
 
     describe(@"loading requests", ^{
@@ -26,7 +29,7 @@ describe(@"MPBannerAdManager", ^{
 
             [manager loadAd];
 
-            NSString *URL = fakeProvider.lastFakeMPAdServerCommunicator.loadedURL.absoluteString;
+            NSString *URL = communicator.loadedURL.absoluteString;
             URL should contain(@"id=panther");
             URL should contain(@"q=liono");
             URL should contain(@"ll=30,20");
@@ -38,23 +41,26 @@ describe(@"MPBannerAdManager", ^{
         context(@"when the requested ad unit loads successfully and it has a refresh interval", ^{
             it(@"should schedule the refresh timer with the given refresh interval", ^{
                 [manager loadAd];
+
                 FakeBannerCustomEvent *event = [[[FakeBannerCustomEvent alloc] initWithFrame:CGRectZero] autorelease];
                 fakeProvider.fakeBannerCustomEvent = event;
 
                 MPAdConfiguration *configuration = [MPAdConfigurationFactory defaultBannerConfigurationWithCustomEventClassName:@"FakeBannerCustomEvent"];
                 configuration.refreshInterval = 20;
-                [fakeProvider.lastFakeMPAdServerCommunicator receiveConfiguration:configuration];
+                [communicator receiveConfiguration:configuration];
 
                 [event simulateLoadingAd];
-                FakeMPTimer *timer = [fakeProvider lastFakeMPTimerWithSelector:@selector(refreshTimerDidFire)];
-                timer.initialTimeInterval should equal(20);
-                timer.isScheduled should equal(YES);
+
+                [communicator resetLoadedURL];
+                [fakeProvider advanceMPTimers:20];
+                communicator.loadedURL should_not be_nil;
             });
         });
 
         context(@"when the requested ad unit loads successfully and it has no refresh interval", ^{
             it(@"should not schedule the refresh timer", ^{
                 [manager loadAd];
+
                 FakeBannerCustomEvent *event = [[[FakeBannerCustomEvent alloc] initWithFrame:CGRectZero] autorelease];
                 fakeProvider.fakeBannerCustomEvent = event;
 
@@ -62,18 +68,23 @@ describe(@"MPBannerAdManager", ^{
                 configuration.refreshInterval = -1;
                 [fakeProvider.lastFakeMPAdServerCommunicator receiveConfiguration:configuration];
 
+                int numberOfTimers = fakeProvider.fakeTimers.count;
+
                 [event simulateLoadingAd];
-                [fakeProvider lastFakeMPTimerWithSelector:@selector(refreshTimerDidFire)] should be_nil;
+
+                fakeProvider.fakeTimers.count should equal(numberOfTimers);
             });
         });
 
         context(@"when the initial ad server request fails", ^{
             it(@"should schedule the default autorefresh timer", ^{
                 [manager loadAd];
-                [fakeProvider.lastFakeMPAdServerCommunicator failWithError:nil];
-                FakeMPTimer *timer = [fakeProvider lastFakeMPTimerWithSelector:@selector(refreshTimerDidFire)];
-                timer.initialTimeInterval should equal(60);
-                timer.isScheduled should equal(YES);
+                FakeMPAdServerCommunicator *communicator = fakeProvider.lastFakeMPAdServerCommunicator;
+                [communicator failWithError:nil];
+
+                [communicator resetLoadedURL];
+                [fakeProvider advanceMPTimers:DEFAULT_BANNER_REFRESH_INTERVAL];
+                communicator.loadedURL should_not be_nil;
             });
         });
     });
@@ -85,12 +96,13 @@ describe(@"MPBannerAdManager", ^{
 
                 MPAdConfiguration *configuration = [MPAdConfigurationFactory defaultBannerConfiguration];
                 configuration.adType = MPAdTypeUnknown;
-                [fakeProvider.lastFakeMPAdServerCommunicator receiveConfiguration:configuration];
+                [communicator receiveConfiguration:configuration];
 
-                FakeMPTimer *timer = [fakeProvider lastFakeMPTimerWithSelector:@selector(refreshTimerDidFire)];
-                timer.initialTimeInterval should equal(configuration.refreshInterval);
-                timer.isScheduled should equal(YES);
                 delegate should have_received(@selector(managerDidFailToLoadAd));
+
+                [communicator resetLoadedURL];
+                [fakeProvider advanceMPTimers:configuration.refreshInterval];
+                communicator.loadedURL should_not be_nil;
             });
         });
 
@@ -100,12 +112,13 @@ describe(@"MPBannerAdManager", ^{
 
                 MPAdConfiguration *configuration = [MPAdConfigurationFactory defaultInterstitialConfiguration];
                 configuration.refreshInterval = 30;
-                [fakeProvider.lastFakeMPAdServerCommunicator receiveConfiguration:configuration];
+                [communicator receiveConfiguration:configuration];
 
-                FakeMPTimer *timer = [fakeProvider lastFakeMPTimerWithSelector:@selector(refreshTimerDidFire)];
-                timer.initialTimeInterval should equal(configuration.refreshInterval);
-                timer.isScheduled should equal(YES);
                 delegate should have_received(@selector(managerDidFailToLoadAd));
+
+                [communicator resetLoadedURL];
+                [fakeProvider advanceMPTimers:configuration.refreshInterval];
+                communicator.loadedURL should_not be_nil;
             });
         });
 
@@ -114,21 +127,19 @@ describe(@"MPBannerAdManager", ^{
                 [manager loadAd];
 
                 MPAdConfiguration *configuration = [MPAdConfigurationFactory defaultBannerConfigurationWithNetworkType:kAdTypeClear];
-                [fakeProvider.lastFakeMPAdServerCommunicator receiveConfiguration:configuration];
+                [communicator receiveConfiguration:configuration];
 
-                FakeMPTimer *timer = [fakeProvider lastFakeMPTimerWithSelector:@selector(refreshTimerDidFire)];
-                timer.initialTimeInterval should equal(configuration.refreshInterval);
-                timer.isScheduled should equal(YES);
                 delegate should have_received(@selector(managerDidFailToLoadAd));
+
+                [communicator resetLoadedURL];
+                [fakeProvider advanceMPTimers:configuration.refreshInterval];
+                communicator.loadedURL should_not be_nil;
             });
         });
 
         context(@"when the configuration refers to an adapter that does not exist", ^{
             it(@"should start the failover waterfall", ^{
                 [manager loadAd];
-
-                FakeMPAdServerCommunicator *communicator = fakeProvider.lastFakeMPAdServerCommunicator;
-                [communicator resetLoadedURL];
 
                 MPAdConfiguration *configuration = [MPAdConfigurationFactory defaultBannerConfigurationWithCustomEventClassName:@"NSFluffyMonkeyPandas"];
                 [communicator receiveConfiguration:configuration];

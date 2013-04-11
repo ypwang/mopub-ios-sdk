@@ -18,12 +18,11 @@
 @property (nonatomic, assign) SEL selector;
 @property (nonatomic, assign) BOOL repeats;
 @property (nonatomic, assign) NSTimeInterval timeInterval;
-
 @property (nonatomic, assign) BOOL isValid;
 @property (nonatomic, assign) BOOL isScheduled;
 @property (nonatomic, assign) BOOL isPaused;
+@property (nonatomic, assign) NSTimeInterval timeToNextTrigger;
 
-
-- (void)trigger;
+- (void)advanceTime:(NSTimeInterval)timeInterval;
 
 @end

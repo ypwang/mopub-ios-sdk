@@ -8,6 +8,8 @@
 #import "FakeMPInstanceProvider.h"
 #import "MPMillennialInterstitialAdapter.h"
 #import "MPAdWebView.h"
+#import "FakeMPTimer.h"
+
 
 @interface MPInstanceProvider (ThirdPartyAdditions)
 
@@ -74,28 +76,6 @@
     return [self singletonForClass:[MPAnalyticsTracker class] provider:^id{
         return [[[FakeMPAnalyticsTracker alloc] init] autorelease];
     }];
-}
-
-- (MPTimer *)buildMPTimerWithTimeInterval:(NSTimeInterval)seconds target:(id)target selector:(SEL)selector repeats:(BOOL)repeats
-{
-    if (!self.fakeTimers) {
-        self.fakeTimers = [NSMutableArray array];
-    }
-    MPTimer *fakeTimer = [FakeMPTimer timerWithTimeInterval:seconds target:target selector:selector repeats:repeats];
-    [self.fakeTimers addObject:fakeTimer];
-    return fakeTimer;
-}
-
-- (FakeMPTimer *)lastFakeMPTimerWithSelector:(SEL)selector
-{
-    int numTimers = [self.fakeTimers count];
-    for (int i = numTimers - 1; i >= 0; i--) {
-        if ([self.fakeTimers[i] selector] == selector) {
-            return self.fakeTimers[i];
-        }
-    }
-
-    return nil;
 }
 
 - (MPAdWebViewAgent *)buildMPAdWebViewAgentWithAdWebViewFrame:(CGRect)frame delegate:(id<MPAdWebViewAgentDelegate>)delegate customMethodDelegate:(id)customMethodDelegate
@@ -313,5 +293,43 @@
         return [super buildGSFullscreenAdWithDelegate:delegate GUID:GUID];
     }
 }
+
+#pragma mark - Advancing Time
+
+- (MPTimer *)buildMPTimerWithTimeInterval:(NSTimeInterval)seconds target:(id)target selector:(SEL)selector repeats:(BOOL)repeats
+{
+    if (!self.fakeTimers) {
+        self.fakeTimers = [NSMutableArray array];
+    }
+    MPTimer *fakeTimer = [FakeMPTimer timerWithTimeInterval:seconds target:target selector:selector repeats:repeats];
+    [self.fakeTimers addObject:fakeTimer];
+    return fakeTimer;
+}
+
+- (void)advanceMPTimers:(NSTimeInterval)timeInterval
+{
+    NSTimeInterval delta = 1;
+    NSTimeInterval advanceBy = 0;
+    while (timeInterval > 0) {
+        advanceBy = delta < timeInterval ? delta : timeInterval;
+        for (FakeMPTimer *timer in self.fakeTimers) {
+            [timer advanceTime:advanceBy];
+        }
+        timeInterval -= advanceBy;
+    }
+}
+
+- (FakeMPTimer *)lastFakeMPTimerWithSelector:(SEL)selector
+{
+    int numTimers = [self.fakeTimers count];
+    for (int i = numTimers - 1; i >= 0; i--) {
+        if ([self.fakeTimers[i] selector] == selector) {
+            return self.fakeTimers[i];
+        }
+    }
+
+    return nil;
+}
+
 
 @end

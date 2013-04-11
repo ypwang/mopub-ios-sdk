@@ -24,14 +24,20 @@
 
 - (void)receiveConfiguration:(MPAdConfiguration *)configuration
 {
-    self.loading = NO;
-    [self.delegate communicatorDidReceiveAdConfiguration:configuration];
+    if (self.loadedURL && !self.cancelled) {
+        self.loading = NO;
+        self.loadedURL = nil;
+        [self.delegate communicatorDidReceiveAdConfiguration:configuration];
+    }
 }
 
 - (void)failWithError:(NSError *)error
 {
-    self.loading = NO;
-    [self.delegate communicatorDidFailWithError:error];
+    if (self.loadedURL && !self.cancelled) {
+        self.loading = NO;
+        self.loadedURL = nil;
+        [self.delegate communicatorDidFailWithError:error];
+    }
 }
 
 - (void)resetLoadedURL

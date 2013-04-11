@@ -11,6 +11,7 @@
 #import "MPBannerAdManagerDelegate.h"
 #import "MPError.h"
 #import "MPTimer.h"
+#import "MPConstants.h"
 
 @interface MPBannerAdManager ()
 
@@ -157,7 +158,7 @@
 - (void)scheduleRefreshTimer
 {
     [self.refreshTimer invalidate];
-    NSTimeInterval timeInterval = self.requestingConfiguration ? self.requestingConfiguration.refreshInterval : 60;
+    NSTimeInterval timeInterval = self.requestingConfiguration ? self.requestingConfiguration.refreshInterval : DEFAULT_BANNER_REFRESH_INTERVAL;
 
     if (timeInterval > 0) {
         self.refreshTimer = [[MPInstanceProvider sharedProvider] buildMPTimerWithTimeInterval:timeInterval

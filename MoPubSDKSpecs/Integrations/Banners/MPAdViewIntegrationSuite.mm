@@ -18,7 +18,6 @@ describe(@"MPAdViewIntegrationSuite", ^{
     __block id<CedarDouble, MPAdViewDelegate> delegate;
     __block FakeMPAdServerCommunicator *communicator;
     __block UIViewController *presentingController;
-    __block FakeMPTimer *refreshTimer;
     __block UIInterfaceOrientation currentOrientation;
     __block FakeBannerCustomEventReturningBlock moveRequestingToOnscreen;
 
@@ -110,23 +109,22 @@ describe(@"MPAdViewIntegrationSuite", ^{
 
         context(@"if the failover URL returns clear", ^{
             __block MPAdConfiguration *clearConfiguration;
-            __block FakeMPTimer *refreshTimer;
 
             beforeEach(^{
                 [delegate reset_sent_messages];
 
                 clearConfiguration = [MPAdConfigurationFactory defaultBannerConfigurationWithNetworkType:@"clear"];
+                clearConfiguration.refreshInterval = 5;
                 [communicator receiveConfiguration:clearConfiguration];
                 [communicator resetLoadedURL];
-
-                refreshTimer = [fakeProvider lastFakeMPTimerWithSelector:@selector(refreshTimerDidFire)];
             });
 
             it(@"should tell the delegate that it failed, schedule a new refresh timer, and leave the onscreen event in place (if present)", ^{
                 verify_fake_received_selectors(delegate, @[@"adViewDidFailToLoadAd:"]);
 
-                refreshTimer.initialTimeInterval should equal(clearConfiguration.refreshInterval);
-                refreshTimer.isScheduled should equal(YES);
+                [communicator resetLoadedURL];
+                [fakeProvider advanceMPTimers:clearConfiguration.refreshInterval];
+                communicator.loadedURL should_not be_nil;
 
                 if (onscreenEvent) {
                     [onscreenEvent simulateUserTap];
@@ -149,10 +147,9 @@ describe(@"MPAdViewIntegrationSuite", ^{
             banner.adContentViewSize should equal(onscreenEvent.view.frame.size);
             fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations should equal(@[onscreenConfiguration]);
 
-            FakeMPTimer *refreshTimer = [fakeProvider lastFakeMPTimerWithSelector:@selector(refreshTimerDidFire)];
-            refreshTimer.timeInterval should equal(onscreenConfiguration.refreshInterval);
-            refreshTimer.isScheduled should equal(YES);
-            refreshTimer.isValid should equal(YES);
+            [communicator resetLoadedURL];
+            [fakeProvider advanceMPTimers:onscreenConfiguration.refreshInterval];
+            communicator.loadedURL should_not be_nil;
 
             onscreenEvent.orientation should equal(currentOrientation);
         });
@@ -229,14 +226,11 @@ describe(@"MPAdViewIntegrationSuite", ^{
         context(@"when the communicator fails", ^{
             beforeEach(^{
                 [communicator failWithError:[NSErrorFactory genericError]];
-                refreshTimer = [fakeProvider lastFakeMPTimerWithSelector:@selector(refreshTimerDidFire)];
             });
 
             it(@"should schedule the default refresh timer and make a new request when it fires", ^{
-                refreshTimer.initialTimeInterval should equal(60);
-                refreshTimer.isScheduled should equal(YES);
                 [communicator resetLoadedURL];
-                [refreshTimer trigger];
+                [fakeProvider advanceMPTimers:DEFAULT_BANNER_REFRESH_INTERVAL];
                 communicator.loadedURL.absoluteString should contain(@"custom_event");
             });
 
@@ -267,9 +261,7 @@ describe(@"MPAdViewIntegrationSuite", ^{
                 beforeEach(^{
                     [delegate reset_sent_messages];
                     [communicator resetLoadedURL];
-                    //in this case we use (and test) the timeout
-                    //TODO!!
-                    [requestingEvent simulateFailingToLoad];
+                    [fakeProvider advanceMPTimers:BANNER_TIMEOUT_INTERVAL];
                 });
 
                 itShouldBehaveLike(@"a banner that loads the failover URL");
@@ -281,8 +273,6 @@ describe(@"MPAdViewIntegrationSuite", ^{
 
                     [requestingEvent simulateLoadingAd];
                     moveRequestingToOnscreen();
-
-                    refreshTimer = [fakeProvider lastFakeMPTimerWithSelector:@selector(refreshTimerDidFire)];
                 });
 
                 itShouldBehaveLike(@"a banner that presents the onscreen event");
@@ -328,7 +318,8 @@ describe(@"MPAdViewIntegrationSuite", ^{
                 // ** LOADING ANOTHER AD IN THE BACKGROUND **
                 context(@"when the refresh timer fires", ^{
                     beforeEach(^{
-                        [refreshTimer trigger];
+                        [communicator resetLoadedURL];
+                        [fakeProvider advanceMPTimers:onscreenConfiguration.refreshInterval];
                         communicator.loadedURL.absoluteString should contain(@"custom_event");
 
                         requestingEvent = [[[FakeBannerCustomEvent alloc] initWithFrame:CGRectMake(0, 0, 40, 10)] autorelease];
@@ -352,8 +343,7 @@ describe(@"MPAdViewIntegrationSuite", ^{
                         beforeEach(^{
                             [delegate reset_sent_messages];
                             [communicator resetLoadedURL];
-                            //TODO: use the timeout here!
-                            [requestingEvent simulateFailingToLoad];
+                            [fakeProvider advanceMPTimers:BANNER_TIMEOUT_INTERVAL];
                         });
 
                         itShouldBehaveLike(@"a banner that loads the failover URL");
@@ -368,7 +358,6 @@ describe(@"MPAdViewIntegrationSuite", ^{
                             [requestingEvent simulateLoadingAd];
 
                             originalOnscreenEvent = moveRequestingToOnscreen();
-                            refreshTimer = [fakeProvider lastFakeMPTimerWithSelector:@selector(refreshTimerDidFire)];
                         });
 
                         itShouldBehaveLike(@"a banner that presents the onscreen event");
@@ -490,7 +479,7 @@ describe(@"MPAdViewIntegrationSuite", ^{
                     beforeEach(^{
                         [banner loadAd];
                         [communicator resetLoadedURL];
-                        [refreshTimer trigger];
+                        [fakeProvider advanceMPTimers:onscreenConfiguration.refreshInterval];
                     });
 
                     it(@"should not restart the load (because it is already loading)", ^{
@@ -519,9 +508,9 @@ describe(@"MPAdViewIntegrationSuite", ^{
             });
 
             it(@"should nonetheless schedule a refresh timer (with the default time interval)", ^{
-                FakeMPTimer *timer = [fakeProvider lastFakeMPTimerWithSelector:@selector(refreshTimerDidFire)];
-                timer.isScheduled should equal(YES);
-                timer.initialTimeInterval should equal(60);
+                [communicator resetLoadedURL];
+                [fakeProvider advanceMPTimers:DEFAULT_BANNER_REFRESH_INTERVAL];
+                communicator.loadedURL should_not be_nil;
             });
         });
 
@@ -533,9 +522,9 @@ describe(@"MPAdViewIntegrationSuite", ^{
             });
 
             it(@"should nonetheless schedule a refresh timer (with the configuration's time interval)", ^{
-                FakeMPTimer *timer = [fakeProvider lastFakeMPTimerWithSelector:@selector(refreshTimerDidFire)];
-                timer.isScheduled should equal(YES);
-                timer.initialTimeInterval should equal(36);
+                [communicator resetLoadedURL];
+                [fakeProvider advanceMPTimers:36];
+                communicator.loadedURL should_not be_nil;
             });
         });
 
@@ -553,8 +542,9 @@ describe(@"MPAdViewIntegrationSuite", ^{
             });
 
             it(@"should not schedule a refresh timer", ^{
-                FakeMPTimer *timer = [fakeProvider lastFakeMPTimerWithSelector:@selector(refreshTimerDidFire)];
-                timer should be_nil;
+                [communicator resetLoadedURL];
+                [fakeProvider advanceMPTimers:36];
+                communicator.loadedURL should be_nil;
             });
         });
     });
