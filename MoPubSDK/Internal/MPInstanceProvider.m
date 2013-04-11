@@ -30,15 +30,15 @@
 
 @interface MPInstanceProvider ()
 
-@property (nonatomic, retain) MPReachability *sharedReachability;
 @property (nonatomic, copy) NSString *userAgent;
+@property (nonatomic, retain) NSMutableDictionary *singletons;
 
 @end
 
 @implementation MPInstanceProvider
 
-@synthesize sharedReachability = _sharedReachability;
 @synthesize userAgent = _userAgent;
+@synthesize singletons = _singletons;
 
 static MPInstanceProvider *sharedProvider = nil;
 
@@ -50,10 +50,29 @@ static MPInstanceProvider *sharedProvider = nil;
     return sharedProvider;
 }
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        self.singletons = [NSMutableDictionary dictionary];
+    }
+    return self;
+}
+
 - (void)dealloc
 {
-    self.sharedReachability = nil;
+    self.singletons = nil;
     [super dealloc];
+}
+
+- (id)singletonForClass:(Class)klass provider:(MPSingletonProviderBlock)provider
+{
+    id singleton = [self.singletons objectForKey:klass];
+    if (!singleton) {
+        singleton = provider();
+        [self.singletons setObject:singleton forKey:(id<NSCopying>)klass];
+    }
+    return singleton;
 }
 
 - (MPTimer *)buildMPTimerWithTimeInterval:(NSTimeInterval)seconds target:(id)target selector:(SEL)selector repeats:(BOOL)repeats
@@ -68,10 +87,9 @@ static MPInstanceProvider *sharedProvider = nil;
 
 - (MPReachability *)sharedMPReachability
 {
-    if (!self.sharedReachability) {
-        self.sharedReachability = [MPReachability reachabilityForLocalWiFi];
-    }
-    return self.sharedReachability;
+    return [self singletonForClass:[MPReachability class] provider:^id{
+        return [MPReachability reachabilityForLocalWiFi];
+    }];
 }
 
 - (NSString *)userAgent

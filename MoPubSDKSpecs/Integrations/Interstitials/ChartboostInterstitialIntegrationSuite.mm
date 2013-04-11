@@ -5,19 +5,6 @@
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
-@interface MPChartboostRouter : NSObject
-@end
-
-@implementation MPChartboostRouter (Spec)
-
-+ (void)beforeEach
-{
-    [MPChartboostRouter performSelector:@selector(resetSharedRouter)];
-}
-
-@end
-
-
 SPEC_BEGIN(ChartboostInterstitialIntegrationSuite)
 
 describe(@"ChartboostInterstitialIntegrationSuite", ^{

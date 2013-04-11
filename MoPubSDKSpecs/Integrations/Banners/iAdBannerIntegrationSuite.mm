@@ -6,18 +6,6 @@
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
-@interface MPADBannerViewManager : NSObject
-@end
-
-@implementation MPADBannerViewManager (Spec)
-
-+ (void)beforeEach
-{
-    [MPADBannerViewManager performSelector:@selector(resetSharedManager)];
-}
-
-@end
-
 SPEC_BEGIN(iAdBannerIntegrationSuite)
 
 describe(@"iAdBannerIntegrationSuite", ^{

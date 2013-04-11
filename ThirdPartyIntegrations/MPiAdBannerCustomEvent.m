@@ -9,6 +9,8 @@
 #import "MPInstanceProvider.h"
 #import <iAd/iAd.h>
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 @protocol MPADBannerViewManagerObserver <NSObject>
 
 - (void)bannerDidLoad;
@@ -18,32 +20,7 @@
 
 @end
 
-@interface MPiAdBannerCustomEvent () <MPADBannerViewManagerObserver>
-
-@property (nonatomic, assign) BOOL onScreen;
-@property (nonatomic, assign) BOOL trackImpressionWhenPresented;
-
-@end
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-@interface MPInstanceProvider (iAdBanners)
-
-- (ADBannerView *)buildADBannerView;
-
-@end
-
-@implementation MPInstanceProvider (iAdBanners)
-
-- (ADBannerView *)buildADBannerView
-{
-    return [[[ADBannerView alloc] init] autorelease];
-}
-
-@end
-
-/////////////////////////////////////////////////////////////////////////////////////
 
 @interface MPADBannerViewManager : NSObject <ADBannerViewDelegate>
 
@@ -63,114 +40,41 @@
 
 @end
 
-@implementation MPADBannerViewManager
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@synthesize bannerView = _bannerView;
-@synthesize observers = _observers;
-@synthesize hasTrackedImpression = _hasTrackedImpression;
-@synthesize hasTrackedClick = _hasTrackedClick;
 
-static MPADBannerViewManager *sharedManager = nil;
+@interface MPInstanceProvider (iAdBanners)
 
-+ (MPADBannerViewManager *)sharedManager
+- (ADBannerView *)buildADBannerView;
+- (MPADBannerViewManager *)sharedMPAdBannerViewManager;
+
+@end
+
+@implementation MPInstanceProvider (iAdBanners)
+
+- (ADBannerView *)buildADBannerView
 {
-    if (!sharedManager) {
-        sharedManager = [[self alloc] init];
-    }
-    return sharedManager;
+    return [[[ADBannerView alloc] init] autorelease];
 }
 
-+ (void)resetSharedManager
+- (MPADBannerViewManager *)sharedMPAdBannerViewManager
 {
-    sharedManager = nil;
-}
-
-- (id)init
-{
-    self = [super init];
-    if (self) {
-        self.bannerView = [[MPInstanceProvider sharedProvider] buildADBannerView];
-        self.bannerView.delegate = self;
-        self.observers = [NSMutableSet set];
-    }
-    return self;
-}
-
-- (void)dealloc
-{
-    self.bannerView.delegate = nil;
-    self.bannerView = nil;
-    self.observers = nil;
-    [super dealloc];
-}
-
-- (void)registerObserver:(id<MPADBannerViewManagerObserver>)observer;
-{
-    [self.observers addObject:observer];
-}
-
-- (void)unregisterObserver:(id<MPADBannerViewManagerObserver>)observer;
-{
-    [self.observers removeObject:observer];
-}
-
-- (BOOL)shouldTrackImpression
-{
-    return !self.hasTrackedImpression;
-}
-
-- (void)didTrackImpression
-{
-    self.hasTrackedImpression = YES;
-}
-
-- (BOOL)shouldTrackClick
-{
-    return !self.hasTrackedClick;
-}
-
-- (void)didTrackClick
-{
-    self.hasTrackedClick = YES;
-}
-
-#pragma mark - <ADBannerViewDelegate>
-
-- (void)bannerViewDidLoadAd:(ADBannerView *)banner
-{
-    self.hasTrackedImpression = NO;
-    self.hasTrackedClick = NO;
-
-    for (id<MPADBannerViewManagerObserver> observer in [self.observers copy]) {
-        [observer bannerDidLoad];
-    }
-}
-
-- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
-{
-    for (id<MPADBannerViewManagerObserver> observer in [self.observers copy]) {
-        [observer bannerDidFail];
-    }
-}
-
-- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave
-{
-    for (id<MPADBannerViewManagerObserver> observer in [self.observers copy]) {
-        [observer bannerActionWillBeginAndWillLeaveApplication:willLeave];
-    }
-    return YES;
-}
-
-- (void)bannerViewActionDidFinish:(ADBannerView *)banner
-{
-    for (id<MPADBannerViewManagerObserver> observer in [self.observers copy]) {
-        [observer bannerActionDidFinish];
-    }
+    return [self singletonForClass:[MPADBannerViewManager class]
+                          provider:^id{
+                              return [[[MPADBannerViewManager alloc] init] autorelease];
+                          }];
 }
 
 @end
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+@interface MPiAdBannerCustomEvent () <MPADBannerViewManagerObserver>
+
+@property (nonatomic, assign) BOOL onScreen;
+
+@end
 
 @implementation MPiAdBannerCustomEvent
 
@@ -259,3 +163,103 @@ static MPADBannerViewManager *sharedManager = nil;
 }
 
 @end
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+@implementation MPADBannerViewManager
+
+@synthesize bannerView = _bannerView;
+@synthesize observers = _observers;
+@synthesize hasTrackedImpression = _hasTrackedImpression;
+@synthesize hasTrackedClick = _hasTrackedClick;
+
++ (MPADBannerViewManager *)sharedManager
+{
+    return [[MPInstanceProvider sharedProvider] sharedMPAdBannerViewManager];
+}
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        self.bannerView = [[MPInstanceProvider sharedProvider] buildADBannerView];
+        self.bannerView.delegate = self;
+        self.observers = [NSMutableSet set];
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    self.bannerView.delegate = nil;
+    self.bannerView = nil;
+    self.observers = nil;
+    [super dealloc];
+}
+
+- (void)registerObserver:(id<MPADBannerViewManagerObserver>)observer;
+{
+    [self.observers addObject:observer];
+}
+
+- (void)unregisterObserver:(id<MPADBannerViewManagerObserver>)observer;
+{
+    [self.observers removeObject:observer];
+}
+
+- (BOOL)shouldTrackImpression
+{
+    return !self.hasTrackedImpression;
+}
+
+- (void)didTrackImpression
+{
+    self.hasTrackedImpression = YES;
+}
+
+- (BOOL)shouldTrackClick
+{
+    return !self.hasTrackedClick;
+}
+
+- (void)didTrackClick
+{
+    self.hasTrackedClick = YES;
+}
+
+#pragma mark - <ADBannerViewDelegate>
+
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner
+{
+    self.hasTrackedImpression = NO;
+    self.hasTrackedClick = NO;
+    
+    for (id<MPADBannerViewManagerObserver> observer in [self.observers copy]) {
+        [observer bannerDidLoad];
+    }
+}
+
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
+{
+    for (id<MPADBannerViewManagerObserver> observer in [self.observers copy]) {
+        [observer bannerDidFail];
+    }
+}
+
+- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave
+{
+    for (id<MPADBannerViewManagerObserver> observer in [self.observers copy]) {
+        [observer bannerActionWillBeginAndWillLeaveApplication:willLeave];
+    }
+    return YES;
+}
+
+- (void)bannerViewActionDidFinish:(ADBannerView *)banner
+{
+    for (id<MPADBannerViewManagerObserver> observer in [self.observers copy]) {
+        [observer bannerActionDidFinish];
+    }
+}
+
+@end
+

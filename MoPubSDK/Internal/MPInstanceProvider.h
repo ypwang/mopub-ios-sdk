@@ -38,9 +38,13 @@
 @protocol MPBannerCustomEventDelegate;
 @protocol MPBannerAdManagerDelegate;
 
+typedef id(^MPSingletonProviderBlock)();
+
 @interface MPInstanceProvider : NSObject
 
 + (MPInstanceProvider *)sharedProvider;
+
+- (id)singletonForClass:(Class)klass provider:(MPSingletonProviderBlock)provider;
 
 - (MPAnalyticsTracker *)buildMPAnalyticsTracker;
 - (MPReachability *)sharedMPReachability;
