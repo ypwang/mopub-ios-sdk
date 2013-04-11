@@ -246,9 +246,14 @@
     return [self.delegate location];
 }
 
+- (BOOL)requestingAdapterIsReadyToBePresented
+{
+    return !!self.requestingAdapterAdContentView;
+}
+
 - (void)presentRequestingAdapter
 {
-    if (!self.adActionInProgress && self.requestingAdapterAdContentView) {
+    if (!self.adActionInProgress && self.requestingAdapterIsReadyToBePresented) {
         [self.onscreenAdapter unregisterDelegate];
         self.onscreenAdapter = self.requestingAdapter;
         self.requestingAdapter = nil;
@@ -289,9 +294,13 @@
         self.onscreenAdapter = nil;
         if (self.adActionInProgress) {
             [self.delegate userActionDidFinish];
+            self.adActionInProgress = NO;
         }
-        self.adActionInProgress = NO;
-        [self loadAd];
+        if (self.requestingAdapterIsReadyToBePresented) {
+            [self presentRequestingAdapter];
+        } else {
+            [self loadAd];
+        }
     }
 }
 
