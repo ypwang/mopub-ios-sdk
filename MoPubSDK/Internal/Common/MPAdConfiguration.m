@@ -105,13 +105,33 @@ NSString * const kAdTypeClear = @"clear";
 
         self.orientationType = [self orientationTypeFromHeaders:headers];
 
-        NSString *customEventClassName = [headers objectForKey:kCustomEventClassNameHeaderKey];
-        self.customEventClass = NSClassFromString(customEventClassName);
+        self.customEventClass = [self customEventClassFromHeaders:headers];
 
-        self.customEventClassData = [self dictionaryFromHeaders:headers
-                                                         forKey:kCustomEventClassDataHeaderKey];
+        self.customEventClassData = [self customEventClassDataFromHeaders:headers];
     }
     return self;
+}
+
+- (Class)customEventClassFromHeaders:(NSDictionary *)headers
+{
+    // This method converts from legacy adapter/network types to new custom event classes.
+
+    NSDictionary *convertedCustomEvents = @{@"iAd": @"MPiAdBannerCustomEvent"};
+    NSString *networkType = [self networkTypeFromHeaders:headers];
+    if ([convertedCustomEvents objectForKey:networkType]) {
+        return NSClassFromString([convertedCustomEvents objectForKey:networkType]);
+    } else {
+        return NSClassFromString([headers objectForKey:kCustomEventClassNameHeaderKey]);
+    }
+}
+
+- (NSDictionary *)customEventClassDataFromHeaders:(NSDictionary *)headers
+{
+    NSDictionary *result = [self dictionaryFromHeaders:headers forKey:kCustomEventClassDataHeaderKey];
+    if (!result) {
+        result = [self dictionaryFromHeaders:headers forKey:kNativeSDKParametersHeaderKey];
+    }
+    return result;
 }
 
 - (void)dealloc

@@ -25,45 +25,42 @@
 + (id)sharedAdapterMap
 {
     static MPAdapterMap *sharedAdapterMap = nil;
-	@synchronized(self)
-	{
-		if (sharedAdapterMap == nil)
-			sharedAdapterMap = [[self alloc] init];
-	}
-	return sharedAdapterMap;
+    @synchronized(self)
+    {
+        if (sharedAdapterMap == nil)
+            sharedAdapterMap = [[self alloc] init];
+    }
+    return sharedAdapterMap;
 }
 
 - (id)init
 {
-	if (self = [super init])
-	{
+    if (self = [super init])
+    {
         bannerAdapterMap = [[NSDictionary dictionaryWithObjectsAndKeys:
                              @"MPHTMLBannerAdapter",        @"html",
                              @"MPMRAIDBannerAdapter",       @"mraid",
-                             @"MPIAdAdapter",               @"iAd",
                              @"MPGoogleAdSenseAdapter",     @"adsense",
                              @"MPGoogleAdMobAdapter",       @"admob_native",
                              @"MPMillennialAdapter",        @"millennial_native",
-                             @"MPBannerCustomEventAdapter", @"custom",
                              nil] retain];
-        
+
         interstitialAdapterMap = [[NSDictionary dictionaryWithObjectsAndKeys:
                                    @"MPHTMLInterstitialAdapter",        @"html",
                                    @"MPMRAIDInterstitialAdapter",       @"mraid",
                                    @"MPIAdInterstitialAdapter",         @"iAd_full",
                                    @"MPGoogleAdMobInterstitialAdapter", @"admob_full",
                                    @"MPMillennialInterstitialAdapter",  @"millennial_full",
-                                   @"MPInterstitialCustomEventAdapter", @"custom",
                                    nil] retain];
-	}
-	return self;
+    }
+    return self;
 }
 
 - (void)dealloc
 {
     self.bannerAdapterMap = nil;
-	self.interstitialAdapterMap = nil;
-	[super dealloc];
+    self.interstitialAdapterMap = nil;
+    [super dealloc];
 }
 
 - (Class)bannerAdapterClassForNetworkType:(NSString *)networkType

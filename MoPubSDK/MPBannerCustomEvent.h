@@ -47,6 +47,16 @@
  */
 - (void)customEventDidUnload;
 
+/*
+ * DOCUMENT: This is called when your ad is actually presented on screen.
+ * If you decide to perform manual impression tracking, this is where you should track the impression.
+ */
+- (void)didDisplayAd;
+
+/*
+ * DOCUMENT: If you make this return NO, you are responsible for handling click and impression tracking yourself.
+ */
+- (BOOL)enableAutomaticImpressionAndClickTracking;
 
 /*
  * The `delegate` object defines several methods that you should call in order to inform both MoPub

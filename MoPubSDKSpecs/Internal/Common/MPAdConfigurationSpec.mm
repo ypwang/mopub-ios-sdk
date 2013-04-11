@@ -240,10 +240,24 @@ describe(@"MPAdConfiguration", ^{
         configuration.customSelectorName should be_nil;
     });
 
+    it(@"should convert network type to custom event class", ^{
+        headers = @{kAdTypeHeaderKey: @"iAd"};
+        configuration = [[[MPAdConfiguration alloc] initWithHeaders:headers data:nil] autorelease];
+        configuration.customEventClass should_not be_nil;
+    });
+
     it(@"should process the customEventClassData", ^{
         headers = @{kCustomEventClassDataHeaderKey: @"{\"foo\":\"bar\", \"baz\":2, \"nah\":null}"};
         configuration = [[[MPAdConfiguration alloc] initWithHeaders:headers data:nil] autorelease];
         configuration.customEventClassData should equal(@{@"foo": @"bar", @"baz": @2});
+
+        headers = @{kCustomEventClassDataHeaderKey: @"{\"foo\":\"bar\", \"baz\":2, \"nah\":null}", kNativeSDKParametersHeaderKey: @"{\"native\":\"guy\"}"};
+        configuration = [[[MPAdConfiguration alloc] initWithHeaders:headers data:nil] autorelease];
+        configuration.customEventClassData should equal(@{@"foo": @"bar", @"baz": @2});
+
+        headers = @{kNativeSDKParametersHeaderKey: @"{\"native\":\"guy\"}"};
+        configuration = [[[MPAdConfiguration alloc] initWithHeaders:headers data:nil] autorelease];
+        configuration.customEventClassData should equal(@{@"native": @"guy"});
 
         headers = @{};
         configuration = [[[MPAdConfiguration alloc] initWithHeaders:headers data:nil] autorelease];

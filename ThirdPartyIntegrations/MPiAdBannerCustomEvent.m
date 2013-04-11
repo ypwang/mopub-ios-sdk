@@ -1,11 +1,11 @@
 //
-//  MPIAdAdapter.m
+//  MPiAdBannerCustomEvent.m
 //  MoPub
 //
 //  Copyright (c) 2013 MoPub. All rights reserved.
 //
 
-#import "MPIAdAdapter.h"
+#import "MPiAdBannerCustomEvent.h"
 #import "MPInstanceProvider.h"
 #import <iAd/iAd.h>
 
@@ -18,15 +18,15 @@
 
 @end
 
-@interface MPIAdAdapter () <MPADBannerViewManagerObserver>
+@interface MPiAdBannerCustomEvent () <MPADBannerViewManagerObserver>
 
-@property (nonatomic, retain) ADBannerView *bannerView;
 @property (nonatomic, assign) BOOL onScreen;
 @property (nonatomic, assign) BOOL trackImpressionWhenPresented;
 
 @end
 
-/////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 @interface MPInstanceProvider (iAdBanners)
 
@@ -54,8 +54,8 @@
 
 + (MPADBannerViewManager *)sharedManager;
 
-- (void)registerAdapter:(MPIAdAdapter *)adapter;
-- (void)unregisterAdapter:(MPIAdAdapter *)adapter;
+- (void)registerObserver:(id<MPADBannerViewManagerObserver>)observer;
+- (void)unregisterObserver:(id<MPADBannerViewManagerObserver>)observer;
 - (BOOL)shouldTrackImpression;
 - (void)didTrackImpression;
 - (BOOL)shouldTrackClick;
@@ -104,14 +104,14 @@ static MPADBannerViewManager *sharedManager = nil;
     [super dealloc];
 }
 
-- (void)registerAdapter:(MPIAdAdapter *)adapter
+- (void)registerObserver:(id<MPADBannerViewManagerObserver>)observer;
 {
-    [self.observers addObject:adapter];
+    [self.observers addObject:observer];
 }
 
-- (void)unregisterAdapter:(MPIAdAdapter *)adapter
+- (void)unregisterObserver:(id<MPADBannerViewManagerObserver>)observer;
 {
-    [self.observers removeObject:adapter];
+    [self.observers removeObject:observer];
 }
 
 - (BOOL)shouldTrackImpression
@@ -141,30 +141,30 @@ static MPADBannerViewManager *sharedManager = nil;
     self.hasTrackedImpression = NO;
     self.hasTrackedClick = NO;
 
-    for (MPIAdAdapter *adapter in [self.observers copy]) {
-        [adapter bannerDidLoad];
+    for (id<MPADBannerViewManagerObserver> observer in [self.observers copy]) {
+        [observer bannerDidLoad];
     }
 }
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
 {
-    for (MPIAdAdapter *adapter in [self.observers copy]) {
-        [adapter bannerDidFail];
+    for (id<MPADBannerViewManagerObserver> observer in [self.observers copy]) {
+        [observer bannerDidFail];
     }
 }
 
 - (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave
 {
-    for (MPIAdAdapter *adapter in [self.observers copy]) {
-        [adapter bannerActionWillBeginAndWillLeaveApplication:willLeave];
+    for (id<MPADBannerViewManagerObserver> observer in [self.observers copy]) {
+        [observer bannerActionWillBeginAndWillLeaveApplication:willLeave];
     }
     return YES;
 }
 
 - (void)bannerViewActionDidFinish:(ADBannerView *)banner
 {
-    for (MPIAdAdapter *adapter in [self.observers copy]) {
-        [adapter bannerActionDidFinish];
+    for (id<MPADBannerViewManagerObserver> observer in [self.observers copy]) {
+        [observer bannerActionDidFinish];
     }
 }
 
@@ -172,38 +172,40 @@ static MPADBannerViewManager *sharedManager = nil;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@implementation MPIAdAdapter
+@implementation MPiAdBannerCustomEvent
 
-@synthesize bannerView = _bannerView;
 @synthesize onScreen = _onScreen;
 
-- (void)dealloc
+- (BOOL)enableAutomaticImpressionAndClickTracking
 {
-    self.bannerView = nil;
-    [super dealloc];
+    return NO;
 }
 
-- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration containerSize:(CGSize)size
+- (ADBannerView *)bannerView
 {
-    self.bannerView = [MPADBannerViewManager sharedManager].bannerView;
-    [[MPADBannerViewManager sharedManager] registerAdapter:self];
+    return [MPADBannerViewManager sharedManager].bannerView;
+}
+
+- (void)requestAdWithSize:(CGSize)size customEventInfo:(NSDictionary *)info
+{
+    [[MPADBannerViewManager sharedManager] registerObserver:self];
 
     if (self.bannerView.isBannerLoaded) {
         [self bannerDidLoad];
     }
 }
 
-- (void)unregisterDelegate
+- (void)customEventDidUnload
 {
     self.onScreen = NO;
-    [[MPADBannerViewManager sharedManager] unregisterAdapter:self];
+    [[MPADBannerViewManager sharedManager] unregisterObserver:self];
 
-    [super unregisterDelegate];
+    [super customEventDidUnload];
 }
 
 - (void)rotateToOrientation:(UIInterfaceOrientation)orientation
 {
-    [MPADBannerViewManager sharedManager].bannerView.currentContentSizeIdentifier = UIInterfaceOrientationIsPortrait(orientation) ? ADBannerContentSizeIdentifierPortrait : ADBannerContentSizeIdentifierLandscape;
+    self.bannerView.currentContentSizeIdentifier = UIInterfaceOrientationIsPortrait(orientation) ? ADBannerContentSizeIdentifierPortrait : ADBannerContentSizeIdentifierLandscape;
 }
 
 - (void)didDisplayAd
@@ -215,7 +217,7 @@ static MPADBannerViewManager *sharedManager = nil;
 - (void)trackImpressionIfNecessary
 {
     if (self.onScreen && [[MPADBannerViewManager sharedManager] shouldTrackImpression]) {
-        [super trackImpression];
+        [self.delegate trackImpression];
         [[MPADBannerViewManager sharedManager] didTrackImpression];
     }
 }
@@ -223,7 +225,7 @@ static MPADBannerViewManager *sharedManager = nil;
 - (void)trackClickIfNecessary
 {
     if ([[MPADBannerViewManager sharedManager] shouldTrackClick]) {
-        [super trackClick];
+        [self.delegate trackClick];
         [[MPADBannerViewManager sharedManager] didTrackClick];
     }
 }
@@ -233,29 +235,27 @@ static MPADBannerViewManager *sharedManager = nil;
 - (void)bannerDidLoad
 {
     [self trackImpressionIfNecessary];
-    [self didStopLoading];
-    [self.delegate adapter:self didFinishLoadingAd:self.bannerView];
+    [self.delegate bannerCustomEvent:self didLoadAd:self.bannerView];
 }
 
 - (void)bannerDidFail
 {
-    [self didStopLoading];
-    [self.delegate adapter:self didFailToLoadAdWithError:nil];
+    [self.delegate bannerCustomEvent:self didFailToLoadAdWithError:nil];
 }
 
 - (void)bannerActionWillBeginAndWillLeaveApplication:(BOOL)willLeave
 {
     [self trackClickIfNecessary];
     if (willLeave) {
-        [self.delegate userWillLeaveApplicationFromAdapter:self];
+        [self.delegate bannerCustomEventWillLeaveApplication:self];
     } else {
-        [self.delegate userActionWillBeginForAdapter:self];
+        [self.delegate bannerCustomEventWillBeginAction:self];
     }
 }
 
 - (void)bannerActionDidFinish
 {
-    [self.delegate userActionDidFinishForAdapter:self];
+    [self.delegate bannerCustomEventDidFinishAction:self];
 }
 
 @end

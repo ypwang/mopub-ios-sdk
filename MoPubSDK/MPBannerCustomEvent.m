@@ -11,6 +11,16 @@
 
 @synthesize delegate;
 
+- (BOOL)enableAutomaticImpressionAndClickTracking
+{
+    return YES;
+}
+
+- (void)didDisplayAd
+{
+    // TODO:
+}
+
 - (void)requestAdWithSize:(CGSize)size customEventInfo:(NSDictionary *)info
 {
     // The default implementation of this method does nothing. Subclasses must override this method
@@ -27,7 +37,7 @@
     // Your subclass can implement this method if it needs to perform any cleanup, or simply do
     // the cleanup work in -dealloc. If you override this method, make sure to call
     // [super customEventDidUnload].
-    
+
     self.delegate = nil;
 }
 

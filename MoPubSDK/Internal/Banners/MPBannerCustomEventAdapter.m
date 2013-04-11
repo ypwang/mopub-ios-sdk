@@ -14,18 +14,20 @@
 @interface MPBannerCustomEventAdapter ()
 
 @property (nonatomic, retain) MPBannerCustomEvent *bannerCustomEvent;
+@property (nonatomic, assign) BOOL hasTrackedImpression;
+@property (nonatomic, assign) BOOL hasTrackedClick;
 
 @end
 
 @implementation MPBannerCustomEventAdapter
 
-- (void)dealloc
+- (void)unregisterDelegate
 {
     [self.bannerCustomEvent customEventDidUnload];
     self.bannerCustomEvent.delegate = nil;
     self.bannerCustomEvent = nil;
 
-    [super dealloc];
+    [super unregisterDelegate];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,6 +55,16 @@
     [self.bannerCustomEvent rotateToOrientation:newOrientation];
 }
 
+- (void)didDisplayAd
+{
+    if ([self.bannerCustomEvent enableAutomaticImpressionAndClickTracking] && !self.hasTrackedImpression) {
+        self.hasTrackedImpression = YES;
+        [self trackImpression];
+    }
+
+    [self.bannerCustomEvent didDisplayAd];
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma mark - MPBannerCustomEventDelegate
@@ -64,17 +76,27 @@
 
 - (void)bannerCustomEvent:(MPBannerCustomEvent *)event didLoadAd:(UIView *)ad
 {
-    [self.delegate adapter:self didFinishLoadingAd:ad];
+    [self didStopLoading];
+    if (ad) {
+        [self.delegate adapter:self didFinishLoadingAd:ad];
+    } else {
+        [self.delegate adapter:self didFailToLoadAdWithError:nil];
+    }
 }
 
 - (void)bannerCustomEvent:(MPBannerCustomEvent *)event didFailToLoadAdWithError:(NSError *)error
 {
+    [self didStopLoading];
     [self.delegate adapter:self didFailToLoadAdWithError:error];
 }
 
 - (void)bannerCustomEventWillBeginAction:(MPBannerCustomEvent *)event
 {
-    [self trackClick];
+    if ([self.bannerCustomEvent enableAutomaticImpressionAndClickTracking] && !self.hasTrackedClick) {
+        self.hasTrackedClick = YES;
+        [self trackClick];
+    }
+
     [self.delegate userActionWillBeginForAdapter:self];
 }
 

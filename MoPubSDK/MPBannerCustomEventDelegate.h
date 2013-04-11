@@ -51,4 +51,9 @@
  */
 - (void)bannerCustomEventWillLeaveApplication:(MPBannerCustomEvent *)event;
 
+//DOCUMENT!
+
+- (void)trackImpression;
+- (void)trackClick;
+
 @end

@@ -48,12 +48,107 @@ describe(@"MPBannerCustomEventAdapter", ^{
         });
     });
 
-    context(@"upon dealloc", ^{
-        it(@"should inform its custom event instance that it is going away", ^{
-            MPBannerCustomEventAdapter *anotherAdapter = [[MPBannerCustomEventAdapter alloc] initWithAdapterDelegate:nil];
-            [anotherAdapter _getAdWithConfiguration:configuration containerSize:CGSizeZero];
-            [anotherAdapter release];
-            event.didUnload should equal(YES);
+    context(@"with a valid custom event", ^{
+        beforeEach(^{
+            [adapter _getAdWithConfiguration:configuration containerSize:CGSizeMake(20, 24)];
+        });
+
+        context(@"when informed of an orientation change", ^{
+            it(@"should forward the message to its custom event", ^{
+                [adapter rotateToOrientation:UIInterfaceOrientationLandscapeLeft];
+                event.orientation should equal(UIInterfaceOrientationLandscapeLeft);
+            });
+        });
+
+        context(@"when the custom event claims to have loaded", ^{
+            beforeEach(^{
+                [delegate reset_sent_messages];
+            });
+
+            context(@"and passes in a non-nil ad", ^{
+                it(@"should tell the delegate that the adapter finished loading, and pass on the view", ^{
+                    UIView *view = [[[UIView alloc] init] autorelease];
+                    [adapter bannerCustomEvent:event didLoadAd:view];
+                    delegate should have_received(@selector(adapter:didFinishLoadingAd:)).with(adapter).and_with(view);
+                });
+            });
+
+            context(@"and passes in a nil ad", ^{
+                it(@"should tell the delegate that the adapter *failed* to load", ^{
+                    [adapter bannerCustomEvent:event didLoadAd:nil];
+                    delegate should have_received(@selector(adapter:didFailToLoadAdWithError:)).with(adapter).and_with(nil);
+                });
+            });
+        });
+
+
+        context(@"when told that its content has been displayed on-screen", ^{
+            context(@"if the custom event has enabled automatic metrics tracking", ^{
+                it(@"should track an impression (only once) and forward the message to its custom event", ^{
+                    event.enableAutomaticMetricsTracking = YES;
+                    [adapter didDisplayAd];
+                    fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations should contain(configuration);
+                    event.didDisplay should equal(YES);
+
+                    [adapter didDisplayAd];
+                    fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
+                });
+            });
+
+            context(@"if the custom event has disabled automatic metrics tracking", ^{
+                it(@"should forward the message to its custom event but *not* track an impression", ^{
+                    event.enableAutomaticMetricsTracking = NO;
+                    [adapter didDisplayAd];
+                    fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations should be_empty;
+                    event.didDisplay should equal(YES);
+                });
+            });
+        });
+
+        context(@"when the custom event is beginning a user action", ^{
+            context(@"if the custom event has enabled automatic metrics tracking", ^{
+                it(@"should track a click (only once)", ^{
+                    event.enableAutomaticMetricsTracking = YES;
+                    [event simulateUserTap];
+                    fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations should contain(configuration);
+
+                    [event simulateUserTap];
+                    fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
+                });
+            });
+
+            context(@"if the custom event has disabled automatic metrics tracking", ^{
+                it(@"should *not* track a click", ^{
+                    event.enableAutomaticMetricsTracking = NO;
+                    [event simulateUserTap];
+                    fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations should be_empty;
+                });
+            });
+        });
+
+        describe(@"the adapter timeout timer", ^{
+            context(@"when the custom event successfully loads", ^{
+                it(@"should invalidate the timer", ^{
+                    [fakeProvider lastFakeMPTimerWithSelector:@selector(timeout)].isValid should equal(YES);
+                    [event simulateLoadingAd];
+                    [fakeProvider lastFakeMPTimerWithSelector:@selector(timeout)].isValid should equal(NO);
+                });
+            });
+
+            context(@"when the custom event fails to load", ^{
+                it(@"should invalidate the timer", ^{
+                    [fakeProvider lastFakeMPTimerWithSelector:@selector(timeout)].isValid should equal(YES);
+                    [event simulateFailingToLoad];
+                    [fakeProvider lastFakeMPTimerWithSelector:@selector(timeout)].isValid should equal(NO);
+                });
+            });
+        });
+
+        context(@"when told to unregister", ^{
+            it(@"should inform its custom event instance that it is going away", ^{
+                [adapter unregisterDelegate];
+                event.didUnload should equal(YES);
+            });
         });
     });
 });

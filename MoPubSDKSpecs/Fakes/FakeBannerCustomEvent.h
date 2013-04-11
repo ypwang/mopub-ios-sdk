@@ -15,6 +15,8 @@
 @property (nonatomic, assign) UIView *view;
 @property (nonatomic, assign) UIViewController *presentingViewController;
 @property (nonatomic, assign) UIInterfaceOrientation orientation;
+@property (nonatomic, assign) BOOL enableAutomaticMetricsTracking;
+@property (nonatomic, assign) BOOL didDisplay;
 
 - (id)initWithFrame:(CGRect)frame;
 - (void)simulateLoadingAd;

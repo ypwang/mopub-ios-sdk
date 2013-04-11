@@ -230,7 +230,6 @@ describe(@"iAdBannerIntegrationSuite", ^{
             });
         });
 
-
         context(@"when our refresh timer fires", ^{
             __block MPAdConfiguration *anotherConfiguration;
 

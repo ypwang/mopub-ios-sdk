@@ -130,14 +130,10 @@ static MPInstanceProvider *sharedProvider = nil;
 - (MPBaseAdapter *)buildBannerAdapterForConfiguration:(MPAdConfiguration *)configuration
                                              delegate:(id<MPAdapterDelegate>)delegate
 {
-    if ([configuration.networkType isEqualToString:@"custom"]) {
-        if (configuration.customEventClass) {
-            return [[(MPBannerCustomEventAdapter *)[MPBannerCustomEventAdapter alloc] initWithAdapterDelegate:delegate] autorelease];
-        } else if (configuration.customSelectorName) {
-            return [[(MPLegacyBannerCustomEventAdapter *)[MPLegacyBannerCustomEventAdapter alloc] initWithAdapterDelegate:delegate] autorelease];
-        } else {
-            return nil;
-        }
+    if (configuration.customEventClass) {
+        return [[(MPBannerCustomEventAdapter *)[MPBannerCustomEventAdapter alloc] initWithAdapterDelegate:delegate] autorelease];
+    } else if (configuration.customSelectorName) {
+        return [[(MPLegacyBannerCustomEventAdapter *)[MPLegacyBannerCustomEventAdapter alloc] initWithAdapterDelegate:delegate] autorelease];
     } else {
         Class adapterClass = [[MPAdapterMap sharedAdapterMap] bannerAdapterClassForNetworkType:configuration.networkType];
         return [[[adapterClass alloc] initWithAdapterDelegate:delegate] autorelease];
@@ -156,14 +152,10 @@ static MPInstanceProvider *sharedProvider = nil;
 - (MPBaseInterstitialAdapter *)buildInterstitialAdapterForConfiguration:(MPAdConfiguration *)configuration
                                                                delegate:(id<MPBaseInterstitialAdapterDelegate>)delegate
 {
-    if ([configuration.networkType isEqualToString:@"custom"]) {
-        if (configuration.customEventClass) {
-            return [[(MPInterstitialCustomEventAdapter *)[MPInterstitialCustomEventAdapter alloc] initWithDelegate:delegate] autorelease];
-        } else if (configuration.customSelectorName) {
-            return [[(MPLegacyInterstitialCustomEventAdapter *)[MPLegacyInterstitialCustomEventAdapter alloc] initWithDelegate:delegate] autorelease];
-        } else {
-            return nil;
-        }
+    if (configuration.customEventClass) {
+        return [[(MPInterstitialCustomEventAdapter *)[MPInterstitialCustomEventAdapter alloc] initWithDelegate:delegate] autorelease];
+    } else if (configuration.customSelectorName) {
+        return [[(MPLegacyInterstitialCustomEventAdapter *)[MPLegacyInterstitialCustomEventAdapter alloc] initWithDelegate:delegate] autorelease];
     } else {
         Class adapterClass = [[MPAdapterMap sharedAdapterMap] interstitialAdapterClassForNetworkType:configuration.networkType];
         return [[(MPBaseInterstitialAdapter *)[adapterClass alloc] initWithDelegate:delegate] autorelease];
