@@ -80,15 +80,17 @@ static MPInstanceProvider *sharedProvider = nil;
     return [MPTimer timerWithTimeInterval:seconds target:target selector:selector repeats:repeats];
 }
 
-- (MPAnalyticsTracker *)buildMPAnalyticsTracker
-{
-    return [MPAnalyticsTracker tracker];
-}
-
 - (MPReachability *)sharedMPReachability
 {
     return [self singletonForClass:[MPReachability class] provider:^id{
         return [MPReachability reachabilityForLocalWiFi];
+    }];
+}
+
+- (MPAnalyticsTracker *)sharedMPAnalyticsTracker
+{
+    return [self singletonForClass:[MPAnalyticsTracker class] provider:^id{
+        return [MPAnalyticsTracker tracker];
     }];
 }
 

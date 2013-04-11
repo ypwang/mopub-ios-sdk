@@ -87,7 +87,7 @@ describe(@"MPGoogleAdMobInterstitialAdapter", ^{
             [adapter interstitialWillPresentScreen:interstitial.masquerade];
             delegate should have_received(@selector(interstitialWillAppearForAdapter:)).with(adapter);
             delegate should have_received(@selector(interstitialDidAppearForAdapter:)).with(adapter);
-            fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations should contain(configuration);
+            fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations should contain(configuration);
         });
     });
 
@@ -108,7 +108,7 @@ describe(@"MPGoogleAdMobInterstitialAdapter", ^{
     context(@"when the interstitial causes the user to leave the application", ^{
         it(@"should track a click", ^{
             [adapter interstitialWillLeaveApplication:interstitial.masquerade];
-            fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations should contain(configuration);
+            fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations should contain(configuration);
         });
     });
 });

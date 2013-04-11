@@ -87,11 +87,11 @@ describe(@"MPBannerCustomEventAdapter", ^{
                 it(@"should track an impression (only once) and forward the message to its custom event", ^{
                     event.enableAutomaticMetricsTracking = YES;
                     [adapter didDisplayAd];
-                    fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations should contain(configuration);
+                    fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations should contain(configuration);
                     event.didDisplay should equal(YES);
 
                     [adapter didDisplayAd];
-                    fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
+                    fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
                 });
             });
 
@@ -99,7 +99,7 @@ describe(@"MPBannerCustomEventAdapter", ^{
                 it(@"should forward the message to its custom event but *not* track an impression", ^{
                     event.enableAutomaticMetricsTracking = NO;
                     [adapter didDisplayAd];
-                    fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations should be_empty;
+                    fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations should be_empty;
                     event.didDisplay should equal(YES);
                 });
             });
@@ -110,10 +110,10 @@ describe(@"MPBannerCustomEventAdapter", ^{
                 it(@"should track a click (only once)", ^{
                     event.enableAutomaticMetricsTracking = YES;
                     [event simulateUserTap];
-                    fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations should contain(configuration);
+                    fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations should contain(configuration);
 
                     [event simulateUserTap];
-                    fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
+                    fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
                 });
             });
 
@@ -121,7 +121,7 @@ describe(@"MPBannerCustomEventAdapter", ^{
                 it(@"should *not* track a click", ^{
                     event.enableAutomaticMetricsTracking = NO;
                     [event simulateUserTap];
-                    fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations should be_empty;
+                    fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations should be_empty;
                 });
             });
         });

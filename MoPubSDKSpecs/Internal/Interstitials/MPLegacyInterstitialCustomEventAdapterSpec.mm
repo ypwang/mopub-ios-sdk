@@ -87,10 +87,10 @@ describe(@"MPLegacyInterstitialCustomEventAdapter", ^{
             });
 
             it(@"should log an impression (only once)", ^{
-                fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations should contain(configuration);
+                fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations should contain(configuration);
 
                 [adapter customEventDidLoadAd];
-                fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
+                fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
             });
 
             it(@"should not tell its delegate anything", ^{
@@ -111,10 +111,10 @@ describe(@"MPLegacyInterstitialCustomEventAdapter", ^{
         context(@"when told that the legacy custom event ad was clicked", ^{
             it(@"should track a click (only once)", ^{
                 [adapter customEventActionWillBegin];
-                fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations should contain(configuration);
+                fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations should contain(configuration);
 
                 [adapter customEventActionWillBegin];
-                fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
+                fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
             });
         });
     });

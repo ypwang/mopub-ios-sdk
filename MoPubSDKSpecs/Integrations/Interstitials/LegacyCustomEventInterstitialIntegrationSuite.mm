@@ -70,15 +70,15 @@ describe(@"LegacyCustomEventInterstitialIntegrationSuite", ^{
     context(@"when the ad successfully loads", ^{
         beforeEach(^{
             [delegate reset_sent_messages];
-            fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(0);
+            fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(0);
             [interstitial customEventDidLoadAd];
         });
 
         it(@"should track an impression (just once)", ^{
-            fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
+            fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
 
             [interstitial customEventDidLoadAd];
-            fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
+            fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
         });
 
         it(@"should not tell the delegate anything and should not be ready", ^{
@@ -123,15 +123,15 @@ describe(@"LegacyCustomEventInterstitialIntegrationSuite", ^{
     context(@"when a custom event action begins", ^{
         beforeEach(^{
             [delegate reset_sent_messages];
-            fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(0);
+            fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(0);
             [interstitial customEventActionWillBegin];
         });
 
         it(@"should track a click (just once)", ^{
-            fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
+            fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
 
             [interstitial customEventActionWillBegin];
-            fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
+            fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
         });
 
         it(@"should not tell the delegate anything", ^{

@@ -15,7 +15,6 @@
 @interface MPBaseInterstitialAdapter ()
 
 @property (nonatomic, retain) MPAdConfiguration *configuration;
-@property (nonatomic, retain) MPAnalyticsTracker *analyticsTracker;
 @property (nonatomic, assign) BOOL hasTrackedImpression;
 @property (nonatomic, assign) BOOL hasTrackedClick;
 
@@ -27,14 +26,12 @@
 @synthesize configuration = _configuration;
 @synthesize hasTrackedImpression = _hasTrackedImpression;
 @synthesize hasTrackedClick = _hasTrackedClick;
-@synthesize analyticsTracker = _analyticsTracker;
 
 - (id)initWithDelegate:(id<MPBaseInterstitialAdapterDelegate>)delegate
 {
     self = [super init];
     if (self) {
         self.delegate = delegate;
-        self.analyticsTracker = [[MPInstanceProvider sharedProvider] buildMPAnalyticsTracker];
     }
     return self;
 }
@@ -43,7 +40,6 @@
 {
     [self unregisterDelegate];
     self.configuration = nil;
-    self.analyticsTracker = nil;
     [super dealloc];
 }
 
@@ -75,7 +71,7 @@
 {
     if (!self.hasTrackedImpression) {
         self.hasTrackedImpression = YES;
-        [self.analyticsTracker trackImpressionForConfiguration:self.configuration];
+        [[[MPInstanceProvider sharedProvider] sharedMPAnalyticsTracker] trackImpressionForConfiguration:self.configuration];
     }
 }
 
@@ -83,7 +79,7 @@
 {
     if (!self.hasTrackedClick) {
         self.hasTrackedClick = YES;
-        [self.analyticsTracker trackClickForConfiguration:self.configuration];
+        [[[MPInstanceProvider sharedProvider] sharedMPAnalyticsTracker] trackClickForConfiguration:self.configuration];
     }
 }
 

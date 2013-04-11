@@ -235,7 +235,7 @@ describe(@"MPMillennialInterstitialAdapter", ^{
             it(@"should tell the delegate and track an impression", ^{
                 [adapter adModalDidAppear];
                 delegate should have_received(@selector(interstitialDidAppearForAdapter:)).with(adapter);
-                fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations should contain(configuration);
+                fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations should contain(configuration);
             });
         });
 

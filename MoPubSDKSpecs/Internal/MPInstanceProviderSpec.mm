@@ -8,6 +8,7 @@
 #import "MPHTMLBannerAdapter.h"
 #import "MPBannerCustomEventAdapter.h"
 #import "MPLegacyBannerCustomEventAdapter.h"
+#import "MPAnalyticsTracker.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -83,7 +84,7 @@ describe(@"MPInstanceProvider", ^{
             });
         });
     });
-    
+
     describe(@"providing banner adapters", ^{
         context(@"when the configuration network type is one of the supported networks", ^{
             it(@"should return an adapter of the right type", ^{
@@ -92,7 +93,7 @@ describe(@"MPInstanceProvider", ^{
                                                     delegate:nil] should be_instance_of([MPHTMLBannerAdapter class]);
             });
         });
-        
+
         context(@"when the configuration network type is 'custom'", ^{
             context(@"when the configuration has a custom event class", ^{
                 context(@"when the class exists", ^{
@@ -102,7 +103,7 @@ describe(@"MPInstanceProvider", ^{
                                                             delegate:nil] should be_instance_of([MPBannerCustomEventAdapter class]);
                     });
                 });
-                
+
                 context(@"when the class does not exist", ^{
                     it(@"should return nil", ^{
                         configuration = [MPAdConfigurationFactory defaultBannerConfigurationWithCustomEventClassName:@"NSMonkeyToastEndocrineParadigmBean"];
@@ -111,7 +112,7 @@ describe(@"MPInstanceProvider", ^{
                     });
                 });
             });
-            
+
             context(@"when the configuration has a custom selector name", ^{
                 it(@"should return an MPLegacyInterstitialCustomEventAdapter", ^{
                     configuration = [MPAdConfigurationFactory defaultBannerConfigurationWithNetworkType:@"custom"];
@@ -120,7 +121,7 @@ describe(@"MPInstanceProvider", ^{
                                                         delegate:nil] should be_instance_of([MPLegacyBannerCustomEventAdapter class]);
                 });
             });
-            
+
             context(@"when the configuration has neither", ^{
                 it(@"should return nil", ^{
                     configuration = [MPAdConfigurationFactory defaultInterstitialConfigurationWithNetworkType:@"custom"];
@@ -129,7 +130,7 @@ describe(@"MPInstanceProvider", ^{
                 });
             });
         });
-        
+
         context(@"when the configuration network type is invalid", ^{
             it(@"should return nil", ^{
                 configuration = [MPAdConfigurationFactory defaultBannerConfigurationWithNetworkType:@"no_chance"];
@@ -158,6 +159,15 @@ describe(@"MPInstanceProvider", ^{
             MPReachability *secondReachability = [provider sharedMPReachability];
             firstReachability should be_instance_of([MPReachability class]);
             firstReachability should be_same_instance_as(secondReachability);
+        });
+    });
+
+    describe(@"providing an analytics tracker", ^{
+        it(@"should always provide the same singleton object", ^{
+            MPAnalyticsTracker *firstTracker = [provider sharedMPAnalyticsTracker];
+            MPAnalyticsTracker *secondTracker = [provider sharedMPAnalyticsTracker];
+            firstTracker should be_instance_of([MPAnalyticsTracker class]);
+            firstTracker should be_same_instance_as(secondTracker);
         });
     });
 

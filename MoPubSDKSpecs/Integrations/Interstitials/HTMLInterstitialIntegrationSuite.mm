@@ -82,7 +82,7 @@ describe(@"HTMLInterstitialIntegrationSuite", ^{
             });
 
             it(@"should track an impression", ^{
-                fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
+                fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
             });
 
             it(@"should tell the webview that it has been shown", ^{

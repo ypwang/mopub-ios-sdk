@@ -46,8 +46,9 @@ typedef id(^MPSingletonProviderBlock)();
 
 - (id)singletonForClass:(Class)klass provider:(MPSingletonProviderBlock)provider;
 
-- (MPAnalyticsTracker *)buildMPAnalyticsTracker;
 - (MPReachability *)sharedMPReachability;
+- (MPAnalyticsTracker *)sharedMPAnalyticsTracker;
+
 - (MPTimer *)buildMPTimerWithTimeInterval:(NSTimeInterval)seconds target:(id)target selector:(SEL)selector repeats:(BOOL)repeats;
 
 - (NSMutableURLRequest *)buildConfiguredURLRequestWithURL:(NSURL *)URL;

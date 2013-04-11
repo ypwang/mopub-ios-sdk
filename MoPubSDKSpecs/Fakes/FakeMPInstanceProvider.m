@@ -64,10 +64,16 @@
                      }];
 }
 
-- (MPAnalyticsTracker *)buildMPAnalyticsTracker
+- (MPAnalyticsTracker *)sharedMPAnalyticsTracker
 {
-    self.lastFakeMPAnalyticsTracker = [[[FakeMPAnalyticsTracker alloc] init] autorelease];
-    return self.lastFakeMPAnalyticsTracker;
+    return [self sharedFakeMPAnalyticsTracker];
+}
+
+- (FakeMPAnalyticsTracker *)sharedFakeMPAnalyticsTracker
+{
+    return [self singletonForClass:[MPAnalyticsTracker class] provider:^id{
+        return [[[FakeMPAnalyticsTracker alloc] init] autorelease];
+    }];
 }
 
 - (MPTimer *)buildMPTimerWithTimeInterval:(NSTimeInterval)seconds target:(id)target selector:(SEL)selector repeats:(BOOL)repeats

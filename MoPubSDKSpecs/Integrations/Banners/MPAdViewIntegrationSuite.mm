@@ -122,8 +122,8 @@ describe(@"MPAdViewIntegrationSuite", ^{
         });
 
         it(@"should track an impression", ^{
-            fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
-            fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.lastObject should equal(configuration);
+            fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
+            fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations.lastObject should equal(configuration);
         });
 
         it(@"should start the refresh timer", ^{
@@ -259,8 +259,8 @@ describe(@"MPAdViewIntegrationSuite", ^{
 
                     it(@"should tell the delegate and track a click", ^{
                         verify_fake_received_selectors(delegate, @[@"willPresentModalViewForAd:"]);
-                        fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
-                        fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations.lastObject should equal(configuration);
+                        fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
+                        fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations.lastObject should equal(configuration);
                     });
 
                     it(@"(the presented modal) should be presented with the correct view controller", ^{
@@ -406,7 +406,7 @@ describe(@"MPAdViewIntegrationSuite", ^{
 
             context(@"when the offscreen ad loads succesfully", ^{
                 beforeEach(^{
-                    [fakeProvider.lastFakeMPAnalyticsTracker reset];
+                    [fakeProvider.sharedFakeMPAnalyticsTracker reset];
                     [delegate reset_sent_messages];
                     [event simulateLoadingAd];
                     onscreenEvent = event;
@@ -437,7 +437,7 @@ describe(@"MPAdViewIntegrationSuite", ^{
 
             context(@"when the offscreen ad loads successfully", ^{
                 beforeEach(^{
-                    [fakeProvider.lastFakeMPAnalyticsTracker reset];
+                    [fakeProvider.sharedFakeMPAnalyticsTracker reset];
                     [delegate reset_sent_messages];
                     [event simulateLoadingAd];
                 });
@@ -446,7 +446,7 @@ describe(@"MPAdViewIntegrationSuite", ^{
                     delegate.sent_messages should be_empty;
                     banner.subviews should equal(@[onscreenEvent.view]);
                     banner.adContentViewSize should equal(onscreenEvent.view.frame.size);
-                    fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations should be_empty;
+                    fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations should be_empty;
                 });
 
                 context(@"when the user tries to load again", ^{itShouldBehaveLike(@"a banner that ignores loads");});

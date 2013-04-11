@@ -101,14 +101,14 @@ sharedExamplesFor(anInterstitialThatPreventsShowing, ^(NSDictionary *sharedConte
 
         [communicator resetLoadedURL];
         [delegate reset_sent_messages];
-        [fakeProvider.lastFakeMPAnalyticsTracker reset];
+        [fakeProvider.sharedFakeMPAnalyticsTracker reset];
     });
 
     it(@"should not show the interstitial, or tell the delegate anything, or log an impression", ^{
         [interstitial showFromViewController:presentingController];
         fakeInterstitialAd.presentingViewController should be_nil;
         delegate.sent_messages should be_empty;
-        fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations should be_empty;
+        fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations should be_empty;
     });
 });
 

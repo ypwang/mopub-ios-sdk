@@ -56,8 +56,8 @@
 @property (nonatomic, assign) FakeMPReachability *fakeMPReachability;
 
 @property (nonatomic, assign) FakeMPAdServerCommunicator *lastFakeMPAdServerCommunicator;
-@property (nonatomic, assign) FakeMPAnalyticsTracker *lastFakeMPAnalyticsTracker;
 
+- (FakeMPAnalyticsTracker *)sharedFakeMPAnalyticsTracker;
 - (FakeMPTimer *)lastFakeMPTimerWithSelector:(SEL)selector;
 
 @end

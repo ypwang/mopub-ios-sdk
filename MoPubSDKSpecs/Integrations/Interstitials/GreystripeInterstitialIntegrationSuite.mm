@@ -74,14 +74,14 @@ describe(@"GreystripeInterstitialIntegrationSuite", ^{
             beforeEach(^{
                 greystripeAd.isAdReady = YES;
                 [delegate reset_sent_messages];
-                fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(0);
+                fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(0);
                 [interstitial showFromViewController:presentingController];
             });
 
             it(@"should track an impression and tell the custom event to show", ^{
                 verify_fake_received_selectors(delegate, @[@"interstitialWillAppear:", @"interstitialDidAppear:"]);
                 greystripeAd.presentingViewController should equal(presentingController);
-                fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
+                fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
             });
 
             context(@"when the user interacts with the ad", ^{
@@ -91,10 +91,10 @@ describe(@"GreystripeInterstitialIntegrationSuite", ^{
 
                 it(@"should track only one click, no matter how many interactions there are, and shouldn't tell the delegate anything", ^{
                     [greystripeAd simulateUserTap];
-                    fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
+                    fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
 
                     [greystripeAd simulateUserTap];
-                    fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
+                    fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
 
                     delegate.sent_messages.count should equal(0);
                 });
@@ -128,7 +128,7 @@ describe(@"GreystripeInterstitialIntegrationSuite", ^{
             });
 
             it(@"should not track any impressions", ^{
-                fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations should be_empty;
+                fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations should be_empty;
             });
 
             it(@"should not tell Greystripe to show", ^{

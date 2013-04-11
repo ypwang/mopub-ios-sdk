@@ -129,7 +129,7 @@ describe(@"MillennialInterstitialIntegrationSuite", ^{
                 context(@"when the user tries to show the ad", ^{
                     beforeEach(^{
                         [delegate reset_sent_messages];
-                        [fakeProvider.lastFakeMPAnalyticsTracker reset];
+                        [fakeProvider.sharedFakeMPAnalyticsTracker reset];
                     });
 
                     context(@"and displays successfully", ^{
@@ -141,7 +141,7 @@ describe(@"MillennialInterstitialIntegrationSuite", ^{
                         it(@"should display the ad, tell the delegate that the ad will and did appear, and it should track an impression", ^{
                             fakeMMInterstitialAdView.presentingViewController should equal(presentingController);
                             verify_fake_received_selectors(delegate, @[@"interstitialWillAppear:", @"interstitialDidAppear:"]);
-                            fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
+                            fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
                             interstitial.ready should equal(YES);
                         });
 
@@ -149,7 +149,7 @@ describe(@"MillennialInterstitialIntegrationSuite", ^{
                         context(@"and the user tries to show the ad (again)", ^{
                             beforeEach(^{
                                 [delegate reset_sent_messages];
-                                [fakeProvider.lastFakeMPAnalyticsTracker reset];
+                                [fakeProvider.sharedFakeMPAnalyticsTracker reset];
                                 fakeMMInterstitialAdView.presentingViewController = nil;
                                 [interstitial showFromViewController:presentingController];
                             });
@@ -157,7 +157,7 @@ describe(@"MillennialInterstitialIntegrationSuite", ^{
                             it(@"should display the ad again (sadly), without tracking a new impression", ^{
                                 fakeMMInterstitialAdView.presentingViewController should equal(presentingController);
                                 verify_fake_received_selectors(delegate, @[@"interstitialWillAppear:", @"interstitialDidAppear:"]);
-                                fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations should be_empty;
+                                fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations should be_empty;
                                 interstitial.ready should equal(YES);
                             });
                         });
@@ -187,7 +187,7 @@ describe(@"MillennialInterstitialIntegrationSuite", ^{
                         it(@"should expire the ad, not track an impression, and should not be ready", ^{
                             verify_fake_received_selectors(delegate, @[@"interstitialDidExpire:"]);
                             interstitial.ready should equal(NO);
-                            fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations should be_empty;
+                            fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations should be_empty;
                         });
 
                         context(@"and the user tries to load the ad", ^{ itShouldBehaveLike(anInterstitialThatStartsLoadingAnAdUnit); });
@@ -217,7 +217,7 @@ describe(@"MillennialInterstitialIntegrationSuite", ^{
                         fakeMMInterstitialAdView.presentingViewController should be_nil;
                         verify_fake_received_selectors(delegate, @[@"interstitialDidExpire:"]);
                         interstitial.ready should equal(NO);
-                        fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations should be_empty;
+                        fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations should be_empty;
                     });
 
                     context(@"and the user tries to load the ad", ^{ itShouldBehaveLike(anInterstitialThatStartsLoadingAnAdUnit); });

@@ -76,14 +76,14 @@ describe(@"ChartboostInterstitialIntegrationSuite", ^{
             beforeEach(^{
                 [chartboost.cachedInterstitials setObject:@YES forKey:@"Boston"];
                 [delegate reset_sent_messages];
-                fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(0);
+                fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(0);
                 [interstitial showFromViewController:presentingController];
             });
 
             it(@"should track an impression and tell the custom event to show", ^{
                 verify_fake_received_selectors(delegate, @[@"interstitialWillAppear:", @"interstitialDidAppear:"]);
                 chartboost.presentingViewController should_not be_nil;
-                fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
+                fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
             });
 
             context(@"when the user interacts with the ad", ^{
@@ -94,7 +94,7 @@ describe(@"ChartboostInterstitialIntegrationSuite", ^{
                 it(@"should track a click and should tell the delegate that it was dismissed", ^{
                     [chartboost simulateUserTap:@"Boston"];
                     verify_fake_received_selectors(delegate, @[@"interstitialWillDisappear:", @"interstitialDidDisappear:"]);
-                    fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
+                    fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
                 });
             });
 
@@ -124,7 +124,7 @@ describe(@"ChartboostInterstitialIntegrationSuite", ^{
             });
 
             it(@"should not track any impressions", ^{
-                fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations should be_empty;
+                fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations should be_empty;
             });
 
             it(@"should not tell Chartboost to show", ^{

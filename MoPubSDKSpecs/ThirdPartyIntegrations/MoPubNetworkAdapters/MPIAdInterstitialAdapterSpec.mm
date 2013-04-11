@@ -48,7 +48,7 @@ describe(@"MPIAdInterstitialAdapter", ^{
             });
 
             it(@"should track an impression", ^{
-                fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations should contain(configuration);
+                fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations should contain(configuration);
             });
         });
 
@@ -114,7 +114,7 @@ describe(@"MPIAdInterstitialAdapter", ^{
     context(@"when the interstitial is clicked", ^{
         it(@"should tell its delegate", ^{
             [adapter interstitialAdActionShouldBegin:iAdInterstitial willLeaveApplication:NO] should equal(YES);
-            fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations should contain(configuration);
+            fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations should contain(configuration);
         });
     });
 });

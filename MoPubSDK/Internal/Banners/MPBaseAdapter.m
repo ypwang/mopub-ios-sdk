@@ -17,7 +17,6 @@
 @interface MPBaseAdapter ()
 
 @property (nonatomic, retain) NSMutableURLRequest *metricsURLRequest;
-@property (nonatomic, retain) MPAnalyticsTracker *analyticsTracker;
 @property (nonatomic, retain) MPAdConfiguration *configuration;
 @property (nonatomic, retain) MPTimer *timeoutTimer;
 
@@ -28,7 +27,6 @@
 @implementation MPBaseAdapter
 
 @synthesize delegate = _delegate;
-@synthesize analyticsTracker = _analyticsTracker;
 @synthesize configuration = _configuration;
 @synthesize timeoutTimer = _timeoutTimer;
 
@@ -36,7 +34,6 @@
 {
     if (self = [super init]) {
         self.delegate = delegate;
-        self.analyticsTracker = [[MPInstanceProvider sharedProvider] buildMPAnalyticsTracker];
     }
     return self;
 }
@@ -44,7 +41,6 @@
 - (void)dealloc
 {
     [self unregisterDelegate];
-    self.analyticsTracker = nil;
     self.configuration = nil;
 
     [self.timeoutTimer invalidate];
@@ -110,12 +106,12 @@
 
 - (void)trackImpression
 {
-    [self.analyticsTracker trackImpressionForConfiguration:self.configuration];
+    [[[MPInstanceProvider sharedProvider] sharedMPAnalyticsTracker] trackImpressionForConfiguration:self.configuration];
 }
 
 - (void)trackClick
 {
-    [self.analyticsTracker trackClickForConfiguration:self.configuration];
+    [[[MPInstanceProvider sharedProvider] sharedMPAnalyticsTracker] trackClickForConfiguration:self.configuration];
 }
 
 @end

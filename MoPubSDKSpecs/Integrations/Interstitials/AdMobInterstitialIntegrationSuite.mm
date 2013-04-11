@@ -74,14 +74,14 @@ describe(@"AdMobIntegrationSuite", ^{
         context(@"and the user shows the ad", ^{
             beforeEach(^{
                 [delegate reset_sent_messages];
-                fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(0);
+                fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(0);
                 [interstitial showFromViewController:presentingController];
             });
 
             it(@"should track an impression and tell AdMob to show", ^{
                 verify_fake_received_selectors(delegate, @[@"interstitialWillAppear:", @"interstitialDidAppear:"]);
                 fakeGADInterstitial.presentingViewController should equal(presentingController);
-                fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
+                fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
             });
 
             context(@"when the user interacts with the ad", ^{
@@ -91,9 +91,9 @@ describe(@"AdMobIntegrationSuite", ^{
 
                 it(@"should track only one click, no matter how many interactions there are, and shouldn't tell the delegate anything", ^{
                     [fakeGADInterstitial simulateUserInteraction];
-                    fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
+                    fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
                     [fakeGADInterstitial simulateUserInteraction];
-                    fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
+                    fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
 
                     delegate.sent_messages should be_empty;
                 });
@@ -106,7 +106,7 @@ describe(@"AdMobIntegrationSuite", ^{
 
                 beforeEach(^{
                     [delegate reset_sent_messages];
-                    [fakeProvider.lastFakeMPAnalyticsTracker reset];
+                    [fakeProvider.sharedFakeMPAnalyticsTracker reset];
 
                     newPresentingController = [[[UIViewController alloc] init] autorelease];
                     [interstitial showFromViewController:newPresentingController];
@@ -120,7 +120,7 @@ describe(@"AdMobIntegrationSuite", ^{
 
                     fakeGADInterstitial.presentingViewController should equal(newPresentingController);
                     verify_fake_received_selectors(delegate, @[@"interstitialWillAppear:", @"interstitialDidAppear:"]);
-                    fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(0);
+                    fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(0);
                 });
             });
 

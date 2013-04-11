@@ -70,7 +70,7 @@ describe(@"CustomEventInterstitialIntegrationSuite", ^{
         context(@"and the user shows the ad", ^{
             beforeEach(^{
                 [delegate reset_sent_messages];
-                fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(0);
+                fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(0);
                 [interstitial showFromViewController:presentingController];
                 verify_fake_received_selectors(delegate, @[@"interstitialWillAppear:"]);
                 [fakeInterstitialCustomEvent simulateInterstitialFinishedAppearing];
@@ -79,7 +79,7 @@ describe(@"CustomEventInterstitialIntegrationSuite", ^{
 
             it(@"should track an impression and tell the custom event to show", ^{
                 fakeInterstitialCustomEvent.presentingViewController should equal(presentingController);
-                fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
+                fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
             });
 
             context(@"when the user interacts with the ad", ^{
@@ -89,9 +89,9 @@ describe(@"CustomEventInterstitialIntegrationSuite", ^{
 
                 it(@"should track only one click, no matter how many interactions there are, and shouldn't tell the delegate anything", ^{
                     [fakeInterstitialCustomEvent simulateUserTap];
-                    fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
+                    fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
                     [fakeInterstitialCustomEvent simulateUserTap];
-                    fakeProvider.lastFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
+                    fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
 
                     delegate.sent_messages should be_empty;
                 });
@@ -104,7 +104,7 @@ describe(@"CustomEventInterstitialIntegrationSuite", ^{
 
                 beforeEach(^{
                     [delegate reset_sent_messages];
-                    [fakeProvider.lastFakeMPAnalyticsTracker reset];
+                    [fakeProvider.sharedFakeMPAnalyticsTracker reset];
 
                     newPresentingController = [[[UIViewController alloc] init] autorelease];
                     [interstitial showFromViewController:newPresentingController];
@@ -119,7 +119,7 @@ describe(@"CustomEventInterstitialIntegrationSuite", ^{
 
                     fakeInterstitialCustomEvent.presentingViewController should equal(newPresentingController);
                     verify_fake_received_selectors(delegate, @[@"interstitialWillAppear:", @"interstitialDidAppear:"]);
-                    fakeProvider.lastFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(0);
+                    fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(0);
                 });
             });
 
