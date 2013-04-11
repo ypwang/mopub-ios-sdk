@@ -40,8 +40,6 @@
         bannerAdapterMap = [[NSDictionary dictionaryWithObjectsAndKeys:
                              @"MPHTMLBannerAdapter",        @"html",
                              @"MPMRAIDBannerAdapter",       @"mraid",
-                             @"MPGoogleAdSenseAdapter",     @"adsense",
-                             @"MPGoogleAdMobAdapter",       @"admob_native",
                              @"MPMillennialAdapter",        @"millennial_native",
                              nil] retain];
 

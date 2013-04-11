@@ -471,7 +471,6 @@ describe(@"MPAdViewIntegrationSuite", ^{
 
                             itShouldBehaveLike(@"a banner that presents the onscreen event");
                         });
-
                     });
                 });
 

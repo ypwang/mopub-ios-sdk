@@ -20,5 +20,10 @@
 @property (nonatomic, assign) UIViewController *rootViewController;
 
 - (GADBannerView *)masquerade;
+- (void)simulateLoadingAd;
+- (void)simulateFailingToLoad;
+- (void)simulateUserTap;
+- (void)simulateUserEndingInteraction;
+- (void)simulateUserLeavingApplication;
 
 @end

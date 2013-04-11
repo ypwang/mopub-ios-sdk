@@ -1,23 +1,21 @@
-#import "MPGoogleAdMobAdapter.h"
+#import "MPGoogleAdMobBannerCustomEvent.h"
 #import "FakeGADBannerView.h"
-#import "MPAdConfigurationFactory.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
-SPEC_BEGIN(MPGoogleAdMobAdapterSpec)
+SPEC_BEGIN(MPGoogleAdMobBannerCustomEventSpec)
 
-describe(@"MPGoogleAdMobAdapter", ^{
-    __block id<CedarDouble, MPAdapterDelegate> delegate;
-    __block MPGoogleAdMobAdapter *adapter;
-    __block MPAdConfiguration *configuration;
+describe(@"MPGoogleAdMobBannerCustomEvent", ^{
+    __block id<CedarDouble, MPBannerCustomEventDelegate> delegate;
+    __block MPGoogleAdMobBannerCustomEvent *event;
     __block FakeGADBannerView *banner;
     __block CLLocation *location;
     __block GADRequest<CedarDouble> *request;
     __block UIViewController *viewController;
 
     beforeEach(^{
-        delegate = nice_fake_for(@protocol(MPAdapterDelegate));
+        delegate = nice_fake_for(@protocol(MPBannerCustomEventDelegate));
 
         request = nice_fake_for([GADRequest class]);
         fakeProvider.fakeGADRequest = request;
@@ -25,14 +23,9 @@ describe(@"MPGoogleAdMobAdapter", ^{
         banner = [[[FakeGADBannerView alloc] init] autorelease];
         fakeProvider.fakeGADBannerView = banner.masquerade;
 
-        adapter = [[[MPGoogleAdMobAdapter alloc] initWithAdapterDelegate:delegate] autorelease];
+        event = [[[MPGoogleAdMobBannerCustomEvent alloc] init] autorelease];
+        event.delegate = delegate;
 
-        NSDictionary *headers = @{
-                                  kAdTypeHeaderKey: @"admob",
-                                  kNativeSDKParametersHeaderKey: @"{\"adUnitID\":\"g00g1e\",\"adWidth\":728,\"adHeight\":90}"
-                                  };
-        configuration = [MPAdConfigurationFactory defaultBannerConfigurationWithHeaders:headers
-                                                                             HTMLString:nil];
 
         location = [[[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.1, 21.2)
                                                   altitude:11
@@ -44,13 +37,17 @@ describe(@"MPGoogleAdMobAdapter", ^{
         viewController = [[[UIViewController alloc] init] autorelease];
         delegate stub_method("viewControllerForPresentingModalView").and_return(viewController);
 
-        [adapter _getAdWithConfiguration:configuration containerSize:CGSizeZero];
+        [event requestAdWithSize:CGSizeZero customEventInfo:@{@"adUnitID":@"g00g1e", @"adWidth":@728, @"adHeight":@90}];
+    });
+
+    it(@"should allow automatic metrics tracking", ^{
+        event.enableAutomaticImpressionAndClickTracking should equal(YES);
     });
 
     context(@"when asked to fetch a banner", ^{
         it(@"should set the banner's ad unit ID and delegate", ^{
             banner.adUnitID should equal(@"g00g1e");
-            banner.delegate should equal(adapter);
+            banner.delegate should equal(event);
             banner.rootViewController should equal(viewController);
         });
 
@@ -67,26 +64,14 @@ describe(@"MPGoogleAdMobAdapter", ^{
 
         context(@"when the size is not provided", ^{
             it(@"should use the 320x50 size", ^{
-                NSDictionary *headers = @{
-                                          kAdTypeHeaderKey: @"admob",
-                                          kNativeSDKParametersHeaderKey: @"{\"adUnitID\":\"g00g1e\"}"
-                                          };
-                configuration = [MPAdConfigurationFactory defaultBannerConfigurationWithHeaders:headers
-                                                                                     HTMLString:nil];
-                [adapter _getAdWithConfiguration:configuration containerSize:CGSizeZero];
+                [event requestAdWithSize:CGSizeZero customEventInfo:@{@"adUnitID":@"g00g1e"}];
                 CGRectEqualToRect(banner.frame, CGRectMake(0, 0, 320, 50)) should equal(YES);
             });
         });
 
         context(@"when the size is smaller than the minimum size", ^{
             it(@"should use the minimum size", ^{
-                NSDictionary *headers = @{
-                                          kAdTypeHeaderKey: @"admob",
-                                          kNativeSDKParametersHeaderKey: @"{\"adUnitID\":\"g00g1e\",\"adWidth\":319,\"adHeight\":49}"
-                                          };
-                configuration = [MPAdConfigurationFactory defaultBannerConfigurationWithHeaders:headers
-                                                                                     HTMLString:nil];
-                [adapter _getAdWithConfiguration:configuration containerSize:CGSizeZero];
+                [event requestAdWithSize:CGSizeZero customEventInfo:@{@"adUnitID":@"g00g1e", @"adWidth":@319, @"adHeight":@49}];
                 CGRectEqualToRect(banner.frame, CGRectMake(0, 0, 320, 50)) should equal(YES);
             });
         });

@@ -6,6 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
 @class MPBannerCustomEvent;
 
@@ -53,6 +54,7 @@
 
 //DOCUMENT!
 
+- (CLLocation *)location;
 - (void)trackImpression;
 - (void)trackClick;
 

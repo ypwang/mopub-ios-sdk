@@ -74,6 +74,11 @@
     return [self.delegate viewControllerForPresentingModalView];
 }
 
+- (CLLocation *)location
+{
+    return [self.delegate location];
+}
+
 - (void)bannerCustomEvent:(MPBannerCustomEvent *)event didLoadAd:(UIView *)ad
 {
     [self didStopLoading];

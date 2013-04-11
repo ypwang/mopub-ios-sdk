@@ -11,9 +11,11 @@
 
 @synthesize delegate;
 
-- (BOOL)enableAutomaticImpressionAndClickTracking
+
+- (void)requestAdWithSize:(CGSize)size customEventInfo:(NSDictionary *)info
 {
-    return YES;
+    // The default implementation of this method does nothing. Subclasses must override this method
+    // and implement code to load a banner here.
 }
 
 - (void)didDisplayAd
@@ -21,10 +23,9 @@
     // TODO:
 }
 
-- (void)requestAdWithSize:(CGSize)size customEventInfo:(NSDictionary *)info
+- (BOOL)enableAutomaticImpressionAndClickTracking
 {
-    // The default implementation of this method does nothing. Subclasses must override this method
-    // and implement code to load a banner here.
+    return YES;
 }
 
 - (void)rotateToOrientation:(UIInterfaceOrientation)newOrientation

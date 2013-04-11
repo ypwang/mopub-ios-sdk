@@ -1,15 +1,13 @@
 //
-//  MPGoogleAdMobAdapter.m
+//  MPGoogleAdMobBannerCustomEvent.m
 //  MoPub
 //
-//  Created by Andrew He on 5/1/11.
-//  Copyright 2011 MoPub, Inc. All rights reserved.
+//  Copyright (c) 2013 MoPub. All rights reserved.
 //
 
-#import "MPGoogleAdMobAdapter.h"
+#import "MPGoogleAdMobBannerCustomEvent.h"
 #import "MPLogging.h"
 #import "MPInstanceProvider.h"
-#import "MPAdConfiguration.h"
 
 @interface MPInstanceProvider (AdMobBanners)
 
@@ -34,20 +32,19 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@interface MPGoogleAdMobAdapter ()
+@interface MPGoogleAdMobBannerCustomEvent ()
 
 @property (nonatomic, retain) GADBannerView *adBannerView;
 
 @end
 
 
-@implementation MPGoogleAdMobAdapter
+@implementation MPGoogleAdMobBannerCustomEvent
 
-@synthesize adBannerView = _adBannerView;
-
-- (id)initWithAdapterDelegate:(id<MPAdapterDelegate>)delegate
+- (id)init
 {
-    if (self = [super initWithAdapterDelegate:delegate])
+    self = [super init];
+    if (self)
     {
         self.adBannerView = [[MPInstanceProvider sharedProvider] buildGADBannerViewWithFrame:CGRectZero];
         self.adBannerView.delegate = self;
@@ -55,17 +52,17 @@
     return self;
 }
 
-- (void)dealloc
+- (void)customEventDidUnload
 {
     self.adBannerView.delegate = nil;
     self.adBannerView = nil;
-    [super dealloc];
+    [super customEventDidUnload];
 }
 
-- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration containerSize:(CGSize)size
+- (void)requestAdWithSize:(CGSize)size customEventInfo:(NSDictionary *)info
 {
-    self.adBannerView.frame = [self frameForConfiguration:configuration];
-    self.adBannerView.adUnitID = [configuration.nativeSDKParameters objectForKey:@"adUnitID"];
+    self.adBannerView.frame = [self frameForCustomEventInfo:info];
+    self.adBannerView.adUnitID = [info objectForKey:@"adUnitID"];
     self.adBannerView.rootViewController = [self.delegate viewControllerForPresentingModalView];
 
     GADRequest *request = [[MPInstanceProvider sharedProvider] buildGADRequest];
@@ -87,10 +84,10 @@
     [self.adBannerView loadRequest:request];
 }
 
-- (CGRect)frameForConfiguration:(MPAdConfiguration *)configuration
+- (CGRect)frameForCustomEventInfo:(NSDictionary *)info
 {
-    CGFloat width = [[configuration.nativeSDKParameters objectForKey:@"adWidth"] floatValue];
-    CGFloat height = [[configuration.nativeSDKParameters objectForKey:@"adHeight"] floatValue];
+    CGFloat width = [[info objectForKey:@"adWidth"] floatValue];
+    CGFloat height = [[info objectForKey:@"adHeight"] floatValue];
 
     if (width < GAD_SIZE_320x50.width && height < GAD_SIZE_320x50.height) {
         width = GAD_SIZE_320x50.width;
@@ -104,28 +101,28 @@
 
 - (void)adViewDidReceiveAd:(GADBannerView *)bannerView
 {
-    [self.delegate adapter:self didFinishLoadingAd:bannerView];
+    [self.delegate bannerCustomEvent:self didLoadAd:self.adBannerView];
 }
 
 - (void)adView:(GADBannerView *)bannerView
-        didFailToReceiveAdWithError:(GADRequestError *)error
+didFailToReceiveAdWithError:(GADRequestError *)error
 {
-    [self.delegate adapter:self didFailToLoadAdWithError:nil];
+    [self.delegate bannerCustomEvent:self didFailToLoadAdWithError:error];
 }
 
 - (void)adViewWillPresentScreen:(GADBannerView *)bannerView
 {
-    [self.delegate userActionWillBeginForAdapter:self];
+    [self.delegate bannerCustomEventWillBeginAction:self];
 }
 
 - (void)adViewDidDismissScreen:(GADBannerView *)bannerView
 {
-    [self.delegate userActionDidFinishForAdapter:self];
+    [self.delegate bannerCustomEventDidFinishAction:self];
 }
 
 - (void)adViewWillLeaveApplication:(GADBannerView *)bannerView
 {
-    [self.delegate userWillLeaveApplicationFromAdapter:self];
+    [self.delegate bannerCustomEventWillLeaveApplication:self];
 }
 
 @end

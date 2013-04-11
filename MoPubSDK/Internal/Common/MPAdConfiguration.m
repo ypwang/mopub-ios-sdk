@@ -116,7 +116,10 @@ NSString * const kAdTypeClear = @"clear";
 {
     // This method converts from legacy adapter/network types to new custom event classes.
 
-    NSDictionary *convertedCustomEvents = @{@"iAd": @"MPiAdBannerCustomEvent"};
+    NSMutableDictionary *convertedCustomEvents = [NSMutableDictionary dictionary];
+    [convertedCustomEvents setObject:@"MPiAdBannerCustomEvent" forKey:@"iAd"];
+    [convertedCustomEvents setObject:@"MPGoogleAdMobBannerCustomEvent" forKey:@"admob_native"];
+
     NSString *networkType = [self networkTypeFromHeaders:headers];
     if ([convertedCustomEvents objectForKey:networkType]) {
         return NSClassFromString([convertedCustomEvents objectForKey:networkType]);
