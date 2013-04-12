@@ -25,7 +25,6 @@ NSString * const kMoPubCustomHost = @"custom";
 @interface MPAdWebViewAgent ()
 
 @property (nonatomic, retain) MPAdConfiguration *configuration;
-@property (nonatomic, assign) id<MPAdWebViewAgentDelegate> delegate;
 @property (nonatomic, retain) MPAdDestinationDisplayAgent *destinationDisplayAgent;
 @property (nonatomic, assign) BOOL shouldHandleRequests;
 
@@ -135,7 +134,7 @@ NSString * const kMoPubCustomHost = @"custom";
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType
-{    
+{
     if (!self.shouldHandleRequests) {
         return NO;
     }

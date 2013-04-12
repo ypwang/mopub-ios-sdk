@@ -7,10 +7,10 @@
 
 #import "MPBaseAdapter.h"
 
-#import "MPBannerCustomEventDelegate.h"
+#import "MPPrivateBannerCustomEventDelegate.h"
 
 @class MPBannerCustomEvent;
 
-@interface MPBannerCustomEventAdapter : MPBaseAdapter <MPBannerCustomEventDelegate>
+@interface MPBannerCustomEventAdapter : MPBaseAdapter <MPPrivateBannerCustomEventDelegate>
 
 @end

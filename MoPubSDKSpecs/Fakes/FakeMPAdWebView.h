@@ -9,12 +9,18 @@
 
 @interface FakeMPAdWebView : MPAdWebView <FakeInterstitialAd>
 
-- (BOOL)didAppear;
-
+// As an interstitial/banner
 - (void)simulateLoadingAd;
 - (void)simulateFailingToLoad;
-- (void)simulateUserDismissingAd;
 
+// As a banner
+- (void)simulateUserBringingUpModal;
+- (void)simulateUserDismissingModal;
+- (void)simulateUserLeavingApplication;
+
+// As an interstitial
+- (BOOL)didAppear;
+- (void)simulateUserDismissingAd;
 - (UIViewController *)presentingViewController;
 
 @end

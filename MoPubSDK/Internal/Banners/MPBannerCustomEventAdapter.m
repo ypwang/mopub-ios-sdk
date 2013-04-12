@@ -14,6 +14,7 @@
 @interface MPBannerCustomEventAdapter ()
 
 @property (nonatomic, retain) MPBannerCustomEvent *bannerCustomEvent;
+@property (nonatomic, retain) MPAdConfiguration *configuration;
 @property (nonatomic, assign) BOOL hasTrackedImpression;
 @property (nonatomic, assign) BOOL hasTrackedClick;
 
@@ -31,24 +32,25 @@
     [super unregisterDelegate];
 }
 
+- (void)dealloc {
+    self.configuration = nil;
+    [super dealloc];
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (void)getAdWithConfiguration:(MPAdConfiguration *)configuration containerSize:(CGSize)size
 {
-    Class customEventClass = configuration.customEventClass;
-
     MPLogInfo(@"Looking for custom event class named %@.", configuration.customEventClass);
+    self.configuration = configuration;
 
-    if (customEventClass) {
-        self.bannerCustomEvent = [[MPInstanceProvider sharedProvider] buildBannerCustomEventFromCustomClass:customEventClass
-                                                                                                   delegate:self];
+    self.bannerCustomEvent = [[MPInstanceProvider sharedProvider] buildBannerCustomEventFromCustomClass:configuration.customEventClass
+                                                                                               delegate:self];
+    if (self.bannerCustomEvent) {
         [self.bannerCustomEvent requestAdWithSize:size customEventInfo:configuration.customEventClassData];
-        return;
+    } else {
+        [self.delegate adapter:self didFailToLoadAdWithError:nil];
     }
-
-    MPLogInfo(@"Could not handle custom event request.");
-
-    [self.delegate adapter:self didFailToLoadAdWithError:nil];
 }
 
 - (void)rotateToOrientation:(UIInterfaceOrientation)newOrientation
@@ -68,11 +70,16 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#pragma mark - MPBannerCustomEventDelegate
+#pragma mark - MPPrivateBannerCustomEventDelegate
 
 - (UIViewController *)viewControllerForPresentingModalView
 {
     return [self.delegate viewControllerForPresentingModalView];
+}
+
+- (id)bannerDelegate
+{
+    return [self.delegate bannerDelegate];
 }
 
 - (CLLocation *)location

@@ -38,7 +38,6 @@
     if (self = [super init])
     {
         bannerAdapterMap = [[NSDictionary dictionaryWithObjectsAndKeys:
-                             @"MPHTMLBannerAdapter",        @"html",
                              @"MPMRAIDBannerAdapter",       @"mraid",
                              nil] retain];
 

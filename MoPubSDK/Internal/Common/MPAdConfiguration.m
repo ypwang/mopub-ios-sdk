@@ -115,18 +115,25 @@ NSString * const kAdTypeClear = @"clear";
 - (Class)customEventClassFromHeaders:(NSDictionary *)headers
 {
     // This method converts from legacy adapter/network types to new custom event classes.
+    Class customEventClass = nil;
 
-    NSMutableDictionary *convertedCustomEvents = [NSMutableDictionary dictionary];
-    [convertedCustomEvents setObject:@"MPiAdBannerCustomEvent" forKey:@"iAd"];
-    [convertedCustomEvents setObject:@"MPGoogleAdMobBannerCustomEvent" forKey:@"admob_native"];
-    [convertedCustomEvents setObject:@"MPMillennialBannerCustomEvent" forKey:@"millennial_native"];
+    if (self.adType == MPAdTypeBanner) {
+        NSMutableDictionary *convertedCustomEvents = [NSMutableDictionary dictionary];
+        [convertedCustomEvents setObject:@"MPiAdBannerCustomEvent" forKey:@"iAd"];
+        [convertedCustomEvents setObject:@"MPGoogleAdMobBannerCustomEvent" forKey:@"admob_native"];
+        [convertedCustomEvents setObject:@"MPMillennialBannerCustomEvent" forKey:@"millennial_native"];
+        [convertedCustomEvents setObject:@"MPHTMLBannerCustomEvent" forKey:@"html"];
 
-    NSString *networkType = [self networkTypeFromHeaders:headers];
-    if ([convertedCustomEvents objectForKey:networkType]) {
-        return NSClassFromString([convertedCustomEvents objectForKey:networkType]);
-    } else {
-        return NSClassFromString([headers objectForKey:kCustomEventClassNameHeaderKey]);
+        NSString *networkType = [self networkTypeFromHeaders:headers];
+        if ([convertedCustomEvents objectForKey:networkType]) {
+            customEventClass = NSClassFromString([convertedCustomEvents objectForKey:networkType]);
+        }
     }
+
+    if (!customEventClass) {
+        customEventClass = NSClassFromString([headers objectForKey:kCustomEventClassNameHeaderKey]);
+    }
+    return customEventClass;
 }
 
 - (NSDictionary *)customEventClassDataFromHeaders:(NSDictionary *)headers

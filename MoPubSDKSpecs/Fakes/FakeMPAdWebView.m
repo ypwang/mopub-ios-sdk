@@ -11,11 +11,7 @@
 
 @implementation FakeMPAdWebView
 
-- (BOOL)didAppear
-{
-    return [[self executedJavaScripts] indexOfObject:@"webviewDidAppear();"] != NSNotFound;
-}
-
+// As an interstitial/banner
 - (void)simulateLoadingAd
 {
     [self loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"mopub://finishLoad"]]];
@@ -24,6 +20,32 @@
 - (void)simulateFailingToLoad
 {
     [self loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"mopub://failLoad"]]];
+}
+
+// As a banner
+- (MPAdWebViewAgent *)agent {
+    MPAdWebViewAgent *agent = (MPAdWebViewAgent *)self.delegate;
+    return agent;
+}
+- (void)simulateUserBringingUpModal
+{
+    [self.agent displayAgentWillPresentModal];
+}
+
+- (void)simulateUserDismissingModal
+{
+    [self.agent displayAgentDidDismissModal];
+}
+
+- (void)simulateUserLeavingApplication
+{
+    [self.agent displayAgentWillLeaveApplication];
+}
+
+// As an interstitial
+- (BOOL)didAppear
+{
+    return [[self executedJavaScripts] indexOfObject:@"webviewDidAppear();"] != NSNotFound;
 }
 
 - (void)simulateUserDismissingAd

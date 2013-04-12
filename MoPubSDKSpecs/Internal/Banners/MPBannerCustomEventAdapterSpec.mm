@@ -37,12 +37,12 @@ describe(@"MPBannerCustomEventAdapter", ^{
 
         context(@"when the requested custom event class does not exist", ^{
             beforeEach(^{
+                fakeProvider.FakeBannerCustomEvent = nil;
                 configuration = [MPAdConfigurationFactory defaultInterstitialConfigurationWithCustomEventClassName:@"NonExistentCustomEvent"];
                 [adapter _getAdWithConfiguration:configuration containerSize:CGSizeZero];
             });
 
             it(@"should not create an instance, and should tell its delegate that it failed to load", ^{
-                event.delegate should be_nil;
                 delegate should have_received(@selector(adapter:didFailToLoadAdWithError:)).with(adapter).and_with(nil);
             });
         });
@@ -72,6 +72,10 @@ describe(@"MPBannerCustomEventAdapter", ^{
     context(@"with a valid custom event", ^{
         beforeEach(^{
             [adapter _getAdWithConfiguration:configuration containerSize:CGSizeMake(20, 24)];
+        });
+
+        it(@"should make the configuration available", ^{
+            adapter.configuration should equal(configuration);
         });
 
         context(@"when informed of an orientation change", ^{

@@ -1,52 +1,53 @@
 //
-//  MPHTMLBannerAdapter.m
+//  MPHTMLBannerCustomEvent.m
 //  MoPub
 //
-//  Copyright (c) 2012 MoPub, Inc. All rights reserved.
+//  Copyright (c) 2013 MoPub. All rights reserved.
 //
 
-#import "MPHTMLBannerAdapter.h"
-
-#import "MPAdConfiguration.h"
-#import "MPAdDestinationDisplayAgent.h"
+#import "MPHTMLBannerCustomEvent.h"
 #import "MPAdWebView.h"
+#import "MPLogging.h"
+#import "MPAdConfiguration.h"
 #import "MPInstanceProvider.h"
 
-@interface MPHTMLBannerAdapter ()
+@interface MPHTMLBannerCustomEvent ()
 
 @property (nonatomic, retain) MPAdWebViewAgent *bannerAgent;
 
 @end
 
-@implementation MPHTMLBannerAdapter
+@implementation MPHTMLBannerCustomEvent
 
 @synthesize bannerAgent = _bannerAgent;
 
-- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration containerSize:(CGSize)size
+- (BOOL)enableAutomaticImpressionAndClickTracking
 {
-    MPLogTrace(@"Loading banner with HTML source: %@", [configuration adResponseHTMLString]);
+    return NO;
+}
+
+- (void)requestAdWithSize:(CGSize)size customEventInfo:(NSDictionary *)info
+{
+    MPLogTrace(@"Loading banner with HTML source: %@", [[self.delegate configuration] adResponseHTMLString]);
 
     self.bannerAgent = [[MPInstanceProvider sharedProvider] buildMPAdWebViewAgentWithAdWebViewFrame:CGRectMake(0, 0, 1, 1)
                                                                                            delegate:self
                                                                                customMethodDelegate:[self.delegate bannerDelegate]];
-    [self.bannerAgent loadConfiguration:configuration];
+    [self.bannerAgent loadConfiguration:[self.delegate configuration]];
 }
 
-- (void)dealloc
+- (void)customEventDidUnload
 {
+    self.bannerAgent.delegate = nil;
+    [[_bannerAgent retain] autorelease];
     self.bannerAgent = nil;
 
-    [super dealloc];
+    [super customEventDidUnload];
 }
 
 - (void)rotateToOrientation:(UIInterfaceOrientation)newOrientation
 {
     [self.bannerAgent rotateToOrientation:newOrientation];
-}
-
-- (void)didDisplayAd
-{
-    //don't track impression
 }
 
 #pragma mark - MPAdWebViewAgentDelegate
@@ -58,47 +59,33 @@
 
 - (void)adDidFinishLoadingAd:(MPAdWebView *)ad
 {
-    [self.delegate adapter:self
-        didFinishLoadingAd:self.bannerAgent.view];
-    [self didStopLoading];
+    [self.delegate bannerCustomEvent:self didLoadAd:ad];
 }
 
 - (void)adDidFailToLoadAd:(MPAdWebView *)ad
 {
-    [self.delegate adapter:self didFailToLoadAdWithError:nil];
-    [self didStopLoading];
+    [self.delegate bannerCustomEvent:self didFailToLoadAdWithError:nil];
 }
 
 - (void)adDidClose:(MPAdWebView *)ad
 {
-
+    //don't care
 }
 
 - (void)adActionWillBegin:(MPAdWebView *)ad
 {
-    [self.delegate userActionWillBeginForAdapter:self];
+    [self.delegate bannerCustomEventWillBeginAction:self];
 }
 
 - (void)adActionDidFinish:(MPAdWebView *)ad
 {
-    [self.delegate userActionDidFinishForAdapter:self];
+    [self.delegate bannerCustomEventDidFinishAction:self];
 }
 
 - (void)adActionWillLeaveApplication:(MPAdWebView *)ad
 {
-    [self.delegate userWillLeaveApplicationFromAdapter:self];
+    [self.delegate bannerCustomEventWillLeaveApplication:self];
 }
 
-#pragma mark - Metrics
-
-- (void)trackImpression
-{
-    // HTML banners perform their own impression tracking.
-}
-
-- (void)trackClick
-{
-    // HTML banners perform their own click tracking.
-}
 
 @end

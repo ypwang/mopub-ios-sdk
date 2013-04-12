@@ -23,6 +23,7 @@ typedef NSUInteger MPAdWebViewEvent;
 
 @property (nonatomic, assign) id customMethodDelegate;
 @property (nonatomic, retain) MPAdWebView *view;
+@property (nonatomic, assign) id<MPAdWebViewAgentDelegate> delegate;
 
 - (id)initWithAdWebViewFrame:(CGRect)frame delegate:(id<MPAdWebViewAgentDelegate>)delegate customMethodDelegate:(id)customMethodDelegate;
 - (void)loadConfiguration:(MPAdConfiguration *)configuration;
@@ -39,7 +40,6 @@ typedef NSUInteger MPAdWebViewEvent;
 
 @protocol MPAdWebViewAgentDelegate <NSObject>
 
-@required
 - (UIViewController *)viewControllerForPresentingModalView;
 - (void)adDidClose:(MPAdWebView *)ad;
 - (void)adDidFinishLoadingAd:(MPAdWebView *)ad;
