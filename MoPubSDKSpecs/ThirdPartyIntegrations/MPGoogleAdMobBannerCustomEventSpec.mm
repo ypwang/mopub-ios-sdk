@@ -26,7 +26,6 @@ describe(@"MPGoogleAdMobBannerCustomEvent", ^{
         event = [[[MPGoogleAdMobBannerCustomEvent alloc] init] autorelease];
         event.delegate = delegate;
 
-
         location = [[[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.1, 21.2)
                                                   altitude:11
                                         horizontalAccuracy:12.3

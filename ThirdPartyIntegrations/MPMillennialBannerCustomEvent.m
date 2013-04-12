@@ -1,12 +1,11 @@
 //
-//  MPMillennialAdapter.m
+//  MPMillennialBannerCustomEvent.m
 //  MoPub
 //
-//  Created by Andrew He on 5/1/11.
-//  Copyright 2011 MoPub, Inc. All rights reserved.
+//  Copyright (c) 2013 MoPub. All rights reserved.
 //
 
-#import "MPMillennialAdapter.h"
+#import "MPMillennialBannerCustomEvent.h"
 #import "MPAdView.h"
 #import "MPLogging.h"
 #import "MPAdConfiguration.h"
@@ -38,52 +37,49 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@interface MPMillennialAdapter ()
+@interface MPMillennialBannerCustomEvent ()
 
 @property (nonatomic, retain) MMAdView *mmAdView;
 
-- (CGSize)sizeFromConfiguration:(MPAdConfiguration *)configuration;
-- (CGRect)frameFromConfiguration:(MPAdConfiguration *)configuration;
-- (MMAdType)typeFromConfiguration:(MPAdConfiguration *)configuration;
+- (CGSize)sizeFromCustomEventInfo:(NSDictionary *)info;
+- (CGRect)frameFromCustomEventInfo:(NSDictionary *)info;
+- (MMAdType)typeFromCustomEventInfo:(NSDictionary *)info;
 
 @end
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+@implementation MPMillennialBannerCustomEvent
 
-@implementation MPMillennialAdapter
-@synthesize mmAdView = _mmAdView;
-
-- (void)dealloc
+- (void)customEventDidUnload
 {
     self.mmAdView.delegate = nil;
     self.mmAdView = nil;
-    [super dealloc];
+    [super customEventDidUnload];
 }
 
-- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration containerSize:(CGSize)size
+- (void)requestAdWithSize:(CGSize)size customEventInfo:(NSDictionary *)info
 {
-    CGRect frame = [self frameFromConfiguration:configuration];
-    MMAdType type = [self typeFromConfiguration:configuration];
-    NSString *apid = [configuration.nativeSDKParameters objectForKey:@"adUnitID"];
+    CGRect frame = [self frameFromCustomEventInfo:info];
+    MMAdType type = [self typeFromCustomEventInfo:info];
+    NSString *apid = [info objectForKey:@"adUnitID"];
     self.mmAdView = [[MPInstanceProvider sharedProvider] buildMMAdViewWithFrame:frame
                                                                            type:type
                                                                            apid:apid
                                                                        delegate:self];
-
+    
     self.mmAdView.rootViewController = [self.delegate viewControllerForPresentingModalView];
     [self.mmAdView refreshAd];
 }
 
-- (CGSize)sizeFromConfiguration:(MPAdConfiguration *)configuration
+- (CGSize)sizeFromCustomEventInfo:(NSDictionary *)info
 {
-    CGFloat width = [[configuration.nativeSDKParameters objectForKey:@"adWidth"] floatValue];
-    CGFloat height = [[configuration.nativeSDKParameters objectForKey:@"adHeight"] floatValue];
+    CGFloat width = [[info objectForKey:@"adWidth"] floatValue];
+    CGFloat height = [[info objectForKey:@"adHeight"] floatValue];
     return CGSizeMake(width, height);
 }
 
-- (CGRect)frameFromConfiguration:(MPAdConfiguration *)configuration
+- (CGRect)frameFromCustomEventInfo:(NSDictionary *)info
 {
-    CGSize size = [self sizeFromConfiguration:configuration];
+    CGSize size = [self sizeFromCustomEventInfo:info];
     if (!CGSizeEqualToSize(size, MM_SIZE_300x250) && !CGSizeEqualToSize(size, MM_SIZE_728x90)) {
         size.width = MM_SIZE_320x53.width;
         size.height = MM_SIZE_320x53.height;
@@ -91,9 +87,9 @@
     return CGRectMake(0, 0, size.width, size.height);
 }
 
-- (MMAdType)typeFromConfiguration:(MPAdConfiguration *)configuration
+- (MMAdType)typeFromCustomEventInfo:(NSDictionary *)info
 {
-    CGSize size = [self sizeFromConfiguration:configuration];
+    CGSize size = [self sizeFromCustomEventInfo:info];
     return CGSizeEqualToSize(size, MM_SIZE_300x250) ? MMBannerAdRectangle : MMBannerAdTop;
 }
 
@@ -104,39 +100,39 @@
 {
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    @"mopubsdk", @"vendor", nil];
-
+    
     CLLocation *location = self.delegate.location;
     if (location) {
         [params setObject:[[NSNumber numberWithDouble:location.coordinate.latitude] stringValue] forKey:@"lat"];
         [params setObject:[[NSNumber numberWithDouble:location.coordinate.longitude] stringValue] forKey:@"long"];
     }
-
+    
     return params;
 }
 
 - (void)adRequestSucceeded:(MMAdView *)adView
 {
-    [self.delegate adapter:self didFinishLoadingAd:adView];
+    [self.delegate bannerCustomEvent:self didLoadAd:self.mmAdView];
 }
 
 - (void)adRequestFailed:(MMAdView *)adView
 {
-    [self.delegate adapter:self didFailToLoadAdWithError:nil];
+    [self.delegate bannerCustomEvent:self didFailToLoadAdWithError:nil];
 }
 
 - (void)adWasTapped:(MMAdView *)adView
 {
-    [self.delegate userActionWillBeginForAdapter:self];
-}
-
-- (void)applicationWillTerminateFromAd
-{
-    [self.delegate userWillLeaveApplicationFromAdapter:self];
+    [self.delegate bannerCustomEventWillBeginAction:self];
 }
 
 - (void)adModalWasDismissed
 {
-    [self.delegate userActionDidFinishForAdapter:self];
+    [self.delegate bannerCustomEventDidFinishAction:self];
+}
+
+- (void)applicationWillTerminateFromAd
+{
+    [self.delegate bannerCustomEventWillLeaveApplication:self];
 }
 
 @end

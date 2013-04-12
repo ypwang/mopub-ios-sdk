@@ -19,4 +19,29 @@
     self.hasRefreshed = YES;
 }
 
+- (void)simulateLoadingAd
+{
+    [self.delegate adRequestSucceeded:self.masquerade];
+}
+
+- (void)simulateFailingToLoad
+{
+    [self.delegate adRequestFailed:self.masquerade];
+}
+
+- (void)simulateUserTap
+{
+    [self.delegate adWasTapped:self.masquerade];
+}
+
+- (void)simulateUserEndingInteraction
+{
+    [self.delegate adModalWasDismissed];
+}
+
+- (void)simulateUserLeavingApplication
+{
+    [self.delegate applicationWillTerminateFromAd];
+}
+
 @end

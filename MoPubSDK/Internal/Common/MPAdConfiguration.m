@@ -119,6 +119,7 @@ NSString * const kAdTypeClear = @"clear";
     NSMutableDictionary *convertedCustomEvents = [NSMutableDictionary dictionary];
     [convertedCustomEvents setObject:@"MPiAdBannerCustomEvent" forKey:@"iAd"];
     [convertedCustomEvents setObject:@"MPGoogleAdMobBannerCustomEvent" forKey:@"admob_native"];
+    [convertedCustomEvents setObject:@"MPMillennialBannerCustomEvent" forKey:@"millennial_native"];
 
     NSString *networkType = [self networkTypeFromHeaders:headers];
     if ([convertedCustomEvents objectForKey:networkType]) {

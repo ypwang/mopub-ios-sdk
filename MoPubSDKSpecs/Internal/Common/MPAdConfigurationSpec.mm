@@ -1,6 +1,7 @@
 #import "MPAdConfiguration.h"
 #import "MPiAdBannerCustomEvent.h"
 #import "MPGoogleAdMobBannerCustomEvent.h"
+#import "MPMillennialBannerCustomEvent.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -250,6 +251,10 @@ describe(@"MPAdConfiguration", ^{
         headers = @{kAdTypeHeaderKey: @"admob_native"};
         configuration = [[[MPAdConfiguration alloc] initWithHeaders:headers data:nil] autorelease];
         configuration.customEventClass should equal([MPGoogleAdMobBannerCustomEvent class]);
+
+        headers = @{kAdTypeHeaderKey: @"millennial_native"};
+        configuration = [[[MPAdConfiguration alloc] initWithHeaders:headers data:nil] autorelease];
+        configuration.customEventClass should equal([MPMillennialBannerCustomEvent class]);
     });
 
     it(@"should process the customEventClassData", ^{

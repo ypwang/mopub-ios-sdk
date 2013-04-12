@@ -40,7 +40,6 @@
         bannerAdapterMap = [[NSDictionary dictionaryWithObjectsAndKeys:
                              @"MPHTMLBannerAdapter",        @"html",
                              @"MPMRAIDBannerAdapter",       @"mraid",
-                             @"MPMillennialAdapter",        @"millennial_native",
                              nil] retain];
 
         interstitialAdapterMap = [[NSDictionary dictionaryWithObjectsAndKeys:
