@@ -22,6 +22,8 @@
 
 - (void)initializeScenarios
 {
+    [KIFTestStep setDefaultTimeout:10];
+
     [self addStoreKitScenarios];
     [self addiAdScenarios];
     [self addMillennialScenarios];
@@ -63,6 +65,7 @@
 
 - (void)addGreystripeScenarios
 {
+    [self addScenario:[KIFTestScenario scenarioForGreystripeBanner]];
     [self addScenario:[KIFTestScenario scenarioForGreystripeInterstitial]];
 }
 

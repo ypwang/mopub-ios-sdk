@@ -7,6 +7,7 @@
 
 #import "MPSpecHelper.h"
 #import "MPInterstitialAdController.h"
+#import "GSConstants.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -41,6 +42,7 @@ void log_sent_messages(id<CedarDouble> fake)
         usleep(200000);
         beforeAllDidRun = YES;
         [MMAdView setLogLevel:MMLOG_LEVEL_OFF];
+        [GSConstants setGUID:@"GreystripeGUID"]; //silences greystripe complaints further down the line
     }
 
     fakeProvider = [[[FakeMPInstanceProvider alloc] init] autorelease];

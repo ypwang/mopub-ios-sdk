@@ -18,6 +18,7 @@
              [MPAdInfo infoWithTitle:@"iAd Banner" ID:@"b9572278a20a11e295fa123138070049" type:MPAdInfoBanner],
              [MPAdInfo infoWithTitle:@"Millennial Banner" ID:@"1aa442709c9f11e281c11231392559e4" type:MPAdInfoBanner],
              [MPAdInfo infoWithTitle:@"Google AdMob Banner" ID:@"01535a569c8e11e281c11231392559e4" type:MPAdInfoBanner],
+             [MPAdInfo infoWithTitle:@"Greystripe Banner" ID:@"ab654e0ca39411e295fa123138070049" type:MPAdInfoBanner],
 #endif
              ];
 }

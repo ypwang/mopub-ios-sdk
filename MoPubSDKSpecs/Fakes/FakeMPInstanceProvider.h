@@ -21,6 +21,7 @@
 #import "GADRequest.h"
 #import "FakeMMBannerAdView.h"
 #import "FakeMPReachability.h"
+#import "FakeGSBannerAdView.h"
 #import "MPBaseAdapter.h"
 #import "FakeBannerCustomEvent.h"
 #import "FakeMPTimer.h"
@@ -50,8 +51,10 @@
 @property (nonatomic, assign) FakeMMInterstitialAdView *fakeMMAdViewInterstitial;
 @property (nonatomic, assign) FakeMMBannerAdView *fakeMMAdViewBanner;
 @property (nonatomic, assign) Chartboost *fakeChartboost;
-@property (nonatomic, assign) FakeGSFullscreenAd *fakeGSFullscreenAd;
 @property (nonatomic, assign) IMAdInterstitial *fakeIMAdInterstitial;
+
+@property (nonatomic, assign) FakeGSFullscreenAd *fakeGSFullscreenAd;
+@property (nonatomic, assign) FakeGSBannerAdView *fakeGSBannerAdView;
 
 @property (nonatomic, assign) FakeMPReachability *fakeMPReachability;
 

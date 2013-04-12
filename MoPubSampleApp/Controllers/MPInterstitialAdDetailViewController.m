@@ -54,6 +54,11 @@
     [self.interstitial loadAd];
 }
 
+- (void)dealloc
+{
+    self.interstitial.delegate = nil;
+}
+
 - (IBAction)didTapShowButton:(id)sender
 {
     [self.interstitial showFromViewController:self];

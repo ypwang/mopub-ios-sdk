@@ -10,6 +10,6 @@
 @interface KIFTestStep (View)
 
 + (KIFTestStep *)stepToWaitForPresenceOfViewWithClassName:(NSString *)className;
-+ (KIFTestStep *)stepToWaitForAbsenseOfViewWithClassName:(NSString *)className;
++ (KIFTestStep *)stepToWaitForAbsenceOfViewWithClassName:(NSString *)className;
 
 @end

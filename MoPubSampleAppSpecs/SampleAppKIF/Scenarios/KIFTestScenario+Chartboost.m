@@ -24,7 +24,7 @@
     [scenario addStep:[KIFTestStep stepToTapScreenAtPoint:CGPointMake(160, 240)]];
     [scenario addStep:[KIFTestStep stepToLogClickForAdUnit:[MPAdSection adInfoAtIndexPath:indexPath].ID]];
     [scenario addStep:[KIFTestStep stepToWaitForPresenceOfViewWithClassName:@"CBNativeInterstitialView"]];
-    [scenario addStep:[KIFTestStep stepToWaitForAbsenseOfViewWithClassName:@"CBLoadingView"]];
+    [scenario addStep:[KIFTestStep stepToWaitForAbsenceOfViewWithClassName:@"CBLoadingView"]];
 
     [scenario addStep:[KIFTestStep stepToReturnToBannerAds]];
 
@@ -54,7 +54,7 @@
     [scenario addStep:[KIFTestStep stepToWaitForPresenceOfViewWithClassName:@"CBNativeInterstitialView"]];
     [scenario addStep:[KIFTestStep stepToLogImpressionForAdUnit:noLocationAdUnit]];
     [scenario addStep:[KIFTestStep stepToTapScreenAtPoint:CGPointMake(285, 60)]]; // Closes the ad
-    [scenario addStep:[KIFTestStep stepToWaitForAbsenseOfViewWithClassName:@"CBNativeInterstitialView"]];
+    [scenario addStep:[KIFTestStep stepToWaitForAbsenceOfViewWithClassName:@"CBNativeInterstitialView"]];
 
     [scenario addStep:[KIFTestStep stepToTapViewWithAccessibilityLabel:@"Interstitial Show 2"]];
     [scenario addStep:[KIFTestStep stepToWaitForPresenceOfViewWithClassName:@"CBNativeInterstitialView"]];
@@ -62,7 +62,7 @@
     [scenario addStep:[KIFTestStep stepToTapScreenAtPoint:CGPointMake(160, 240)]]; // Clicks the ad
     [scenario addStep:[KIFTestStep stepToLogClickForAdUnit:somewhereLocationAdUnit]];
     [scenario addStep:[KIFTestStep stepToWaitForPresenceOfViewWithClassName:@"CBNativeInterstitialView"]];
-    [scenario addStep:[KIFTestStep stepToWaitForAbsenseOfViewWithClassName:@"CBLoadingView"]];
+    [scenario addStep:[KIFTestStep stepToWaitForAbsenceOfViewWithClassName:@"CBLoadingView"]];
 
     [scenario addStep:[KIFTestStep stepToReturnToBannerAds]];
 

@@ -10,6 +10,27 @@
 
 @implementation KIFTestScenario (Greystripe)
 
++ (KIFTestScenario *)scenarioForGreystripeBanner
+{
+    KIFTestScenario *scenario = [MPSampleAppTestScenario scenarioWithDescription:@"Test that a Greystripe BAnner ad works."];
+    NSIndexPath *indexPath = [MPAdSection indexPathForAd:@"Greystripe Banner" inSection:@"Banner Ads"];
+    [scenario addStep:[KIFTestStep stepToActuallyTapRowInTableViewWithAccessibilityLabel:@"Ad Table View"
+                                                                             atIndexPath:indexPath]];
+
+    [scenario addStep:[KIFTestStep stepToWaitForViewWithAccessibilityLabel:@"banner"]];
+    [scenario addStep:[KIFTestStep stepToWaitUntilActivityIndicatorIsNotAnimating]];
+    [scenario addStep:[KIFTestStep stepToWaitForPresenceOfViewWithClassName:@"GSMobileBannerAdView"]];
+    [scenario addStep:[KIFTestStep stepToLogImpressionForAdUnit:[MPAdSection adInfoAtIndexPath:indexPath].ID]];
+    [scenario addStep:[KIFTestStep stepToTapViewWithAccessibilityLabel:@"banner"]];
+    [scenario addStep:[KIFTestStep stepToLogClickForAdUnit:[MPAdSection adInfoAtIndexPath:indexPath].ID]];
+    [scenario addStep:[KIFTestStep stepToWaitForPresenceOfViewWithClassName:@"GSBrowserView"]];
+    [scenario addStep:[KIFTestStep stepToTapViewWithAccessibilityLabel:@"Done"]];
+    [scenario addStep:[KIFTestStep stepToWaitForAbsenceOfViewWithClassName:@"GSBrowserView"]];
+    [scenario addStep:[KIFTestStep stepToReturnToBannerAds]];
+
+    return scenario;
+}
+
 + (KIFTestScenario *)scenarioForGreystripeInterstitial
 {
     KIFTestScenario *scenario = [MPSampleAppTestScenario scenarioWithDescription:@"Test that a Greystripe interstitial ad works."];
@@ -27,7 +48,7 @@
         id gsFullScreenAdViewController = [KIFHelper topMostViewController];
         [gsFullScreenAdViewController dismissAnimated:YES];
     }]];
-    [scenario addStep:[KIFTestStep stepToWaitForAbsenseOfViewWithClassName:@"GSFullscreenAdView"]];
+    [scenario addStep:[KIFTestStep stepToWaitForAbsenceOfViewWithClassName:@"GSFullscreenAdView"]];
 
     [scenario addStep:[KIFTestStep stepToReturnToBannerAds]];
 

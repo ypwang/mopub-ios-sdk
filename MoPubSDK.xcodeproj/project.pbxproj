@@ -106,6 +106,10 @@
 		AE4341A916F93E8F00B73710 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE4341A816F93E8F00B73710 /* AVFoundation.framework */; };
 		AE448D52171394EB00598A73 /* MPBannerAdManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AE448D51171394EB00598A73 /* MPBannerAdManager.m */; };
 		AE448D53171394EB00598A73 /* MPBannerAdManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AE448D51171394EB00598A73 /* MPBannerAdManager.m */; };
+		AE5A369017186C170054385C /* GreystripeBannerCustomEventSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE5A368F17186C170054385C /* GreystripeBannerCustomEventSpec.mm */; };
+		AE5A369A17186F8E0054385C /* FakeGSBannerAdView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE5A369917186F8E0054385C /* FakeGSBannerAdView.m */; };
+		AE5A369C171875310054385C /* MPGreystripeBannerIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE5A369B171875310054385C /* MPGreystripeBannerIntegrationSuite.mm */; };
+		AE5A36A517187D6C0054385C /* GreystripeBannerCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = AEC845E916F2371900943383 /* GreystripeBannerCustomEvent.m */; };
 		AE60D7F916F2956700A4B67F /* NSURL+MPAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = AE60D7F816F2956700A4B67F /* NSURL+MPAdditions.m */; };
 		AE60D7FA16F2956700A4B67F /* NSURL+MPAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = AE60D7F816F2956700A4B67F /* NSURL+MPAdditions.m */; };
 		AE60D7FC16F2958C00A4B67F /* NSURL+MPAdditionsSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D7FB16F2958C00A4B67F /* NSURL+MPAdditionsSpec.mm */; };
@@ -487,6 +491,10 @@
 		AE448D50171394EB00598A73 /* MPBannerAdManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPBannerAdManager.h; sourceTree = "<group>"; };
 		AE448D51171394EB00598A73 /* MPBannerAdManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPBannerAdManager.m; sourceTree = "<group>"; };
 		AE448D54171397B200598A73 /* MPBannerAdManagerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MPBannerAdManagerDelegate.h; sourceTree = "<group>"; };
+		AE5A368F17186C170054385C /* GreystripeBannerCustomEventSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GreystripeBannerCustomEventSpec.mm; sourceTree = "<group>"; };
+		AE5A369817186F8E0054385C /* FakeGSBannerAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeGSBannerAdView.h; sourceTree = "<group>"; };
+		AE5A369917186F8E0054385C /* FakeGSBannerAdView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeGSBannerAdView.m; sourceTree = "<group>"; };
+		AE5A369B171875310054385C /* MPGreystripeBannerIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPGreystripeBannerIntegrationSuite.mm; sourceTree = "<group>"; };
 		AE60D7F716F2956700A4B67F /* NSURL+MPAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+MPAdditions.h"; sourceTree = "<group>"; };
 		AE60D7F816F2956700A4B67F /* NSURL+MPAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+MPAdditions.m"; sourceTree = "<group>"; };
 		AE60D7FB16F2958C00A4B67F /* NSURL+MPAdditionsSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSURL+MPAdditionsSpec.mm"; sourceTree = "<group>"; };
@@ -804,6 +812,7 @@
 		AE093C5D170DF8F100F5334B /* Banners */ = {
 			isa = PBXGroup;
 			children = (
+				AE5A369B171875310054385C /* MPGreystripeBannerIntegrationSuite.mm */,
 				AE9954A5171790C0004EB92F /* MPMillennialBannerIntegrationSuite.mm */,
 				AEBD2E0A1717721E00C774EB /* MPGoogleAdMobBannerIntegrationSuite.mm */,
 				AE093C5E170DF92E00F5334B /* MPAdViewIntegrationSuite.mm */,
@@ -1382,6 +1391,7 @@
 				AEE8E94316FB8B1700C41D15 /* MoPubNetworkAdapters */,
 				AEBD2E0817176DF700C774EB /* MPGoogleAdMobBannerCustomEventSpec.mm */,
 				AE9954A317178D48004EB92F /* MPMillennialBannerCustomEventSpec.mm */,
+				AE5A368F17186C170054385C /* GreystripeBannerCustomEventSpec.mm */,
 			);
 			path = ThirdPartyIntegrations;
 			sourceTree = "<group>";
@@ -1426,6 +1436,8 @@
 				AE25B6EF170C9DC3005A3017 /* FakeMMBannerAdView.m */,
 				AE64C4891714EAF40001A07E /* FakeADBannerView.h */,
 				AE64C48A1714EAF40001A07E /* FakeADBannerView.m */,
+				AE5A369817186F8E0054385C /* FakeGSBannerAdView.h */,
+				AE5A369917186F8E0054385C /* FakeGSBannerAdView.m */,
 			);
 			path = FakeThirdPartyIntegrations;
 			sourceTree = "<group>";
@@ -1814,6 +1826,9 @@
 				AE99549B17178D2D004EB92F /* MPMillennialBannerCustomEvent.m in Sources */,
 				AE9954A417178D48004EB92F /* MPMillennialBannerCustomEventSpec.mm in Sources */,
 				AE9954A6171790C0004EB92F /* MPMillennialBannerIntegrationSuite.mm in Sources */,
+				AE5A369017186C170054385C /* GreystripeBannerCustomEventSpec.mm in Sources */,
+				AE5A369A17186F8E0054385C /* FakeGSBannerAdView.m in Sources */,
+				AE5A369C171875310054385C /* MPGreystripeBannerIntegrationSuite.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1889,6 +1904,7 @@
 				AEF46A561716266A004129C5 /* MPiAdBannerCustomEvent.m in Sources */,
 				AEBD2E0617176DE400C774EB /* MPGoogleAdMobBannerCustomEvent.m in Sources */,
 				AE99549A17178D2D004EB92F /* MPMillennialBannerCustomEvent.m in Sources */,
+				AE5A36A517187D6C0054385C /* GreystripeBannerCustomEvent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,37 +6,58 @@
 //
 
 #import "GreystripeBannerCustomEvent.h"
+#import "GSMobileBannerAdView.h"
+#import "GSMediumRectangleAdView.h"
+#import "GSLeaderboardAdView.h"
 #import "MPConstants.h"
+#import "MPLogging.h"
+#import "MPInstanceProvider.h"
 
 #define kGreystripeGUID @"YOUR_GREYSTRIPE_GUID"
 
+@interface MPInstanceProvider (GreystripeBanners)
+
+- (GSBannerAdView *)buildGreystripeBannerAdViewWithDelegate:(id<GSAdDelegate>)delegate GUID:(NSString *)GUID size:(CGSize)size;
+
+@end
+
+@implementation MPInstanceProvider (GreystripeBanners)
+
+- (GSBannerAdView *)buildGreystripeBannerAdViewWithDelegate:(id<GSAdDelegate>)delegate GUID:(NSString *)GUID size:(CGSize)size
+{
+    if (CGSizeEqualToSize(size, MOPUB_BANNER_SIZE)) {
+        return [[GSMobileBannerAdView alloc] initWithDelegate:delegate GUID:GUID autoload:NO];
+    } else if (CGSizeEqualToSize(size, MOPUB_MEDIUM_RECT_SIZE)) {
+        return [[GSMediumRectangleAdView alloc] initWithDelegate:delegate GUID:GUID autoload:NO];
+    } else if (CGSizeEqualToSize(size, MOPUB_LEADERBOARD_SIZE)) {
+        return [[GSLeaderboardAdView alloc] initWithDelegate:delegate GUID:GUID autoload:NO];
+    } else {
+        return nil;
+    }
+}
+
+@end
+
+
+@interface GreystripeBannerCustomEvent ()
+
+@property (nonatomic, retain) GSBannerAdView *greystripeBanner;
+
+@end
+
 @implementation GreystripeBannerCustomEvent
+
+@synthesize greystripeBanner = _greystripeBanner;
 
 #pragma mark - MPBannerCustomEvent Subclass Methods
 
 - (void)requestAdWithSize:(CGSize)size customEventInfo:(NSDictionary *)info
 {
-    NSLog(@"Requesting Greystripe banner.");
-    
-    if (CGSizeEqualToSize(size, MOPUB_BANNER_SIZE)) {
-        _greystripeBannerAdView = [[GSMobileBannerAdView alloc] initWithDelegate:self
-                                                                            GUID:kGreystripeGUID
-                                                                        autoload:NO];
-    } else if (CGSizeEqualToSize(size, MOPUB_MEDIUM_RECT_SIZE)) {
-        _greystripeBannerAdView = [[GSMediumRectangleAdView alloc] initWithDelegate:self
-                                                                               GUID:kGreystripeGUID
-                                                                           autoload:NO];
-    } else if (CGSizeEqualToSize(size, MOPUB_LEADERBOARD_SIZE)) {
-        _greystripeBannerAdView = [[GSLeaderboardAdView alloc] initWithDelegate:self
-                                                                           GUID:kGreystripeGUID
-                                                                       autoload:NO];
-    } else {
-        NSLog(@"Failed to load Greystripe banner: ad size %@ is not supported.",
-              NSStringFromCGSize(size));
+    self.greystripeBanner = [[MPInstanceProvider sharedProvider] buildGreystripeBannerAdViewWithDelegate:self GUID:kGreystripeGUID size:size];
+    if (!self.greystripeBanner) {
         [self.delegate bannerCustomEvent:self didFailToLoadAdWithError:nil];
     }
-    
-    [_greystripeBannerAdView fetch];
+    [self.greystripeBanner fetch];
 }
 
 - (UIViewController *)greystripeBannerDisplayViewController
@@ -46,8 +67,9 @@
 
 - (void)customEventDidUnload
 {
-    _greystripeBannerAdView.delegate = nil;
-    [_greystripeBannerAdView release];
+    self.greystripeBanner.delegate = nil;
+    self.greystripeBanner = nil;
+
     [super customEventDidUnload];
 }
 
@@ -55,29 +77,21 @@
 
 - (void)greystripeAdFetchSucceeded:(id<GSAd>)a_ad
 {
-    NSLog(@"Successfully loaded Greystripe banner.");
-    
-    [self.delegate bannerCustomEvent:self didLoadAd:_greystripeBannerAdView];
+    [self.delegate bannerCustomEvent:self didLoadAd:self.greystripeBanner];
 }
 
 - (void)greystripeAdFetchFailed:(id<GSAd>)a_ad withError:(GSAdError)a_error
 {
-    NSLog(@"Failed to load Greystripe banner.");
-    
     [self.delegate bannerCustomEvent:self didFailToLoadAdWithError:nil];
 }
 
 - (void)greystripeWillPresentModalViewController
 {
-    NSLog(@"Greystripe banner will present screen.");
-    
     [self.delegate bannerCustomEventWillBeginAction:self];
 }
 
 - (void)greystripeDidDismissModalViewController
 {
-    NSLog(@"Greystripe banner did dismiss screen.");
-    
     [self.delegate bannerCustomEventDidFinishAction:self];
 }
 

@@ -26,6 +26,7 @@
 - (Chartboost *)buildChartboost;
 
 - (GSFullscreenAd *)buildGSFullscreenAdWithDelegate:(id<GSAdDelegate>)delegate GUID:(NSString *)GUID;
+- (GSBannerAdView *)buildGreystripeBannerAdViewWithDelegate:(id<GSAdDelegate>)delegate GUID:(NSString *)GUID size:(CGSize)size;
 
 - (MPInterstitialCustomEvent *)buildInterstitialCustomEventFromCustomClass:(Class)customClass
                                                                   delegate:(id<MPInterstitialCustomEventDelegate>)delegate;
@@ -293,6 +294,18 @@
         return [super buildGSFullscreenAdWithDelegate:delegate GUID:GUID];
     }
 }
+
+- (GSBannerAdView *)buildGreystripeBannerAdViewWithDelegate:(id<GSAdDelegate>)delegate GUID:(NSString *)GUID size:(CGSize)size;
+{
+    if (self.fakeGSBannerAdView) {
+        self.fakeGSBannerAdView.delegate = delegate;
+        self.fakeGSBannerAdView.GUID = GUID;
+        return self.fakeGSBannerAdView;
+    } else {
+        return [super buildGreystripeBannerAdViewWithDelegate:delegate GUID:GUID size:size];
+    }
+}
+
 
 #pragma mark - Advancing Time
 

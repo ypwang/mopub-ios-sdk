@@ -9,6 +9,7 @@
 
 @interface KIFTestScenario (Greystripe)
 
++ (KIFTestScenario *)scenarioForGreystripeBanner;
 + (KIFTestScenario *)scenarioForGreystripeInterstitial;
 
 @end

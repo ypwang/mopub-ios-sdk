@@ -23,7 +23,7 @@
     }];
 }
 
-+ (KIFTestStep *)stepToWaitForAbsenseOfViewWithClassName:(NSString *)className
++ (KIFTestStep *)stepToWaitForAbsenceOfViewWithClassName:(NSString *)className
 {
     NSString *description = [NSString stringWithFormat:@"Waiting for view with class name %@ to disappear", className];
     return [KIFTestStep stepWithDescription:description executionBlock:^KIFTestStepResult(KIFTestStep *step, NSError *__autoreleasing *error) {

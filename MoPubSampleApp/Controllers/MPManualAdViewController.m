@@ -43,6 +43,8 @@
 
 - (void)dealloc
 {
+    self.firstInterstitial.delegate = nil;
+    self.secondInterstitial.delegate = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

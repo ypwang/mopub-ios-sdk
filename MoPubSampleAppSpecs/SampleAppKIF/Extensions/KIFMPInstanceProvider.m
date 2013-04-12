@@ -6,12 +6,22 @@
 //
 
 #import "KIFMPInstanceProvider.h"
+#import "GSBAnnerAdView.h"
 #import "GSFullscreenAd.h"
 #import "GSAdDelegate.h"
 #import "IMAdInterstitial.h"
 #import "IMAdInterstitialDelegate.h"
 
 static KIFMPInstanceProvider *sharedProvider = nil;
+
+@interface MPInstanceProvider (ThirdPartyIntegrations)
+
+- (GSFullscreenAd *)buildGSFullscreenAdWithDelegate:(id<GSAdDelegate>)delegate GUID:(NSString *)GUID;
+- (GSBannerAdView *)buildGreystripeBannerAdViewWithDelegate:(id<GSAdDelegate>)delegate GUID:(NSString *)GUID size:(CGSize)size;
+- (IMAdInterstitial *)buildIMAdInterstitialWithDelegate:(id<IMAdInterstitialDelegate>)delegate appId:(NSString *)appId;
+- (IMAdRequest *)buildIMAdRequest;
+
+@end
 
 @implementation MPInstanceProvider (KIF)
 
@@ -29,20 +39,22 @@ static KIFMPInstanceProvider *sharedProvider = nil;
 
 - (GSFullscreenAd *)buildGSFullscreenAdWithDelegate:(id<GSAdDelegate>)delegate GUID:(NSString *)GUID
 {
-    return [[GSFullscreenAd alloc] initWithDelegate:delegate GUID:@"1d73efc1-c8c5-44e6-9b02-b6dd29374c1c"];
+    return [super buildGSFullscreenAdWithDelegate:delegate GUID:GUID];
 }
 
-- (IMAdInterstitial *)buildIMAdInterstitialWithDelegate:(id<IMAdInterstitialDelegate>)delegate appId:(NSString *)appId;
+- (GSBannerAdView *)buildGreystripeBannerAdViewWithDelegate:(id<GSAdDelegate>)delegate GUID:(NSString *)GUID size:(CGSize)size
 {
-    IMAdInterstitial *inMobiInterstitial = [[IMAdInterstitial alloc] init];
-    inMobiInterstitial.delegate = delegate;
-    inMobiInterstitial.imAppId = @"4028cba631d63df10131e1d4650600cd";
-    return inMobiInterstitial;
+    return [super buildGreystripeBannerAdViewWithDelegate:delegate GUID:@"1d73efc1-c8c5-44e6-9b02-b6dd29374c1c" size:size];
+}
+
+- (IMAdInterstitial *)buildIMAdInterstitialWithDelegate:(id<IMAdInterstitialDelegate>)delegate appId:(NSString *)appId
+{
+    return [super buildIMAdInterstitialWithDelegate:delegate appId:@"4028cba631d63df10131e1d4650600cd"];
 }
 
 - (IMAdRequest *)buildIMAdRequest
 {
-    IMAdRequest *request = [IMAdRequest request];
+    IMAdRequest *request = [super buildIMAdRequest];
     request.testMode = YES;
     return request;
 }

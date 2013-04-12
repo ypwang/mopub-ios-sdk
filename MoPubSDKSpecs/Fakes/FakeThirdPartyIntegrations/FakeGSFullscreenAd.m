@@ -11,7 +11,7 @@
 
 - (id)init
 {
-    return [super initWithDelegate:nil GUID:@"THE_GUID_WILL_COME"];
+    return [super initWithDelegate:nil];
 }
 
 - (void)fetch
