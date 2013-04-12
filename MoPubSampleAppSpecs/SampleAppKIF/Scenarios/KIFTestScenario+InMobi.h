@@ -9,6 +9,7 @@
 
 @interface KIFTestScenario (InMobi)
 
++ (KIFTestScenario *)scenarioForInMobiBanner;
 + (KIFTestScenario *)scenarioForInMobiInterstitial;
 
 @end

@@ -12,7 +12,7 @@
 
 + (KIFTestScenario *)scenarioForGreystripeBanner
 {
-    KIFTestScenario *scenario = [MPSampleAppTestScenario scenarioWithDescription:@"Test that a Greystripe BAnner ad works."];
+    KIFTestScenario *scenario = [MPSampleAppTestScenario scenarioWithDescription:@"Test that a Greystripe Banner ad works."];
     NSIndexPath *indexPath = [MPAdSection indexPathForAd:@"Greystripe Banner" inSection:@"Banner Ads"];
     [scenario addStep:[KIFTestStep stepToActuallyTapRowInTableViewWithAccessibilityLabel:@"Ad Table View"
                                                                              atIndexPath:indexPath]];

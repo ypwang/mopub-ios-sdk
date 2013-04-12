@@ -9,6 +9,27 @@
 
 @implementation KIFTestScenario (InMobi)
 
++ (KIFTestScenario *)scenarioForInMobiBanner
+{
+    KIFTestScenario *scenario = [MPSampleAppTestScenario scenarioWithDescription:@"Test that an InMobi Banner ad works."];
+    NSIndexPath *indexPath = [MPAdSection indexPathForAd:@"InMobi Banner" inSection:@"Banner Ads"];
+    [scenario addStep:[KIFTestStep stepToActuallyTapRowInTableViewWithAccessibilityLabel:@"Ad Table View"
+                                                                             atIndexPath:indexPath]];
+
+    [scenario addStep:[KIFTestStep stepToWaitForViewWithAccessibilityLabel:@"banner"]];
+    [scenario addStep:[KIFTestStep stepToWaitUntilActivityIndicatorIsNotAnimating]];
+    [scenario addStep:[KIFTestStep stepToWaitForPresenceOfViewWithClassName:@"IMAdView"]];
+    [scenario addStep:[KIFTestStep stepToLogImpressionForAdUnit:[MPAdSection adInfoAtIndexPath:indexPath].ID]];
+    [scenario addStep:[KIFTestStep stepToTapViewWithAccessibilityLabel:@"banner"]];
+    [scenario addStep:[KIFTestStep stepToWaitForAbsenceOfViewWithAccessibilityLabel:@"banner"]];
+    [scenario addStep:[KIFTestStep stepToLogClickForAdUnit:[MPAdSection adInfoAtIndexPath:indexPath].ID]];
+    [scenario addStep:[KIFTestStep stepToTapScreenAtPoint:CGPointMake(20, 460)]];
+    [scenario addStep:[KIFTestStep stepToWaitForViewWithAccessibilityLabel:@"banner"]];
+    [scenario addStep:[KIFTestStep stepToReturnToBannerAds]];
+
+    return scenario;
+}
+
 + (KIFTestScenario *)scenarioForInMobiInterstitial
 {
     KIFTestScenario *scenario = [MPSampleAppTestScenario scenarioWithDescription:@"Test that an InMobi interstitial ad works."];

@@ -10,6 +10,7 @@
 #import "GSFullscreenAd.h"
 #import "GSAdDelegate.h"
 #import "IMAdInterstitial.h"
+#import "IMAdView.h"
 #import "IMAdInterstitialDelegate.h"
 
 static KIFMPInstanceProvider *sharedProvider = nil;
@@ -19,6 +20,7 @@ static KIFMPInstanceProvider *sharedProvider = nil;
 - (GSFullscreenAd *)buildGSFullscreenAdWithDelegate:(id<GSAdDelegate>)delegate GUID:(NSString *)GUID;
 - (GSBannerAdView *)buildGreystripeBannerAdViewWithDelegate:(id<GSAdDelegate>)delegate GUID:(NSString *)GUID size:(CGSize)size;
 - (IMAdInterstitial *)buildIMAdInterstitialWithDelegate:(id<IMAdInterstitialDelegate>)delegate appId:(NSString *)appId;
+- (IMAdView *)buildIMAdViewWithFrame:(CGRect)frame appId:(NSString *)appId adSize:(int)adSize rootViewController:(UIViewController *)rootViewController;
 - (IMAdRequest *)buildIMAdRequest;
 
 @end
@@ -50,6 +52,11 @@ static KIFMPInstanceProvider *sharedProvider = nil;
 - (IMAdInterstitial *)buildIMAdInterstitialWithDelegate:(id<IMAdInterstitialDelegate>)delegate appId:(NSString *)appId
 {
     return [super buildIMAdInterstitialWithDelegate:delegate appId:@"4028cba631d63df10131e1d4650600cd"];
+}
+
+- (IMAdView *)buildIMAdViewWithFrame:(CGRect)frame appId:(NSString *)appId adSize:(int)adSize rootViewController:(UIViewController *)rootViewController
+{
+    return [super buildIMAdViewWithFrame:frame appId:@"4028cba631d63df10131e1d4650600cd" adSize:adSize rootViewController:rootViewController];
 }
 
 - (IMAdRequest *)buildIMAdRequest

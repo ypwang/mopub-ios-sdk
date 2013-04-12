@@ -24,54 +24,19 @@
 {
     [KIFTestStep setDefaultTimeout:10];
 
-    [self addStoreKitScenarios];
-    [self addiAdScenarios];
-    [self addMillennialScenarios];
-    [self addAdMobScenarios];
-    [self addGreystripeScenarios];
-    [self addChartboostScenarios];
-    [self addInMobiScenarios];
-}
-
-- (void)addStoreKitScenarios
-{
     [self addScenario:[KIFTestScenario scenarioForBannerAdWithStoreKitLink]];
     [self addScenario:[KIFTestScenario scenarioForBannerAdWithInvalidStoreKitLink]];
-    [self addScenario:[KIFTestScenario scenarioForInterstitialAdWithStoreKitLink]];
-}
-
-- (void)addiAdScenarios
-{
-    //nothing to see here iAd is too slow/purposefully flakey to be testable
-}
-
-- (void)addMillennialScenarios
-{
-    [self addScenario:[KIFTestScenario scenarioForMillennialInterstitial]];
     [self addScenario:[KIFTestScenario scenarioForMillennialBanner]];
-}
-
-- (void)addAdMobScenarios
-{
-    [self addScenario:[KIFTestScenario scenarioForGADInterstitial]];
     [self addScenario:[KIFTestScenario scenarioForGADBanner]];
-}
-
-- (void)addChartboostScenarios
-{
+    [self addScenario:[KIFTestScenario scenarioForGreystripeBanner]];
+    [self addScenario:[KIFTestScenario scenarioForInMobiBanner]];
+    [self addScenario:[KIFTestScenario scenarioForInterstitialAdWithStoreKitLink]];
+    [self addScenario:[KIFTestScenario scenarioForMillennialInterstitial]];
+    [self addScenario:[KIFTestScenario scenarioForGADInterstitial]];
+    [self addScenario:[KIFTestScenario scenarioForGreystripeInterstitial]];
+    [self addScenario:[KIFTestScenario scenarioForInMobiInterstitial]];
     [self addScenario:[KIFTestScenario scenarioForChartboostInterstitial]];
     [self addScenario:[KIFTestScenario scenarioForMultipleChartboostInterstitials]];
-}
-
-- (void)addGreystripeScenarios
-{
-    [self addScenario:[KIFTestScenario scenarioForGreystripeBanner]];
-    [self addScenario:[KIFTestScenario scenarioForGreystripeInterstitial]];
-}
-
-- (void)addInMobiScenarios
-{
-    [self addScenario:[KIFTestScenario scenarioForInMobiInterstitial]];
 }
 
 @end
