@@ -105,35 +105,32 @@ NSString * const kAdTypeClear = @"clear";
 
         self.orientationType = [self orientationTypeFromHeaders:headers];
 
-        self.customEventClass = [self customEventClassFromHeaders:headers];
+        self.customEventClass = NSClassFromString([headers objectForKey:kCustomEventClassNameHeaderKey]);
 
         self.customEventClassData = [self customEventClassDataFromHeaders:headers];
     }
     return self;
 }
 
-- (Class)customEventClassFromHeaders:(NSDictionary *)headers
+- (void)setUpCustomEventClassForBanner
 {
-    // This method converts from legacy adapter/network types to new custom event classes.
-    Class customEventClass = nil;
+    //This method converts the network type into the appropriate custom event
+    //Sadly we can't guarantee that we know whether this configuration represents a banner
+    //or an interstitial.  This method must be called directly once that distinction is known.
 
-    if (self.adType == MPAdTypeBanner) {
-        NSMutableDictionary *convertedCustomEvents = [NSMutableDictionary dictionary];
-        [convertedCustomEvents setObject:@"MPiAdBannerCustomEvent" forKey:@"iAd"];
-        [convertedCustomEvents setObject:@"MPGoogleAdMobBannerCustomEvent" forKey:@"admob_native"];
-        [convertedCustomEvents setObject:@"MPMillennialBannerCustomEvent" forKey:@"millennial_native"];
-        [convertedCustomEvents setObject:@"MPHTMLBannerCustomEvent" forKey:@"html"];
+    NSMutableDictionary *convertedCustomEvents = [NSMutableDictionary dictionary];
+    [convertedCustomEvents setObject:@"MPiAdBannerCustomEvent" forKey:@"iAd"];
+    [convertedCustomEvents setObject:@"MPGoogleAdMobBannerCustomEvent" forKey:@"admob_native"];
+    [convertedCustomEvents setObject:@"MPMillennialBannerCustomEvent" forKey:@"millennial_native"];
+    [convertedCustomEvents setObject:@"MPHTMLBannerCustomEvent" forKey:@"html"];
 
-        NSString *networkType = [self networkTypeFromHeaders:headers];
-        if ([convertedCustomEvents objectForKey:networkType]) {
-            customEventClass = NSClassFromString([convertedCustomEvents objectForKey:networkType]);
-        }
-    }
+    if ([convertedCustomEvents objectForKey:self.networkType]) {
+        self.customEventClass = NSClassFromString([convertedCustomEvents objectForKey:self.networkType]);
+    }}
 
-    if (!customEventClass) {
-        customEventClass = NSClassFromString([headers objectForKey:kCustomEventClassNameHeaderKey]);
-    }
-    return customEventClass;
+- (void)setUpCustomEventClassForInterstitial
+{
+
 }
 
 - (NSDictionary *)customEventClassDataFromHeaders:(NSDictionary *)headers

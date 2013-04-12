@@ -247,23 +247,23 @@ describe(@"MPAdConfiguration", ^{
     it(@"should convert network type to custom event class", ^{
         headers = @{kAdTypeHeaderKey: @"iAd"};
         configuration = [[[MPAdConfiguration alloc] initWithHeaders:headers data:nil] autorelease];
+        [configuration setUpCustomEventClassForBanner];
         configuration.customEventClass should equal([MPiAdBannerCustomEvent class]);
 
         headers = @{kAdTypeHeaderKey: @"admob_native"};
         configuration = [[[MPAdConfiguration alloc] initWithHeaders:headers data:nil] autorelease];
+        [configuration setUpCustomEventClassForBanner];
         configuration.customEventClass should equal([MPGoogleAdMobBannerCustomEvent class]);
 
         headers = @{kAdTypeHeaderKey: @"millennial_native"};
         configuration = [[[MPAdConfiguration alloc] initWithHeaders:headers data:nil] autorelease];
+        [configuration setUpCustomEventClassForBanner];
         configuration.customEventClass should equal([MPMillennialBannerCustomEvent class]);
 
         headers = @{kAdTypeHeaderKey: @"html"};
         configuration = [[[MPAdConfiguration alloc] initWithHeaders:headers data:nil] autorelease];
+        [configuration setUpCustomEventClassForBanner];
         configuration.customEventClass should equal([MPHTMLBannerCustomEvent class]);
-
-        headers = @{kAdTypeHeaderKey: @"interstitial", kInterstitialAdTypeHeaderKey:@"html"};
-        configuration = [[[MPAdConfiguration alloc] initWithHeaders:headers data:nil] autorelease];
-        configuration.customEventClass should be_nil;
     });
 
     it(@"should process the customEventClassData", ^{
