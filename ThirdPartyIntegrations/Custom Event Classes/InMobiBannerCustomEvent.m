@@ -57,7 +57,6 @@
         [self.delegate bannerCustomEvent:self didFailToLoadAdWithError:nil];
         return;
     }
-
     self.inMobiAdView = [[MPInstanceProvider sharedProvider] buildIMAdViewWithFrame:CGRectMake(0, 0, size.width, size.height)
                                                                               appId:kInMobiAppID
                                                                              adSize:imAdSizeConstant
@@ -85,6 +84,7 @@
 - (void)customEventDidUnload
 {
     [self.inMobiAdView setDelegate:nil];
+    [[_inMobiAdView retain] autorelease];
     self.inMobiAdView = nil;
     [super customEventDidUnload];
 }

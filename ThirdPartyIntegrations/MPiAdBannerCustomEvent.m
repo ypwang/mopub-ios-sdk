@@ -233,7 +233,7 @@
 {
     self.hasTrackedImpression = NO;
     self.hasTrackedClick = NO;
-    
+
     for (id<MPADBannerViewManagerObserver> observer in [self.observers copy]) {
         [observer bannerDidLoad];
     }

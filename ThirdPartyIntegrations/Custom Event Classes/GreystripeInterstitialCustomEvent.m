@@ -61,6 +61,7 @@
 - (void)customEventDidUnload
 {
     [self.greystripeFullscreenAd setDelegate:nil];
+    [[_greystripeFullscreenAd retain] autorelease];
     self.greystripeFullscreenAd = nil;
     [super customEventDidUnload];
 }

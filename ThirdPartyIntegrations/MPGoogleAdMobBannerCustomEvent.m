@@ -55,6 +55,7 @@
 - (void)customEventDidUnload
 {
     self.adBannerView.delegate = nil;
+    [[_adBannerView retain] autorelease];
     self.adBannerView = nil;
     [super customEventDidUnload];
 }

@@ -68,6 +68,7 @@
 - (void)customEventDidUnload
 {
     self.greystripeBanner.delegate = nil;
+    [[_greystripeBanner retain] autorelease];
     self.greystripeBanner = nil;
 
     [super customEventDidUnload];

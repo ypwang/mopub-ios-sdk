@@ -52,6 +52,7 @@
 - (void)customEventDidUnload
 {
     self.mmAdView.delegate = nil;
+    [[_mmAdView retain] autorelease];
     self.mmAdView = nil;
     [super customEventDidUnload];
 }
@@ -65,7 +66,7 @@
                                                                            type:type
                                                                            apid:apid
                                                                        delegate:self];
-    
+
     self.mmAdView.rootViewController = [self.delegate viewControllerForPresentingModalView];
     [self.mmAdView refreshAd];
 }
@@ -100,13 +101,13 @@
 {
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    @"mopubsdk", @"vendor", nil];
-    
+
     CLLocation *location = self.delegate.location;
     if (location) {
         [params setObject:[[NSNumber numberWithDouble:location.coordinate.latitude] stringValue] forKey:@"lat"];
         [params setObject:[[NSNumber numberWithDouble:location.coordinate.longitude] stringValue] forKey:@"long"];
     }
-    
+
     return params;
 }
 

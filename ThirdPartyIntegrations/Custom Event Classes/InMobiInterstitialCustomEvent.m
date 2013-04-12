@@ -69,6 +69,7 @@
 - (void)customEventDidUnload
 {
     [self.inMobiInterstitial setDelegate:nil];
+    [[_inMobiInterstitial retain] autorelease];
     self.inMobiInterstitial = nil;
     [super customEventDidUnload];
 }
