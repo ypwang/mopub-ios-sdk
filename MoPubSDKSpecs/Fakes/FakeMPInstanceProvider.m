@@ -10,7 +10,6 @@
 #import "MPAdWebView.h"
 #import "FakeMPTimer.h"
 
-
 @interface MPInstanceProvider (ThirdPartyAdditions)
 
 - (ADInterstitialAd *)buildADInterstitialAd;
@@ -31,6 +30,7 @@
 - (MPInterstitialCustomEvent *)buildInterstitialCustomEventFromCustomClass:(Class)customClass
                                                                   delegate:(id<MPInterstitialCustomEventDelegate>)delegate;
 
+- (IMAdView *)buildIMAdViewWithFrame:(CGRect)frame appId:(NSString *)appId adSize:(int)adSize rootViewController:(UIViewController *)rootViewController;
 - (IMAdInterstitial *)buildIMAdInterstitialWithDelegate:(id<IMAdInterstitialDelegate>)delegate appId:(NSString *)appID;
 
 @end
@@ -272,6 +272,18 @@
                      orCall:^{
                          return [super buildChartboost];
                      }];
+}
+
+- (IMAdView *)buildIMAdViewWithFrame:(CGRect)frame appId:(NSString *)appId adSize:(int)adSize rootViewController:(UIViewController *)rootViewController
+{
+    if (self.fakeIMAdView) {
+        self.fakeIMAdView.frame = frame;
+        self.fakeIMAdView.imAppId = appId;
+        self.fakeIMAdView.imAdSize = adSize;
+        self.fakeIMAdView.rootViewController = rootViewController;
+        return self.fakeIMAdView;
+    }
+    return [super buildIMAdViewWithFrame:frame appId:appId adSize:adSize rootViewController:rootViewController];
 }
 
 - (IMAdInterstitial *)buildIMAdInterstitialWithDelegate:(id<IMAdInterstitialDelegate>)delegate appId:(NSString *)appId;

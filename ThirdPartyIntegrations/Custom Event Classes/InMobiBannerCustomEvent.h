@@ -9,8 +9,5 @@
 #import "IMAdView.h"
 
 @interface InMobiBannerCustomEvent : MPBannerCustomEvent <IMAdDelegate>
-{
-    IMAdView *_inmobiAdView;
-}
 
 @end

@@ -73,6 +73,7 @@ describe(@"GreystripeBannerCustomEvent", ^{
         it(@"should tell the ad to fetch and not tell the delegate anything just yet", ^{
             banner.didFetch should equal(YES);
             banner.GUID should equal(@"YOUR_GREYSTRIPE_GUID");
+            delegate.sent_messages should be_empty;
         });
     });
 

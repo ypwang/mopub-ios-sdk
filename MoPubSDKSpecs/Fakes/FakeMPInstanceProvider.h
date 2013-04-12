@@ -17,6 +17,7 @@
 #import "Chartboost.h"
 #import "FakeGSFullscreenAd.h"
 #import "IMAdInterstitial.h"
+#import "IMAdView.h"
 #import "MPInterstitialAdManager.h"
 #import "GADRequest.h"
 #import "FakeMMBannerAdView.h"
@@ -52,6 +53,7 @@
 @property (nonatomic, assign) FakeMMBannerAdView *fakeMMAdViewBanner;
 @property (nonatomic, assign) Chartboost *fakeChartboost;
 @property (nonatomic, assign) IMAdInterstitial *fakeIMAdInterstitial;
+@property (nonatomic, assign) IMAdView *fakeIMAdView;
 
 @property (nonatomic, assign) FakeGSFullscreenAd *fakeGSFullscreenAd;
 @property (nonatomic, assign) FakeGSBannerAdView *fakeGSBannerAdView;
