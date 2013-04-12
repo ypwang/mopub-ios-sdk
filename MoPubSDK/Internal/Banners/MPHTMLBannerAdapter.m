@@ -60,11 +60,13 @@
 {
     [self.delegate adapter:self
         didFinishLoadingAd:self.bannerAgent.view];
+    [self didStopLoading];
 }
 
 - (void)adDidFailToLoadAd:(MPAdWebView *)ad
 {
     [self.delegate adapter:self didFailToLoadAdWithError:nil];
+    [self didStopLoading];
 }
 
 - (void)adDidClose:(MPAdWebView *)ad

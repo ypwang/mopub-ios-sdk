@@ -48,6 +48,27 @@ describe(@"MPBannerCustomEventAdapter", ^{
         });
     });
 
+    describe(@"regression test: make sure the event is not dealloced immediately after unregisterDelegate is called", ^{
+        //  This was an issue where the destinationDisplayAgent would try to set some state after causing the modal to dismiss.
+        //  In cases where there was an ad waiting in the wings, the onscreen ad would be deallocated immediately after the modal is dismissed causing the destinationdisplayagent to explode.
+
+        it(@"should not blow up", ^{
+            FakeBannerCustomEvent *event = [[FakeBannerCustomEvent alloc] initWithFrame:CGRectZero];
+            fakeProvider.fakeBannerCustomEvent = event;
+
+            [adapter _getAdWithConfiguration:configuration containerSize:CGSizeZero];
+            [event release]; //the adapter has him now
+
+            [adapter unregisterDelegate];
+
+            //previously the event would be deallocarted at this point.
+            //not any more!
+            event should be_instance_of([FakeBannerCustomEvent class]);
+            event.view should_not be_nil;
+        });
+    });
+
+
     context(@"with a valid custom event", ^{
         beforeEach(^{
             [adapter _getAdWithConfiguration:configuration containerSize:CGSizeMake(20, 24)];

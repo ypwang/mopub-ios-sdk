@@ -25,6 +25,7 @@
 {
     [self.bannerCustomEvent customEventDidUnload];
     self.bannerCustomEvent.delegate = nil;
+    [[_bannerCustomEvent retain] autorelease]; //make sure the custom event isn't released immediately
     self.bannerCustomEvent = nil;
 
     [super unregisterDelegate];
