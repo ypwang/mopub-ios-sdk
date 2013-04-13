@@ -15,8 +15,6 @@
 @interface MPBaseInterstitialAdapter ()
 
 @property (nonatomic, retain) MPAdConfiguration *configuration;
-@property (nonatomic, assign) BOOL hasTrackedImpression;
-@property (nonatomic, assign) BOOL hasTrackedClick;
 
 @end
 
@@ -24,8 +22,6 @@
 
 @synthesize delegate = _delegate;
 @synthesize configuration = _configuration;
-@synthesize hasTrackedImpression = _hasTrackedImpression;
-@synthesize hasTrackedClick = _hasTrackedClick;
 
 - (id)initWithDelegate:(id<MPBaseInterstitialAdapterDelegate>)delegate
 {
@@ -69,18 +65,12 @@
 
 - (void)trackImpression
 {
-    if (!self.hasTrackedImpression) {
-        self.hasTrackedImpression = YES;
-        [[[MPInstanceProvider sharedProvider] sharedMPAnalyticsTracker] trackImpressionForConfiguration:self.configuration];
-    }
+    [[[MPInstanceProvider sharedProvider] sharedMPAnalyticsTracker] trackImpressionForConfiguration:self.configuration];
 }
 
 - (void)trackClick
 {
-    if (!self.hasTrackedClick) {
-        self.hasTrackedClick = YES;
-        [[[MPInstanceProvider sharedProvider] sharedMPAnalyticsTracker] trackClickForConfiguration:self.configuration];
-    }
+    [[[MPInstanceProvider sharedProvider] sharedMPAnalyticsTracker] trackClickForConfiguration:self.configuration];
 }
 
 @end

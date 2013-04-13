@@ -26,8 +26,6 @@
 @synthesize adUnitId = _adUnitId;
 @synthesize keywords = _keywords;
 @synthesize location = _location;
-@synthesize locationEnabled = _locationEnabled;
-@synthesize locationPrecision = _locationPrecision;
 @synthesize testing = _testing;
 
 - (id)initWithAdUnitId:(NSString *)adUnitId

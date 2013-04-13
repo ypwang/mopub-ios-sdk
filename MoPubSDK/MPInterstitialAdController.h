@@ -21,8 +21,6 @@
 @property (nonatomic, copy) NSString *adUnitId;
 @property (nonatomic, copy) NSString *keywords;
 @property (nonatomic, copy) CLLocation *location;
-@property (nonatomic, assign) BOOL locationEnabled;
-@property (nonatomic, assign) NSUInteger locationPrecision;
 @property (nonatomic, assign, getter=isTesting) BOOL testing;
 
 /*

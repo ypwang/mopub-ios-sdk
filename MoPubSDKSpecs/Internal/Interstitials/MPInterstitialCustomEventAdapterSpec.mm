@@ -36,6 +36,7 @@ describe(@"MPInterstitialCustomEventAdapter", ^{
 
         context(@"when the requested custom event class does not exist", ^{
             beforeEach(^{
+                fakeProvider.fakeInterstitialCustomEvent = nil;
                 configuration = [MPAdConfigurationFactory defaultInterstitialConfigurationWithCustomEventClassName:@"NonExistentCustomEvent"];
                 [adapter _getAdWithConfiguration:configuration];
             });
@@ -67,6 +68,66 @@ describe(@"MPInterstitialCustomEventAdapter", ^{
             [anotherAdapter _getAdWithConfiguration:configuration];
             [anotherAdapter release];
             event.didUnload should equal(YES);
+        });
+    });
+
+    context(@"when told that the interstitial has appeared", ^{
+        beforeEach(^{
+            [adapter _getAdWithConfiguration:configuration];
+
+            UIViewController *controller = [[[UIViewController alloc] init] autorelease];
+
+            [adapter showInterstitialFromViewController:controller];
+        });
+
+        context(@"if the custom event has enabled automatic metrics tracking", ^{
+            it(@"should track an impression (only once) and forward the message to its custom event", ^{
+                event.enableAutomaticImpressionAndClickTracking = YES;
+                [event simulateInterstitialFinishedAppearing];
+                fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations should contain(configuration);
+
+                [event simulateInterstitialFinishedAppearing];
+                fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
+            });
+        });
+
+        context(@"if the custom event has disabled automatic metrics tracking", ^{
+            it(@"should forward the message to its custom event but *not* track an impression", ^{
+                event.enableAutomaticImpressionAndClickTracking = NO;
+                [event simulateInterstitialFinishedAppearing];
+                fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations should be_empty;
+            });
+        });
+    });
+
+    context(@"when the custom event is beginning a user action", ^{
+        beforeEach(^{
+            [adapter _getAdWithConfiguration:configuration];
+        });
+
+        context(@"if the custom event has enabled automatic metrics tracking", ^{
+            it(@"should track a click (only once)", ^{
+                event.enableAutomaticImpressionAndClickTracking = YES;
+                [event simulateUserTap];
+                fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations should contain(configuration);
+
+                [event simulateUserTap];
+                fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
+            });
+        });
+
+        context(@"if the custom event has disabled automatic metrics tracking", ^{
+            it(@"should *not* track a click", ^{
+                event.enableAutomaticImpressionAndClickTracking = NO;
+                [event simulateUserTap];
+                fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations should be_empty;
+            });
+        });
+    });
+
+    describe(@"Timeout!", ^{
+        xit(@"should timeout!", ^{
+
         });
     });
 });

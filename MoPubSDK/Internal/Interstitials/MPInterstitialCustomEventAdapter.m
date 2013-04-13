@@ -13,16 +13,19 @@
 #import "MPLogging.h"
 #import "MPInstanceProvider.h"
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @interface MPInterstitialCustomEventAdapter ()
 
 @property (nonatomic, retain) MPInterstitialCustomEvent *interstitialCustomEvent;
-- (void)loadAdFromCustomClass:(Class)customClass configuration:(MPAdConfiguration *)configuration;
+@property (nonatomic, retain) MPAdConfiguration *configuration;
+@property (nonatomic, assign) BOOL hasTrackedImpression;
+@property (nonatomic, assign) BOOL hasTrackedClick;
 
 @end
 
 @implementation MPInterstitialCustomEventAdapter
+@synthesize hasTrackedImpression = _hasTrackedImpression;
+@synthesize hasTrackedClick = _hasTrackedClick;
 
 @synthesize interstitialCustomEvent = _interstitialCustomEvent;
 
@@ -30,34 +33,25 @@
 {
     [self.interstitialCustomEvent customEventDidUnload];
     self.interstitialCustomEvent.delegate = nil;
+    [[_interstitialCustomEvent retain] autorelease];
     self.interstitialCustomEvent = nil;
+    self.configuration = nil;
 
     [super dealloc];
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
 - (void)getAdWithConfiguration:(MPAdConfiguration *)configuration
 {
-    Class customEventClass = configuration.customEventClass;
-
     MPLogInfo(@"Looking for custom event class named %@.", configuration.customEventClass);
+    self.configuration = configuration;
 
-    if (customEventClass) {
-        [self loadAdFromCustomClass:customEventClass configuration:configuration];
-        return;
+    self.interstitialCustomEvent = [[MPInstanceProvider sharedProvider] buildInterstitialCustomEventFromCustomClass:configuration.customEventClass delegate:self];
+
+    if (self.interstitialCustomEvent) {
+        [self.interstitialCustomEvent requestInterstitialWithCustomEventInfo:configuration.customEventClassData];
+    } else {
+        [self.delegate adapter:self didFailToLoadAdWithError:nil];
     }
-
-    MPLogInfo(@"Could not handle custom event request.");
-
-    [self.delegate adapter:self didFailToLoadAdWithError:nil];
-}
-
-
-- (void)loadAdFromCustomClass:(Class)customClass configuration:(MPAdConfiguration *)configuration
-{
-    self.interstitialCustomEvent = [[MPInstanceProvider sharedProvider] buildInterstitialCustomEventFromCustomClass:customClass delegate:self];
-    [self.interstitialCustomEvent requestInterstitialWithCustomEventInfo:configuration.customEventClassData];
 }
 
 - (void)showInterstitialFromViewController:(UIViewController *)controller
@@ -65,9 +59,12 @@
     [self.interstitialCustomEvent showInterstitialFromRootViewController:controller];
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
 #pragma mark - MPInterstitialCustomEventDelegate
+
+- (CLLocation *)location
+{
+    return [self.delegate location];
+}
 
 - (void)interstitialCustomEvent:(MPInterstitialCustomEvent *)customEvent
                       didLoadAd:(id)ad
@@ -88,7 +85,10 @@
 
 - (void)interstitialCustomEventDidAppear:(MPInterstitialCustomEvent *)customEvent
 {
-    [self trackImpression];
+    if ([self.interstitialCustomEvent enableAutomaticImpressionAndClickTracking] && !self.hasTrackedImpression) {
+        self.hasTrackedImpression = YES;
+        [self trackImpression];
+    }
     [self.delegate interstitialDidAppearForAdapter:self];
 }
 
@@ -104,7 +104,10 @@
 
 - (void)interstitialCustomEventDidReceiveTapEvent:(MPInterstitialCustomEvent *)customEvent
 {
-    [self trackClick];
+    if ([self.interstitialCustomEvent enableAutomaticImpressionAndClickTracking] && !self.hasTrackedClick) {
+        self.hasTrackedClick = YES;
+        [self trackClick];
+    }
 }
 
 - (void)interstitialCustomEventWillLeaveApplication:(MPInterstitialCustomEvent *)customEvent

@@ -21,6 +21,8 @@
 @end
 
 @implementation MPBannerCustomEventAdapter
+@synthesize hasTrackedImpression = _hasTrackedImpression;
+@synthesize hasTrackedClick = _hasTrackedClick;
 
 - (void)unregisterDelegate
 {

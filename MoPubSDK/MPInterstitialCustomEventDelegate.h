@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
 @class MPInterstitialCustomEvent;
 
@@ -64,5 +65,11 @@
  * those callbacks (since leaving the application is generally an indicator of a user tap).
  */
 - (void)interstitialCustomEventDidReceiveTapEvent:(MPInterstitialCustomEvent *)customEvent;
+
+//DOCUMENT!
+
+- (CLLocation *)location;
+- (void)trackImpression;
+- (void)trackClick;
 
 @end

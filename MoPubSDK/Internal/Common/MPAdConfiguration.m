@@ -127,11 +127,17 @@ NSString * const kAdTypeClear = @"clear";
 
     if ([convertedCustomEvents objectForKey:self.networkType]) {
         self.customEventClass = NSClassFromString([convertedCustomEvents objectForKey:self.networkType]);
-    }}
+    }
+}
 
 - (void)setUpCustomEventClassForInterstitial
 {
+    NSMutableDictionary *convertedCustomEvents = [NSMutableDictionary dictionary];
+    [convertedCustomEvents setObject:@"MPGoogleAdMobInterstitialCustomEvent" forKey:@"admob_full"];
 
+    if ([convertedCustomEvents objectForKey:self.networkType]) {
+        self.customEventClass = NSClassFromString([convertedCustomEvents objectForKey:self.networkType]);
+    }
 }
 
 - (NSDictionary *)customEventClassDataFromHeaders:(NSDictionary *)headers

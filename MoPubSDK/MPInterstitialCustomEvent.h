@@ -46,6 +46,11 @@
 - (void)customEventDidUnload;
 
 /*
+ * DOCUMENT: If you make this return NO, you are responsible for handling click and impression tracking yourself.
+ */
+- (BOOL)enableAutomaticImpressionAndClickTracking;
+
+/*
  * The `delegate` object defines several methods that you should call in order to inform both MoPub
  * and your MPInterstitialAdController's delegate of the progress of your custom event. At a
  * minimum, you are required to call the -interstitialCustomEvent:didLoadAd: and

@@ -20,11 +20,14 @@
 
 - (void)didDisplayAd
 {
-    // TODO:
+    // TODO: DOCUMENT ME!
 }
 
 - (BOOL)enableAutomaticImpressionAndClickTracking
 {
+    //DOCUMENT: This will automatically track clicks and impressions and only track them once per ad.
+    //IF YOU OVERRIDE THIS AND RETURN NO YOU WILL HAVE TO TRACK CLICKS/IMPRESSIONS YOURSELF.  NOTE FOR
+    //ACCURATE METRICS YOU SHOULD CALL THE TRACKING METHODS JUDICIOUSLY
     return YES;
 }
 

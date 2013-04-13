@@ -14,14 +14,9 @@
     self = [super init];
     if (self) {
         self.view = [[[UIView alloc] initWithFrame:frame] autorelease];
-        self.enableAutomaticMetricsTracking = YES;
+        self.enableAutomaticImpressionAndClickTracking = YES;
     }
     return self;
-}
-
-- (BOOL)enableAutomaticImpressionAndClickTracking
-{
-    return self.enableAutomaticMetricsTracking;
 }
 
 - (void)requestAdWithSize:(CGSize)size customEventInfo:(NSDictionary *)info

@@ -9,7 +9,17 @@
 #import "MPAdConfiguration.h"
 #import "MPLogging.h"
 
+@interface MPLegacyInterstitialCustomEventAdapter ()
+
+@property (nonatomic, assign) BOOL hasTrackedImpression;
+@property (nonatomic, assign) BOOL hasTrackedClick;
+
+@end
+
 @implementation MPLegacyInterstitialCustomEventAdapter
+
+@synthesize hasTrackedImpression = _hasTrackedImpression;
+@synthesize hasTrackedClick = _hasTrackedClick;
 
 - (void)getAdWithConfiguration:(MPAdConfiguration *)configuration
 {
@@ -38,7 +48,10 @@
 
 - (void)customEventDidLoadAd
 {
-    [self trackImpression];
+    if (!self.hasTrackedImpression) {
+        self.hasTrackedImpression = YES;
+        [self trackImpression];
+    }
 }
 
 - (void)customEventDidFailToLoadAd
@@ -48,7 +61,10 @@
 
 - (void)customEventActionWillBegin
 {
-    [self trackClick];
+    if (!self.hasTrackedClick) {
+        self.hasTrackedClick = YES;
+        [self trackClick];
+    }
 }
 
 @end

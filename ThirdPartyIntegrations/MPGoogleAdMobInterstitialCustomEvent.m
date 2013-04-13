@@ -1,19 +1,16 @@
 //
-//  MPGoogleAdMobInterstitialAdapter.m
+//  MPGoogleAdMobInterstitialCustomEvent.m
 //  MoPub
 //
-//  Created by Nafis Jamal on 4/26/11.
-//  Copyright 2011 MoPub. All rights reserved.
+//  Copyright (c) 2012 MoPub, Inc. All rights reserved.
 //
 
-#import "MPGoogleAdMobInterstitialAdapter.h"
+#import "MPGoogleAdMobInterstitialCustomEvent.h"
 #import "MPInterstitialAdController.h"
 #import "MPLogging.h"
 #import "MPAdConfiguration.h"
 #import "MPInstanceProvider.h"
 #import <CoreLocation/CoreLocation.h>
-
-////// Add AdMob support to the shared instance provider
 
 @interface MPInstanceProvider (AdMobInterstitials)
 
@@ -36,23 +33,25 @@
 
 @end
 
-////// MPGoogleAdMobInterstitialAdapter
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@interface MPGoogleAdMobInterstitialAdapter ()
+@interface MPGoogleAdMobInterstitialCustomEvent ()
 
 @property (nonatomic, retain) GADInterstitial *interstitial;
 
 @end
 
-@implementation MPGoogleAdMobInterstitialAdapter
+@implementation MPGoogleAdMobInterstitialCustomEvent
 
 @synthesize interstitial = _interstitial;
 
-- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration
+#pragma mark - MPInterstitialCustomEvent Subclass Methods
+
+- (void)requestInterstitialWithCustomEventInfo:(NSDictionary *)info
 {
     self.interstitial = [[MPInstanceProvider sharedProvider] buildGADInterstitialAd];
 
-    self.interstitial.adUnitID = [configuration.nativeSDKParameters objectForKey:@"adUnitID"];
+    self.interstitial.adUnitID = [info objectForKey:@"adUnitID"];
     self.interstitial.delegate = self;
 
     GADRequest *request = [[MPInstanceProvider sharedProvider] buildGADRequest];
@@ -74,51 +73,50 @@
     [self.interstitial loadRequest:request];
 }
 
+- (void)showInterstitialFromRootViewController:(UIViewController *)rootViewController
+{
+    [self.interstitial presentFromRootViewController:rootViewController];
+}
+
+- (void)customEventDidUnload
+{
+    self.interstitial.delegate = nil;
+    [[_interstitial retain] autorelease];
+    self.interstitial = nil;
+    [super customEventDidUnload];
+}
+
+#pragma mark - IMAdInterstitialDelegate
+
 - (void)interstitialDidReceiveAd:(GADInterstitial *)interstitial
 {
-    [self.delegate adapterDidFinishLoadingAd:self];
+    [self.delegate interstitialCustomEvent:self didLoadAd:self];
 }
 
-- (void)interstitial:(GADInterstitial *)interstitial
-        didFailToReceiveAdWithError:(GADRequestError *)error
+- (void)interstitial:(GADInterstitial *)interstitial didFailToReceiveAdWithError:(GADRequestError *)error
 {
-    [self.delegate adapter:self didFailToLoadAdWithError:error];
-}
-
-- (void)showInterstitialFromViewController:(UIViewController *)controller
-{
-    [self.interstitial presentFromRootViewController:controller];
+    [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:error];
 }
 
 - (void)interstitialWillPresentScreen:(GADInterstitial *)interstitial
 {
-    [self trackImpression];
-    [self.delegate interstitialWillAppearForAdapter:self];
-    [self.delegate interstitialDidAppearForAdapter:self];
+    [self.delegate interstitialCustomEventWillAppear:self];
+    [self.delegate interstitialCustomEventDidAppear:self];
 }
 
 - (void)interstitialWillDismissScreen:(GADInterstitial *)ad
 {
-    [self.delegate interstitialWillDisappearForAdapter:self];
+    [self.delegate interstitialCustomEventWillDisappear:self];
 }
 
 - (void)interstitialDidDismissScreen:(GADInterstitial *)ad
 {
-    [self retain];
-    [self.delegate interstitialDidDisappearForAdapter:self];
-    [self release];
+    [self.delegate interstitialCustomEventDidDisappear:self];
 }
 
 - (void)interstitialWillLeaveApplication:(GADInterstitial *)ad
 {
-    [self trackClick];
-}
-
-- (void)dealloc
-{
-    self.interstitial.delegate = nil;
-    self.interstitial = nil;
-    [super dealloc];
+    [self.delegate interstitialCustomEventDidReceiveTapEvent:self];
 }
 
 @end

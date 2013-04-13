@@ -9,6 +9,15 @@
 
 @implementation FakeInterstitialCustomEvent
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        self.enableAutomaticImpressionAndClickTracking = YES;
+    }
+    return self;
+}
+
 - (void)requestInterstitialWithCustomEventInfo:(NSDictionary *)info
 {
     self.customEventInfo = info;

@@ -110,7 +110,7 @@ describe(@"MPBannerCustomEventAdapter", ^{
         context(@"when told that its content has been displayed on-screen", ^{
             context(@"if the custom event has enabled automatic metrics tracking", ^{
                 it(@"should track an impression (only once) and forward the message to its custom event", ^{
-                    event.enableAutomaticMetricsTracking = YES;
+                    event.enableAutomaticImpressionAndClickTracking = YES;
                     [adapter didDisplayAd];
                     fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations should contain(configuration);
                     event.didDisplay should equal(YES);
@@ -122,7 +122,7 @@ describe(@"MPBannerCustomEventAdapter", ^{
 
             context(@"if the custom event has disabled automatic metrics tracking", ^{
                 it(@"should forward the message to its custom event but *not* track an impression", ^{
-                    event.enableAutomaticMetricsTracking = NO;
+                    event.enableAutomaticImpressionAndClickTracking = NO;
                     [adapter didDisplayAd];
                     fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations should be_empty;
                     event.didDisplay should equal(YES);
@@ -133,7 +133,7 @@ describe(@"MPBannerCustomEventAdapter", ^{
         context(@"when the custom event is beginning a user action", ^{
             context(@"if the custom event has enabled automatic metrics tracking", ^{
                 it(@"should track a click (only once)", ^{
-                    event.enableAutomaticMetricsTracking = YES;
+                    event.enableAutomaticImpressionAndClickTracking = YES;
                     [event simulateUserTap];
                     fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations should contain(configuration);
 
@@ -144,7 +144,7 @@ describe(@"MPBannerCustomEventAdapter", ^{
 
             context(@"if the custom event has disabled automatic metrics tracking", ^{
                 it(@"should *not* track a click", ^{
-                    event.enableAutomaticMetricsTracking = NO;
+                    event.enableAutomaticImpressionAndClickTracking = NO;
                     [event simulateUserTap];
                     fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations should be_empty;
                 });
