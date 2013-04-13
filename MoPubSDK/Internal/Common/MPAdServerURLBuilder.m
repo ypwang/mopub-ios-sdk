@@ -137,7 +137,7 @@ NSString * const kMoPubInterfaceOrientationLandscape = @"l";
 
 + (NSString *)queryParameterForMRAID
 {
-    if (NSClassFromString(@"MPMRAIDBannerAdapter") &&
+    if (NSClassFromString(@"MPMRAIDBannerCustomEvent") &&
         NSClassFromString(@"MPMRAIDInterstitialAdapter")) {
         return @"&mr=1";
     } else {

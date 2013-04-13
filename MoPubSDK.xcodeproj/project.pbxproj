@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AE0021B71703AA9400A220F0 /* MPMRAIDBannerAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C0916EF9DB00046D464 /* MPMRAIDBannerAdapter.m */; };
 		AE093BBE170CD1AC00F5334B /* MPReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AE093BBD170CD1AC00F5334B /* MPReachability.m */; };
 		AE093BBF170CD1AC00F5334B /* MPReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AE093BBD170CD1AC00F5334B /* MPReachability.m */; };
 		AE093BC9170CD49600F5334B /* FakeMPReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AE093BC8170CD49600F5334B /* FakeMPReachability.m */; };
@@ -150,6 +149,10 @@
 		AE62588D1718BDCA00198E99 /* MPHTMLBannerCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = AE62588B1718BDCA00198E99 /* MPHTMLBannerCustomEvent.m */; };
 		AE62588F1718BDF300198E99 /* MPHTMLBannerCustomEventSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE62588E1718BDF300198E99 /* MPHTMLBannerCustomEventSpec.mm */; };
 		AE6258911718C57C00198E99 /* MPHTMLBannerIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE6258901718C57C00198E99 /* MPHTMLBannerIntegrationSuite.mm */; };
+		AE6258A41718D56F00198E99 /* MPMRAIDBannerCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6258A31718D56F00198E99 /* MPMRAIDBannerCustomEvent.m */; };
+		AE6258A51718D56F00198E99 /* MPMRAIDBannerCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6258A31718D56F00198E99 /* MPMRAIDBannerCustomEvent.m */; };
+		AE6258AE1718D79D00198E99 /* MPMRAIDBannerCustomEventSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE6258AD1718D79D00198E99 /* MPMRAIDBannerCustomEventSpec.mm */; };
+		AE6258B01718D7DB00198E99 /* MPMRAIDBannerIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE6258AF1718D7DB00198E99 /* MPMRAIDBannerIntegrationSuite.mm */; };
 		AE64C48B1714EAF40001A07E /* FakeADBannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE64C48A1714EAF40001A07E /* FakeADBannerView.m */; };
 		AE7565B6170E3DF600ED83C3 /* MPBannerCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C7916EF9DBC0046D464 /* MPBannerCustomEvent.m */; };
 		AE7565C0170E498000ED83C3 /* MPLegacyBannerCustomEventAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = AE7565BF170E498000ED83C3 /* MPLegacyBannerCustomEventAdapter.m */; };
@@ -175,7 +178,6 @@
 		AEA97BEE16EF9C030046D464 /* Cedar-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97BED16EF9C030046D464 /* Cedar-iOS.framework */; };
 		AEA97C5116EF9DB00046D464 /* MPBannerCustomEventAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C0116EF9DB00046D464 /* MPBannerCustomEventAdapter.m */; };
 		AEA97C5316EF9DB00046D464 /* MPBaseAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C0516EF9DB00046D464 /* MPBaseAdapter.m */; };
-		AEA97C5516EF9DB00046D464 /* MPMRAIDBannerAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C0916EF9DB00046D464 /* MPMRAIDBannerAdapter.m */; };
 		AEA97C5616EF9DB00046D464 /* MPAdapterMap.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C0C16EF9DB00046D464 /* MPAdapterMap.m */; };
 		AEA97C5716EF9DB00046D464 /* MPAdBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C0E16EF9DB00046D464 /* MPAdBrowserController.m */; };
 		AEA97C5816EF9DB00046D464 /* MPAdConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C1116EF9DB00046D464 /* MPAdConfiguration.m */; };
@@ -532,6 +534,10 @@
 		AE62588B1718BDCA00198E99 /* MPHTMLBannerCustomEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHTMLBannerCustomEvent.m; sourceTree = "<group>"; };
 		AE62588E1718BDF300198E99 /* MPHTMLBannerCustomEventSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPHTMLBannerCustomEventSpec.mm; sourceTree = "<group>"; };
 		AE6258901718C57C00198E99 /* MPHTMLBannerIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPHTMLBannerIntegrationSuite.mm; sourceTree = "<group>"; };
+		AE6258A21718D56F00198E99 /* MPMRAIDBannerCustomEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMRAIDBannerCustomEvent.h; sourceTree = "<group>"; };
+		AE6258A31718D56F00198E99 /* MPMRAIDBannerCustomEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMRAIDBannerCustomEvent.m; sourceTree = "<group>"; };
+		AE6258AD1718D79D00198E99 /* MPMRAIDBannerCustomEventSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPMRAIDBannerCustomEventSpec.mm; sourceTree = "<group>"; };
+		AE6258AF1718D7DB00198E99 /* MPMRAIDBannerIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPMRAIDBannerIntegrationSuite.mm; sourceTree = "<group>"; };
 		AE64C4871714D9600001A07E /* iAdBannerIntegrationSuite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iAdBannerIntegrationSuite.mm; sourceTree = "<group>"; };
 		AE64C4891714EAF40001A07E /* FakeADBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeADBannerView.h; sourceTree = "<group>"; };
 		AE64C48A1714EAF40001A07E /* FakeADBannerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeADBannerView.m; sourceTree = "<group>"; };
@@ -563,8 +569,6 @@
 		AEA97C0116EF9DB00046D464 /* MPBannerCustomEventAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPBannerCustomEventAdapter.m; sourceTree = "<group>"; };
 		AEA97C0416EF9DB00046D464 /* MPBaseAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPBaseAdapter.h; sourceTree = "<group>"; };
 		AEA97C0516EF9DB00046D464 /* MPBaseAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPBaseAdapter.m; sourceTree = "<group>"; };
-		AEA97C0816EF9DB00046D464 /* MPMRAIDBannerAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMRAIDBannerAdapter.h; sourceTree = "<group>"; };
-		AEA97C0916EF9DB00046D464 /* MPMRAIDBannerAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMRAIDBannerAdapter.m; sourceTree = "<group>"; };
 		AEA97C0B16EF9DB00046D464 /* MPAdapterMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPAdapterMap.h; sourceTree = "<group>"; };
 		AEA97C0C16EF9DB00046D464 /* MPAdapterMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPAdapterMap.m; sourceTree = "<group>"; };
 		AEA97C0D16EF9DB00046D464 /* MPAdBrowserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPAdBrowserController.h; sourceTree = "<group>"; };
@@ -825,6 +829,7 @@
 			isa = PBXGroup;
 			children = (
 				AE6258901718C57C00198E99 /* MPHTMLBannerIntegrationSuite.mm */,
+				AE6258AF1718D7DB00198E99 /* MPMRAIDBannerIntegrationSuite.mm */,
 				AE62587417188B4C00198E99 /* MPInMobiBannerIntegrationSuite.mm */,
 				AE5A369B171875310054385C /* MPGreystripeBannerIntegrationSuite.mm */,
 				AE9954A5171790C0004EB92F /* MPMillennialBannerIntegrationSuite.mm */,
@@ -986,6 +991,7 @@
 				AE7565C4170E4ADE00ED83C3 /* MPBannerCustomEventAdapterSpec.mm */,
 				AEC16C771714B9BF00397DB4 /* MPBannerAdManagerSpec.mm */,
 				AE62588E1718BDF300198E99 /* MPHTMLBannerCustomEventSpec.mm */,
+				AE6258AD1718D79D00198E99 /* MPMRAIDBannerCustomEventSpec.mm */,
 			);
 			path = Banners;
 			sourceTree = "<group>";
@@ -1098,10 +1104,10 @@
 				AEA97C0116EF9DB00046D464 /* MPBannerCustomEventAdapter.m */,
 				AE7565BE170E498000ED83C3 /* MPLegacyBannerCustomEventAdapter.h */,
 				AE7565BF170E498000ED83C3 /* MPLegacyBannerCustomEventAdapter.m */,
-				AEA97C0816EF9DB00046D464 /* MPMRAIDBannerAdapter.h */,
-				AEA97C0916EF9DB00046D464 /* MPMRAIDBannerAdapter.m */,
 				AE62588A1718BDCA00198E99 /* MPHTMLBannerCustomEvent.h */,
 				AE62588B1718BDCA00198E99 /* MPHTMLBannerCustomEvent.m */,
+				AE6258A21718D56F00198E99 /* MPMRAIDBannerCustomEvent.h */,
+				AE6258A31718D56F00198E99 /* MPMRAIDBannerCustomEvent.m */,
 			);
 			path = Banners;
 			sourceTree = "<group>";
@@ -1800,7 +1806,6 @@
 				AEE45796170394B4007B1D19 /* MPIdentityProviderSpec.mm in Sources */,
 				AEE457971703A22B007B1D19 /* MPFacebookKeywordProvider.m in Sources */,
 				AEE457981703A5ED007B1D19 /* MPGlobal.m in Sources */,
-				AE0021B71703AA9400A220F0 /* MPMRAIDBannerAdapter.m in Sources */,
 				AE25B6DA170BA208005A3017 /* MPAdViewSpec.mm in Sources */,
 				AE25B6DB170BA328005A3017 /* MPAdView.m in Sources */,
 				AE25B6DF170BA37F005A3017 /* MPBannerCustomEventAdapter.m in Sources */,
@@ -1852,6 +1857,9 @@
 				AE62588D1718BDCA00198E99 /* MPHTMLBannerCustomEvent.m in Sources */,
 				AE62588F1718BDF300198E99 /* MPHTMLBannerCustomEventSpec.mm in Sources */,
 				AE6258911718C57C00198E99 /* MPHTMLBannerIntegrationSuite.mm in Sources */,
+				AE6258A51718D56F00198E99 /* MPMRAIDBannerCustomEvent.m in Sources */,
+				AE6258AE1718D79D00198E99 /* MPMRAIDBannerCustomEventSpec.mm in Sources */,
+				AE6258B01718D7DB00198E99 /* MPMRAIDBannerIntegrationSuite.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1861,7 +1869,6 @@
 			files = (
 				AEA97C5116EF9DB00046D464 /* MPBannerCustomEventAdapter.m in Sources */,
 				AEA97C5316EF9DB00046D464 /* MPBaseAdapter.m in Sources */,
-				AEA97C5516EF9DB00046D464 /* MPMRAIDBannerAdapter.m in Sources */,
 				AEA97C5616EF9DB00046D464 /* MPAdapterMap.m in Sources */,
 				AEA97C5716EF9DB00046D464 /* MPAdBrowserController.m in Sources */,
 				AEA97C5816EF9DB00046D464 /* MPAdConfiguration.m in Sources */,
@@ -1929,6 +1936,7 @@
 				AE5A36A517187D6C0054385C /* GreystripeBannerCustomEvent.m in Sources */,
 				AE625873171888B600198E99 /* InMobiBannerCustomEvent.m in Sources */,
 				AE62588C1718BDCA00198E99 /* MPHTMLBannerCustomEvent.m in Sources */,
+				AE6258A41718D56F00198E99 /* MPMRAIDBannerCustomEvent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

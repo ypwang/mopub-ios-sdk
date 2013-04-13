@@ -123,6 +123,7 @@ NSString * const kAdTypeClear = @"clear";
     [convertedCustomEvents setObject:@"MPGoogleAdMobBannerCustomEvent" forKey:@"admob_native"];
     [convertedCustomEvents setObject:@"MPMillennialBannerCustomEvent" forKey:@"millennial_native"];
     [convertedCustomEvents setObject:@"MPHTMLBannerCustomEvent" forKey:@"html"];
+    [convertedCustomEvents setObject:@"MPMRAIDBannerCustomEvent" forKey:@"mraid"];
 
     if ([convertedCustomEvents objectForKey:self.networkType]) {
         self.customEventClass = NSClassFromString([convertedCustomEvents objectForKey:self.networkType]);

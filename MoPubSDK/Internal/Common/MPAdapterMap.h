@@ -18,7 +18,6 @@
 /*
  * Convenience methods for getting the Class representation for a certain ad network type.
  */
-- (Class)bannerAdapterClassForNetworkType:(NSString *)networkType;
 - (Class)interstitialAdapterClassForNetworkType:(NSString *)networkType;
 
 @end

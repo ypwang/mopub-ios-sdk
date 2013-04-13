@@ -10,7 +10,6 @@
 
 @interface MPAdapterMap ()
 
-@property (nonatomic, retain) NSDictionary *bannerAdapterMap;
 @property (nonatomic, retain) NSDictionary *interstitialAdapterMap;
 
 @end
@@ -19,7 +18,6 @@
 
 @implementation MPAdapterMap
 
-@synthesize bannerAdapterMap;
 @synthesize interstitialAdapterMap;
 
 + (id)sharedAdapterMap
@@ -37,10 +35,6 @@
 {
     if (self = [super init])
     {
-        bannerAdapterMap = [[NSDictionary dictionaryWithObjectsAndKeys:
-                             @"MPMRAIDBannerAdapter",       @"mraid",
-                             nil] retain];
-
         interstitialAdapterMap = [[NSDictionary dictionaryWithObjectsAndKeys:
                                    @"MPHTMLInterstitialAdapter",        @"html",
                                    @"MPMRAIDInterstitialAdapter",       @"mraid",
@@ -54,14 +48,8 @@
 
 - (void)dealloc
 {
-    self.bannerAdapterMap = nil;
     self.interstitialAdapterMap = nil;
     [super dealloc];
-}
-
-- (Class)bannerAdapterClassForNetworkType:(NSString *)networkType
-{
-    return NSClassFromString([self.bannerAdapterMap objectForKey:networkType]);
 }
 
 - (Class)interstitialAdapterClassForNetworkType:(NSString *)networkType

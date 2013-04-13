@@ -155,10 +155,9 @@ static MPInstanceProvider *sharedProvider = nil;
         return [[(MPBannerCustomEventAdapter *)[MPBannerCustomEventAdapter alloc] initWithAdapterDelegate:delegate] autorelease];
     } else if (configuration.customSelectorName) {
         return [[(MPLegacyBannerCustomEventAdapter *)[MPLegacyBannerCustomEventAdapter alloc] initWithAdapterDelegate:delegate] autorelease];
-    } else {
-        Class adapterClass = [[MPAdapterMap sharedAdapterMap] bannerAdapterClassForNetworkType:configuration.networkType];
-        return [[[adapterClass alloc] initWithAdapterDelegate:delegate] autorelease];
     }
+
+    return nil;
 }
 
 - (MPBannerCustomEvent *)buildBannerCustomEventFromCustomClass:(Class)customClass

@@ -8,7 +8,6 @@
 #import "MPBannerCustomEventAdapter.h"
 #import "MPLegacyBannerCustomEventAdapter.h"
 #import "MPAnalyticsTracker.h"
-#import "MPMRAIDBannerAdapter.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -86,14 +85,6 @@ describe(@"MPInstanceProvider", ^{
     });
 
     describe(@"providing banner adapters", ^{
-        context(@"when the configuration network type is one of the supported networks", ^{
-            it(@"should return an adapter of the right type", ^{
-                configuration = [MPAdConfigurationFactory defaultBannerConfigurationWithNetworkType:@"mraid"];
-                [provider buildBannerAdapterForConfiguration:configuration
-                                                    delegate:nil] should be_instance_of([MPMRAIDBannerAdapter class]);
-            });
-        });
-
         context(@"when the configuration network type is 'custom'", ^{
             context(@"when the configuration has a custom event class", ^{
                 context(@"when the class exists", ^{
