@@ -45,39 +45,39 @@
     [self.interstitial presentInterstitialFromViewController:rootViewController];
 }
 
-#pragma mark - MPHTMLInterstitialViewControllerDelegate
+#pragma mark - MPInterstitialViewControllerDelegate
 
-- (void)interstitialDidLoadAd:(MPHTMLInterstitialViewController *)interstitial
+- (void)interstitialDidLoadAd:(MPInterstitialViewController *)interstitial
 {
     [self.delegate interstitialCustomEvent:self didLoadAd:self.interstitial];
 }
 
-- (void)interstitialDidFailToLoadAd:(MPHTMLInterstitialViewController *)interstitial
+- (void)interstitialDidFailToLoadAd:(MPInterstitialViewController *)interstitial
 {
     [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:nil];
 }
 
-- (void)interstitialWillAppear:(MPHTMLInterstitialViewController *)interstitial
+- (void)interstitialWillAppear:(MPInterstitialViewController *)interstitial
 {
     [self.delegate interstitialCustomEventWillAppear:self];
 }
 
-- (void)interstitialDidAppear:(MPHTMLInterstitialViewController *)interstitial
+- (void)interstitialDidAppear:(MPInterstitialViewController *)interstitial
 {
     [self.delegate interstitialCustomEventDidAppear:self];
 }
 
-- (void)interstitialWillDisappear:(MPHTMLInterstitialViewController *)interstitial
+- (void)interstitialWillDisappear:(MPInterstitialViewController *)interstitial
 {
     [self.delegate interstitialCustomEventWillDisappear:self];
 }
 
-- (void)interstitialDidDisappear:(MPHTMLInterstitialViewController *)interstitial
+- (void)interstitialDidDisappear:(MPInterstitialViewController *)interstitial
 {
     [self.delegate interstitialCustomEventDidDisappear:self];
 }
 
-- (void)interstitialWillLeaveApplication:(MPHTMLInterstitialViewController *)interstitial
+- (void)interstitialWillLeaveApplication:(MPInterstitialViewController *)interstitial
 {
     [self.delegate interstitialCustomEventWillLeaveApplication:self];
 }

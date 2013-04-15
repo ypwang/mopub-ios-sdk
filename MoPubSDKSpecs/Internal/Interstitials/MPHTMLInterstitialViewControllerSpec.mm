@@ -12,14 +12,14 @@ describe(@"MPHTMLInterstitialViewController", ^{
     __block MPHTMLInterstitialViewController *controller;
     __block MPAdWebView *backingView;
     __block MPAdConfiguration *configuration;
-    __block id<CedarDouble, MPHTMLInterstitialViewControllerDelegate> delegate;
+    __block id<CedarDouble, MPInterstitialViewControllerDelegate> delegate;
     __block UIViewController *presentingViewController;
     __block MPAdWebViewAgent *agent;
 
     beforeEach(^{
         presentingViewController = [[[UIViewController alloc] init] autorelease];
         configuration = [MPAdConfigurationFactory defaultInterstitialConfiguration];
-        delegate = nice_fake_for(@protocol(MPHTMLInterstitialViewControllerDelegate));
+        delegate = nice_fake_for(@protocol(MPInterstitialViewControllerDelegate));
 
         backingView = [[MPInstanceProvider sharedProvider] buildMPAdWebViewWithFrame:CGRectMake(0, 0, 50, 100)
                                                                             delegate:nil];

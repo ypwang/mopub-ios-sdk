@@ -9,7 +9,7 @@
 #import "MPMRAIDInterstitialViewController.h"
 #import "MPPrivateInterstitialCustomEventDelegate.h"
 
-@interface MPMRAIDInterstitialCustomEvent : MPInterstitialCustomEvent <MPMRAIDInterstitialViewControllerDelegate>
+@interface MPMRAIDInterstitialCustomEvent : MPInterstitialCustomEvent <MPInterstitialViewControllerDelegate>
 
 @property (nonatomic, assign) id<MPPrivateInterstitialCustomEventDelegate> delegate;
 

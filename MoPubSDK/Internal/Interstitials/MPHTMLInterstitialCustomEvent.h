@@ -9,7 +9,7 @@
 #import "MPHTMLInterstitialViewController.h"
 #import "MPPrivateInterstitialCustomEventDelegate.h"
 
-@interface MPHTMLInterstitialCustomEvent : MPInterstitialCustomEvent <MPHTMLInterstitialViewControllerDelegate>
+@interface MPHTMLInterstitialCustomEvent : MPInterstitialCustomEvent <MPInterstitialViewControllerDelegate>
 
 @property (nonatomic, assign) id<MPPrivateInterstitialCustomEventDelegate> delegate;
 

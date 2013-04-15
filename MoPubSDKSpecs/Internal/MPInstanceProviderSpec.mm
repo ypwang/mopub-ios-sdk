@@ -125,7 +125,7 @@ describe(@"MPInstanceProvider", ^{
 
     describe(@"providing an HTML interstitial view controller", ^{
         it(@"should provide a correctly configured interstitial view controller", ^{
-            id<CedarDouble, MPHTMLInterstitialViewControllerDelegate> delegate = nice_fake_for(@protocol(MPHTMLInterstitialViewControllerDelegate));
+            id<CedarDouble, MPInterstitialViewControllerDelegate> delegate = nice_fake_for(@protocol(MPInterstitialViewControllerDelegate));
             id customMethodDelegate = [[[NSObject alloc] init] autorelease];
             MPHTMLInterstitialViewController *controller = [provider buildMPHTMLInterstitialViewControllerWithDelegate:delegate
                                                                                                        orientationType:MPInterstitialOrientationTypePortrait

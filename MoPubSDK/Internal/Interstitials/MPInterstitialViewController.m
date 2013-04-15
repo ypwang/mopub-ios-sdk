@@ -36,6 +36,7 @@ static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
 @synthesize orientationType = _orientationType;
 @synthesize applicationHasStatusBar = _applicationHasStatusBar;
 @synthesize isOnViewControllerStack = _isOnViewControllerStack;
+@synthesize delegate = _delegate;
 
 - (void)dealloc
 {

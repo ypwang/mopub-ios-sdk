@@ -31,8 +31,7 @@
 @protocol MPInterstitialAdManagerDelegate;
 @protocol MPAdServerCommunicatorDelegate;
 @protocol MPBaseInterstitialAdapterDelegate;
-@protocol MPHTMLInterstitialViewControllerDelegate;
-@protocol MPMRAIDInterstitialViewControllerDelegate;
+@protocol MPInterstitialViewControllerDelegate;
 @protocol MPInterstitialCustomEventDelegate;
 @protocol MPAdapterDelegate;
 @protocol MPBannerCustomEventDelegate;
@@ -74,10 +73,10 @@ typedef id(^MPSingletonProviderBlock)();
 - (MPInterstitialCustomEvent *)buildInterstitialCustomEventFromCustomClass:(Class)customClass
                                                                   delegate:(id<MPInterstitialCustomEventDelegate>)delegate;
 
-- (MPHTMLInterstitialViewController *)buildMPHTMLInterstitialViewControllerWithDelegate:(id<MPHTMLInterstitialViewControllerDelegate>)delegate
+- (MPHTMLInterstitialViewController *)buildMPHTMLInterstitialViewControllerWithDelegate:(id<MPInterstitialViewControllerDelegate>)delegate
                                                                         orientationType:(MPInterstitialOrientationType)type
                                                                    customMethodDelegate:(id)customMethodDelegate;
-- (MPMRAIDInterstitialViewController *)buildMPMRAIDInterstitialViewControllerWithDelegate:(id<MPMRAIDInterstitialViewControllerDelegate>)delegate
+- (MPMRAIDInterstitialViewController *)buildMPMRAIDInterstitialViewControllerWithDelegate:(id<MPInterstitialViewControllerDelegate>)delegate
                                                                             configuration:(MPAdConfiguration *)configuration;
 
 @end

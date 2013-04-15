@@ -42,35 +42,39 @@
 
 #pragma mark - MPMRAIDInterstitialViewControllerDelegate
 
-- (void)interstitialDidLoadAd:(MPMRAIDInterstitialViewController *)interstitial
+- (void)interstitialDidLoadAd:(MPInterstitialViewController *)interstitial
 {
     [self.delegate interstitialCustomEvent:self didLoadAd:self.interstitial];
 }
 
-- (void)interstitialDidFailToLoadAd:(MPMRAIDInterstitialViewController *)interstitial
+- (void)interstitialDidFailToLoadAd:(MPInterstitialViewController *)interstitial
 {
     [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:nil];
 }
 
-- (void)interstitialWillAppear:(MPMRAIDInterstitialViewController *)interstitial
+- (void)interstitialWillAppear:(MPInterstitialViewController *)interstitial
 {
     [self.delegate interstitialCustomEventWillAppear:self];
 }
 
-- (void)interstitialDidAppear:(MPMRAIDInterstitialViewController *)interstitial
+- (void)interstitialDidAppear:(MPInterstitialViewController *)interstitial
 {
     [self.delegate interstitialCustomEventDidAppear:self];
 }
 
-- (void)interstitialWillDisappear:(MPMRAIDInterstitialViewController *)interstitial
+- (void)interstitialWillDisappear:(MPInterstitialViewController *)interstitial
 {
     [self.delegate interstitialCustomEventWillDisappear:self];
 }
 
-- (void)interstitialDidDisappear:(MPMRAIDInterstitialViewController *)interstitial
+- (void)interstitialDidDisappear:(MPInterstitialViewController *)interstitial
 {
     [self.delegate interstitialCustomEventDidDisappear:self];
 }
 
+- (void)interstitialWillLeaveApplication:(MPInterstitialViewController *)interstitial
+{
+    [self.delegate interstitialCustomEventWillLeaveApplication:self];
+}
 
 @end

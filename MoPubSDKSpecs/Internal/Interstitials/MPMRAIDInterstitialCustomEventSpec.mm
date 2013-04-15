@@ -74,6 +74,9 @@ describe(@"MPMRAIDInterstitialCustomEvent", ^{
 
             [event interstitialDidDisappear:controller];
             delegate should have_received(@selector(interstitialCustomEventDidDisappear:)).with(event);
+
+            [event interstitialWillLeaveApplication:controller];
+            delegate should have_received(@selector(interstitialCustomEventWillLeaveApplication:)).with(event);
         });
     });
 });

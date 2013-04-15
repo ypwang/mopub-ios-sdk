@@ -21,6 +21,8 @@ enum {
 };
 typedef NSUInteger MPInterstitialOrientationType;
 
+@protocol MPInterstitialViewControllerDelegate;
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @interface MPInterstitialViewController : UIViewController
@@ -28,6 +30,7 @@ typedef NSUInteger MPInterstitialOrientationType;
 @property (nonatomic, assign) MPInterstitialCloseButtonStyle closeButtonStyle;
 @property (nonatomic, assign) MPInterstitialOrientationType orientationType;
 @property (nonatomic, retain) UIButton *closeButton;
+@property (nonatomic, assign) id<MPInterstitialViewControllerDelegate> delegate;
 
 - (void)presentInterstitialFromViewController:(UIViewController *)controller;
 - (void)dismissInterstitialAnimated:(BOOL)animated;
@@ -37,5 +40,19 @@ typedef NSUInteger MPInterstitialOrientationType;
 - (void)willDismissInterstitial;
 - (void)didDismissInterstitial;
 - (void)layoutCloseButton;
+
+@end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@protocol MPInterstitialViewControllerDelegate <NSObject>
+
+- (void)interstitialDidLoadAd:(MPInterstitialViewController *)interstitial;
+- (void)interstitialDidFailToLoadAd:(MPInterstitialViewController *)interstitial;
+- (void)interstitialWillAppear:(MPInterstitialViewController *)interstitial;
+- (void)interstitialDidAppear:(MPInterstitialViewController *)interstitial;
+- (void)interstitialWillDisappear:(MPInterstitialViewController *)interstitial;
+- (void)interstitialDidDisappear:(MPInterstitialViewController *)interstitial;
+- (void)interstitialWillLeaveApplication:(MPInterstitialViewController *)interstitial;
 
 @end

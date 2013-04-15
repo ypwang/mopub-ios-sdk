@@ -118,7 +118,7 @@
                      }];
 }
 
-- (MPHTMLInterstitialViewController *)buildMPHTMLInterstitialViewControllerWithDelegate:(id<MPHTMLInterstitialViewControllerDelegate>)delegate orientationType:(MPInterstitialOrientationType)type customMethodDelegate:(id)customMethodDelegate
+- (MPHTMLInterstitialViewController *)buildMPHTMLInterstitialViewControllerWithDelegate:(id<MPInterstitialViewControllerDelegate>)delegate orientationType:(MPInterstitialOrientationType)type customMethodDelegate:(id)customMethodDelegate
 {
     return [self returnFake:self.fakeMPHTMLInterstitialViewController
                      orCall:^{
@@ -126,7 +126,7 @@
                      }];
 }
 
-- (MPMRAIDInterstitialViewController *)buildMPMRAIDInterstitialViewControllerWithDelegate:(id<MPMRAIDInterstitialViewControllerDelegate>)delegate configuration:(MPAdConfiguration *)configuration
+- (MPMRAIDInterstitialViewController *)buildMPMRAIDInterstitialViewControllerWithDelegate:(id<MPInterstitialViewControllerDelegate>)delegate configuration:(MPAdConfiguration *)configuration
 {
     return [self returnFake:self.fakeMPMRAIDInterstitialViewController
                      orCall:^{
