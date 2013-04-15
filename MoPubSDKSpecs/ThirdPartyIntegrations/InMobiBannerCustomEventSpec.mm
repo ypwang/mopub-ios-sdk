@@ -29,17 +29,6 @@ describe(@"InMobiBannerCustomEvent", ^{
         event.enableAutomaticImpressionAndClickTracking should equal(YES);
     });
 
-    context(@"when told to unload", ^{
-        it(@"should not immediately dallocate the ad", ^{
-            [event requestAdWithSize:MOPUB_BANNER_SIZE customEventInfo:nil];
-
-            int bannerRetainCount = banner.retainCount;
-            [event customEventDidUnload];
-            banner.retainCount should equal(bannerRetainCount);
-            banner.delegate should be_nil;
-        });
-    });
-
     context(@"when requesting an ad with a valid size", ^{
         it(@"should configure the ad correctly, tell it to fech and not tell the delegate anything just yet", ^{
             [event requestAdWithSize:MOPUB_BANNER_SIZE customEventInfo:nil];

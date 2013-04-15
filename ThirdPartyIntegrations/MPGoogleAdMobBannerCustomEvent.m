@@ -52,12 +52,11 @@
     return self;
 }
 
-- (void)customEventDidUnload
+- (void)dealloc
 {
     self.adBannerView.delegate = nil;
-    [[_adBannerView retain] autorelease];
     self.adBannerView = nil;
-    [super customEventDidUnload];
+    [super dealloc];
 }
 
 - (void)requestAdWithSize:(CGSize)size customEventInfo:(NSDictionary *)info

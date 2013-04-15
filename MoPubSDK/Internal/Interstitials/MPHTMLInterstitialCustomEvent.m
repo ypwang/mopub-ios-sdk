@@ -31,13 +31,12 @@
     [self.interstitial loadConfiguration:configuration];
 }
 
-- (void)customEventDidUnload
+- (void)dealloc
 {
     [self.interstitial setDelegate:nil];
     [self.interstitial setCustomMethodDelegate:nil];
-    [[_interstitial retain] autorelease];
     self.interstitial = nil;
-    [super customEventDidUnload];
+    [super dealloc];
 }
 
 - (void)showInterstitialFromRootViewController:(UIViewController *)rootViewController

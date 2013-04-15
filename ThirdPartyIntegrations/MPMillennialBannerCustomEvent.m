@@ -49,12 +49,11 @@
 
 @implementation MPMillennialBannerCustomEvent
 
-- (void)customEventDidUnload
+- (void)dealloc
 {
     self.mmAdView.delegate = nil;
-    [[_mmAdView retain] autorelease];
     self.mmAdView = nil;
-    [super customEventDidUnload];
+    [super dealloc];
 }
 
 - (void)requestAdWithSize:(CGSize)size customEventInfo:(NSDictionary *)info

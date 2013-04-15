@@ -43,11 +43,10 @@
     self.iAdInterstitial.delegate = self;
 }
 
-- (void)customEventDidUnload {
+- (void)dealloc {
     self.iAdInterstitial.delegate = nil;
-    [[_iAdInterstitial retain] autorelease];
     self.iAdInterstitial = nil;
-    [super customEventDidUnload];
+    [super dealloc];
 }
 
 - (void)showInterstitialFromRootViewController:(UIViewController *)controller {

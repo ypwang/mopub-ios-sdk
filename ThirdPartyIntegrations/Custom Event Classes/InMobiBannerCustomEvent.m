@@ -81,12 +81,11 @@
     }
 }
 
-- (void)customEventDidUnload
+- (void)dealloc
 {
     [self.inMobiAdView setDelegate:nil];
-    [[_inMobiAdView retain] autorelease];
     self.inMobiAdView = nil;
-    [super customEventDidUnload];
+    [super dealloc];
 }
 
 #pragma mark - IMAdDelegate

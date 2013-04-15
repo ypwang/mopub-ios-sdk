@@ -38,19 +38,6 @@ describe(@"GreystripeBannerCustomEvent", ^{
         event.greystripeBannerDisplayViewController should equal(viewController);
     });
 
-    context(@"when told to unload", ^{
-        it(@"should not immediately dallocate the ad", ^{
-            banner = [[[FakeGSBannerAdView alloc] init] autorelease];
-            fakeProvider.fakeGSBannerAdView = banner;
-            [event requestAdWithSize:MOPUB_BANNER_SIZE customEventInfo:nil];
-
-            int bannerRetainCount = banner.retainCount;
-            [event customEventDidUnload];
-            banner.retainCount should equal(bannerRetainCount);
-            banner.delegate should be_nil;
-        });
-    });
-
     describe(@"the instance provider", ^{
         __block MPInstanceProvider *provider;
         beforeEach(^{

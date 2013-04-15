@@ -29,11 +29,11 @@ static NSMutableDictionary *sharedMMAdViews = nil;
                   @"publisher ID in your MoPub dashboard?");
         return nil;
     }
-    
+
     if (!sharedMMAdViews) {
         sharedMMAdViews = [[NSMutableDictionary dictionary] retain];
     }
-    
+
     MMAdView *interstitial = [sharedMMAdViews objectForKey:apid];
     if (!interstitial) {
         interstitial = [MMAdView interstitialWithType:MMFullScreenAdTransition
@@ -42,7 +42,7 @@ static NSMutableDictionary *sharedMMAdViews = nil;
                                                loadAd:NO];
         [sharedMMAdViews setObject:interstitial forKey:apid];
     }
-    
+
     interstitial.delegate = delegate;
     return interstitial;
 }
@@ -61,32 +61,31 @@ static NSMutableDictionary *sharedMMAdViews = nil;
 
 @synthesize interstitial = _interstitial;
 
-- (void)customEventDidUnload
+- (void)dealloc
 {
     self.interstitial.delegate = nil;
-    [[_interstitial retain] autorelease];
     self.interstitial = nil;
-    [super customEventDidUnload];
+    [super dealloc];
 }
 
 - (void)requestInterstitialWithCustomEventInfo:(NSDictionary *)info
 {
     NSString *apid = [info objectForKey:@"adUnitID"];
-    
+
     self.interstitial = [[MPInstanceProvider sharedProvider] buildMMInterstitialAdWithAPID:apid delegate:self];
-    
+
     if (!self.interstitial) {
         [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:nil];
         return;
     }
-    
+
     // If a Millennial interstitial has already been cached, we don't need to fetch another one.
     if ([self.interstitial checkForCachedAd]) {
         MPLogInfo(@"Previous Millennial interstitial ad was found in the cache.");
         [self.delegate interstitialCustomEvent:self didLoadAd:self.interstitial];
         return;
     }
-    
+
     [self.interstitial fetchAdToCache];
 }
 
@@ -110,18 +109,18 @@ static NSMutableDictionary *sharedMMAdViews = nil;
 {
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    @"mopubsdk", @"vendor", nil];
-    
+
     CLLocation *location = self.delegate.location;
     if (location) {
         [params setObject:[[NSNumber numberWithDouble:location.coordinate.latitude] stringValue] forKey:@"lat"];
         [params setObject:[[NSNumber numberWithDouble:location.coordinate.longitude] stringValue] forKey:@"long"];
     }
-    
+
     return params;
 }
 
 - (void)adRequestFailed:(MMAdView *)adView {
-    
+
 }
 
 - (void)adRequestIsCaching:(MMAdView *)adView {

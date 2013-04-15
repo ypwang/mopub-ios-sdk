@@ -62,11 +62,26 @@ describe(@"MPInterstitialCustomEventAdapter", ^{
         });
     });
 
-    context(@"upon dealloc", ^{
-        it(@"should inform its custom event instance that it is going away", ^{
-            MPInterstitialCustomEventAdapter *anotherAdapter = [[MPInterstitialCustomEventAdapter alloc] initWithDelegate:nil];
-            [anotherAdapter _getAdWithConfiguration:configuration];
-            [anotherAdapter release];
+    context(@"when deallocated", ^{
+        // There are scenarios where unregisterDelegate could be called synchronously in response to an "adDidFail" or "adDidDismiss" callback.  This can be problematic if unregisterDelegate synchronously deallocates the customEvent (which would deallocate the third party ad network object) as some third party SDKs do work immediately after sending their callbacks.
+
+        it(@"should not deallocate the custom event immediately", ^{
+            FakeInterstitialCustomEvent *event = [[FakeInterstitialCustomEvent alloc] init];
+            fakeProvider.fakeInterstitialCustomEvent = event;
+
+            adapter = [[MPInterstitialCustomEventAdapter alloc] initWithDelegate:delegate];
+
+            [adapter _getAdWithConfiguration:configuration];
+            event.delegate should equal(adapter);
+            [event release]; //the adapter has him now
+
+            [adapter dealloc];
+
+            //previously the event would be deallocated at this point.
+            //not any more!
+            event should be_instance_of([FakeInterstitialCustomEvent class]);
+
+            event.delegate should be_nil;
             event.didUnload should equal(YES);
         });
     });

@@ -39,15 +39,6 @@ describe(@"MPGoogleAdMobInterstitialCustomEvent", ^{
         event.enableAutomaticImpressionAndClickTracking should equal(YES);
     });
 
-    context(@"when told to unload", ^{
-        it(@"should not immediately dallocate the ad", ^{
-            int interstitialRetainCount = interstitial.retainCount;
-            [event customEventDidUnload];
-            interstitial.retainCount should equal(interstitialRetainCount);
-            interstitial.delegate should be_nil;
-        });
-    });
-
     context(@"when asked to fetch an interstitial", ^{
         it(@"should set interstitial's ad unit ID and delegate", ^{
             interstitial.adUnitID should equal(@"g00g1e");

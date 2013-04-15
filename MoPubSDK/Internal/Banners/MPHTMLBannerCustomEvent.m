@@ -36,13 +36,12 @@
     [self.bannerAgent loadConfiguration:[self.delegate configuration]];
 }
 
-- (void)customEventDidUnload
+- (void)dealloc
 {
     self.bannerAgent.delegate = nil;
-    [[_bannerAgent retain] autorelease];
     self.bannerAgent = nil;
 
-    [super customEventDidUnload];
+    [super dealloc];
 }
 
 - (void)rotateToOrientation:(UIInterfaceOrientation)newOrientation

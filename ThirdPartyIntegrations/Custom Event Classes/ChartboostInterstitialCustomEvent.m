@@ -74,8 +74,13 @@ forChartboostInterstitialCustomEvent:(ChartboostInterstitialCustomEvent *)event;
 - (void)customEventDidUnload
 {
     [[MPChartboostRouter sharedRouter] unregisterEvent:self];
-    self.location = nil;
     [super customEventDidUnload];
+}
+
+- (void)dealloc
+{
+    self.location = nil;
+    [super dealloc];
 }
 
 #pragma mark - MPInterstitialCustomEvent Subclass Methods

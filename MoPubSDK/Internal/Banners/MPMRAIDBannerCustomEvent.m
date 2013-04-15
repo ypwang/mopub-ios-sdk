@@ -44,13 +44,12 @@
                                     baseURL:nil];
 }
 
-- (void)customEventDidUnload
+- (void)dealloc
 {
     self.banner.delegate = nil;
-    [[_banner retain] autorelease];
     self.banner = nil;
 
-    [super customEventDidUnload];
+    [super dealloc];
 }
 
 - (void)rotateToOrientation:(UIInterfaceOrientation)newOrientation

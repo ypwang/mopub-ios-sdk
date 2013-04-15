@@ -43,15 +43,6 @@ describe(@"MPGoogleAdMobBannerCustomEvent", ^{
         event.enableAutomaticImpressionAndClickTracking should equal(YES);
     });
 
-    context(@"when told to unload", ^{
-        it(@"should not immediately dallocate the ad", ^{
-            int bannerRetainCount = banner.retainCount;
-            [event customEventDidUnload];
-            banner.retainCount should equal(bannerRetainCount);
-            banner.delegate should be_nil;
-        });
-    });
-
     context(@"when asked to fetch a banner", ^{
         it(@"should set the banner's ad unit ID and delegate", ^{
             banner.adUnitID should equal(@"g00g1e");

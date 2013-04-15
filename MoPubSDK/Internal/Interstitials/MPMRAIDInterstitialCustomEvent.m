@@ -26,13 +26,12 @@
     [self.interstitial startLoading];
 }
 
-- (void)customEventDidUnload
+- (void)dealloc
 {
     self.interstitial.delegate = nil;
-    [[_interstitial retain] autorelease];
     self.interstitial = nil;
 
-    [super customEventDidUnload];
+    [super dealloc];
 }
 
 - (void)showInterstitialFromRootViewController:(UIViewController *)controller

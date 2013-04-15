@@ -78,12 +78,11 @@
     [self.interstitial presentFromRootViewController:rootViewController];
 }
 
-- (void)customEventDidUnload
+- (void)dealloc
 {
     self.interstitial.delegate = nil;
-    [[_interstitial retain] autorelease];
     self.interstitial = nil;
-    [super customEventDidUnload];
+    [super dealloc];
 }
 
 #pragma mark - IMAdInterstitialDelegate
