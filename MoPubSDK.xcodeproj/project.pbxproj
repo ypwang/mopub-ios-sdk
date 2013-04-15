@@ -117,7 +117,7 @@
 		AE60D80016F2A8E000A4B67F /* MPInterstitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C2F16EF9DB00046D464 /* MPInterstitialViewController.m */; };
 		AE60D82016F38D0500A4B67F /* MPAdWebViewAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = AE60D81E16F38D0500A4B67F /* MPAdWebViewAgent.m */; };
 		AE60D82B16F38D1500A4B67F /* MPAdWebViewAgentSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D82916F38D1500A4B67F /* MPAdWebViewAgentSpec.mm */; };
-		AE60D82D16F39A7800A4B67F /* MPBaseAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C0516EF9DB00046D464 /* MPBaseAdapter.m */; };
+		AE60D82D16F39A7800A4B67F /* MPBaseBannerAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C0516EF9DB00046D464 /* MPBaseBannerAdapter.m */; };
 		AE60D83616F3A3D400A4B67F /* MPAdWebViewAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = AE60D81E16F38D0500A4B67F /* MPAdWebViewAgent.m */; };
 		AE60D84516F3A4C200A4B67F /* MPInstanceProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AE60D84416F3A4C200A4B67F /* MPInstanceProvider.m */; };
 		AE60D84616F3A4C200A4B67F /* MPInstanceProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AE60D84416F3A4C200A4B67F /* MPInstanceProvider.m */; };
@@ -185,7 +185,7 @@
 		AEA97BEB16EF9C030046D464 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97BEA16EF9C030046D464 /* main.m */; };
 		AEA97BEE16EF9C030046D464 /* Cedar-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97BED16EF9C030046D464 /* Cedar-iOS.framework */; };
 		AEA97C5116EF9DB00046D464 /* MPBannerCustomEventAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C0116EF9DB00046D464 /* MPBannerCustomEventAdapter.m */; };
-		AEA97C5316EF9DB00046D464 /* MPBaseAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C0516EF9DB00046D464 /* MPBaseAdapter.m */; };
+		AEA97C5316EF9DB00046D464 /* MPBaseBannerAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C0516EF9DB00046D464 /* MPBaseBannerAdapter.m */; };
 		AEA97C5716EF9DB00046D464 /* MPAdBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C0E16EF9DB00046D464 /* MPAdBrowserController.m */; };
 		AEA97C5816EF9DB00046D464 /* MPAdConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C1116EF9DB00046D464 /* MPAdConfiguration.m */; };
 		AEA97C5916EF9DB00046D464 /* MPAdServerCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C1316EF9DB00046D464 /* MPAdServerCommunicator.m */; };
@@ -578,8 +578,8 @@
 		AEA97BF816EF9DA90046D464 /* MRAID.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MRAID.bundle; sourceTree = "<group>"; };
 		AEA97C0016EF9DB00046D464 /* MPBannerCustomEventAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPBannerCustomEventAdapter.h; sourceTree = "<group>"; };
 		AEA97C0116EF9DB00046D464 /* MPBannerCustomEventAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPBannerCustomEventAdapter.m; sourceTree = "<group>"; };
-		AEA97C0416EF9DB00046D464 /* MPBaseAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPBaseAdapter.h; sourceTree = "<group>"; };
-		AEA97C0516EF9DB00046D464 /* MPBaseAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPBaseAdapter.m; sourceTree = "<group>"; };
+		AEA97C0416EF9DB00046D464 /* MPBaseBannerAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPBaseBannerAdapter.h; sourceTree = "<group>"; };
+		AEA97C0516EF9DB00046D464 /* MPBaseBannerAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPBaseBannerAdapter.m; sourceTree = "<group>"; };
 		AEA97C0D16EF9DB00046D464 /* MPAdBrowserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPAdBrowserController.h; sourceTree = "<group>"; };
 		AEA97C0E16EF9DB00046D464 /* MPAdBrowserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPAdBrowserController.m; sourceTree = "<group>"; };
 		AEA97C0F16EF9DB00046D464 /* MPAdBrowserController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MPAdBrowserController.xib; sourceTree = "<group>"; };
@@ -1078,8 +1078,8 @@
 			children = (
 				AE60D7ED16F2953C00A4B67F /* Categories */,
 				AEA97BFA16EF9DB00046D464 /* Banners */,
-				AEA97C0A16EF9DB00046D464 /* Common */,
 				AEA97C2116EF9DB00046D464 /* Interstitials */,
+				AEA97C0A16EF9DB00046D464 /* Common */,
 				AEA97C3416EF9DB00046D464 /* MRAID */,
 				AEA97C4316EF9DB00046D464 /* UIKit Categories */,
 				AEA97C4816EF9DB00046D464 /* Utility */,
@@ -1095,8 +1095,8 @@
 				AE448D50171394EB00598A73 /* MPBannerAdManager.h */,
 				AE448D51171394EB00598A73 /* MPBannerAdManager.m */,
 				AE448D54171397B200598A73 /* MPBannerAdManagerDelegate.h */,
-				AEA97C0416EF9DB00046D464 /* MPBaseAdapter.h */,
-				AEA97C0516EF9DB00046D464 /* MPBaseAdapter.m */,
+				AEA97C0416EF9DB00046D464 /* MPBaseBannerAdapter.h */,
+				AEA97C0516EF9DB00046D464 /* MPBaseBannerAdapter.m */,
 				AE6258891718BD3A00198E99 /* MPPrivateBannerCustomEventDelegate.h */,
 				AEA97C0016EF9DB00046D464 /* MPBannerCustomEventAdapter.h */,
 				AEA97C0116EF9DB00046D464 /* MPBannerCustomEventAdapter.m */,
@@ -1290,12 +1290,12 @@
 			isa = PBXGroup;
 			children = (
 				AE60D8BD16F3E8C000A4B67F /* Utility */,
+				AE60D82E16F39ACD00A4B67F /* Banners */,
 				AE60D8B316F3E69000A4B67F /* Interstitials */,
+				AEA97CB716EFAB810046D464 /* Common */,
+				AE60D7F616F2954C00A4B67F /* Categories */,
 				AE60D87216F3C86B00A4B67F /* MRAID */,
 				AE60D84F16F3A4D600A4B67F /* MPInstanceProviderSpec.mm */,
-				AE60D82E16F39ACD00A4B67F /* Banners */,
-				AE60D7F616F2954C00A4B67F /* Categories */,
-				AEA97CB716EFAB810046D464 /* Common */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -1719,7 +1719,7 @@
 				AE60D80016F2A8E000A4B67F /* MPInterstitialViewController.m in Sources */,
 				AE60D82016F38D0500A4B67F /* MPAdWebViewAgent.m in Sources */,
 				AE60D82B16F38D1500A4B67F /* MPAdWebViewAgentSpec.mm in Sources */,
-				AE60D82D16F39A7800A4B67F /* MPBaseAdapter.m in Sources */,
+				AE60D82D16F39A7800A4B67F /* MPBaseBannerAdapter.m in Sources */,
 				AE60D84616F3A4C200A4B67F /* MPInstanceProvider.m in Sources */,
 				AE60D85016F3A4D600A4B67F /* MPInstanceProviderSpec.mm in Sources */,
 				AE60D85616F3ADBB00A4B67F /* MPInstanceProvider+Spec.m in Sources */,
@@ -1849,7 +1849,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AEA97C5116EF9DB00046D464 /* MPBannerCustomEventAdapter.m in Sources */,
-				AEA97C5316EF9DB00046D464 /* MPBaseAdapter.m in Sources */,
+				AEA97C5316EF9DB00046D464 /* MPBaseBannerAdapter.m in Sources */,
 				AEA97C5716EF9DB00046D464 /* MPAdBrowserController.m in Sources */,
 				AEA97C5816EF9DB00046D464 /* MPAdConfiguration.m in Sources */,
 				AEA97C5916EF9DB00046D464 /* MPAdServerCommunicator.m in Sources */,

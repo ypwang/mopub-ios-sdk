@@ -141,8 +141,8 @@
     return self.lastFakeMPAdServerCommunicator;
 }
 
-- (MPBaseAdapter *)buildBannerAdapterForConfiguration:(MPAdConfiguration *)configuration
-                                             delegate:(id<MPAdapterDelegate>)delegate
+- (MPBaseBannerAdapter *)buildBannerAdapterForConfiguration:(MPAdConfiguration *)configuration
+                                             delegate:(id<MPBannerAdapterDelegate>)delegate
 {
     if (self.fakeBannerAdapter) {
         self.fakeBannerAdapter.delegate = delegate;
@@ -166,7 +166,7 @@
 
 
 - (MPBaseInterstitialAdapter *)buildInterstitialAdapterForConfiguration:(MPAdConfiguration *)configuration
-                                                               delegate:(id<MPBaseInterstitialAdapterDelegate>)delegate
+                                                               delegate:(id<MPInterstitialAdapterDelegate>)delegate
 {
     if (self.fakeInterstitialAdapter) {
         self.fakeInterstitialAdapter.delegate = delegate;

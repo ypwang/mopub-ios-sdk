@@ -160,7 +160,7 @@
     [self.adapter _getAdWithConfiguration:configuration];
 }
 
-#pragma mark - MPBaseInterstitialAdapterDelegate
+#pragma mark - MPInterstitialAdapterDelegate
 
 - (void)adapterDidFinishLoadingAd:(MPBaseInterstitialAdapter *)adapter
 {

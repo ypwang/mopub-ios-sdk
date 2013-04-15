@@ -21,7 +21,7 @@
 #import "MPReachability.h"
 #import "MPTimer.h"
 #import "MPInterstitialCustomEvent.h"
-#import "MPBaseAdapter.h"
+#import "MPBaseBannerAdapter.h"
 #import "MPBannerCustomEventAdapter.h"
 #import "MPLegacyBannerCustomEventAdapter.h"
 #import "MPBannerCustomEvent.h"
@@ -146,8 +146,8 @@ static MPInstanceProvider *sharedProvider = nil;
     return [[(MPBannerAdManager *)[MPBannerAdManager alloc] initWithDelegate:delegate] autorelease];
 }
 
-- (MPBaseAdapter *)buildBannerAdapterForConfiguration:(MPAdConfiguration *)configuration
-                                             delegate:(id<MPAdapterDelegate>)delegate
+- (MPBaseBannerAdapter *)buildBannerAdapterForConfiguration:(MPAdConfiguration *)configuration
+                                             delegate:(id<MPBannerAdapterDelegate>)delegate
 {
     [configuration setUpCustomEventClassForBanner];
     if (configuration.customEventClass) {
@@ -169,7 +169,7 @@ static MPInstanceProvider *sharedProvider = nil;
 
 
 - (MPBaseInterstitialAdapter *)buildInterstitialAdapterForConfiguration:(MPAdConfiguration *)configuration
-                                                               delegate:(id<MPBaseInterstitialAdapterDelegate>)delegate
+                                                               delegate:(id<MPInterstitialAdapterDelegate>)delegate
 {
     [configuration setUpCustomEventClassForInterstitial];
     if (configuration.customEventClass) {

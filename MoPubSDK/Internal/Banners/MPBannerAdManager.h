@@ -7,11 +7,11 @@
 
 #import <Foundation/Foundation.h>
 #import "MPAdServerCommunicator.h"
-#import "MPBaseAdapter.h"
+#import "MPBaseBannerAdapter.h"
 
 @protocol MPBannerAdManagerDelegate;
 
-@interface MPBannerAdManager : NSObject <MPAdServerCommunicatorDelegate, MPAdapterDelegate>
+@interface MPBannerAdManager : NSObject <MPAdServerCommunicatorDelegate, MPBannerAdapterDelegate>
 
 @property (nonatomic, assign) id<MPBannerAdManagerDelegate> delegate;
 

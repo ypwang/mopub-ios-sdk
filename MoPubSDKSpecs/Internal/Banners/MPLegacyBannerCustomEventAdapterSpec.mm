@@ -17,11 +17,11 @@ SPEC_BEGIN(MPLegacyBannerCustomEventAdapterSpec)
 
 describe(@"MPLegacyBannerCustomEventAdapter", ^{
     __block MPLegacyBannerCustomEventAdapter *adapter;
-    __block id<CedarDouble, MPAdapterDelegate> delegate;
+    __block id<CedarDouble, MPBannerAdapterDelegate> delegate;
     __block MPAdConfiguration *configuration;
 
     beforeEach(^{
-        delegate = nice_fake_for(@protocol(MPAdapterDelegate));
+        delegate = nice_fake_for(@protocol(MPBannerAdapterDelegate));
         adapter = [[MPLegacyBannerCustomEventAdapter alloc] initWithAdapterDelegate:delegate];
         configuration = [MPAdConfigurationFactory defaultBannerConfiguration];
         configuration.customEventClass = nil;

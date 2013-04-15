@@ -14,7 +14,7 @@
 @class MPURLResolver;
 @class MPInterstitialAdManager;
 @class MPAdServerCommunicator;
-@class MPBaseAdapter;
+@class MPBaseBannerAdapter;
 @class MPBannerCustomEvent;
 @class MPBaseInterstitialAdapter;
 @class MPInterstitialCustomEvent;
@@ -30,10 +30,10 @@
 @protocol MPAdDestinationDisplayAgentDelegate;
 @protocol MPInterstitialAdManagerDelegate;
 @protocol MPAdServerCommunicatorDelegate;
-@protocol MPBaseInterstitialAdapterDelegate;
+@protocol MPInterstitialAdapterDelegate;
 @protocol MPInterstitialViewControllerDelegate;
 @protocol MPInterstitialCustomEventDelegate;
-@protocol MPAdapterDelegate;
+@protocol MPBannerAdapterDelegate;
 @protocol MPBannerCustomEventDelegate;
 @protocol MPBannerAdManagerDelegate;
 
@@ -63,13 +63,13 @@ typedef id(^MPSingletonProviderBlock)();
 - (MPAdServerCommunicator *)buildMPAdServerCommunicatorWithDelegate:(id<MPAdServerCommunicatorDelegate>)delegate;
 - (MPBannerAdManager *)buildMPBannerAdManagerWithDelegate:(id<MPBannerAdManagerDelegate>)delegate;
 
-- (MPBaseAdapter *)buildBannerAdapterForConfiguration:(MPAdConfiguration *)configuration
-                                             delegate:(id<MPAdapterDelegate>)delegate;
+- (MPBaseBannerAdapter *)buildBannerAdapterForConfiguration:(MPAdConfiguration *)configuration
+                                             delegate:(id<MPBannerAdapterDelegate>)delegate;
 - (MPBannerCustomEvent *)buildBannerCustomEventFromCustomClass:(Class)customClass
                                                       delegate:(id<MPBannerCustomEventDelegate>)delegate;
 
 - (MPBaseInterstitialAdapter *)buildInterstitialAdapterForConfiguration:(MPAdConfiguration *)configuration
-                                                               delegate:(id<MPBaseInterstitialAdapterDelegate>)delegate;
+                                                               delegate:(id<MPInterstitialAdapterDelegate>)delegate;
 - (MPInterstitialCustomEvent *)buildInterstitialCustomEventFromCustomClass:(Class)customClass
                                                                   delegate:(id<MPInterstitialCustomEventDelegate>)delegate;
 

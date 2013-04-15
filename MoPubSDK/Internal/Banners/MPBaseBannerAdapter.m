@@ -1,12 +1,12 @@
 //
-//  MPBaseAdapter.m
+//  MPBaseBannerAdapter.m
 //  MoPub
 //
 //  Created by Nafis Jamal on 1/19/11.
 //  Copyright 2011 MoPub, Inc. All rights reserved.
 //
 
-#import "MPBaseAdapter.h"
+#import "MPBaseBannerAdapter.h"
 #import "MPConstants.h"
 
 #import "MPAdConfiguration.h"
@@ -15,7 +15,7 @@
 #import "MPAnalyticsTracker.h"
 #import "MPTimer.h"
 
-@interface MPBaseAdapter ()
+@interface MPBaseBannerAdapter ()
 
 @property (nonatomic, retain) NSMutableURLRequest *metricsURLRequest;
 @property (nonatomic, retain) MPAdConfiguration *configuration;
@@ -25,13 +25,13 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@implementation MPBaseAdapter
+@implementation MPBaseBannerAdapter
 
 @synthesize delegate = _delegate;
 @synthesize configuration = _configuration;
 @synthesize timeoutTimer = _timeoutTimer;
 
-- (id)initWithAdapterDelegate:(id<MPAdapterDelegate>)delegate
+- (id)initWithAdapterDelegate:(id<MPBannerAdapterDelegate>)delegate
 {
     if (self = [super init]) {
         self.delegate = delegate;

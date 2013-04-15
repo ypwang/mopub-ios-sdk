@@ -11,16 +11,16 @@
 
 @class MPAdConfiguration, CLLocation;
 
-@protocol MPBaseInterstitialAdapterDelegate;
+@protocol MPInterstitialAdapterDelegate;
 
 @interface MPBaseInterstitialAdapter : NSObject
 
-@property (nonatomic, assign) id<MPBaseInterstitialAdapterDelegate> delegate;
+@property (nonatomic, assign) id<MPInterstitialAdapterDelegate> delegate;
 
 /*
  * Creates an adapter with a reference to an MPInterstitialAdManager.
  */
-- (id)initWithDelegate:(id<MPBaseInterstitialAdapterDelegate>)delegate;
+- (id)initWithDelegate:(id<MPInterstitialAdapterDelegate>)delegate;
 
 /*
  * Sets the adapter's delegate to nil.
@@ -48,7 +48,7 @@
 
 @class MPInterstitialAdController;
 
-@protocol MPBaseInterstitialAdapterDelegate
+@protocol MPInterstitialAdapterDelegate
 
 - (MPInterstitialAdController *)interstitialAdController;
 - (id)interstitialDelegate;

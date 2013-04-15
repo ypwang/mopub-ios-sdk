@@ -1,9 +1,9 @@
-#import "MPBaseAdapter.h"
+#import "MPBaseBannerAdapter.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
-@interface MPConcreteBaseAdapter : MPBaseAdapter
+@interface MPConcreteBaseAdapter : MPBaseBannerAdapter
 
 - (void)simulateLoadingFinished;
 
@@ -23,14 +23,14 @@ using namespace Cedar::Doubles;
 
 @end
 
-SPEC_BEGIN(MPBaseAdapterSpec)
+SPEC_BEGIN(MPBaseBannerAdapterSpec)
 
-describe(@"MPBaseAdapter", ^{
+describe(@"MPBaseBannerAdapter", ^{
     __block MPConcreteBaseAdapter *adapter;
-    __block id<CedarDouble, MPAdapterDelegate> delegate;
+    __block id<CedarDouble, MPBannerAdapterDelegate> delegate;
 
     beforeEach(^{
-        delegate = nice_fake_for(@protocol(MPAdapterDelegate));
+        delegate = nice_fake_for(@protocol(MPBannerAdapterDelegate));
         adapter = [[[MPConcreteBaseAdapter alloc] initWithAdapterDelegate:delegate] autorelease];
     });
 

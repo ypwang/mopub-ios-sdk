@@ -23,7 +23,7 @@
 @synthesize delegate = _delegate;
 @synthesize configuration = _configuration;
 
-- (id)initWithDelegate:(id<MPBaseInterstitialAdapterDelegate>)delegate
+- (id)initWithDelegate:(id<MPInterstitialAdapterDelegate>)delegate
 {
     self = [super init];
     if (self) {

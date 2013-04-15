@@ -5,12 +5,12 @@
 //  Copyright (c) 2012 MoPub, Inc. All rights reserved.
 //
 
-#import "MPBaseAdapter.h"
+#import "MPBaseBannerAdapter.h"
 
 #import "MPPrivateBannerCustomEventDelegate.h"
 
 @class MPBannerCustomEvent;
 
-@interface MPBannerCustomEventAdapter : MPBaseAdapter <MPPrivateBannerCustomEventDelegate>
+@interface MPBannerCustomEventAdapter : MPBaseBannerAdapter <MPPrivateBannerCustomEventDelegate>
 
 @end

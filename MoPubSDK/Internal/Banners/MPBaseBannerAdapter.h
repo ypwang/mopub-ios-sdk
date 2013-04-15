@@ -1,5 +1,5 @@
 //
-//  MPBaseAdapter.h
+//  MPBaseBannerAdapter.h
 //  MoPub
 //
 //  Created by Nafis Jamal on 1/19/11.
@@ -10,19 +10,19 @@
 #import <UIKit/UIKit.h>
 #import "MPAdView.h"
 
-@protocol MPAdapterDelegate;
+@protocol MPBannerAdapterDelegate;
 @class MPAdConfiguration;
 
-@interface MPBaseAdapter : NSObject
+@interface MPBaseBannerAdapter : NSObject
 {
-    id<MPAdapterDelegate> _delegate;
+    id<MPBannerAdapterDelegate> _delegate;
 }
 
-@property (nonatomic, assign) id<MPAdapterDelegate> delegate;
+@property (nonatomic, assign) id<MPBannerAdapterDelegate> delegate;
 @property (nonatomic, copy) NSURL *impressionTrackingURL;
 @property (nonatomic, copy) NSURL *clickTrackingURL;
 
-- (id)initWithAdapterDelegate:(id<MPAdapterDelegate>)delegate;
+- (id)initWithAdapterDelegate:(id<MPBannerAdapterDelegate>)delegate;
 
 /*
  * Sets the adapter's delegate to nil.
@@ -52,7 +52,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@protocol MPAdapterDelegate
+@protocol MPBannerAdapterDelegate
 
 @required
 
@@ -65,19 +65,19 @@
 /*
  * These callbacks notify you that the adapter (un)successfully loaded an ad.
  */
-- (void)adapter:(MPBaseAdapter *)adapter didFailToLoadAdWithError:(NSError *)error;
-- (void)adapter:(MPBaseAdapter *)adapter didFinishLoadingAd:(UIView *)ad;
+- (void)adapter:(MPBaseBannerAdapter *)adapter didFailToLoadAdWithError:(NSError *)error;
+- (void)adapter:(MPBaseBannerAdapter *)adapter didFinishLoadingAd:(UIView *)ad;
 
 /*
  * These callbacks notify you that the user interacted (or stopped interacting) with the native ad.
  */
-- (void)userActionWillBeginForAdapter:(MPBaseAdapter *)adapter;
-- (void)userActionDidFinishForAdapter:(MPBaseAdapter *)adapter;
+- (void)userActionWillBeginForAdapter:(MPBaseBannerAdapter *)adapter;
+- (void)userActionDidFinishForAdapter:(MPBaseBannerAdapter *)adapter;
 
 /*
  * This callback notifies you that user has tapped on an ad which will cause them to leave the
  * current application (e.g. the ad action opens the iTunes store, Mobile Safari, etc).
  */
-- (void)userWillLeaveApplicationFromAdapter:(MPBaseAdapter *)adapter;
+- (void)userWillLeaveApplicationFromAdapter:(MPBaseBannerAdapter *)adapter;
 
 @end

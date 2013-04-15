@@ -9,12 +9,12 @@ SPEC_BEGIN(MPBannerCustomEventAdapterSpec)
 
 describe(@"MPBannerCustomEventAdapter", ^{
     __block MPBannerCustomEventAdapter *adapter;
-    __block id<CedarDouble, MPAdapterDelegate> delegate;
+    __block id<CedarDouble, MPBannerAdapterDelegate> delegate;
     __block MPAdConfiguration *configuration;
     __block FakeBannerCustomEvent *event;
 
     beforeEach(^{
-        delegate = nice_fake_for(@protocol(MPAdapterDelegate));
+        delegate = nice_fake_for(@protocol(MPBannerAdapterDelegate));
         adapter = [[[MPBannerCustomEventAdapter alloc] initWithAdapterDelegate:delegate] autorelease];
         configuration = [MPAdConfigurationFactory defaultBannerConfigurationWithCustomEventClassName:@"FakeBannerCustomEvent"];
         event = [[[FakeBannerCustomEvent alloc] init] autorelease];

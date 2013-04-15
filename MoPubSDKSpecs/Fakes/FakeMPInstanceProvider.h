@@ -23,7 +23,7 @@
 #import "FakeMMBannerAdView.h"
 #import "FakeMPReachability.h"
 #import "FakeGSBannerAdView.h"
-#import "MPBaseAdapter.h"
+#import "MPBaseBannerAdapter.h"
 #import "FakeBannerCustomEvent.h"
 #import "FakeMPTimer.h"
 
@@ -37,7 +37,7 @@
 @property (nonatomic, assign) MPMRAIDInterstitialViewController *fakeMPMRAIDInterstitialViewController;
 @property (nonatomic, assign) MPInterstitialAdManager *fakeMPInterstitialAdManager;
 
-@property (nonatomic, assign) MPBaseAdapter *fakeBannerAdapter;
+@property (nonatomic, assign) MPBaseBannerAdapter *fakeBannerAdapter;
 @property (nonatomic, assign) FakeBannerCustomEvent *fakeBannerCustomEvent;
 @property (nonatomic, assign) MPBaseInterstitialAdapter *fakeInterstitialAdapter;
 @property (nonatomic, assign) FakeInterstitialCustomEvent *fakeInterstitialCustomEvent;

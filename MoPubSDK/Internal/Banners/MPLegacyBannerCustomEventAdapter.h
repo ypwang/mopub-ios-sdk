@@ -5,8 +5,8 @@
 //  Copyright (c) 2013 MoPub. All rights reserved.
 //
 
-#import "MPBaseAdapter.h"
+#import "MPBaseBannerAdapter.h"
 
-@interface MPLegacyBannerCustomEventAdapter : MPBaseAdapter
+@interface MPLegacyBannerCustomEventAdapter : MPBaseBannerAdapter
 
 @end

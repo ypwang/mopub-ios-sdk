@@ -16,8 +16,8 @@
 @interface MPBannerAdManager ()
 
 @property (nonatomic, retain) MPAdServerCommunicator *communicator;
-@property (nonatomic, retain) MPBaseAdapter *onscreenAdapter;
-@property (nonatomic, retain) MPBaseAdapter *requestingAdapter;
+@property (nonatomic, retain) MPBaseBannerAdapter *onscreenAdapter;
+@property (nonatomic, retain) MPBaseBannerAdapter *requestingAdapter;
 @property (nonatomic, retain) UIView *requestingAdapterAdContentView;
 @property (nonatomic, retain) MPAdConfiguration *requestingConfiguration;
 @property (nonatomic, retain) MPTimer *refreshTimer;
@@ -220,7 +220,7 @@
     MPLogError(@"Banner view (%@) failed. Error: %@", [self.delegate adUnitId], error);
 }
 
-#pragma mark - <MPAdapterDelegate>
+#pragma mark - <MPBannerAdapterDelegate>
 
 - (MPAdView *)banner
 {
@@ -270,7 +270,7 @@
     }
 }
 
-- (void)adapter:(MPBaseAdapter *)adapter didFinishLoadingAd:(UIView *)ad
+- (void)adapter:(MPBaseBannerAdapter *)adapter didFinishLoadingAd:(UIView *)ad
 {
     if (self.requestingAdapter == adapter) {
         self.requestingAdapterAdContentView = ad;
@@ -278,7 +278,7 @@
     }
 }
 
-- (void)adapter:(MPBaseAdapter *)adapter didFailToLoadAdWithError:(NSError *)error
+- (void)adapter:(MPBaseBannerAdapter *)adapter didFailToLoadAdWithError:(NSError *)error
 {
     if (self.requestingAdapter == adapter) {
         [self loadAdWithURL:self.requestingConfiguration.failoverURL];
@@ -305,7 +305,7 @@
     }
 }
 
-- (void)userActionWillBeginForAdapter:(MPBaseAdapter *)adapter
+- (void)userActionWillBeginForAdapter:(MPBaseBannerAdapter *)adapter
 {
     if (self.onscreenAdapter == adapter) {
         self.adActionInProgress = YES;
@@ -313,7 +313,7 @@
     }
 }
 
-- (void)userActionDidFinishForAdapter:(MPBaseAdapter *)adapter
+- (void)userActionDidFinishForAdapter:(MPBaseBannerAdapter *)adapter
 {
     if (self.onscreenAdapter == adapter) {
         [self.delegate userActionDidFinish];
@@ -322,7 +322,7 @@
     }
 }
 
-- (void)userWillLeaveApplicationFromAdapter:(MPBaseAdapter *)adapter
+- (void)userWillLeaveApplicationFromAdapter:(MPBaseBannerAdapter *)adapter
 {
     if (self.onscreenAdapter == adapter) {
         [self.delegate userWillLeaveApplication];

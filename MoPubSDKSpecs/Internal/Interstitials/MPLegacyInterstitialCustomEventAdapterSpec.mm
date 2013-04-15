@@ -16,11 +16,11 @@ SPEC_BEGIN(MPLegacyInterstitialCustomEventAdapterSpec)
 
 describe(@"MPLegacyInterstitialCustomEventAdapter", ^{
     __block MPLegacyInterstitialCustomEventAdapter *adapter;
-    __block id<CedarDouble, MPBaseInterstitialAdapterDelegate> delegate;
+    __block id<CedarDouble, MPInterstitialAdapterDelegate> delegate;
     __block MPAdConfiguration *configuration;
 
     beforeEach(^{
-        delegate = nice_fake_for(@protocol(MPBaseInterstitialAdapterDelegate));
+        delegate = nice_fake_for(@protocol(MPInterstitialAdapterDelegate));
         adapter = [[MPLegacyInterstitialCustomEventAdapter alloc] initWithDelegate:delegate];
         configuration = [MPAdConfigurationFactory defaultInterstitialConfiguration];
         configuration.customEventClass = nil;
