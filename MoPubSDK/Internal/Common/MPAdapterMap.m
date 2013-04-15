@@ -38,7 +38,6 @@
         interstitialAdapterMap = [[NSDictionary dictionaryWithObjectsAndKeys:
                                    @"MPHTMLInterstitialAdapter",        @"html",
                                    @"MPMRAIDInterstitialAdapter",       @"mraid",
-                                   @"MPIAdInterstitialAdapter",         @"iAd_full",
                                    nil] retain];
     }
     return self;
