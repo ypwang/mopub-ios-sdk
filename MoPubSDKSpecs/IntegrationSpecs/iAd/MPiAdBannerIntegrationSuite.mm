@@ -69,6 +69,7 @@ describe(@"iAdBannerIntegrationSuite", ^{
         it(@"should show the ad, track an impression, tell the delegate, and start the refresh timer", ^{
             banner.subviews.lastObject should equal(fakeADBannerView);
             fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations should contain(configuration);
+            fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
             delegate should have_received(@selector(adViewDidLoadAd:)).with(banner);
             refreshTimer.isScheduled should equal(YES);
         });
