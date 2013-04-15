@@ -1,46 +1,41 @@
 //
-//  MPMraidInterstitialAdapter.m
+//  MPMRAIDInterstitialCustomEvent.m
 //  MoPub
 //
-//  Created by Andrew He on 12/11/11.
-//  Copyright (c) 2012 MoPub, Inc. All rights reserved.
+//  Copyright (c) 2013 MoPub. All rights reserved.
 //
 
-#import "MPMraidInterstitialAdapter.h"
-
-#import "MPAdConfiguration.h"
+#import "MPMRAIDInterstitialCustomEvent.h"
 #import "MPInstanceProvider.h"
-#import "MPInterstitialAdController.h"
-#import "MPInterstitialAdManager.h"
-#import "MPLogging.h"
 
-@interface MPMRAIDInterstitialAdapter ()
+@interface MPMRAIDInterstitialCustomEvent ()
 
 @property (nonatomic, retain) MPMRAIDInterstitialViewController *interstitial;
 
 @end
 
-@implementation MPMRAIDInterstitialAdapter
+@implementation MPMRAIDInterstitialCustomEvent
 
 @synthesize interstitial = _interstitial;
 
-- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration
+- (void)requestInterstitialWithCustomEventInfo:(NSDictionary *)info
 {
     self.interstitial = [[MPInstanceProvider sharedProvider] buildMPMRAIDInterstitialViewControllerWithDelegate:self
-                                                                                                  configuration:configuration];
+                                                                                                  configuration:[self.delegate configuration]];
     [self.interstitial setCloseButtonStyle:MPInterstitialCloseButtonStyleAdControlled];
     [self.interstitial startLoading];
 }
 
-- (void)dealloc
+- (void)customEventDidUnload
 {
     self.interstitial.delegate = nil;
+    [[_interstitial retain] autorelease];
     self.interstitial = nil;
 
-    [super dealloc];
+    [super customEventDidUnload];
 }
 
-- (void)showInterstitialFromViewController:(UIViewController *)controller
+- (void)showInterstitialFromRootViewController:(UIViewController *)controller
 {
     [self.interstitial presentInterstitialFromViewController:controller];
 }
@@ -49,33 +44,33 @@
 
 - (void)interstitialDidLoadAd:(MPMRAIDInterstitialViewController *)interstitial
 {
-    [self.delegate adapterDidFinishLoadingAd:self];
+    [self.delegate interstitialCustomEvent:self didLoadAd:self.interstitial];
 }
 
 - (void)interstitialDidFailToLoadAd:(MPMRAIDInterstitialViewController *)interstitial
 {
-    [self.delegate adapter:self didFailToLoadAdWithError:nil];
+    [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:nil];
 }
 
 - (void)interstitialWillAppear:(MPMRAIDInterstitialViewController *)interstitial
 {
-    [self.delegate interstitialWillAppearForAdapter:self];
+    [self.delegate interstitialCustomEventWillAppear:self];
 }
 
 - (void)interstitialDidAppear:(MPMRAIDInterstitialViewController *)interstitial
 {
-    [self.delegate interstitialDidAppearForAdapter:self];
-    [self trackImpression];
+    [self.delegate interstitialCustomEventDidAppear:self];
 }
 
 - (void)interstitialWillDisappear:(MPMRAIDInterstitialViewController *)interstitial
 {
-    [self.delegate interstitialWillDisappearForAdapter:self];
+    [self.delegate interstitialCustomEventWillDisappear:self];
 }
 
 - (void)interstitialDidDisappear:(MPMRAIDInterstitialViewController *)interstitial
 {
-    [self.delegate interstitialDidDisappearForAdapter:self];
+    [self.delegate interstitialCustomEventDidDisappear:self];
 }
+
 
 @end

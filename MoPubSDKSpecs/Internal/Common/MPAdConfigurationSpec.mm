@@ -8,6 +8,7 @@
 #import "MPMillennialInterstitialCustomEvent.h"
 #import "MPiAdInterstitialCustomEvent.h"
 #import "MPHTMLInterstitialCustomEvent.h"
+#import "MPMRAIDInterstitialCustomEvent.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -296,6 +297,11 @@ describe(@"MPAdConfiguration", ^{
         configuration = [[[MPAdConfiguration alloc] initWithHeaders:headers data:nil] autorelease];
         [configuration setUpCustomEventClassForInterstitial];
         configuration.customEventClass should equal([MPHTMLInterstitialCustomEvent class]);
+
+        headers = @{kAdTypeHeaderKey: @"mraid"};
+        configuration = [[[MPAdConfiguration alloc] initWithHeaders:headers data:nil] autorelease];
+        [configuration setUpCustomEventClassForInterstitial];
+        configuration.customEventClass should equal([MPMRAIDInterstitialCustomEvent class]);
     });
 
     it(@"should process the customEventClassData", ^{

@@ -9,7 +9,6 @@
 
 #import "MPInterstitialAdManager.h"
 
-#import "MPAdapterMap.h"
 #import "MPAdServerURLBuilder.h"
 #import "MPInterstitialAdController.h"
 #import "MPInterstitialCustomEventAdapter.h"

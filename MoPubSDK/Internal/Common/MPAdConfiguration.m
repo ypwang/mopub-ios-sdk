@@ -137,6 +137,7 @@ NSString * const kAdTypeClear = @"clear";
     [convertedCustomEvents setObject:@"MPMillennialInterstitialCustomEvent" forKey:@"millennial_full"];
     [convertedCustomEvents setObject:@"MPiAdInterstitialCustomEvent" forKey:@"iAd_full"];
     [convertedCustomEvents setObject:@"MPHTMLInterstitialCustomEvent" forKey:@"html"];
+    [convertedCustomEvents setObject:@"MPMRAIDInterstitialCustomEvent" forKey:@"mraid"];
 
     if ([convertedCustomEvents objectForKey:self.networkType]) {
         self.customEventClass = NSClassFromString([convertedCustomEvents objectForKey:self.networkType]);

@@ -12,7 +12,6 @@
 #import "MPAdWebViewAgent.h"
 #import "MPInterstitialAdManager.h"
 #import "MPAdServerCommunicator.h"
-#import "MPAdapterMap.h"
 #import "MPInterstitialCustomEventAdapter.h"
 #import "MPLegacyInterstitialCustomEventAdapter.h"
 #import "MPHTMLInterstitialViewController.h"
@@ -177,10 +176,9 @@ static MPInstanceProvider *sharedProvider = nil;
         return [[(MPInterstitialCustomEventAdapter *)[MPInterstitialCustomEventAdapter alloc] initWithDelegate:delegate] autorelease];
     } else if (configuration.customSelectorName) {
         return [[(MPLegacyInterstitialCustomEventAdapter *)[MPLegacyInterstitialCustomEventAdapter alloc] initWithDelegate:delegate] autorelease];
-    } else {
-        Class adapterClass = [[MPAdapterMap sharedAdapterMap] interstitialAdapterClassForNetworkType:configuration.networkType];
-        return [[(MPBaseInterstitialAdapter *)[adapterClass alloc] initWithDelegate:delegate] autorelease];
     }
+
+    return nil;
 }
 
 - (MPInterstitialCustomEvent *)buildInterstitialCustomEventFromCustomClass:(Class)customClass
