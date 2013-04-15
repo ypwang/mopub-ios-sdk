@@ -20,6 +20,11 @@ describe(@"MPMillennialInterstitialIntegrationSuite", ^{
         delegate = nice_fake_for(@protocol(MPInterstitialAdControllerDelegate));
 
         interstitial = [MPInterstitialAdController interstitialAdControllerForAdUnitId:@"MM_interstitial"];
+        interstitial.location = [[[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.1, 21.2)
+                                                               altitude:11
+                                                     horizontalAccuracy:12.3
+                                                       verticalAccuracy:10
+                                                              timestamp:[NSDate date]] autorelease];
         interstitial.delegate = delegate;
 
         presentingController = [[[UIViewController alloc] init] autorelease];
@@ -61,6 +66,11 @@ describe(@"MPMillennialInterstitialIntegrationSuite", ^{
             it(@"should tell the delegate that it has loaded an ad, and it should be ready", ^{
                 verify_fake_received_selectors(delegate, @[@"interstitialDidLoadAd:"]);
                 interstitial.ready should equal(YES);
+            });
+
+            it(@"should forward the location along correctly", ^{
+                // note, this is always true, not just specific to this context, but we stick the test here for convenience
+                [fakeMMInterstitialAdView.delegate requestData] should equal(@{@"vendor": @"mopubsdk", @"lat": @"37.1", @"long": @"21.2"});
             });
 
             context(@"if the user tries to load again", ^{ itShouldBehaveLike(anInterstitialThatHasAlreadyLoaded); });

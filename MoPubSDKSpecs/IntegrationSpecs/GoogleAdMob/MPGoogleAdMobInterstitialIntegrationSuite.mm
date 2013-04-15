@@ -16,11 +16,17 @@ describe(@"MPGoogleAdMobIntegrationSuite", ^{
     __block FakeGADInterstitial *fakeGADInterstitial;
     __block FakeMPAdServerCommunicator *communicator;
     __block MPAdConfiguration *configuration;
+    __block GADRequest<CedarDouble> *fakeGADRequest;
 
     beforeEach(^{
         delegate = nice_fake_for(@protocol(MPInterstitialAdControllerDelegate));
 
         interstitial = [MPInterstitialAdController interstitialAdControllerForAdUnitId:@"admob_interstitial"];
+        interstitial.location = [[[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.1, 21.2)
+                                                               altitude:11
+                                                     horizontalAccuracy:12.3
+                                                       verticalAccuracy:10
+                                                              timestamp:[NSDate date]] autorelease];
         interstitial.delegate = delegate;
 
         presentingController = [[[UIViewController alloc] init] autorelease];
@@ -33,15 +39,24 @@ describe(@"MPGoogleAdMobIntegrationSuite", ^{
         // prepare the fake and tell the injector about it
         fakeGADInterstitial = [[[FakeGADInterstitial alloc] init] autorelease];
         fakeProvider.fakeGADInterstitial = fakeGADInterstitial.masquerade;
+        fakeGADRequest = nice_fake_for([GADRequest class]);
+        fakeProvider.fakeGADRequest = fakeGADRequest;
 
         // receive the configuration -- this will create an adapter which will use our fake interstitial
-        configuration = [MPAdConfigurationFactory defaultInterstitialConfigurationWithNetworkType:@"admob_full"];
+        NSDictionary *headers = @{kInterstitialAdTypeHeaderKey: @"admob_full",
+                                  kNativeSDKParametersHeaderKey:@"{\"adUnitID\":\"g00g1e\"}"};
+        configuration = [MPAdConfigurationFactory defaultInterstitialConfigurationWithHeaders:headers HTMLString:nil];
         [communicator receiveConfiguration:configuration];
 
         // clear out the communicator so we can make future assertions about it
         [communicator resetLoadedURL];
 
         setUpInterstitialSharedContext(communicator, delegate, interstitial, @"admob_interstitial", fakeGADInterstitial, configuration.failoverURL);
+    });
+
+    it(@"should set up the google ad request correctly", ^{
+        fakeGADInterstitial.adUnitID should equal(@"g00g1e");
+        fakeGADRequest should have_received(@selector(setLocationWithLatitude:longitude:accuracy:)).with(37.1f).and_with(21.2f).and_with(12.3f);
     });
 
     context(@"while the ad is loading", ^{
