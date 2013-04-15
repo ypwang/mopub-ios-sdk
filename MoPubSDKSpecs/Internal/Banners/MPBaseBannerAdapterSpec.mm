@@ -3,13 +3,13 @@
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
-@interface MPConcreteBaseAdapter : MPBaseBannerAdapter
+@interface ConcreteBannerAdapter : MPBaseBannerAdapter
 
 - (void)simulateLoadingFinished;
 
 @end
 
-@implementation MPConcreteBaseAdapter
+@implementation ConcreteBannerAdapter
 
 - (void)getAdWithConfiguration:(MPAdConfiguration *)configuration containerSize:(CGSize)size
 {
@@ -18,7 +18,6 @@ using namespace Cedar::Doubles;
 - (void)simulateLoadingFinished
 {
     [self didStopLoading];
-    [self.delegate adapter:self didFinishLoadingAd:nil];
 }
 
 @end
@@ -26,12 +25,12 @@ using namespace Cedar::Doubles;
 SPEC_BEGIN(MPBaseBannerAdapterSpec)
 
 describe(@"MPBaseBannerAdapter", ^{
-    __block MPConcreteBaseAdapter *adapter;
+    __block ConcreteBannerAdapter *adapter;
     __block id<CedarDouble, MPBannerAdapterDelegate> delegate;
 
     beforeEach(^{
         delegate = nice_fake_for(@protocol(MPBannerAdapterDelegate));
-        adapter = [[[MPConcreteBaseAdapter alloc] initWithAdapterDelegate:delegate] autorelease];
+        adapter = [[[ConcreteBannerAdapter alloc] initWithDelegate:delegate] autorelease];
     });
 
     describe(@"timing out requests", ^{

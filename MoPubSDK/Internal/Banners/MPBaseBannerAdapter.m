@@ -17,7 +17,6 @@
 
 @interface MPBaseBannerAdapter ()
 
-@property (nonatomic, retain) NSMutableURLRequest *metricsURLRequest;
 @property (nonatomic, retain) MPAdConfiguration *configuration;
 @property (nonatomic, retain) MPTimer *timeoutTimer;
 
@@ -31,7 +30,7 @@
 @synthesize configuration = _configuration;
 @synthesize timeoutTimer = _timeoutTimer;
 
-- (id)initWithAdapterDelegate:(id<MPBannerAdapterDelegate>)delegate
+- (id)initWithDelegate:(id<MPBannerAdapterDelegate>)delegate
 {
     if (self = [super init]) {
         self.delegate = delegate;
@@ -47,7 +46,6 @@
     [self.timeoutTimer invalidate];
     self.timeoutTimer = nil;
 
-    [_metricsURLRequest release];
     [super dealloc];
 }
 

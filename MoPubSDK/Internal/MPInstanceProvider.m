@@ -151,9 +151,9 @@ static MPInstanceProvider *sharedProvider = nil;
 {
     [configuration setUpCustomEventClassForBanner];
     if (configuration.customEventClass) {
-        return [[(MPBannerCustomEventAdapter *)[MPBannerCustomEventAdapter alloc] initWithAdapterDelegate:delegate] autorelease];
+        return [[(MPBannerCustomEventAdapter *)[MPBannerCustomEventAdapter alloc] initWithDelegate:delegate] autorelease];
     } else if (configuration.customSelectorName) {
-        return [[(MPLegacyBannerCustomEventAdapter *)[MPLegacyBannerCustomEventAdapter alloc] initWithAdapterDelegate:delegate] autorelease];
+        return [[(MPLegacyBannerCustomEventAdapter *)[MPLegacyBannerCustomEventAdapter alloc] initWithDelegate:delegate] autorelease];
     }
 
     return nil;

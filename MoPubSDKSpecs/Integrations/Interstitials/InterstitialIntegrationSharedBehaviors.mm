@@ -7,6 +7,8 @@ NSString *anInterstitialThatHasAlreadyLoaded = @"an interstitial that has alread
 NSString *anInterstitialThatPreventsLoading = @"an interstitial that prevents loading";
 NSString *anInterstitialThatPreventsShowing = @"an interstitial that prevents showing";
 NSString *anInterstitialThatLoadsTheFailoverURL = @"an interstitial that loads the failover URL";
+NSString *anInterstitialThatTimesOut = @"an interstitial that times out";
+NSString *anInterstitialThatDoesNotTimeOut = @"an interstitial that does not time out";
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -38,6 +40,34 @@ failoverURL = sharedContext[@"failoverURL"];
 
 SHARED_EXAMPLE_GROUPS_BEGIN(InterstitialIntegrationSharedBehaviors)
 
+sharedExamplesFor(anInterstitialThatTimesOut, ^(NSDictionary *sharedContext) {
+    SET_UP_BLOCK_VARIABLES
+
+    beforeEach(^{
+        INITIALIZE_BLOCK_VARIABLES
+        [communicator resetLoadedURL];
+    });
+
+    it(@"should time out", ^{
+        [fakeProvider advanceMPTimers:INTERSTITIAL_TIMEOUT_INTERVAL];
+        communicator.loadedURL should equal(failoverURL);
+    });
+});
+
+sharedExamplesFor(anInterstitialThatDoesNotTimeOut, ^(NSDictionary *sharedContext) {
+    SET_UP_BLOCK_VARIABLES
+
+    beforeEach(^{
+        INITIALIZE_BLOCK_VARIABLES
+        [communicator resetLoadedURL];
+    });
+
+    it(@"should not time out", ^{
+        [fakeProvider advanceMPTimers:INTERSTITIAL_TIMEOUT_INTERVAL];
+        communicator.loadedURL should be_nil;
+    });
+});
+
 sharedExamplesFor(anInterstitialThatStartsLoadingAnAdUnit, ^(NSDictionary *sharedContext) {
     SET_UP_BLOCK_VARIABLES
 
@@ -48,7 +78,7 @@ sharedExamplesFor(anInterstitialThatStartsLoadingAnAdUnit, ^(NSDictionary *share
         [delegate reset_sent_messages];
     });
 
-    it(@"should not try to load the URL or tell the delegate anything", ^{
+    it(@"should start loading the ad", ^{
         [interstitial loadAd];
         communicator.loadedURL.absoluteString should contain(adUnitId);
         delegate.sent_messages should be_empty;

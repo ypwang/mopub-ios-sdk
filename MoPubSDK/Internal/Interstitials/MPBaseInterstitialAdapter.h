@@ -30,6 +30,8 @@
 - (void)getAdWithConfiguration:(MPAdConfiguration *)configuration;
 - (void)_getAdWithConfiguration:(MPAdConfiguration *)configuration;
 
+- (void)didStopLoading;
+
 /*
  * Presents the interstitial from the specified view controller.
  */

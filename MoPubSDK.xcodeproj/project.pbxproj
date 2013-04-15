@@ -135,7 +135,7 @@
 		AE60D8A816F3E5E800A4B67F /* MPProgressOverlayViewSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D8A716F3E5E800A4B67F /* MPProgressOverlayViewSpec.mm */; };
 		AE60D8B216F3E62400A4B67F /* MPGlobalSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D8B116F3E62400A4B67F /* MPGlobalSpec.mm */; };
 		AE60D8B516F3E6A300A4B67F /* MPInterstitialViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D8B416F3E6A300A4B67F /* MPInterstitialViewControllerSpec.mm */; };
-		AE60D8B716F3E6ED00A4B67F /* MPBaseAdapterSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D8B616F3E6ED00A4B67F /* MPBaseAdapterSpec.mm */; };
+		AE60D8B716F3E6ED00A4B67F /* MPBaseBannerAdapterSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D8B616F3E6ED00A4B67F /* MPBaseBannerAdapterSpec.mm */; };
 		AE60D8B916F3E73700A4B67F /* MRAdViewDisplayControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D8B816F3E73600A4B67F /* MRAdViewDisplayControllerSpec.mm */; };
 		AE60D8BB16F3E75E00A4B67F /* MRDimmingViewSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D8BA16F3E75E00A4B67F /* MRDimmingViewSpec.mm */; };
 		AE60D8BF16F3E8D900A4B67F /* MPTimerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE60D8BE16F3E8D900A4B67F /* MPTimerSpec.mm */; };
@@ -174,6 +174,7 @@
 		AE8F99B7171C71FA000AE3A9 /* MPHTMLInterstitialCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8F99B5171C71FA000AE3A9 /* MPHTMLInterstitialCustomEvent.m */; };
 		AE8F99C6171C7952000AE3A9 /* MPMRAIDInterstitialCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8F99C5171C7952000AE3A9 /* MPMRAIDInterstitialCustomEvent.m */; };
 		AE8F99C7171C7952000AE3A9 /* MPMRAIDInterstitialCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8F99C5171C7952000AE3A9 /* MPMRAIDInterstitialCustomEvent.m */; };
+		AE8F99D0171C8549000AE3A9 /* MPBaseInterstitialAdapterSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE8F99CF171C8548000AE3A9 /* MPBaseInterstitialAdapterSpec.mm */; };
 		AE99549A17178D2D004EB92F /* MPMillennialBannerCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = AE99549917178D2D004EB92F /* MPMillennialBannerCustomEvent.m */; };
 		AE99549B17178D2D004EB92F /* MPMillennialBannerCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = AE99549917178D2D004EB92F /* MPMillennialBannerCustomEvent.m */; };
 		AE9954A417178D48004EB92F /* MPMillennialBannerCustomEventSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE9954A317178D48004EB92F /* MPMillennialBannerCustomEventSpec.mm */; };
@@ -521,7 +522,7 @@
 		AE60D8A716F3E5E800A4B67F /* MPProgressOverlayViewSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPProgressOverlayViewSpec.mm; sourceTree = "<group>"; };
 		AE60D8B116F3E62400A4B67F /* MPGlobalSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPGlobalSpec.mm; sourceTree = "<group>"; };
 		AE60D8B416F3E6A300A4B67F /* MPInterstitialViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPInterstitialViewControllerSpec.mm; sourceTree = "<group>"; };
-		AE60D8B616F3E6ED00A4B67F /* MPBaseAdapterSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPBaseAdapterSpec.mm; sourceTree = "<group>"; };
+		AE60D8B616F3E6ED00A4B67F /* MPBaseBannerAdapterSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPBaseBannerAdapterSpec.mm; sourceTree = "<group>"; };
 		AE60D8B816F3E73600A4B67F /* MRAdViewDisplayControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MRAdViewDisplayControllerSpec.mm; sourceTree = "<group>"; };
 		AE60D8BA16F3E75E00A4B67F /* MRDimmingViewSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MRDimmingViewSpec.mm; sourceTree = "<group>"; };
 		AE60D8BE16F3E8D900A4B67F /* MPTimerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPTimerSpec.mm; sourceTree = "<group>"; };
@@ -561,6 +562,7 @@
 		AE8F99B5171C71FA000AE3A9 /* MPHTMLInterstitialCustomEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHTMLInterstitialCustomEvent.m; sourceTree = "<group>"; };
 		AE8F99C4171C7952000AE3A9 /* MPMRAIDInterstitialCustomEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMRAIDInterstitialCustomEvent.h; sourceTree = "<group>"; };
 		AE8F99C5171C7952000AE3A9 /* MPMRAIDInterstitialCustomEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMRAIDInterstitialCustomEvent.m; sourceTree = "<group>"; };
+		AE8F99CF171C8548000AE3A9 /* MPBaseInterstitialAdapterSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPBaseInterstitialAdapterSpec.mm; sourceTree = "<group>"; };
 		AE99549817178D2D004EB92F /* MPMillennialBannerCustomEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMillennialBannerCustomEvent.h; sourceTree = "<group>"; };
 		AE99549917178D2D004EB92F /* MPMillennialBannerCustomEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMillennialBannerCustomEvent.m; sourceTree = "<group>"; };
 		AE9954A317178D48004EB92F /* MPMillennialBannerCustomEventSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPMillennialBannerCustomEventSpec.mm; sourceTree = "<group>"; };
@@ -984,7 +986,7 @@
 		AE60D82E16F39ACD00A4B67F /* Banners */ = {
 			isa = PBXGroup;
 			children = (
-				AE60D8B616F3E6ED00A4B67F /* MPBaseAdapterSpec.mm */,
+				AE60D8B616F3E6ED00A4B67F /* MPBaseBannerAdapterSpec.mm */,
 				AE7565C2170E49A100ED83C3 /* MPLegacyBannerCustomEventAdapterSpec.mm */,
 				AE7565C4170E4ADE00ED83C3 /* MPBannerCustomEventAdapterSpec.mm */,
 				AEC16C771714B9BF00397DB4 /* MPBannerAdManagerSpec.mm */,
@@ -1009,11 +1011,12 @@
 		AE60D8B316F3E69000A4B67F /* Interstitials */ = {
 			isa = PBXGroup;
 			children = (
+				AE8F99CF171C8548000AE3A9 /* MPBaseInterstitialAdapterSpec.mm */,
+				AE43417616F9281A00B73710 /* MPInterstitialCustomEventAdapterSpec.mm */,
+				AEE8E92D16FA7AE900C41D15 /* MPLegacyInterstitialCustomEventAdapterSpec.mm */,
 				AE60D7FD16F2A2BB00A4B67F /* MPHTMLInterstitialViewControllerSpec.mm */,
 				AE60D8B416F3E6A300A4B67F /* MPInterstitialViewControllerSpec.mm */,
-				AE43417616F9281A00B73710 /* MPInterstitialCustomEventAdapterSpec.mm */,
 				AEEA5E8616FA2225003D48F4 /* MPInterstitialAdManagerSpec.mm */,
-				AEE8E92D16FA7AE900C41D15 /* MPLegacyInterstitialCustomEventAdapterSpec.mm */,
 				AEE8E93E16FB824500C41D15 /* MPMRAIDInterstitialCustomEventSpec.mm */,
 				AE8F99B2171C71D7000AE3A9 /* MPHTMLInterstitialCustomEventSpec.mm */,
 			);
@@ -1734,7 +1737,7 @@
 				AE60D8A816F3E5E800A4B67F /* MPProgressOverlayViewSpec.mm in Sources */,
 				AE60D8B216F3E62400A4B67F /* MPGlobalSpec.mm in Sources */,
 				AE60D8B516F3E6A300A4B67F /* MPInterstitialViewControllerSpec.mm in Sources */,
-				AE60D8B716F3E6ED00A4B67F /* MPBaseAdapterSpec.mm in Sources */,
+				AE60D8B716F3E6ED00A4B67F /* MPBaseBannerAdapterSpec.mm in Sources */,
 				AE60D8B916F3E73700A4B67F /* MRAdViewDisplayControllerSpec.mm in Sources */,
 				AE60D8BB16F3E75E00A4B67F /* MRDimmingViewSpec.mm in Sources */,
 				AE60D8BF16F3E8D900A4B67F /* MPTimerSpec.mm in Sources */,
@@ -1841,6 +1844,7 @@
 				AE8F99B3171C71D7000AE3A9 /* MPHTMLInterstitialCustomEventSpec.mm in Sources */,
 				AE8F99B7171C71FA000AE3A9 /* MPHTMLInterstitialCustomEvent.m in Sources */,
 				AE8F99C7171C7952000AE3A9 /* MPMRAIDInterstitialCustomEvent.m in Sources */,
+				AE8F99D0171C8549000AE3A9 /* MPBaseInterstitialAdapterSpec.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

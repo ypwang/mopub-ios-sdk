@@ -48,6 +48,7 @@
 
 - (void)customEventDidLoadAd
 {
+    [self didStopLoading];
     if (!self.hasTrackedImpression) {
         self.hasTrackedImpression = YES;
         [self trackImpression];
@@ -56,6 +57,7 @@
 
 - (void)customEventDidFailToLoadAd
 {
+    [self didStopLoading];
     [self.delegate adapter:self didFailToLoadAdWithError:nil];
 }
 

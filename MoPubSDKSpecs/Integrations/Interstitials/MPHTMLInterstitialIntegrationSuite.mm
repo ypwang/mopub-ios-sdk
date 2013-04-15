@@ -60,6 +60,7 @@ describe(@"MPHTMLInterstitialIntegrationSuite", ^{
 
         context(@"and the user tries to load again", ^{ itShouldBehaveLike(anInterstitialThatPreventsLoading); });
         context(@"and the user tries to show the ad", ^{ itShouldBehaveLike(anInterstitialThatPreventsShowing); });
+        context(@"and the timeout interval elapses", ^{ itShouldBehaveLike(anInterstitialThatTimesOut); });
     });
 
     context(@"when the ad successfully loads", ^{
@@ -74,6 +75,7 @@ describe(@"MPHTMLInterstitialIntegrationSuite", ^{
         });
 
         context(@"and the user tries to load again", ^{ itShouldBehaveLike(anInterstitialThatHasAlreadyLoaded); });
+        context(@"and the timeout interval elapses", ^{ itShouldBehaveLike(anInterstitialThatDoesNotTimeOut); });
 
         context(@"and the user shows the ad", ^{
             beforeEach(^{
@@ -83,7 +85,7 @@ describe(@"MPHTMLInterstitialIntegrationSuite", ^{
 
             it(@"should track an impression (only once)", ^{
                 fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations should contain(configuration);
-                
+
                 [presentingController dismissModalViewControllerAnimated:NO];
                 [interstitial showFromViewController:presentingController];
                 fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
@@ -94,7 +96,7 @@ describe(@"MPHTMLInterstitialIntegrationSuite", ^{
                 [webview didAppear] should equal(YES);
                 webview.presentingViewController should equal(presentingController);
             });
-            
+
             context(@"and the ad loads a custom method URL", ^{
                 it(@"should call the method on the interstitial's delegate", ^{
                     NSURL *URL = [NSURL URLWithString:@"mopub://custom?fnc=beMethodical&data=%7B%22foo%22%3A3%7D"];
@@ -137,6 +139,7 @@ describe(@"MPHTMLInterstitialIntegrationSuite", ^{
         });
 
         itShouldBehaveLike(anInterstitialThatLoadsTheFailoverURL);
+        context(@"and the timeout interval elapses", ^{ itShouldBehaveLike(anInterstitialThatDoesNotTimeOut); });
     });
 });
 

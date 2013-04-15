@@ -72,12 +72,14 @@
 - (void)interstitialCustomEvent:(MPInterstitialCustomEvent *)customEvent
                       didLoadAd:(id)ad
 {
+    [self didStopLoading];
     [self.delegate adapterDidFinishLoadingAd:self];
 }
 
 - (void)interstitialCustomEvent:(MPInterstitialCustomEvent *)customEvent
        didFailToLoadAdWithError:(NSError *)error
 {
+    [self didStopLoading];
     [self.delegate adapter:self didFailToLoadAdWithError:error];
 }
 

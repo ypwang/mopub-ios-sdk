@@ -44,6 +44,15 @@
 
 @implementation FakeMPInstanceProvider
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        self.fakeTimers = [NSMutableArray array];
+    }
+    return self;
+}
+
 - (id)returnFake:(id)fake orCall:(IDReturningBlock)block
 {
     if (fake) {
@@ -322,9 +331,6 @@
 
 - (MPTimer *)buildMPTimerWithTimeInterval:(NSTimeInterval)seconds target:(id)target selector:(SEL)selector repeats:(BOOL)repeats
 {
-    if (!self.fakeTimers) {
-        self.fakeTimers = [NSMutableArray array];
-    }
     MPTimer *fakeTimer = [FakeMPTimer timerWithTimeInterval:seconds target:target selector:selector repeats:repeats];
     [self.fakeTimers addObject:fakeTimer];
     return fakeTimer;

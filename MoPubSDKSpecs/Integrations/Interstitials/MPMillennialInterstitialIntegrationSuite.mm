@@ -85,6 +85,7 @@ describe(@"MPMillennialInterstitialIntegrationSuite", ^{
 
             context(@"if the user tries to load again", ^{ itShouldBehaveLike(anInterstitialThatPreventsLoading); });
             context(@"if the user tries to show the ad", ^{ itShouldBehaveLike(anInterstitialThatPreventsShowing); });
+            context(@"and the timeout interval elapses", ^{ itShouldBehaveLike(anInterstitialThatTimesOut); });
 
             context(@"when the ad is cached successfully", ^{
                 beforeEach(^{
@@ -99,6 +100,7 @@ describe(@"MPMillennialInterstitialIntegrationSuite", ^{
                 });
 
                 context(@"if the user tries to load again", ^{ itShouldBehaveLike(anInterstitialThatHasAlreadyLoaded); });
+                context(@"and the timeout interval elapses", ^{ itShouldBehaveLike(anInterstitialThatDoesNotTimeOut); });
                 //"Show" tests are below
             });
 
@@ -241,6 +243,7 @@ describe(@"MPMillennialInterstitialIntegrationSuite", ^{
         });
 
         itShouldBehaveLike(anInterstitialThatLoadsTheFailoverURL);
+        context(@"and the timeout interval elapses", ^{ itShouldBehaveLike(anInterstitialThatDoesNotTimeOut); });
     });
 });
 

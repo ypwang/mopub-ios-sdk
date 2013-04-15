@@ -22,7 +22,7 @@ describe(@"MPLegacyBannerCustomEventAdapter", ^{
 
     beforeEach(^{
         delegate = nice_fake_for(@protocol(MPBannerAdapterDelegate));
-        adapter = [[MPLegacyBannerCustomEventAdapter alloc] initWithAdapterDelegate:delegate];
+        adapter = [[MPLegacyBannerCustomEventAdapter alloc] initWithDelegate:delegate];
         configuration = [MPAdConfigurationFactory defaultBannerConfiguration];
         configuration.customEventClass = nil;
         configuration.customSelectorName = @"buildGuy";

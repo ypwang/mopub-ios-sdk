@@ -53,6 +53,7 @@ describe(@"MPLegacyCustomEventInterstitialIntegrationSuite", ^{
         });
 
         context(@"and the user tries to load again", ^{ itShouldBehaveLike(anInterstitialThatPreventsLoading); });
+        context(@"and the timeout interval elapses", ^{ itShouldBehaveLike(anInterstitialThatTimesOut); });
 
         context(@"and the user tries to show the ad", ^{
             beforeEach(^{
@@ -109,6 +110,8 @@ describe(@"MPLegacyCustomEventInterstitialIntegrationSuite", ^{
                 delegate.sent_messages should be_empty;
             });
         });
+
+        context(@"and the timeout interval elapses", ^{ itShouldBehaveLike(anInterstitialThatDoesNotTimeOut); });
     });
 
     context(@"when the ad fails to load", ^{
@@ -118,6 +121,7 @@ describe(@"MPLegacyCustomEventInterstitialIntegrationSuite", ^{
         });
 
         itShouldBehaveLike(anInterstitialThatLoadsTheFailoverURL);
+        context(@"and the timeout interval elapses", ^{ itShouldBehaveLike(anInterstitialThatDoesNotTimeOut); });
     });
 
     context(@"when a custom event action begins", ^{

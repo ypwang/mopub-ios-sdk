@@ -15,7 +15,7 @@ describe(@"MPBannerCustomEventAdapter", ^{
 
     beforeEach(^{
         delegate = nice_fake_for(@protocol(MPBannerAdapterDelegate));
-        adapter = [[[MPBannerCustomEventAdapter alloc] initWithAdapterDelegate:delegate] autorelease];
+        adapter = [[[MPBannerCustomEventAdapter alloc] initWithDelegate:delegate] autorelease];
         configuration = [MPAdConfigurationFactory defaultBannerConfigurationWithCustomEventClassName:@"FakeBannerCustomEvent"];
         event = [[[FakeBannerCustomEvent alloc] init] autorelease];
         fakeProvider.FakeBannerCustomEvent = event;

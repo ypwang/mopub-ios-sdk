@@ -22,7 +22,7 @@
 @property (nonatomic, copy) NSURL *impressionTrackingURL;
 @property (nonatomic, copy) NSURL *clickTrackingURL;
 
-- (id)initWithAdapterDelegate:(id<MPBannerAdapterDelegate>)delegate;
+- (id)initWithDelegate:(id<MPBannerAdapterDelegate>)delegate;
 
 /*
  * Sets the adapter's delegate to nil.

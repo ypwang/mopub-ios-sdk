@@ -16,6 +16,8 @@ extern NSString *anInterstitialThatHasAlreadyLoaded;
 extern NSString *anInterstitialThatPreventsLoading;
 extern NSString *anInterstitialThatPreventsShowing;
 extern NSString *anInterstitialThatLoadsTheFailoverURL;
+extern NSString *anInterstitialThatTimesOut;
+extern NSString *anInterstitialThatDoesNotTimeOut;
 
 @protocol FakeInterstitialAd <NSObject>
 

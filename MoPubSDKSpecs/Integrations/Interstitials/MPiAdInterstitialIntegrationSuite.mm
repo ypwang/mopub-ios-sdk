@@ -51,6 +51,7 @@ describe(@"MPiAdInterstitialIntegrationSuite", ^{
 
         context(@"and the user tries to load again", ^{ itShouldBehaveLike(anInterstitialThatPreventsLoading); });
         context(@"and the user tries to show the ad", ^{ itShouldBehaveLike(anInterstitialThatPreventsShowing); });
+        context(@"and the timeout interval elapses", ^{ itShouldBehaveLike(anInterstitialThatTimesOut); });
     });
 
     context(@"when the ad successfully loads", ^{
@@ -65,6 +66,7 @@ describe(@"MPiAdInterstitialIntegrationSuite", ^{
         });
 
         context(@"and the user tries to load again", ^{ itShouldBehaveLike(anInterstitialThatHasAlreadyLoaded); });
+        context(@"and the timeout interval elapses", ^{ itShouldBehaveLike(anInterstitialThatDoesNotTimeOut); });
 
         context(@"and the user shows the ad", ^{
             beforeEach(^{
@@ -158,6 +160,7 @@ describe(@"MPiAdInterstitialIntegrationSuite", ^{
         });
 
         itShouldBehaveLike(anInterstitialThatLoadsTheFailoverURL);
+        context(@"and the timeout interval elapses", ^{ itShouldBehaveLike(anInterstitialThatDoesNotTimeOut); });
     });
 });
 

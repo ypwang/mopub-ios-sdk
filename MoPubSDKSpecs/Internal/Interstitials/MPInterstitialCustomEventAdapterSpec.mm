@@ -125,9 +125,27 @@ describe(@"MPInterstitialCustomEventAdapter", ^{
         });
     });
 
-    describe(@"Timeout!", ^{
-        xit(@"should timeout!", ^{
+    describe(@"the adapter timeout", ^{
+        beforeEach(^{
+            [adapter _getAdWithConfiguration:configuration];
+        });
 
+        context(@"when the custom event successfully loads", ^{
+            it(@"should no longer trigger a timeout", ^{
+                [event simulateLoadingAd];
+                [delegate reset_sent_messages];
+                [fakeProvider advanceMPTimers:INTERSTITIAL_TIMEOUT_INTERVAL];
+                delegate.sent_messages should be_empty;
+            });
+        });
+
+        context(@"when the custom event fails to load", ^{
+            it(@"should invalidate the timer", ^{
+                [event simulateLoadingAd];
+                [delegate reset_sent_messages];
+                [fakeProvider advanceMPTimers:INTERSTITIAL_TIMEOUT_INTERVAL];
+                delegate.sent_messages should be_empty;
+            });
         });
     });
 });
