@@ -8,9 +8,9 @@ using namespace Cedar::Doubles;
 - (void)legacyMethod:(MPInterstitialAdController *)controller;
 @end
 
-SPEC_BEGIN(LegacyCustomEventInterstitialIntegrationSuite)
+SPEC_BEGIN(MPLegacyCustomEventInterstitialIntegrationSuite)
 
-describe(@"LegacyCustomEventInterstitialIntegrationSuite", ^{
+describe(@"MPLegacyCustomEventInterstitialIntegrationSuite", ^{
     __block id<FakeLegacyCustomEvent, CedarDouble> delegate;
     __block MPInterstitialAdController *interstitial = nil;
     __block FakeMPAdServerCommunicator *communicator;

@@ -11,9 +11,9 @@ using namespace Cedar::Doubles;
 
 @end
 
-SPEC_BEGIN(HTMLInterstitialIntegrationSuite)
+SPEC_BEGIN(MPHTMLInterstitialIntegrationSuite)
 
-describe(@"HTMLInterstitialIntegrationSuite", ^{
+describe(@"MPHTMLInterstitialIntegrationSuite", ^{
     __block id<MethodicalDelegate, CedarDouble> delegate;
     __block MPInterstitialAdController *interstitial = nil;
     __block UIViewController *presentingController;
@@ -81,7 +81,11 @@ describe(@"HTMLInterstitialIntegrationSuite", ^{
                 [interstitial showFromViewController:presentingController];
             });
 
-            it(@"should track an impression", ^{
+            it(@"should track an impression (only once)", ^{
+                fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations should contain(configuration);
+                
+                [presentingController dismissModalViewControllerAnimated:NO];
+                [interstitial showFromViewController:presentingController];
                 fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
             });
 
@@ -90,7 +94,7 @@ describe(@"HTMLInterstitialIntegrationSuite", ^{
                 [webview didAppear] should equal(YES);
                 webview.presentingViewController should equal(presentingController);
             });
-
+            
             context(@"and the ad loads a custom method URL", ^{
                 it(@"should call the method on the interstitial's delegate", ^{
                     NSURL *URL = [NSURL URLWithString:@"mopub://custom?fnc=beMethodical&data=%7B%22foo%22%3A3%7D"];

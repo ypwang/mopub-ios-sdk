@@ -36,7 +36,6 @@
     if (self = [super init])
     {
         interstitialAdapterMap = [[NSDictionary dictionaryWithObjectsAndKeys:
-                                   @"MPHTMLInterstitialAdapter",        @"html",
                                    @"MPMRAIDInterstitialAdapter",       @"mraid",
                                    nil] retain];
     }

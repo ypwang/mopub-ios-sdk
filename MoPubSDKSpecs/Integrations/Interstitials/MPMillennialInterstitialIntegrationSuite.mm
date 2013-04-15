@@ -6,9 +6,9 @@
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
-SPEC_BEGIN(MillennialInterstitialIntegrationSuite)
+SPEC_BEGIN(MPMillennialInterstitialIntegrationSuite)
 
-describe(@"MillennialInterstitialIntegrationSuite", ^{
+describe(@"MPMillennialInterstitialIntegrationSuite", ^{
     __block id<MPInterstitialAdControllerDelegate, CedarDouble> delegate;
     __block MPInterstitialAdController *interstitial = nil;
     __block UIViewController *presentingController;

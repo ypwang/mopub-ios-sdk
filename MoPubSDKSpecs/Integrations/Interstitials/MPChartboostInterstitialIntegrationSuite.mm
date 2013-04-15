@@ -5,9 +5,9 @@
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
-SPEC_BEGIN(ChartboostInterstitialIntegrationSuite)
+SPEC_BEGIN(MPChartboostInterstitialIntegrationSuite)
 
-describe(@"ChartboostInterstitialIntegrationSuite", ^{
+describe(@"MPChartboostInterstitialIntegrationSuite", ^{
     __block id<MPInterstitialAdControllerDelegate, CedarDouble> delegate;
     __block MPInterstitialAdController *interstitial = nil;
     __block UIViewController *presentingController;

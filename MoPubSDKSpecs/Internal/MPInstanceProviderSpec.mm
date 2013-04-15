@@ -1,6 +1,5 @@
 #import "MPInstanceProvider.h"
 #import "MPAdConfigurationFactory.h"
-#import "MPHTMLInterstitialAdapter.h"
 #import "FakeInterstitialCustomEvent.h"
 #import "MPInterstitialCustomEventAdapter.h"
 #import "MPLegacyInterstitialCustomEventAdapter.h"
@@ -8,6 +7,7 @@
 #import "MPBannerCustomEventAdapter.h"
 #import "MPLegacyBannerCustomEventAdapter.h"
 #import "MPAnalyticsTracker.h"
+#import "MPHTMLInterstitialViewController.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -30,14 +30,6 @@ describe(@"MPInstanceProvider", ^{
     });
 
     describe(@"providing interstitial adapters", ^{
-        context(@"when the configuration network type is one of the supported networks", ^{
-            it(@"should return an adapter of the right type", ^{
-                configuration = [MPAdConfigurationFactory defaultInterstitialConfigurationWithNetworkType:@"html"];
-                [provider buildInterstitialAdapterForConfiguration:configuration
-                                                          delegate:nil] should be_instance_of([MPHTMLInterstitialAdapter class]);
-            });
-        });
-
         context(@"when the configuration network type is 'custom'", ^{
             context(@"when the configuration has a custom event class", ^{
                 context(@"when the class exists", ^{

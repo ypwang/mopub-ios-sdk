@@ -7,6 +7,7 @@
 #import "MPGoogleAdMobInterstitialCustomEvent.h"
 #import "MPMillennialInterstitialCustomEvent.h"
 #import "MPiAdInterstitialCustomEvent.h"
+#import "MPHTMLInterstitialCustomEvent.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -290,6 +291,11 @@ describe(@"MPAdConfiguration", ^{
         configuration = [[[MPAdConfiguration alloc] initWithHeaders:headers data:nil] autorelease];
         [configuration setUpCustomEventClassForInterstitial];
         configuration.customEventClass should equal([MPiAdInterstitialCustomEvent class]);
+
+        headers = @{kAdTypeHeaderKey: @"html"}; //yup, this is what the server sends over
+        configuration = [[[MPAdConfiguration alloc] initWithHeaders:headers data:nil] autorelease];
+        [configuration setUpCustomEventClassForInterstitial];
+        configuration.customEventClass should equal([MPHTMLInterstitialCustomEvent class]);
     });
 
     it(@"should process the customEventClassData", ^{

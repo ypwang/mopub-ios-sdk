@@ -10,7 +10,7 @@
 
 #import "MPAdView.h"
 #import "MPGlobal.h"
-#import "MPInterstitialAdManager.h"
+#import "MPInterstitialAdManagerDelegate.h"
 
 @protocol MPInterstitialAdControllerDelegate;
 

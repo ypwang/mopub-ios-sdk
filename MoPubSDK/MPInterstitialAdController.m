@@ -9,6 +9,7 @@
 
 #import "MPLogging.h"
 #import "MPInstanceProvider.h"
+#import "MPInterstitialAdManager.h"
 
 @interface MPInterstitialAdController ()
 

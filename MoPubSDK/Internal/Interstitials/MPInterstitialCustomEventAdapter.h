@@ -7,9 +7,8 @@
 
 #import "MPBaseInterstitialAdapter.h"
 
-#import "MPInterstitialCustomEvent.h"
-#import "MPInterstitialCustomEventDelegate.h"
+#import "MPPrivateInterstitialCustomEventDelegate.h"
 
-@interface MPInterstitialCustomEventAdapter : MPBaseInterstitialAdapter <MPInterstitialCustomEventDelegate>
+@interface MPInterstitialCustomEventAdapter : MPBaseInterstitialAdapter <MPPrivateInterstitialCustomEventDelegate>
 
 @end

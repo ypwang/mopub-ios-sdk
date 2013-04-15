@@ -3,6 +3,7 @@
 #import "MPAdServerURLBuilder.h"
 #import "MPAdConfigurationFactory.h"
 #import "MPLegacyInterstitialCustomEventAdapter.h"
+#import "MPInterstitialAdManagerDelegate.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;

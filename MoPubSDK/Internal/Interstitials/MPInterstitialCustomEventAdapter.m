@@ -8,11 +8,9 @@
 #import "MPInterstitialCustomEventAdapter.h"
 
 #import "MPAdConfiguration.h"
-#import "MPInterstitialAdManager.h"
-#import "MPInterstitialAdController.h"
 #import "MPLogging.h"
 #import "MPInstanceProvider.h"
-
+#import "MPInterstitialCustomEvent.h"
 
 @interface MPInterstitialCustomEventAdapter ()
 
@@ -64,6 +62,11 @@
 - (CLLocation *)location
 {
     return [self.delegate location];
+}
+
+- (id)interstitialDelegate
+{
+    return [self.delegate interstitialDelegate];
 }
 
 - (void)interstitialCustomEvent:(MPInterstitialCustomEvent *)customEvent

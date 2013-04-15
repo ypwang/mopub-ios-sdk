@@ -1,29 +1,28 @@
 //
-//  MPHTMLInterstitialAdapter.m
+//  MPHTMLInterstitialCustomEvent.m
 //  MoPub
 //
-//  Copyright (c) 2012 MoPub, Inc. All rights reserved.
+//  Copyright (c) 2013 MoPub. All rights reserved.
 //
 
-#import "MPHTMLInterstitialAdapter.h"
-
-#import "MPAdConfiguration.h"
-#import "MPInterstitialAdController.h"
+#import "MPHTMLInterstitialCustomEvent.h"
 #import "MPLogging.h"
+#import "MPAdConfiguration.h"
 #import "MPInstanceProvider.h"
 
-@interface MPHTMLInterstitialAdapter ()
+@interface MPHTMLInterstitialCustomEvent ()
 
 @property (nonatomic, retain) MPHTMLInterstitialViewController *interstitial;
 
 @end
 
-@implementation MPHTMLInterstitialAdapter
+@implementation MPHTMLInterstitialCustomEvent
 
 @synthesize interstitial = _interstitial;
 
-- (void)getAdWithConfiguration:(MPAdConfiguration *)configuration
+- (void)requestInterstitialWithCustomEventInfo:(NSDictionary *)info
 {
+    MPAdConfiguration *configuration = [self.delegate configuration];
     MPLogTrace(@"Loading HTML interstitial with source: %@", [configuration adResponseHTMLString]);
 
     self.interstitial = [[MPInstanceProvider sharedProvider] buildMPHTMLInterstitialViewControllerWithDelegate:self
@@ -32,55 +31,55 @@
     [self.interstitial loadConfiguration:configuration];
 }
 
-- (void)dealloc
+- (void)customEventDidUnload
 {
     [self.interstitial setDelegate:nil];
     [self.interstitial setCustomMethodDelegate:nil];
+    [[_interstitial retain] autorelease];
     self.interstitial = nil;
-    [super dealloc];
+    [super customEventDidUnload];
 }
 
-- (void)showInterstitialFromViewController:(UIViewController *)controller
+- (void)showInterstitialFromRootViewController:(UIViewController *)rootViewController
 {
-    [self.interstitial presentInterstitialFromViewController:controller];
+    [self.interstitial presentInterstitialFromViewController:rootViewController];
 }
 
 #pragma mark - MPHTMLInterstitialViewControllerDelegate
 
 - (void)interstitialDidLoadAd:(MPHTMLInterstitialViewController *)interstitial
 {
-    [self.delegate adapterDidFinishLoadingAd:self];
+    [self.delegate interstitialCustomEvent:self didLoadAd:self.interstitial];
 }
 
 - (void)interstitialDidFailToLoadAd:(MPHTMLInterstitialViewController *)interstitial
 {
-    [self.delegate adapter:self didFailToLoadAdWithError:nil];
+    [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:nil];
 }
 
 - (void)interstitialWillAppear:(MPHTMLInterstitialViewController *)interstitial
 {
-    [self.delegate interstitialWillAppearForAdapter:self];
+    [self.delegate interstitialCustomEventWillAppear:self];
 }
 
 - (void)interstitialDidAppear:(MPHTMLInterstitialViewController *)interstitial
 {
-    [self.delegate interstitialDidAppearForAdapter:self];
-    [self trackImpression];
+    [self.delegate interstitialCustomEventDidAppear:self];
 }
 
 - (void)interstitialWillDisappear:(MPHTMLInterstitialViewController *)interstitial
 {
-    [self.delegate interstitialWillDisappearForAdapter:self];
+    [self.delegate interstitialCustomEventWillDisappear:self];
 }
 
 - (void)interstitialDidDisappear:(MPHTMLInterstitialViewController *)interstitial
 {
-    [self.delegate interstitialDidDisappearForAdapter:self];
+    [self.delegate interstitialCustomEventDidDisappear:self];
 }
 
 - (void)interstitialWillLeaveApplication:(MPHTMLInterstitialViewController *)interstitial
 {
-    [self.delegate interstitialWillLeaveApplicationForAdapter:self];
+    [self.delegate interstitialCustomEventWillLeaveApplication:self];
 }
 
 @end

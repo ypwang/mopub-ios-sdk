@@ -14,6 +14,7 @@
 #import "MPInterstitialAdController.h"
 #import "MPInterstitialCustomEventAdapter.h"
 #import "MPInstanceProvider.h"
+#import "MPInterstitialAdManagerDelegate.h"
 
 @interface MPInterstitialAdManager ()
 

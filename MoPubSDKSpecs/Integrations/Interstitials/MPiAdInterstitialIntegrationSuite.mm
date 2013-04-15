@@ -1,24 +1,25 @@
 #import "MPInterstitialAdController.h"
 #import "MPAdConfigurationFactory.h"
-#import "FakeGSFullScreenAd.h"
+#import "FakeMPAdServerCommunicator.h"
+#import "FakeADInterstitialAd.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
-SPEC_BEGIN(GreystripeInterstitialIntegrationSuite)
+SPEC_BEGIN(MPiAdInterstitialIntegrationSuite)
 
-describe(@"GreystripeInterstitialIntegrationSuite", ^{
+describe(@"MPiAdInterstitialIntegrationSuite", ^{
     __block id<MPInterstitialAdControllerDelegate, CedarDouble> delegate;
     __block MPInterstitialAdController *interstitial = nil;
     __block UIViewController *presentingController;
-    __block FakeGSFullscreenAd *greystripeAd;
+    __block FakeADInterstitialAd *fakeADInterstitialAd;
     __block FakeMPAdServerCommunicator *communicator;
     __block MPAdConfiguration *configuration;
 
     beforeEach(^{
         delegate = nice_fake_for(@protocol(MPInterstitialAdControllerDelegate));
 
-        interstitial = [MPInterstitialAdController interstitialAdControllerForAdUnitId:@"greystripe_interstitial"];
+        interstitial = [MPInterstitialAdController interstitialAdControllerForAdUnitId:@"iAd_interstitial"];
         interstitial.delegate = delegate;
 
         presentingController = [[[UIViewController alloc] init] autorelease];
@@ -26,28 +27,23 @@ describe(@"GreystripeInterstitialIntegrationSuite", ^{
         // request an Ad
         [interstitial loadAd];
         communicator = fakeProvider.lastFakeMPAdServerCommunicator;
-        communicator.loadedURL.absoluteString should contain(@"greystripe_interstitial");
+        communicator.loadedURL.absoluteString should contain(@"iAd_interstitial");
 
         // prepare the fake and tell the injector about it
-        greystripeAd = [[[FakeGSFullscreenAd alloc] init] autorelease];
-        fakeProvider.fakeGSFullscreenAd = greystripeAd;
+        fakeADInterstitialAd = [[[FakeADInterstitialAd alloc] init] autorelease];
+        fakeProvider.fakeADInterstitialAd = fakeADInterstitialAd.masquerade;
 
         // receive the configuration -- this will create an adapter which will use our fake interstitial
-        configuration = [MPAdConfigurationFactory defaultInterstitialConfigurationWithCustomEventClassName:@"GreystripeInterstitialCustomEvent"];
+        configuration = [MPAdConfigurationFactory defaultInterstitialConfigurationWithNetworkType:@"iAd_full"];
         [communicator receiveConfiguration:configuration];
 
         // clear out the communicator so we can make future assertions about it
         [communicator resetLoadedURL];
 
-        setUpInterstitialSharedContext(communicator, delegate, interstitial, @"greystripe_interstitial", greystripeAd, configuration.failoverURL);
+        setUpInterstitialSharedContext(communicator, delegate, interstitial, @"iAd_interstitial", fakeADInterstitialAd, configuration.failoverURL);
     });
 
     context(@"while the ad is loading", ^{
-        it(@"should configure Greystripe properly and start fetching the interstitial", ^{
-            greystripeAd.GUID should equal(@"YOUR_GREYSTRIPE_GUID");
-            greystripeAd.didFetch should equal(YES);
-        });
-
         it(@"should not tell the delegate anything, nor should it be ready", ^{
             delegate.sent_messages should be_empty;
             interstitial.ready should equal(NO);
@@ -60,7 +56,7 @@ describe(@"GreystripeInterstitialIntegrationSuite", ^{
     context(@"when the ad successfully loads", ^{
         beforeEach(^{
             [delegate reset_sent_messages];
-            [greystripeAd simulateLoadingAd];
+            [fakeADInterstitialAd simulateLoadingAd];
         });
 
         it(@"should tell the delegate and -ready should return YES", ^{
@@ -72,15 +68,14 @@ describe(@"GreystripeInterstitialIntegrationSuite", ^{
 
         context(@"and the user shows the ad", ^{
             beforeEach(^{
-                greystripeAd.isAdReady = YES;
                 [delegate reset_sent_messages];
                 fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(0);
                 [interstitial showFromViewController:presentingController];
             });
 
-            it(@"should track an impression and tell the custom event to show", ^{
+            it(@"should track an impression and tell iAd to show", ^{
                 verify_fake_received_selectors(delegate, @[@"interstitialWillAppear:", @"interstitialDidAppear:"]);
-                greystripeAd.presentingViewController should equal(presentingController);
+                fakeADInterstitialAd.presentingViewController should equal(presentingController);
                 fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(1);
             });
 
@@ -90,28 +85,48 @@ describe(@"GreystripeInterstitialIntegrationSuite", ^{
                 });
 
                 it(@"should track only one click, no matter how many interactions there are, and shouldn't tell the delegate anything", ^{
-                    [greystripeAd simulateUserTap];
+                    [fakeADInterstitialAd simulateUserInteraction];
+                    fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
+                    [fakeADInterstitialAd simulateUserInteraction];
                     fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
 
-                    [greystripeAd simulateUserTap];
-                    fakeProvider.sharedFakeMPAnalyticsTracker.trackedClickConfigurations.count should equal(1);
-
-                    delegate.sent_messages.count should equal(0);
+                    delegate.sent_messages should be_empty;
                 });
             });
 
             context(@"and the user tries to load again", ^{ itShouldBehaveLike(anInterstitialThatHasAlreadyLoaded); });
 
+            context(@"and the user tries to show (again)", ^{
+                __block UIViewController *newPresentingController;
+
+                beforeEach(^{
+                    [delegate reset_sent_messages];
+                    [fakeProvider.sharedFakeMPAnalyticsTracker reset];
+
+                    newPresentingController = [[[UIViewController alloc] init] autorelease];
+                    [interstitial showFromViewController:newPresentingController];
+                });
+
+                it(@"should tell iAd to show and send the delegate messages again", ^{
+                    // XXX: The "ideal" behavior here is to ignore any -show messages after the first one, until the
+                    // underlying ad is dismissed. However, given the risk that some third-party or custom event
+                    // network could give us a silent failure when presenting (and therefore never dismiss), it might
+                    // be best just to allow multiple calls to go through.
+
+                    fakeADInterstitialAd.presentingViewController should equal(newPresentingController);
+                    verify_fake_received_selectors(delegate, @[@"interstitialWillAppear:", @"interstitialDidAppear:"]);
+                    fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations.count should equal(0);
+                });
+            });
+
             context(@"when the ad is dismissed", ^{
                 beforeEach(^{
                     [delegate reset_sent_messages];
-                    [greystripeAd simulateUserDismissingAd];
-                    verify_fake_received_selectors(delegate, @[@"interstitialWillDisappear:"]);
-                    [greystripeAd simulateInterstitialFinishedDisappearing];
-                    verify_fake_received_selectors(delegate, @[@"interstitialDidDisappear:"]);
+                    [fakeADInterstitialAd simulateUserDismissingAd];
                 });
 
                 it(@"should tell the delegate and should no longer be ready", ^{
+                    verify_fake_received_selectors(delegate, @[@"interstitialWillDisappear:", @"interstitialDidDisappear:", @"interstitialDidExpire:"]);
                     interstitial.ready should equal(NO);
                 });
 
@@ -120,29 +135,26 @@ describe(@"GreystripeInterstitialIntegrationSuite", ^{
             });
         });
 
-        context(@"GREYSTRIPE SAD PATH: when the interstitial uncaches *before* it is shown", ^{
+        context(@"iAD SAD PATH: when the ad unloads *before* it is shown", ^{
             beforeEach(^{
                 [delegate reset_sent_messages];
-                greystripeAd.isAdReady = NO;
-                [interstitial showFromViewController:presentingController];
+                [fakeADInterstitialAd simulateUnloadingAd];
             });
 
-            it(@"should not track any impressions", ^{
-                fakeProvider.sharedFakeMPAnalyticsTracker.trackedImpressionConfigurations should be_empty;
+            it(@"should tell the delegate that the ad expired and should no longer be ready", ^{
+                verify_fake_received_selectors(delegate, @[@"interstitialDidExpire:"]);
+                interstitial.ready should equal(NO);
             });
 
-            it(@"should not tell Greystripe to show", ^{
-                greystripeAd.presentingViewController should be_nil;
-            });
-
-            itShouldBehaveLike(anInterstitialThatLoadsTheFailoverURL);
+            context(@"and the user tries to load again", ^{ itShouldBehaveLike(anInterstitialThatStartsLoadingAnAdUnit); });
+            context(@"and the user tries to show the ad", ^{ itShouldBehaveLike(anInterstitialThatPreventsShowing); });
         });
     });
 
     context(@"when the ad fails to load", ^{
         beforeEach(^{
             [delegate reset_sent_messages];
-            [greystripeAd simulateFailingToLoad];
+            [fakeADInterstitialAd simulateFailingToLoad];
         });
 
         itShouldBehaveLike(anInterstitialThatLoadsTheFailoverURL);

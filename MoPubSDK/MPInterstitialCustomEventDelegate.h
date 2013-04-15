@@ -69,6 +69,7 @@
 //DOCUMENT!
 
 - (void)interstitialCustomEventDidExpire:(MPInterstitialCustomEvent *)customEvent;
+- (void)interstitialCustomEventWillLeaveApplication:(MPInterstitialCustomEvent *)customEvent;
 
 
 - (CLLocation *)location;
