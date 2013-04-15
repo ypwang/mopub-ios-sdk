@@ -7,9 +7,9 @@
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
-SPEC_BEGIN(MPAdMobIntegrationSuite)
+SPEC_BEGIN(MPGoogleAdMobIntegrationSuite)
 
-describe(@"MPAdMobIntegrationSuite", ^{
+describe(@"MPGoogleAdMobIntegrationSuite", ^{
     __block id<MPInterstitialAdControllerDelegate, CedarDouble> delegate;
     __block MPInterstitialAdController *interstitial = nil;
     __block UIViewController *presentingController;
