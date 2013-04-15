@@ -68,6 +68,9 @@
 
 //DOCUMENT!
 
+- (void)interstitialCustomEventDidExpire:(MPInterstitialCustomEvent *)customEvent;
+
+
 - (CLLocation *)location;
 - (void)trackImpression;
 - (void)trackClick;

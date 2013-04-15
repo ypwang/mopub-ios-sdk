@@ -5,6 +5,7 @@
 #import "MPHTMLBannerCustomEvent.h"
 #import "MPMRAIDBannerCustomEvent.h"
 #import "MPGoogleAdMobInterstitialCustomEvent.h"
+#import "MPMillennialInterstitialCustomEvent.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -278,6 +279,11 @@ describe(@"MPAdConfiguration", ^{
         configuration = [[[MPAdConfiguration alloc] initWithHeaders:headers data:nil] autorelease];
         [configuration setUpCustomEventClassForInterstitial];
         configuration.customEventClass should equal([MPGoogleAdMobInterstitialCustomEvent class]);
+
+        headers = @{kAdTypeHeaderKey: @"interstitial", kInterstitialAdTypeHeaderKey: @"millennial_full"};
+        configuration = [[[MPAdConfiguration alloc] initWithHeaders:headers data:nil] autorelease];
+        [configuration setUpCustomEventClassForInterstitial];
+        configuration.customEventClass should equal([MPMillennialInterstitialCustomEvent class]);
     });
 
     it(@"should process the customEventClassData", ^{

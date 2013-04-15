@@ -39,8 +39,6 @@
                                    @"MPHTMLInterstitialAdapter",        @"html",
                                    @"MPMRAIDInterstitialAdapter",       @"mraid",
                                    @"MPIAdInterstitialAdapter",         @"iAd_full",
-                                   @"MPGoogleAdMobInterstitialAdapter", @"admob_full",
-                                   @"MPMillennialInterstitialAdapter",  @"millennial_full",
                                    nil] retain];
     }
     return self;

@@ -6,7 +6,6 @@
 //
 
 #import "FakeMPInstanceProvider.h"
-#import "MPMillennialInterstitialAdapter.h"
 #import "MPAdWebView.h"
 #import "FakeMPTimer.h"
 
@@ -19,7 +18,7 @@
 - (GADBannerView *)buildGADBannerViewWithFrame:(CGRect)frame;
 - (GADRequest *)buildGADRequest;
 
-- (MMAdView *)buildMMInterstitialAdWithAPID:(NSString *)apid delegate:(MPMillennialInterstitialAdapter *)delegate;
+- (MMAdView *)buildMMInterstitialAdWithAPID:(NSString *)apid delegate:(id<MMAdDelegate>)delegate;
 - (MMAdView *)buildMMAdViewWithFrame:(CGRect)frame type:(MMAdType)type apid:(NSString *)apid delegate:(id<MMAdDelegate>)delegate;
 
 - (Chartboost *)buildChartboost;
@@ -238,7 +237,7 @@
                      }];
 }
 
-- (MMAdView *)buildMMInterstitialAdWithAPID:(NSString *)apid delegate:(MPMillennialInterstitialAdapter *)delegate
+- (MMAdView *)buildMMInterstitialAdWithAPID:(NSString *)apid delegate:(id<MMAdDelegate>)delegate
 {
     if ([apid length] == 0) {
         return nil;

@@ -87,7 +87,6 @@
 		AE43417C16F9375A00B73710 /* FakeInterstitialCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = AE43417B16F9375A00B73710 /* FakeInterstitialCustomEvent.m */; };
 		AE43417D16F9394900B73710 /* MPInterstitialCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97C7F16EF9DBC0046D464 /* MPInterstitialCustomEvent.m */; };
 		AE43418116F93C7C00B73710 /* MPIAdInterstitialAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = AEC845FA16F2371900943383 /* MPIAdInterstitialAdapter.m */; };
-		AE43418316F93C7C00B73710 /* MPMillennialInterstitialAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = AEC845FE16F2371900943383 /* MPMillennialInterstitialAdapter.m */; };
 		AE43419416F93DB600B73710 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE43418F16F93DB600B73710 /* libGoogleAdMobAds.a */; };
 		AE43419516F93DB700B73710 /* libMMSDK_4.6.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE43419216F93DB600B73710 /* libMMSDK_4.6.2.a */; };
 		AE43419716F93DEC00B73710 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE43419616F93DEB00B73710 /* iAd.framework */; };
@@ -227,6 +226,9 @@
 		AEA97CB116EF9E9F0046D464 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA97CB016EF9E9F0046D464 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		AEA97CB416EFA8980046D464 /* MPURLResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97CB316EFA8980046D464 /* MPURLResolver.m */; };
 		AEA97CB516EFA89C0046D464 /* MPURLResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA97CB316EFA8980046D464 /* MPURLResolver.m */; };
+		AEB8830C171C606700FCBFCB /* MPMillennialInterstitialCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = AEB8830B171C606700FCBFCB /* MPMillennialInterstitialCustomEvent.m */; };
+		AEB8830D171C606700FCBFCB /* MPMillennialInterstitialCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = AEB8830B171C606700FCBFCB /* MPMillennialInterstitialCustomEvent.m */; };
+		AEB88316171C608300FCBFCB /* MPMillennialInterstitialCustomEventSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEB88315171C608300FCBFCB /* MPMillennialInterstitialCustomEventSpec.mm */; };
 		AEBD2DF91717615200C774EB /* MPAdViewIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE093C5E170DF92E00F5334B /* MPAdViewIntegrationSuite.mm */; };
 		AEBD2E021717616300C774EB /* MPBannerAdManagerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEC16C771714B9BF00397DB4 /* MPBannerAdManagerSpec.mm */; };
 		AEBD2E031717651C00C774EB /* iAdBannerIntegrationSuite.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE64C4871714D9600001A07E /* iAdBannerIntegrationSuite.mm */; };
@@ -270,9 +272,7 @@
 		AEE8E94C16FB933B00C41D15 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE43419B16F93E2900B73710 /* MessageUI.framework */; };
 		AEE8E94D16FB934400C41D15 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE43419D16F93E2E00B73710 /* SystemConfiguration.framework */; };
 		AEE8E94E16FB934C00C41D15 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE43419916F93E2300B73710 /* AudioToolbox.framework */; };
-		AEE8E95016FBAAE400C41D15 /* MPMillennialInterstitialAdapterSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEE8E94F16FBAAE400C41D15 /* MPMillennialInterstitialAdapterSpec.mm */; };
 		AEE8E95316FBAD4A00C41D15 /* FakeMMInterstitialAdView.m in Sources */ = {isa = PBXBuildFile; fileRef = AEE8E95216FBAD4900C41D15 /* FakeMMInterstitialAdView.m */; };
-		AEE8E95416FBBBA100C41D15 /* MPMillennialInterstitialAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = AEC845FE16F2371900943383 /* MPMillennialInterstitialAdapter.m */; };
 		AEE8E95516FBBBB600C41D15 /* libMMSDK_4.6.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE43419216F93DB600B73710 /* libMMSDK_4.6.2.a */; };
 		AEE8E95616FBBBD900C41D15 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE4341A316F93E7C00B73710 /* MediaPlayer.framework */; };
 		AEE8E95716FBBBF200C41D15 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE4341A816F93E8F00B73710 /* AVFoundation.framework */; };
@@ -671,6 +671,9 @@
 		AEA97CB016EF9E9F0046D464 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		AEA97CB216EFA8980046D464 /* MPURLResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPURLResolver.h; sourceTree = "<group>"; };
 		AEA97CB316EFA8980046D464 /* MPURLResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPURLResolver.m; sourceTree = "<group>"; };
+		AEB8830A171C606700FCBFCB /* MPMillennialInterstitialCustomEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMillennialInterstitialCustomEvent.h; sourceTree = "<group>"; };
+		AEB8830B171C606700FCBFCB /* MPMillennialInterstitialCustomEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMillennialInterstitialCustomEvent.m; sourceTree = "<group>"; };
+		AEB88315171C608300FCBFCB /* MPMillennialInterstitialCustomEventSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPMillennialInterstitialCustomEventSpec.mm; sourceTree = "<group>"; };
 		AEBD2E0417176DE400C774EB /* MPGoogleAdMobBannerCustomEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPGoogleAdMobBannerCustomEvent.h; sourceTree = "<group>"; };
 		AEBD2E0517176DE400C774EB /* MPGoogleAdMobBannerCustomEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPGoogleAdMobBannerCustomEvent.m; sourceTree = "<group>"; };
 		AEBD2E0817176DF700C774EB /* MPGoogleAdMobBannerCustomEventSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPGoogleAdMobBannerCustomEventSpec.mm; sourceTree = "<group>"; };
@@ -692,8 +695,6 @@
 		AEC845EF16F2371900943383 /* InMobiInterstitialCustomEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InMobiInterstitialCustomEvent.m; sourceTree = "<group>"; };
 		AEC845F916F2371900943383 /* MPIAdInterstitialAdapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MPIAdInterstitialAdapter.h; sourceTree = "<group>"; };
 		AEC845FA16F2371900943383 /* MPIAdInterstitialAdapter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MPIAdInterstitialAdapter.m; sourceTree = "<group>"; };
-		AEC845FD16F2371900943383 /* MPMillennialInterstitialAdapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MPMillennialInterstitialAdapter.h; sourceTree = "<group>"; };
-		AEC845FE16F2371900943383 /* MPMillennialInterstitialAdapter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MPMillennialInterstitialAdapter.m; sourceTree = "<group>"; };
 		AEC9E56A16EFABD7007CA2BA /* MPURLResolverSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPURLResolverSpec.mm; sourceTree = "<group>"; };
 		AEC9E56D16EFACBB007CA2BA /* FakeMPURLResolverDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeMPURLResolverDelegate.h; sourceTree = "<group>"; };
 		AEC9E56E16EFACBB007CA2BA /* FakeMPURLResolverDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeMPURLResolverDelegate.m; sourceTree = "<group>"; };
@@ -716,7 +717,6 @@
 		AEE8E93B16FB733800C41D15 /* FakeMPAnalyticsTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeMPAnalyticsTracker.m; sourceTree = "<group>"; };
 		AEE8E93E16FB824500C41D15 /* MPMRAIDInterstitialAdapterSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPMRAIDInterstitialAdapterSpec.mm; sourceTree = "<group>"; };
 		AEE8E94416FB8B2300C41D15 /* MPIAdInterstitialAdapterSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPIAdInterstitialAdapterSpec.mm; sourceTree = "<group>"; };
-		AEE8E94F16FBAAE400C41D15 /* MPMillennialInterstitialAdapterSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPMillennialInterstitialAdapterSpec.mm; sourceTree = "<group>"; };
 		AEE8E95116FBAD4900C41D15 /* FakeMMInterstitialAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeMMInterstitialAdView.h; sourceTree = "<group>"; };
 		AEE8E95216FBAD4900C41D15 /* FakeMMInterstitialAdView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeMMInterstitialAdView.m; sourceTree = "<group>"; };
 		AEE8E95D16FCBD1700C41D15 /* FakeAdInterstitialAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeAdInterstitialAd.h; sourceTree = "<group>"; };
@@ -1337,12 +1337,14 @@
 				AEC845F016F2371900943383 /* MoPubNetworkAdapters */,
 				AEF46A541716266A004129C5 /* MPiAdBannerCustomEvent.h */,
 				AEF46A551716266A004129C5 /* MPiAdBannerCustomEvent.m */,
-				AE6258BD1718D94D00198E99 /* MPGoogleAdMobInterstitialCustomEvent.h */,
-				AE6258BE1718D94D00198E99 /* MPGoogleAdMobInterstitialCustomEvent.m */,
 				AEBD2E0417176DE400C774EB /* MPGoogleAdMobBannerCustomEvent.h */,
 				AEBD2E0517176DE400C774EB /* MPGoogleAdMobBannerCustomEvent.m */,
+				AE6258BD1718D94D00198E99 /* MPGoogleAdMobInterstitialCustomEvent.h */,
+				AE6258BE1718D94D00198E99 /* MPGoogleAdMobInterstitialCustomEvent.m */,
 				AE99549817178D2D004EB92F /* MPMillennialBannerCustomEvent.h */,
 				AE99549917178D2D004EB92F /* MPMillennialBannerCustomEvent.m */,
+				AEB8830A171C606700FCBFCB /* MPMillennialInterstitialCustomEvent.h */,
+				AEB8830B171C606700FCBFCB /* MPMillennialInterstitialCustomEvent.m */,
 			);
 			path = ThirdPartyIntegrations;
 			sourceTree = "<group>";
@@ -1369,8 +1371,6 @@
 			children = (
 				AEC845F916F2371900943383 /* MPIAdInterstitialAdapter.h */,
 				AEC845FA16F2371900943383 /* MPIAdInterstitialAdapter.m */,
-				AEC845FD16F2371900943383 /* MPMillennialInterstitialAdapter.h */,
-				AEC845FE16F2371900943383 /* MPMillennialInterstitialAdapter.m */,
 			);
 			path = MoPubNetworkAdapters;
 			sourceTree = "<group>";
@@ -1415,6 +1415,7 @@
 				AE5A368F17186C170054385C /* GreystripeBannerCustomEventSpec.mm */,
 				AEECD01C171885A90008A0ED /* InMobiBannerCustomEventSpec.mm */,
 				AE6258C81718E01D00198E99 /* MPGoogleAdMobInterstitialCustomEventSpec.mm */,
+				AEB88315171C608300FCBFCB /* MPMillennialInterstitialCustomEventSpec.mm */,
 			);
 			path = ThirdPartyIntegrations;
 			sourceTree = "<group>";
@@ -1423,7 +1424,6 @@
 			isa = PBXGroup;
 			children = (
 				AEE8E94416FB8B2300C41D15 /* MPIAdInterstitialAdapterSpec.mm */,
-				AEE8E94F16FBAAE400C41D15 /* MPMillennialInterstitialAdapterSpec.mm */,
 			);
 			path = MoPubNetworkAdapters;
 			sourceTree = "<group>";
@@ -1785,9 +1785,7 @@
 				AEE8E94016FB844300C41D15 /* MPMRAIDInterstitialAdapter.m in Sources */,
 				AEE8E94516FB8B2300C41D15 /* MPIAdInterstitialAdapterSpec.mm in Sources */,
 				AEE8E94616FB8C1500C41D15 /* MPIAdInterstitialAdapter.m in Sources */,
-				AEE8E95016FBAAE400C41D15 /* MPMillennialInterstitialAdapterSpec.mm in Sources */,
 				AEE8E95316FBAD4A00C41D15 /* FakeMMInterstitialAdView.m in Sources */,
-				AEE8E95416FBBBA100C41D15 /* MPMillennialInterstitialAdapter.m in Sources */,
 				AEE8E95C16FBC73300C41D15 /* MPInterstitialAdController.m in Sources */,
 				AEE8E95F16FCBD1800C41D15 /* FakeAdInterstitialAd.m in Sources */,
 				AED1B2E316FD120D000F5C39 /* FakeGADInterstitial.m in Sources */,
@@ -1860,6 +1858,8 @@
 				AE6258B01718D7DB00198E99 /* MPMRAIDBannerIntegrationSuite.mm in Sources */,
 				AE6258C01718D94D00198E99 /* MPGoogleAdMobInterstitialCustomEvent.m in Sources */,
 				AE6258C91718E01D00198E99 /* MPGoogleAdMobInterstitialCustomEventSpec.mm in Sources */,
+				AEB8830D171C606700FCBFCB /* MPMillennialInterstitialCustomEvent.m in Sources */,
+				AEB88316171C608300FCBFCB /* MPMillennialInterstitialCustomEventSpec.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1918,7 +1918,6 @@
 				AE60D83616F3A3D400A4B67F /* MPAdWebViewAgent.m in Sources */,
 				AE60D84516F3A4C200A4B67F /* MPInstanceProvider.m in Sources */,
 				AE43418116F93C7C00B73710 /* MPIAdInterstitialAdapter.m in Sources */,
-				AE43418316F93C7C00B73710 /* MPMillennialInterstitialAdapter.m in Sources */,
 				AEE8E92B16FA7ABD00C41D15 /* MPLegacyInterstitialCustomEventAdapter.m in Sources */,
 				AEE8E93416FB6F9B00C41D15 /* MPAnalyticsTracker.m in Sources */,
 				AE1091991701053300812E6E /* ChartboostInterstitialCustomEvent.m in Sources */,
@@ -1937,6 +1936,7 @@
 				AE62588C1718BDCA00198E99 /* MPHTMLBannerCustomEvent.m in Sources */,
 				AE6258A41718D56F00198E99 /* MPMRAIDBannerCustomEvent.m in Sources */,
 				AE6258BF1718D94D00198E99 /* MPGoogleAdMobInterstitialCustomEvent.m in Sources */,
+				AEB8830C171C606700FCBFCB /* MPMillennialInterstitialCustomEvent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

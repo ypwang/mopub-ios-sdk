@@ -102,6 +102,11 @@
     [self.delegate interstitialDidDisappearForAdapter:self];
 }
 
+- (void)interstitialCustomEventDidExpire:(MPInterstitialCustomEvent *)customEvent
+{
+    [self.delegate interstitialDidExpireForAdapter:self];
+}
+
 - (void)interstitialCustomEventDidReceiveTapEvent:(MPInterstitialCustomEvent *)customEvent
 {
     if ([self.interstitialCustomEvent enableAutomaticImpressionAndClickTracking] && !self.hasTrackedClick) {
