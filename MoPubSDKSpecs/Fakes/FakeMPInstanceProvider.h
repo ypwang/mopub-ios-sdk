@@ -29,42 +29,60 @@
 
 @interface FakeMPInstanceProvider : MPInstanceProvider
 
-@property (nonatomic, assign) MPAdWebViewAgent *fakeMPAdWebViewAgent;
-@property (nonatomic, assign) MPAdWebView *fakeMPAdWebView;
-@property (nonatomic, assign) MPAdDestinationDisplayAgent *fakeMPAdDestinationDisplayAgent;
-@property (nonatomic, assign) MPURLResolver *fakeMPURLResolver;
-@property (nonatomic, assign) MPHTMLInterstitialViewController *fakeMPHTMLInterstitialViewController;
-@property (nonatomic, assign) MPMRAIDInterstitialViewController *fakeMPMRAIDInterstitialViewController;
-@property (nonatomic, assign) MPInterstitialAdManager *fakeMPInterstitialAdManager;
+#pragma mark - Fetching Ads
+@property (nonatomic, assign) FakeMPAdServerCommunicator *lastFakeMPAdServerCommunicator;
 
+#pragma mark - Banners
 @property (nonatomic, assign) MPBaseBannerAdapter *fakeBannerAdapter;
 @property (nonatomic, assign) FakeBannerCustomEvent *fakeBannerCustomEvent;
+
+#pragma mark - Interstitials
+@property (nonatomic, assign) MPInterstitialAdManager *fakeMPInterstitialAdManager;
 @property (nonatomic, assign) MPBaseInterstitialAdapter *fakeInterstitialAdapter;
 @property (nonatomic, assign) FakeInterstitialCustomEvent *fakeInterstitialCustomEvent;
+@property (nonatomic, assign) MPHTMLInterstitialViewController *fakeMPHTMLInterstitialViewController;
+@property (nonatomic, assign) MPMRAIDInterstitialViewController *fakeMPMRAIDInterstitialViewController;
 
-@property (nonatomic, assign) ADInterstitialAd *fakeADInterstitialAd;
-@property (nonatomic, assign) ADBannerView *fakeADBannerView;
+#pragma mark - HTML Ads
+@property (nonatomic, assign) MPAdWebView *fakeMPAdWebView;
+@property (nonatomic, assign) MPAdWebViewAgent *fakeMPAdWebViewAgent;
 
-@property (nonatomic, assign) GADInterstitial *fakeGADInterstitial;
-@property (nonatomic, assign) GADBannerView *fakeGADBannerView;
-@property (nonatomic, assign) GADRequest *fakeGADRequest;
+#pragma mark - URL Handling
+@property (nonatomic, assign) MPURLResolver *fakeMPURLResolver;
+@property (nonatomic, assign) MPAdDestinationDisplayAgent *fakeMPAdDestinationDisplayAgent;
 
-@property (nonatomic, assign) FakeMMInterstitialAdView *fakeMMAdViewInterstitial;
-@property (nonatomic, assign) FakeMMBannerAdView *fakeMMAdViewBanner;
-@property (nonatomic, assign) Chartboost *fakeChartboost;
-@property (nonatomic, assign) IMAdInterstitial *fakeIMAdInterstitial;
-@property (nonatomic, assign) IMAdView *fakeIMAdView;
-
-@property (nonatomic, assign) FakeGSFullscreenAd *fakeGSFullscreenAd;
-@property (nonatomic, assign) FakeGSBannerAdView *fakeGSBannerAdView;
-
+#pragma mark - Utilities
 @property (nonatomic, assign) FakeMPReachability *fakeMPReachability;
-
-@property (nonatomic, assign) FakeMPAdServerCommunicator *lastFakeMPAdServerCommunicator;
 
 - (FakeMPAnalyticsTracker *)sharedFakeMPAnalyticsTracker;
 - (void)advanceMPTimers:(NSTimeInterval)timeInterval;
 - (NSMutableArray *)fakeTimers;
 - (FakeMPTimer *)lastFakeMPTimerWithSelector:(SEL)selector;
+
+#pragma mark - Third Party Integrations
+
+#pragma mark iAd
+@property (nonatomic, assign) ADBannerView *fakeADBannerView;
+@property (nonatomic, assign) ADInterstitialAd *fakeADInterstitialAd;
+
+#pragma mark Chartboost
+@property (nonatomic, assign) Chartboost *fakeChartboost;
+
+#pragma mark Google Ad Mob
+@property (nonatomic, assign) GADRequest *fakeGADRequest;
+@property (nonatomic, assign) GADBannerView *fakeGADBannerView;
+@property (nonatomic, assign) GADInterstitial *fakeGADInterstitial;
+
+#pragma mark Greystripe
+@property (nonatomic, assign) FakeGSBannerAdView *fakeGSBannerAdView;
+@property (nonatomic, assign) FakeGSFullscreenAd *fakeGSFullscreenAd;
+
+#pragma mark InMobi
+@property (nonatomic, assign) IMAdView *fakeIMAdView;
+@property (nonatomic, assign) IMAdInterstitial *fakeIMAdInterstitial;
+
+#pragma mark Millennial
+@property (nonatomic, assign) FakeMMBannerAdView *fakeMMAdViewBanner;
+@property (nonatomic, assign) FakeMMInterstitialAdView *fakeMMAdViewInterstitial;
 
 @end

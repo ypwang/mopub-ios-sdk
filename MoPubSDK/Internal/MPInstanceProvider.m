@@ -74,23 +74,12 @@ static MPInstanceProvider *sharedProvider = nil;
     return singleton;
 }
 
-- (MPTimer *)buildMPTimerWithTimeInterval:(NSTimeInterval)seconds target:(id)target selector:(SEL)selector repeats:(BOOL)repeats
+#pragma mark - Fetching Ads
+- (NSMutableURLRequest *)buildConfiguredURLRequestWithURL:(NSURL *)URL
 {
-    return [MPTimer timerWithTimeInterval:seconds target:target selector:selector repeats:repeats];
-}
-
-- (MPReachability *)sharedMPReachability
-{
-    return [self singletonForClass:[MPReachability class] provider:^id{
-        return [MPReachability reachabilityForLocalWiFi];
-    }];
-}
-
-- (MPAnalyticsTracker *)sharedMPAnalyticsTracker
-{
-    return [self singletonForClass:[MPAnalyticsTracker class] provider:^id{
-        return [MPAnalyticsTracker tracker];
-    }];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
+    [request setValue:self.userAgent forHTTPHeaderField:@"User-Agent"];
+    return request;
 }
 
 - (NSString *)userAgent
@@ -102,44 +91,12 @@ static MPInstanceProvider *sharedProvider = nil;
     return _userAgent;
 }
 
-- (NSMutableURLRequest *)buildConfiguredURLRequestWithURL:(NSURL *)URL
-{
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
-    [request setValue:self.userAgent forHTTPHeaderField:@"User-Agent"];
-    return request;
-}
-
-- (MPAdWebViewAgent *)buildMPAdWebViewAgentWithAdWebViewFrame:(CGRect)frame delegate:(id<MPAdWebViewAgentDelegate>)delegate customMethodDelegate:(id)customMethodDelegate
-{
-    return [[[MPAdWebViewAgent alloc] initWithAdWebViewFrame:frame delegate:delegate customMethodDelegate:customMethodDelegate] autorelease];
-}
-
-- (MPAdWebView *)buildMPAdWebViewWithFrame:(CGRect)frame delegate:(id<UIWebViewDelegate>)delegate
-{
-    MPAdWebView *webView = [[[MPAdWebView alloc] initWithFrame:frame] autorelease];
-    webView.delegate = delegate;
-    return webView;
-}
-
-- (MPAdDestinationDisplayAgent *)buildMPAdDestinationDisplayAgentWithDelegate:(id<MPAdDestinationDisplayAgentDelegate>)delegate
-{
-    return [MPAdDestinationDisplayAgent agentWithDelegate:delegate];
-}
-
-- (MPURLResolver *)buildMPURLResolver
-{
-    return [MPURLResolver resolver];
-}
-
-- (MPInterstitialAdManager *)buildMPInterstitialAdManagerWithDelegate:(id<MPInterstitialAdManagerDelegate>)delegate
-{
-    return [[(MPInterstitialAdManager *)[MPInterstitialAdManager alloc] initWithDelegate:delegate] autorelease];
-}
-
 - (MPAdServerCommunicator *)buildMPAdServerCommunicatorWithDelegate:(id<MPAdServerCommunicatorDelegate>)delegate
 {
     return [[(MPAdServerCommunicator *)[MPAdServerCommunicator alloc] initWithDelegate:delegate] autorelease];
 }
+
+#pragma mark - Banners
 
 - (MPBannerAdManager *)buildMPBannerAdManagerWithDelegate:(id<MPBannerAdManagerDelegate>)delegate
 {
@@ -147,7 +104,7 @@ static MPInstanceProvider *sharedProvider = nil;
 }
 
 - (MPBaseBannerAdapter *)buildBannerAdapterForConfiguration:(MPAdConfiguration *)configuration
-                                             delegate:(id<MPBannerAdapterDelegate>)delegate
+                                                   delegate:(id<MPBannerAdapterDelegate>)delegate
 {
     [configuration setUpCustomEventClassForBanner];
     if (configuration.customEventClass) {
@@ -165,6 +122,13 @@ static MPInstanceProvider *sharedProvider = nil;
     MPBannerCustomEvent *customEvent = [[[customClass alloc] init] autorelease];
     customEvent.delegate = delegate;
     return customEvent;
+}
+
+#pragma mark - Interstitials
+
+- (MPInterstitialAdManager *)buildMPInterstitialAdManagerWithDelegate:(id<MPInterstitialAdManagerDelegate>)delegate
+{
+    return [[(MPInterstitialAdManager *)[MPInterstitialAdManager alloc] initWithDelegate:delegate] autorelease];
 }
 
 
@@ -206,6 +170,53 @@ static MPInstanceProvider *sharedProvider = nil;
     MPMRAIDInterstitialViewController *controller = [[[MPMRAIDInterstitialViewController alloc] initWithAdConfiguration:configuration] autorelease];
     controller.delegate = delegate;
     return controller;
+}
+
+#pragma mark - HTML Ads
+
+- (MPAdWebView *)buildMPAdWebViewWithFrame:(CGRect)frame delegate:(id<UIWebViewDelegate>)delegate
+{
+    MPAdWebView *webView = [[[MPAdWebView alloc] initWithFrame:frame] autorelease];
+    webView.delegate = delegate;
+    return webView;
+}
+
+- (MPAdWebViewAgent *)buildMPAdWebViewAgentWithAdWebViewFrame:(CGRect)frame delegate:(id<MPAdWebViewAgentDelegate>)delegate customMethodDelegate:(id)customMethodDelegate
+{
+    return [[[MPAdWebViewAgent alloc] initWithAdWebViewFrame:frame delegate:delegate customMethodDelegate:customMethodDelegate] autorelease];
+}
+
+#pragma mark - URL Handling
+
+- (MPURLResolver *)buildMPURLResolver
+{
+    return [MPURLResolver resolver];
+}
+
+- (MPAdDestinationDisplayAgent *)buildMPAdDestinationDisplayAgentWithDelegate:(id<MPAdDestinationDisplayAgentDelegate>)delegate
+{
+    return [MPAdDestinationDisplayAgent agentWithDelegate:delegate];
+}
+
+#pragma mark - Utilities
+
+- (MPAnalyticsTracker *)sharedMPAnalyticsTracker
+{
+    return [self singletonForClass:[MPAnalyticsTracker class] provider:^id{
+        return [MPAnalyticsTracker tracker];
+    }];
+}
+
+- (MPReachability *)sharedMPReachability
+{
+    return [self singletonForClass:[MPReachability class] provider:^id{
+        return [MPReachability reachabilityForLocalWiFi];
+    }];
+}
+
+- (MPTimer *)buildMPTimerWithTimeInterval:(NSTimeInterval)seconds target:(id)target selector:(SEL)selector repeats:(BOOL)repeats
+{
+    return [MPTimer timerWithTimeInterval:seconds target:target selector:selector repeats:repeats];
 }
 
 @end

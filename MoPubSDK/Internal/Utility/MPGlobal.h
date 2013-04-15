@@ -47,6 +47,22 @@ BOOL MPViewIsVisible(UIView *view);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+enum {
+    MPInterstitialCloseButtonStyleAlwaysVisible,
+    MPInterstitialCloseButtonStyleAlwaysHidden,
+    MPInterstitialCloseButtonStyleAdControlled
+};
+typedef NSUInteger MPInterstitialCloseButtonStyle;
+
+enum {
+    MPInterstitialOrientationTypePortrait,
+    MPInterstitialOrientationTypeLandscape,
+    MPInterstitialOrientationTypeAll
+};
+typedef NSUInteger MPInterstitialOrientationType;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 @interface CJSONDeserializer (MPAdditions)
 
 + (CJSONDeserializer *)deserializerWithNullObject:(id)obj;

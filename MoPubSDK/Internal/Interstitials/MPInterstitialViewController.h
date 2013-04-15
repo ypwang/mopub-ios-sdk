@@ -6,20 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-enum {
-    MPInterstitialCloseButtonStyleAlwaysVisible,
-    MPInterstitialCloseButtonStyleAlwaysHidden,
-    MPInterstitialCloseButtonStyleAdControlled
-};
-typedef NSUInteger MPInterstitialCloseButtonStyle;
-
-enum {
-    MPInterstitialOrientationTypePortrait,
-    MPInterstitialOrientationTypeLandscape,
-    MPInterstitialOrientationTypeAll
-};
-typedef NSUInteger MPInterstitialOrientationType;
+#import "MPGlobal.h"
 
 @protocol MPInterstitialViewControllerDelegate;
 
