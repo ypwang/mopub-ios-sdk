@@ -209,7 +209,7 @@ namespace :mopubsample do
 
     kif_log_file = nil
     network_testing.run_with_proxy do
-      kif_log_file = run_in_simulator(project: "MoPubSampleApp", target: "SampleAppKIF", environment:environment, success_condition: "TESTING FINISHED: 0 failures", record_video: true)
+      kif_log_file = run_in_simulator(project: "MoPubSampleApp", target: "SampleAppKIF", environment:environment, success_condition: "TESTING FINISHED: 0 failures", record_video: ENV['IS_CI_BOX'])
     end
 
     network_testing.verify_kif_log_lines(File.readlines(kif_log_file))
