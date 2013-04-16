@@ -1296,7 +1296,7 @@
 					"$(SRCROOT)/Externals/**",
 				);
 				INFOPLIST_FILE = "MoPubSampleApp/MoPubSampleApp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/build/Release-iphoneos\"",
@@ -1318,7 +1318,7 @@
 					"$(SRCROOT)/Externals/**",
 				);
 				INFOPLIST_FILE = "MoPubSampleApp/MoPubSampleApp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/build/Release-iphoneos\"",

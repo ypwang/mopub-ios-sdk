@@ -33,7 +33,7 @@
     self.banner.delegate = self;
     [self.bannerContainer addSubview:self.banner];
 
-    [self.scrollView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapScrollView)]];
+//    [self.scrollView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapScrollView)]];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -219,6 +219,18 @@
     UIEdgeInsets contentInsets = UIEdgeInsetsZero;
     self.scrollView.contentInset = contentInsets;
     self.scrollView.scrollIndicatorInsets = contentInsets;
+}
+
+#pragma mark - Rotation (pre-iOS 6.0)
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return YES;
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self.banner rotateToOrientation:MPInterfaceOrientation()];
 }
 
 @end

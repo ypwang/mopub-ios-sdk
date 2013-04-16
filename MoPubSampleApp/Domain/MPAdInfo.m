@@ -14,6 +14,8 @@
     return @[
              [MPAdInfo infoWithTitle:@"Valid StoreKit Link" ID:@"b086a37c8fe911e295fa123138070049" type:MPAdInfoBanner],
              [MPAdInfo infoWithTitle:@"Invalid StoreKit Link" ID:@"4ebfdd8a90ba11e295fa123138070049" type:MPAdInfoBanner],
+             [MPAdInfo infoWithTitle:@"MRAID Banner" ID:@"agltb3B1Yi1pbmNyDQsSBFNpdGUYzejGEgw" type:MPAdInfoBanner],
+             [MPAdInfo infoWithTitle:@"Legacy Custom Event Banner" ID:@"66e80812a6d411e295fa123138070049" type:MPAdInfoBanner],
 #if RUN_KIF_TESTS
              [MPAdInfo infoWithTitle:@"iAd Banner" ID:@"b9572278a20a11e295fa123138070049" type:MPAdInfoBanner],
              [MPAdInfo infoWithTitle:@"Millennial Banner" ID:@"1aa442709c9f11e281c11231392559e4" type:MPAdInfoBanner],
