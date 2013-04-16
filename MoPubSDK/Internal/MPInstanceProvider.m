@@ -147,6 +147,9 @@ static MPInstanceProvider *sharedProvider = nil;
                                                                   delegate:(id<MPInterstitialCustomEventDelegate>)delegate
 {
     MPInterstitialCustomEvent *customEvent = [[[customClass alloc] init] autorelease];
+    if ([customEvent respondsToSelector:@selector(customEventDidUnload)]) {
+        MPLogWarn(@"**** Custom Event Class: %@ implements the deprecated -customEventDidUnload method.  This is no longer called.  Use -dealloc for cleanup instead ****", NSStringFromClass(customClass));
+    }
     customEvent.delegate = delegate;
     return customEvent;
 }

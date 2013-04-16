@@ -11,7 +11,7 @@
 
 @property (nonatomic, assign) NSDictionary *customEventInfo;
 @property (nonatomic, assign) UIViewController *presentingViewController;
-@property (nonatomic, assign) BOOL didUnload;
+@property (nonatomic, assign) BOOL invalidated;
 @property (nonatomic, assign) BOOL enableAutomaticImpressionAndClickTracking;
 
 - (void)simulateLoadingAd;

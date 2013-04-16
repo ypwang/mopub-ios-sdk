@@ -99,12 +99,10 @@
     }
 }
 
-- (void)customEventDidUnload
+- (void)invalidate
 {
     self.onScreen = NO;
     [[MPADBannerViewManager sharedManager] unregisterObserver:self];
-
-    [super customEventDidUnload];
 }
 
 - (void)rotateToOrientation:(UIInterfaceOrientation)orientation

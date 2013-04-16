@@ -31,13 +31,4 @@
     // and implement code to display an interstitial here.
 }
 
-- (void)customEventDidUnload
-{
-    // Your subclass can implement this method if it needs to perform any cleanup, or simply do
-    // the cleanup work in -dealloc. If you override this method, make sure to call
-    // [super customEventDidUnload].
-
-    self.delegate = nil;
-}
-
 @end

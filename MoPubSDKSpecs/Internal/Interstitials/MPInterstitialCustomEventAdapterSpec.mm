@@ -82,7 +82,7 @@ describe(@"MPInterstitialCustomEventAdapter", ^{
             event should be_instance_of([FakeInterstitialCustomEvent class]);
 
             event.delegate should be_nil;
-            event.didUnload should equal(YES);
+            event.invalidated should equal(YES);
         });
     });
 

@@ -36,10 +36,9 @@
     self.didDisplay = YES;
 }
 
-- (void)customEventDidUnload
+- (void)invalidate
 {
-    self.didUnload = YES;
-    [super customEventDidUnload];
+    self.invalidated = YES;
 }
 
 - (void)simulateLoadingAd

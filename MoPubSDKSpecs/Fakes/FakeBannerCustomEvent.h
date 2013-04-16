@@ -11,7 +11,7 @@
 
 @property (nonatomic, assign) CGSize size;
 @property (nonatomic, assign) NSDictionary *customEventInfo;
-@property (nonatomic, assign) BOOL didUnload;
+@property (nonatomic, assign) BOOL invalidated;
 @property (nonatomic, assign) UIView *view;
 @property (nonatomic, assign) UIViewController *presentingViewController;
 @property (nonatomic, assign) UIInterfaceOrientation orientation;

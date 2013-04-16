@@ -39,13 +39,6 @@
 - (void)showInterstitialFromRootViewController:(UIViewController *)rootViewController;
 
 /*
- * This message is sent when the MoPub SDK is about to deallocate your custom event instance.
- * You may override this method to perform any necessary cleanup.  Your implementation must call
- * [super customEventDidUnload].
- */
-- (void)customEventDidUnload;
-
-/*
  * DOCUMENT: If you make this return NO, you are responsible for handling click and impression tracking yourself.
  */
 - (BOOL)enableAutomaticImpressionAndClickTracking;

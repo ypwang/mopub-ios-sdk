@@ -66,7 +66,7 @@ describe(@"MPBannerCustomEventAdapter", ^{
             event should be_instance_of([FakeBannerCustomEvent class]);
 
             event.delegate should be_nil;
-            event.didUnload should equal(YES);
+            event.invalidated should equal(YES);
             event.view should_not be_nil;
         });
     });
@@ -177,7 +177,7 @@ describe(@"MPBannerCustomEventAdapter", ^{
         context(@"when told to unregister", ^{
             it(@"should inform its custom event instance that it is going away", ^{
                 [adapter unregisterDelegate];
-                event.didUnload should equal(YES);
+                event.invalidated should equal(YES);
             });
         });
     });

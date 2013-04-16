@@ -41,13 +41,6 @@
 - (void)rotateToOrientation:(UIInterfaceOrientation)newOrientation;
 
 /*
- * This message is sent when the MoPub SDK is about to deallocate your custom event instance.
- * You may override this method to perform any necessary cleanup.  Your implementation must call
- * [super customEventDidUnload].
- */
-- (void)customEventDidUnload;
-
-/*
  * DOCUMENT: This is called when your ad is actually presented on screen.
  * If you decide to perform manual impression tracking, this is where you should track the impression.
  */

@@ -29,10 +29,9 @@
     self.presentingViewController = rootViewController;
 }
 
-- (void)customEventDidUnload
+- (void)invalidate
 {
-    self.didUnload = YES;
-    [super customEventDidUnload];
+    self.invalidated = YES;
 }
 
 - (void)simulateInterstitialFinishedAppearing
