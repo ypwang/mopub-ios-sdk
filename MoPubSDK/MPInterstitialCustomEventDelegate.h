@@ -13,6 +13,12 @@
 @protocol MPInterstitialCustomEventDelegate <NSObject>
 
 /*
+ * This method provides the location that was passed into the parent MPInterstitialAdController. You
+ * may use this to inform third-party ad networks of the user's location.
+ */
+- (CLLocation *)location;
+
+/*
  * Your custom event subclass must call this method when it successfully loads an ad.
  * Failure to do so will disrupt the mediation waterfall and cause future ad requests to stall.
  */
@@ -66,13 +72,23 @@
  */
 - (void)interstitialCustomEventDidReceiveTapEvent:(MPInterstitialCustomEvent *)customEvent;
 
-//DOCUMENT!
-
+/*
+ * Some third-party networks will mark interstitials as expired (indicating they should not be
+ * presented) *after* they have loaded.  You may use this method to inform the MoPub SDK that a
+ * previously loaded interstitial has expired and that a new interstitial should be obtained.
+ */
 - (void)interstitialCustomEventDidExpire:(MPInterstitialCustomEvent *)customEvent;
+
+/*
+ * Your custom event subclass should call this method if the ad will cause the user to leave the
+ * application (e.g. for the App Store or Safari). This method is optional.
+ */
 - (void)interstitialCustomEventWillLeaveApplication:(MPInterstitialCustomEvent *)customEvent;
 
-
-- (CLLocation *)location;
+/*
+ * If your custom event opts out of automatic impression and click tracking, you may use these
+ * methods to manually track impressions and clicks.
+ */
 - (void)trackImpression;
 - (void)trackClick;
 

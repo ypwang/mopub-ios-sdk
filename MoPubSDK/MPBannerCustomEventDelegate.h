@@ -22,21 +22,27 @@
 - (UIViewController *)viewControllerForPresentingModalView;
 
 /*
- * Your custom event subclass must call this method when it successfully loads an ad.
+ * This method provides the location that was passed into the parent MPAdView. You may use this
+ * to inform third-party ad networks of the user's location.
+ */
+- (CLLocation *)location;
+
+/*
+ * Your custom event subclass **must** call this method when it successfully loads an ad.
  * Failure to do so will disrupt the mediation waterfall and cause future ad requests to stall.
  */
 - (void)bannerCustomEvent:(MPBannerCustomEvent *)event didLoadAd:(UIView *)ad;
 
 /*
- * Your custom event subclass must call this method when it fails to load an ad.
+ * Your custom event subclass **must** call this method when it fails to load an ad.
  * Failure to do so will disrupt the mediation waterfall and cause future ad requests to stall.
  */
 - (void)bannerCustomEvent:(MPBannerCustomEvent *)event didFailToLoadAdWithError:(NSError *)error;
 
 /*
  * Your custom event subclass should call this method when the user taps on a banner ad.
- * This method is optional; however, if you call it, you must also call either
- * -bannerCustomEventDidFinishAction: or -bannerCustomEventWillLeaveApplication at a later point.
+ * This method is optional; however, if you call it, you **must** also call
+ * -bannerCustomEventDidFinishAction: at a later point.
  */
 - (void)bannerCustomEventWillBeginAction:(MPBannerCustomEvent *)event;
 
@@ -52,9 +58,10 @@
  */
 - (void)bannerCustomEventWillLeaveApplication:(MPBannerCustomEvent *)event;
 
-//DOCUMENT!
-
-- (CLLocation *)location;
+/*
+ * If your custom event opts out of automatic impression and click tracking, you may use these
+ * methods to manually track impressions and clicks.
+ */
 - (void)trackImpression;
 - (void)trackClick;
 

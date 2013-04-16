@@ -39,7 +39,11 @@
 - (void)showInterstitialFromRootViewController:(UIViewController *)rootViewController;
 
 /*
- * DOCUMENT: If you make this return NO, you are responsible for handling click and impression tracking yourself.
+ * By default, the custom event delegate will automatically record impressions and clicks in
+ * response to the appropriate callbacks. You may override this behavior by implementing this method
+ * to return NO. If you do this, you are responsible for calling the -trackImpression and
+ * -trackClick methods on the custom event delegate. Additionally, you should make sure that these
+ * methods are only called once per ad.
  */
 - (BOOL)enableAutomaticImpressionAndClickTracking;
 

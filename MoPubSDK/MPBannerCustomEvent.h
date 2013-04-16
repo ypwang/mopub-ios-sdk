@@ -36,20 +36,27 @@
 - (void)requestAdWithSize:(CGSize)size customEventInfo:(NSDictionary *)info;
 
 /*
- * TODO: DOCUMENT ME!
+ * If you call -rotateToOrientation on an MPAdView, it will forward the message to its custom event.
+ * You can implement this method for third-party ad networks that have special behavior when
+ * orientation changes happen.
  */
 - (void)rotateToOrientation:(UIInterfaceOrientation)newOrientation;
 
 /*
- * DOCUMENT: This is called when your ad is actually presented on screen.
- * If you decide to perform manual impression tracking, this is where you should track the impression.
- */
-- (void)didDisplayAd;
-
-/*
- * DOCUMENT: If you make this return NO, you are responsible for handling click and impression tracking yourself.
+ * By default, the custom event delegate will automatically record impressions and clicks in
+ * response to the appropriate callbacks. You may override this behavior by implementing this method
+ * to return NO. If you do this, you are responsible for calling the -trackImpression and
+ * -trackClick methods on the custom event delegate. Additionally, you should make sure that these
+ * methods are only called once per ad.
  */
 - (BOOL)enableAutomaticImpressionAndClickTracking;
+
+/*
+ * This method is called when your ad is actually presented on screen.  If you decide to opt out of
+ * automatic impression tracking, you should place your manual calls to -trackImpression in this
+ * method to ensure correct metrics.
+ */
+- (void)didDisplayAd;
 
 /*
  * The `delegate` object defines several methods that you should call in order to inform both MoPub

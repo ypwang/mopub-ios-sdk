@@ -45,7 +45,6 @@
 
 - (void)simulateUserInteraction
 {
-    //TODO: does this call any of the dismissal guys?
     [self.delegate interstitialWillLeaveApplication:self.masquerade];
 }
 

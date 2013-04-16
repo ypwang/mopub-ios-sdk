@@ -125,7 +125,6 @@
     self.secondsLeft = [fireDate timeIntervalSinceDate:self.pauseDate];
     if (self.secondsLeft <= 0)
     {
-        // TODO: Don't think this can happen since we're on the run loop thread.
         MPLogWarn(@"An MPTimer was somehow paused after it was supposed to fire.");
         self.secondsLeft = 5;
     }

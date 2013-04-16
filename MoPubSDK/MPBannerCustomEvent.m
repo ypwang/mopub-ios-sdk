@@ -11,7 +11,6 @@
 
 @synthesize delegate;
 
-
 - (void)requestAdWithSize:(CGSize)size customEventInfo:(NSDictionary *)info
 {
     // The default implementation of this method does nothing. Subclasses must override this method
@@ -20,20 +19,21 @@
 
 - (void)didDisplayAd
 {
-    // TODO: DOCUMENT ME!
+    // The default implementation of this method does nothing. Subclasses may override this method
+    // to be notified when the ad is actually displayed on screen.
 }
 
 - (BOOL)enableAutomaticImpressionAndClickTracking
 {
-    //DOCUMENT: This will automatically track clicks and impressions and only track them once per ad.
-    //IF YOU OVERRIDE THIS AND RETURN NO YOU WILL HAVE TO TRACK CLICKS/IMPRESSIONS YOURSELF.  NOTE FOR
-    //ACCURATE METRICS YOU SHOULD CALL THE TRACKING METHODS JUDICIOUSLY
+    // Subclasses may override this method to return NO to perform impression and click tracking
+    // manually.
     return YES;
 }
 
 - (void)rotateToOrientation:(UIInterfaceOrientation)newOrientation
 {
-    // TODO: DOCUMENT ME!
+    // The default implementation of this method does nothing. Subclasses may override this method
+    // to be notified when the parent MPAdView receives -rotateToOrientation: calls.
 }
 
 @end
