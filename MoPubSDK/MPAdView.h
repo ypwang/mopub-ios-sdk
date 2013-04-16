@@ -28,8 +28,14 @@ typedef enum
 @property (nonatomic, copy) NSString *adUnitId;
 @property (nonatomic, copy) CLLocation *location;
 @property (nonatomic, retain) NSString *keywords;
-@property (nonatomic, assign) BOOL ignoresAutorefresh;
 @property (nonatomic, assign, getter = isTesting) BOOL testing;
+
+/*
+ * Set this to YES to tell the ad view to not automatically refresh. The default value is NO.
+ * Note: if you wish to set this to YES, you should do so before you call -loadAd for the first
+ * time.
+ */
+@property (nonatomic, assign) BOOL ignoresAutorefresh;
 
 /*
  * Returns an MPAdView with the given ad unit ID.
