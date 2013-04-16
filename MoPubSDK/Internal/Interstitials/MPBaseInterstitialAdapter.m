@@ -19,6 +19,8 @@
 @property (nonatomic, retain) MPAdConfiguration *configuration;
 @property (nonatomic, retain) MPTimer *timeoutTimer;
 
+- (void)startTimeoutTimer;
+
 @end
 
 @implementation MPBaseInterstitialAdapter
@@ -62,15 +64,20 @@
 {
     self.configuration = configuration;
 
+    [self startTimeoutTimer];
+
+    [self retain];
+    [self getAdWithConfiguration:configuration];
+    [self release];
+}
+
+- (void)startTimeoutTimer
+{
     self.timeoutTimer = [[MPInstanceProvider sharedProvider] buildMPTimerWithTimeInterval:INTERSTITIAL_TIMEOUT_INTERVAL
                                                                                    target:self
                                                                                  selector:@selector(timeout)
                                                                                   repeats:NO];
     [self.timeoutTimer scheduleNow];
-
-    [self retain];
-    [self getAdWithConfiguration:configuration];
-    [self release];
 }
 
 - (void)didStopLoading

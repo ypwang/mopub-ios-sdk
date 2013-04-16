@@ -12,6 +12,7 @@
 #import "MPError.h"
 #import "MPTimer.h"
 #import "MPConstants.h"
+#import "MPLegacyBannerCustomEventAdapter.h"
 
 @interface MPBannerAdManager ()
 
@@ -125,32 +126,6 @@
     self.currentOrientation = orientation;
     [self.requestingAdapter rotateToOrientation:orientation];
     [self.onscreenAdapter rotateToOrientation:orientation];
-}
-
-#pragma mark - Deprecated Public Interface
-
-- (void)customEventDidLoadAd
-{
-    // the requesting adapter will send this message
-    // nil out the requesting adapter (signifies load is done)
-    // don't tell the delegate
-    // start the refresh timer
-}
-
-- (void)customEventDidFailToLoadAd
-{
-    // waterfall
-}
-
-- (void)customEventActionWillBegin
-{
-    //ad action in progress
-}
-
-- (void)customEventActionDidEnd
-{
-    //ad action not in progress
-    //presentRequestingAdapter
 }
 
 #pragma mark - Internal
@@ -327,6 +302,63 @@
     if (self.onscreenAdapter == adapter) {
         [self.delegate userWillLeaveApplication];
     }
+}
+
+#pragma mark - Deprecated Public Interface
+
+- (void)customEventDidLoadAd
+{
+    if (![self.requestingAdapter isKindOfClass:[MPLegacyBannerCustomEventAdapter class]]) {
+        MPLogWarn(@"-customEventDidLoadAd should not be called unless a custom event is in "
+                  @"progress.");
+        return;
+    }
+
+    //NOTE: this will immediately deallocate the onscreen adapter, even if there is a modal onscreen.
+
+    [self.onscreenAdapter unregisterDelegate];
+    self.onscreenAdapter = self.requestingAdapter;
+    self.requestingAdapter = nil;
+
+    [self.onscreenAdapter didDisplayAd];
+
+    if (![self.delegate ignoresAutorefresh]) {
+        [self scheduleRefreshTimer];
+    }
+}
+
+- (void)customEventDidFailToLoadAd
+{
+    if (![self.requestingAdapter isKindOfClass:[MPLegacyBannerCustomEventAdapter class]]) {
+        MPLogWarn(@"-customEventDidFailToLoadAd should not be called unless a custom event is in "
+                  @"progress.");
+        return;
+    }
+
+    [self loadAdWithURL:self.requestingConfiguration.failoverURL];
+}
+
+- (void)customEventActionWillBegin
+{
+    if (![self.onscreenAdapter isKindOfClass:[MPLegacyBannerCustomEventAdapter class]]) {
+        MPLogWarn(@"-customEventActionWillBegin should not be called unless a custom event is in "
+                  @"progress.");
+        return;
+    }
+
+    [self.onscreenAdapter trackClick];
+    [self userActionWillBeginForAdapter:self.onscreenAdapter];
+}
+
+- (void)customEventActionDidEnd
+{
+    if (![self.onscreenAdapter isKindOfClass:[MPLegacyBannerCustomEventAdapter class]]) {
+        MPLogWarn(@"-customEventActionDidEnd should not be called unless a custom event is in "
+                  @"progress.");
+        return;
+    }
+
+    [self userActionDidFinishForAdapter:self.onscreenAdapter];
 }
 
 @end

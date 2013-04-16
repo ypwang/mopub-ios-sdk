@@ -46,9 +46,13 @@
     [self.delegate adapter:self didFailToLoadAdWithError:nil];
 }
 
+- (void)startTimeoutTimer
+{
+    // Override to do nothing as we don't want to time out these legacy custom events.
+}
+
 - (void)customEventDidLoadAd
 {
-    [self didStopLoading];
     if (!self.hasTrackedImpression) {
         self.hasTrackedImpression = YES;
         [self trackImpression];
@@ -57,7 +61,6 @@
 
 - (void)customEventDidFailToLoadAd
 {
-    [self didStopLoading];
     [self.delegate adapter:self didFailToLoadAdWithError:nil];
 }
 

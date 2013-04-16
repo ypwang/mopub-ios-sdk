@@ -20,6 +20,8 @@
 @property (nonatomic, retain) MPAdConfiguration *configuration;
 @property (nonatomic, retain) MPTimer *timeoutTimer;
 
+- (void)startTimeoutTimer;
+
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -66,11 +68,7 @@
 {
     self.configuration = configuration;
 
-    self.timeoutTimer = [[MPInstanceProvider sharedProvider] buildMPTimerWithTimeInterval:BANNER_TIMEOUT_INTERVAL
-                                                                                   target:self
-                                                                                 selector:@selector(timeout)
-                                                                                  repeats:NO];
-    [self.timeoutTimer scheduleNow];
+    [self startTimeoutTimer];
 
     [self retain];
     [self getAdWithConfiguration:configuration containerSize:size];
@@ -85,6 +83,15 @@
 - (void)didDisplayAd
 {
     [self trackImpression];
+}
+
+- (void)startTimeoutTimer
+{
+    self.timeoutTimer = [[MPInstanceProvider sharedProvider] buildMPTimerWithTimeInterval:BANNER_TIMEOUT_INTERVAL
+                                                                                   target:self
+                                                                                 selector:@selector(timeout)
+                                                                                  repeats:NO];
+    [self.timeoutTimer scheduleNow];
 }
 
 - (void)timeout
