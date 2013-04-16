@@ -1,17 +1,23 @@
 require 'tmpdir'
 require 'pp'
+require 'fileutils'
+require './Scripts/screen_recorder'
+require './Scripts/network_testing'
 
 CONFIGURATION = "Debug"
 SDK_VERSION = "6.1"
 BUILD_DIR = File.join(File.dirname(__FILE__), "build")
-SCRIPTS_DIR = File.join(File.dirname(__FILE__), "Scripts")
 
-def xcode_developer_dir
-  `xcode-select -print-path`.strip
+def head(text)
+  puts "\n########### #{text} ###########"
 end
 
-def sdk_dir
-  "#{xcode_developer_dir}/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator#{SDK_VERSION}.sdk"
+def reset_simulator
+  `osascript ./Scripts/reset_simulator.as`
+end
+
+def clean!
+  `rm -rf #{BUILD_DIR}`
 end
 
 def build_dir(effective_platform_name)
@@ -20,18 +26,19 @@ end
 
 def output_file(target)
   output_dir = File.join(File.dirname(__FILE__), "build")
-  Dir.mkdir(output_dir) unless File.exists?(output_dir)
-  output_file = File.join(output_dir, "#{target}.output")
-  puts "Output: #{output_file}"
-  output_file
+  FileUtils.mkdir_p(output_dir)
+  File.join(output_dir, "#{target}.output")
 end
 
-def head(text)
-  puts "\n########### #{text} ###########"
-end
+def system_or_exit(cmd, outfile = nil)
+  cmd += " > #{outfile}" if outfile
+  puts "Executing #{cmd}"
 
-def clean!
-  `rm -rf #{BUILD_DIR}`
+  system(cmd) or begin
+    puts "******** Build Failed ********"
+    puts "To review:\ncat #{outfile}" if outfile
+    exit(1)
+  end
 end
 
 def build(options)
@@ -47,49 +54,46 @@ def build(options)
     sdk = "iphonesimulator#{SDK_VERSION}"
   end
   out_file = output_file("mopub_#{options[:target].downcase}_#{sdk}")
-  system_or_exit(%Q[xcodebuild -project #{project}.xcodeproj -target #{target} -configuration #{configuration} ARCHS=i386 -sdk #{sdk} build SYMROOT=#{BUILD_DIR}], {}, out_file)
-end
-
-def system_or_exit(cmd, env_overrides = {}, stdout = nil)
-  cmd += " > #{stdout}" if stdout
-  puts "Executing #{cmd}"
-
-  with_environment(env_overrides) do
-    system(cmd) or begin
-      puts "******** Build failed ********"
-      if stdout
-        puts "To review:"
-        puts "cat #{stdout}"
-      end
-      exit(1)
-    end
-  end
+  system_or_exit(%Q[xcodebuild -project #{project}.xcodeproj -target #{target} -configuration #{configuration} ARCHS=i386 -sdk #{sdk} build SYMROOT=#{BUILD_DIR}], out_file)
 end
 
 def run_in_simulator(options)
-  `osascript ./Scripts/reset_simulator.as`
+  reset_simulator
 
   app_name = "#{options[:target]}.app"
   app_location = "#{File.join(build_dir("-iphonesimulator"), app_name)}"
   platform = options[:platform] || 'iphone'
   sdk = options[:sdk] || SDK_VERSION
   out_file = output_file("#{options[:project]}_#{options[:target]}_#{platform}_#{sdk}")
+  success_condition = options[:success_condition]
+  record_video = options[:record_video]
 
   cmd = %Q[script -q #{out_file} ./Scripts/waxsim #{app_location} -f #{platform} -s #{sdk}]
 
-  with_environment(options[:environment]) do
+  screen_recorder = ScreenRecorder.new(File.absolute_path("./Scripts"))
+  screen_recorder.start_recording if record_video
+
+  run_with_environment(options[:environment]) do
+    puts "Executing #{cmd}"
     system(cmd)
   end
 
-  success_condition = options[:success_condition]
   system("grep -q \"#{success_condition}\" #{out_file}") or begin
-      puts "******** Build failed ********"
-      exit(1)
+    puts "******** Simulator Run Failed ********"
+
+    if record_video
+      video_path = screen_recorder.save_recording
+      puts "Saved video. On Jenkins: http://192.168.1.33:8080/job/MoPubIOSSDKIntegrations/ws/Scripts/#{video_path}"
+    end
+
+    exit(1)
   end
+
+  screen_recorder.stop_recording if record_video
   return out_file
 end
 
-def with_environment(env)
+def run_with_environment(env)
   env = env || {}
   old_env = {}
   env.each do |key, value|
@@ -174,47 +178,6 @@ namespace :mopubsdk do
     head "Running Specs"
     run_in_simulator(project: "MoPubSDK", target: "Specs", environment: cedar_env, success_condition: ", 0 failures")
   end
-
-  task :clean do
-    system_or_exit(%Q[xcodebuild -project MoPubSDK.xcodeproj -alltargets -configuration #{CONFIGURATION} clean SYMROOT=#{BUILD_DIR}], output_file("mopub_clean"))
-  end
-end
-
-def run_with_proxy
-  pid = fork do
-    exec "#{SCRIPTS_DIR}/proxy.rb"
-  end
-
-  begin
-    yield
-  rescue SystemExit => e
-    exit(1)
-  ensure
-    Process.kill 'INT', pid
-    Process.wait pid
-  end
-end
-
-def run_with_video_recording
-  if ENV['IS_CI_BOX']
-    video_file_name = "KIF_RUN_#{Time.new.strftime("%Y_%m_%d_%H_%M")}.mov"
-    video_path = File.join(SCRIPTS_DIR, video_file_name)
-
-    begin
-      `osascript ./Scripts/start_recording.applescript`
-      yield
-    rescue SystemExit => e
-      `osascript ./Scripts/stop_and_save_recording.applescript #{video_path}`
-      puts "Saved simulator recording to #{video_path}"
-      puts "On Jenkins: http://192.168.1.33:8080/job/MoPubIOSSDKIntegrations/ws/Scripts/#{video_file_name}"
-
-      exit(1)
-    ensure
-      `osascript ./Scripts/stop_recording.applescript`
-    end
-  else
-    yield
-  end
 end
 
 namespace :mopubsample do
@@ -234,7 +197,7 @@ namespace :mopubsample do
   end
 
   desc "Run MoPub Sample App Integration Specs"
-  task :kif, :flaky, :record do |t, args|
+  task :kif, :flaky do |t, args|
     head "Building KIF Integration Suite"
     build project: "MoPubSampleApp", target: "SampleAppKIF"
     head "Running KIF Integration Suite"
@@ -242,26 +205,14 @@ namespace :mopubsample do
     environment = { }
     environment["KIF_FLAKY_TESTS"] = '1' if args.flaky == 'flaky'
 
+    network_testing = NetworkTesting.new
+
     kif_log_file = nil
-    run_with_video_recording do
-      run_with_proxy do
-        kif_log_file = run_in_simulator(project: "MoPubSampleApp", target: "SampleAppKIF", environment:environment, success_condition: "TESTING FINISHED: 0 failures")
-      end
+    network_testing.run_with_proxy do
+      kif_log_file = run_in_simulator(project: "MoPubSampleApp", target: "SampleAppKIF", environment:environment, success_condition: "TESTING FINISHED: 0 failures", record_video: true)
     end
 
-    head "Verifying Conversion Tracking"
-    verify_presence_of_url("Conversion Tracking", File.readlines("#{SCRIPTS_DIR}/proxy.log"), /http:\/\/ads.mopub.com\/m\/open\?v=\d&udid=[A-Za-z0-9_\-\:]+&id=112358&av=1\.0$/)
-    verify_presence_of_url("Foreground Tracking", File.readlines("#{SCRIPTS_DIR}/proxy.log"), /http:\/\/ads.mopub.com\/m\/open\?v=\d&udid=[A-Za-z0-9_\-\:]+&id=com\.mopub\.SampleAppKIF&av=1\.0&st=1$/)
-
-    head "Verifying KIF Impressions"
-    verify_impressions(File.readlines("#{SCRIPTS_DIR}/proxy.log"), File.readlines(kif_log_file))
-
-    head "Verifying KIF Clicks"
-    verify_clicks(File.readlines("#{SCRIPTS_DIR}/proxy.log"), File.readlines(kif_log_file))
-  end
-
-  task :clean do
-    system_or_exit(%Q[xcodebuild -project MoPubSampleApp.xcodeproj -alltargets -configuration #{CONFIGURATION} clean SYMROOT=#{BUILD_DIR}], {}, output_file("mopub_clean"))
+    network_testing.verify_kif_log_lines(File.readlines(kif_log_file))
   end
 
   desc "Bump Server Ad Units"
@@ -269,52 +220,6 @@ namespace :mopubsample do
     head "Bumping Server Ad Units"
     system("./Scripts/bump_server.rb")
   end
-end
-
-def ids_matching_matcher(lines, matcher)
-  ids = []
-  lines.each do |line|
-    match = matcher.match(line)
-    ids << match[1] if match
-  end
-  ids
-end
-
-def verify_match(kif_ad_ids, proxy_ad_ids, kind)
-  if kif_ad_ids == proxy_ad_ids
-    puts "******** KIF TEST #{kind} SUCCEEDED (#{proxy_ad_ids.length}/#{kif_ad_ids.length}) ********"
-  else
-    puts "******** KIF TEST #{kind} FAILED ********"
-    puts "Expected                         Received"
-    count = [proxy_ad_ids.length, kif_ad_ids.length].max
-    (0...count).each do |i|
-      puts "#{kif_ad_ids[i]} #{proxy_ad_ids[i]}"
-    end
-
-    exit(1)
-  end
-end
-
-def verify_presence_of_url(kind, proxy_lines, regex)
-  matches = ids_matching_matcher(proxy_lines, regex)
-  if matches.count == 0
-    puts "******** KIF TEST #{kind} FAILED (expected #{regex}) ********"
-    exit(1)
-  else
-    puts "******** #{kind} SUCCEEDED ********"
-  end
-end
-
-def verify_impressions(proxy_lines, kif_lines)
-  kif_ad_ids = ids_matching_matcher(kif_lines, /~~~ EXPECT IMPRESSION FOR AD UNIT ID: ([A-Za-z0-9_\-]+)/)
-  proxy_ad_ids = ids_matching_matcher(proxy_lines, /http:\/\/ads.mopub.com\/m\/imp\?.*&id=([A-Za-z0-9_\-]+)&/)
-  verify_match(kif_ad_ids, proxy_ad_ids, "IMPRESSIONS")
-end
-
-def verify_clicks(proxy_lines, kif_lines)
-  kif_ad_ids = ids_matching_matcher(kif_lines, /~~~ EXPECT CLICK FOR AD UNIT ID: ([A-Za-z0-9_\-]+)/)
-  proxy_ad_ids = ids_matching_matcher(proxy_lines, /http:\/\/ads.mopub.com\/m\/aclk\?.*&id=([A-Za-z0-9_\-]+)&/)
-  verify_match(kif_ad_ids, proxy_ad_ids, "CLICKS")
 end
 
 desc "Copy and Verify code into the mopub client repo"
