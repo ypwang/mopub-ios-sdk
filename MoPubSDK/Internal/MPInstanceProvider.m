@@ -106,7 +106,6 @@ static MPInstanceProvider *sharedProvider = nil;
 - (MPBaseBannerAdapter *)buildBannerAdapterForConfiguration:(MPAdConfiguration *)configuration
                                                    delegate:(id<MPBannerAdapterDelegate>)delegate
 {
-    [configuration setUpCustomEventClassForBanner];
     if (configuration.customEventClass) {
         return [[(MPBannerCustomEventAdapter *)[MPBannerCustomEventAdapter alloc] initWithDelegate:delegate] autorelease];
     } else if (configuration.customSelectorName) {
@@ -135,7 +134,6 @@ static MPInstanceProvider *sharedProvider = nil;
 - (MPBaseInterstitialAdapter *)buildInterstitialAdapterForConfiguration:(MPAdConfiguration *)configuration
                                                                delegate:(id<MPInterstitialAdapterDelegate>)delegate
 {
-    [configuration setUpCustomEventClassForInterstitial];
     if (configuration.customEventClass) {
         return [[(MPInterstitialCustomEventAdapter *)[MPInterstitialCustomEventAdapter alloc] initWithDelegate:delegate] autorelease];
     } else if (configuration.customSelectorName) {

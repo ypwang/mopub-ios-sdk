@@ -105,18 +105,20 @@ NSString * const kAdTypeClear = @"clear";
 
         self.orientationType = [self orientationTypeFromHeaders:headers];
 
-        self.customEventClass = NSClassFromString([headers objectForKey:kCustomEventClassNameHeaderKey]);
+        if (self.adType == MPAdTypeBanner) {
+            [self setUpCustomEventClassForBanner:headers];
+        } else if (self.adType == MPAdTypeInterstitial) {
+            [self setUpCustomEventClassForInterstitial:headers];
+        }
 
         self.customEventClassData = [self customEventClassDataFromHeaders:headers];
     }
     return self;
 }
 
-- (void)setUpCustomEventClassForBanner
+- (void)setUpCustomEventClassForBanner:(NSDictionary *)headers
 {
-    //This method converts the network type into the appropriate custom event
-    //Sadly we can't guarantee that we know whether this configuration represents a banner
-    //or an interstitial.  This method must be called directly once that distinction is known.
+    self.customEventClass = NSClassFromString([headers objectForKey:kCustomEventClassNameHeaderKey]);
 
     NSMutableDictionary *convertedCustomEvents = [NSMutableDictionary dictionary];
     [convertedCustomEvents setObject:@"MPiAdBannerCustomEvent" forKey:@"iAd"];
@@ -130,8 +132,10 @@ NSString * const kAdTypeClear = @"clear";
     }
 }
 
-- (void)setUpCustomEventClassForInterstitial
+- (void)setUpCustomEventClassForInterstitial:(NSDictionary *)headers
 {
+    self.customEventClass = NSClassFromString([headers objectForKey:kCustomEventClassNameHeaderKey]);
+
     NSMutableDictionary *convertedCustomEvents = [NSMutableDictionary dictionary];
     [convertedCustomEvents setObject:@"MPGoogleAdMobInterstitialCustomEvent" forKey:@"admob_full"];
     [convertedCustomEvents setObject:@"MPMillennialInterstitialCustomEvent" forKey:@"millennial_full"];
@@ -198,6 +202,9 @@ NSString * const kAdTypeClear = @"clear";
     if ([adTypeString isEqualToString:@"interstitial"]) {
         return MPAdTypeInterstitial;
     } else if ([adTypeString isEqualToString:@"mraid"] &&
+               [headers objectForKey:kOrientationTypeHeaderKey]) {
+        return MPAdTypeInterstitial;
+    } else if ([adTypeString isEqualToString:@"html"] &&
                [headers objectForKey:kOrientationTypeHeaderKey]) {
         return MPAdTypeInterstitial;
     } else if (adTypeString) {

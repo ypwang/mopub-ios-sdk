@@ -46,7 +46,7 @@ describe(@"MPMillennialInterstitialIntegrationSuite", ^{
             [delegate reset_sent_messages];
 
             NSDictionary *headers = @{
-                                      kAdTypeHeaderKey: @"millennial_full",
+                                      kInterstitialAdTypeHeaderKey: @"millennial_full",
                                       kNativeSDKParametersHeaderKey: @"{\"adUnitID\":\"millenialist\"}"
                                       };
             configuration = [MPAdConfigurationFactory defaultInterstitialConfigurationWithHeaders:headers

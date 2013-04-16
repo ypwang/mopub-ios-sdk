@@ -64,7 +64,5 @@ extern NSString * const kAdTypeClear;
 - (BOOL)hasPreferredSize;
 - (NSString *)adResponseHTMLString;
 - (NSString *)clickDetectionURLPrefix;
-- (void)setUpCustomEventClassForBanner;
-- (void)setUpCustomEventClassForInterstitial;
 
 @end
