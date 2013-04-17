@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>MoPubSDK+Networks.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
 		<key>MoPubSDK.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -12,11 +17,16 @@
 		<key>Specs.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>4</integer>
+			<integer>5</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>AE515F39171F1B110086B464</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>AEA97BDD16EF9C030046D464</key>
 		<dict>
 			<key>primary</key>

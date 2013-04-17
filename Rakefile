@@ -168,6 +168,11 @@ namespace :mopubsdk do
       head "Building MoPubSDK for #{sdk_version}"
       build project: "MoPubSDK", target: "MoPubSDK", sdk_version: sdk_version
     end
+
+    available_sdk_versions.each do |sdk_version|
+      head "Building MoPubSDK+Networks for #{sdk_version}"
+      build project: "MoPubSDK", target: "MoPubSDK+Networks", sdk_version: sdk_version
+    end
   end
 
   desc "Run MoPubSDK Cedar Specs"
