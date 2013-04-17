@@ -22,7 +22,7 @@
 		AE0F1FB0171F1D2300FA3BE6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E4D16F940EC003D48F4 /* QuartzCore.framework */; };
 		AE0F1FB2171F1D2800FA3BE6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE0F1FB1171F1D2800FA3BE6 /* CoreLocation.framework */; };
 		AE0F1FB3171F1D3100FA3BE6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE23239416F78A17002C2082 /* Foundation.framework */; };
-		AE0F1FC8171F1DB800FA3BE6 /* libMoPubSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AED9E41616F78ADE00EA71A7 /* libMoPubSDK.a */; };
+		AE0F2018171F220500FA3BE6 /* libMoPubSDK+Networks.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AED9E41616F78ADE00EA71A7 /* libMoPubSDK+Networks.a */; };
 		AE109198170103BD00812E6E /* KIFTestScenario+Chartboost.m in Sources */ = {isa = PBXBuildFile; fileRef = AE109197170103BD00812E6E /* KIFTestScenario+Chartboost.m */; };
 		AE1091A3170108AA00812E6E /* KIFTestStep+View.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1091A2170108AA00812E6E /* KIFTestStep+View.m */; };
 		AE1091F517011EF400812E6E /* KIFTestScenario+Greystripe.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1091F417011EF300812E6E /* KIFTestScenario+Greystripe.m */; };
@@ -112,7 +112,7 @@
 		AED9E4F816F7B8A600EA71A7 /* MPSampleAppInstanceProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AED9E4DD16F7B00100EA71A7 /* MPSampleAppInstanceProvider.m */; };
 		AED9E4FA16F7B8A600EA71A7 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AED9E47016F78DA900EA71A7 /* StoreKit.framework */; };
 		AED9E4FB16F7B8A600EA71A7 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AED9E47216F78DAD00EA71A7 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		AED9E4FC16F7B8A600EA71A7 /* libMoPubSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AED9E41616F78ADE00EA71A7 /* libMoPubSDK.a */; };
+		AED9E4FC16F7B8A600EA71A7 /* libMoPubSDK+Networks.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AED9E41616F78ADE00EA71A7 /* libMoPubSDK+Networks.a */; };
 		AED9E4FD16F7B8A600EA71A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE23239216F78A17002C2082 /* UIKit.framework */; };
 		AED9E4FE16F7B8A600EA71A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE23239416F78A17002C2082 /* Foundation.framework */; };
 		AED9E4FF16F7B8A600EA71A7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE23239616F78A17002C2082 /* CoreGraphics.framework */; };
@@ -144,10 +144,6 @@
 		AEEA5E6616F940EC003D48F4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E5016F940EC003D48F4 /* AudioToolbox.framework */; };
 		AEEA5E6816F940EC003D48F4 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E5116F940EC003D48F4 /* iAd.framework */; };
 		AEEA5E6916F940EC003D48F4 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEA5E5116F940EC003D48F4 /* iAd.framework */; };
-		AEEA5E7316F94102003D48F4 /* libGoogleAdMobAds.a in Resources */ = {isa = PBXBuildFile; fileRef = AEEA5E7116F94102003D48F4 /* libGoogleAdMobAds.a */; };
-		AEEA5E7416F94102003D48F4 /* libGoogleAdMobAds.a in Resources */ = {isa = PBXBuildFile; fileRef = AEEA5E7116F94102003D48F4 /* libGoogleAdMobAds.a */; };
-		AEEA5E7616F94102003D48F4 /* libMMSDK_4.6.2.a in Resources */ = {isa = PBXBuildFile; fileRef = AEEA5E7216F94102003D48F4 /* libMMSDK_4.6.2.a */; };
-		AEEA5E7716F94102003D48F4 /* libMMSDK_4.6.2.a in Resources */ = {isa = PBXBuildFile; fileRef = AEEA5E7216F94102003D48F4 /* libMMSDK_4.6.2.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -441,7 +437,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AE0F1FC8171F1DB800FA3BE6 /* libMoPubSDK.a in Frameworks */,
+				AE0F2018171F220500FA3BE6 /* libMoPubSDK+Networks.a in Frameworks */,
 				AED9E4B516F78FEF00EA71A7 /* libFoundation+PivotalCore-StaticLib.a in Frameworks */,
 				AED9E4A516F78F7B00EA71A7 /* libxml2.2.dylib in Frameworks */,
 				AED9E4A016F78F4700EA71A7 /* libFoundation+PivotalSpecHelper-StaticLib.a in Frameworks */,
@@ -474,7 +470,7 @@
 				AED9E50F16F7B8CC00EA71A7 /* libKIF.a in Frameworks */,
 				AED9E4FA16F7B8A600EA71A7 /* StoreKit.framework in Frameworks */,
 				AED9E4FB16F7B8A600EA71A7 /* AdSupport.framework in Frameworks */,
-				AED9E4FC16F7B8A600EA71A7 /* libMoPubSDK.a in Frameworks */,
+				AED9E4FC16F7B8A600EA71A7 /* libMoPubSDK+Networks.a in Frameworks */,
 				AED9E4FD16F7B8A600EA71A7 /* UIKit.framework in Frameworks */,
 				AED9E4FE16F7B8A600EA71A7 /* Foundation.framework in Frameworks */,
 				AED9E4FF16F7B8A600EA71A7 /* CoreGraphics.framework in Frameworks */,
@@ -621,7 +617,7 @@
 			isa = PBXGroup;
 			children = (
 				AE515FA4171F1B8D0086B464 /* libMoPubSDK.a */,
-				AED9E41616F78ADE00EA71A7 /* libMoPubSDK.a */,
+				AED9E41616F78ADE00EA71A7 /* libMoPubSDK+Networks.a */,
 				AED9E41816F78ADE00EA71A7 /* Specs.app */,
 			);
 			name = Products;
@@ -944,10 +940,9 @@
 			remoteRef = AE515FA3171F1B8D0086B464 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		AED9E41616F78ADE00EA71A7 /* libMoPubSDK.a */ = {
+		AED9E41616F78ADE00EA71A7 /* libMoPubSDK+Networks.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			name = libMoPubSDK.a;
 			path = "libMoPubSDK+Networks.a";
 			remoteRef = AED9E41516F78ADE00EA71A7 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -1046,8 +1041,6 @@
 				AED9E42316F78B3000EA71A7 /* MPAdBrowserController.xib in Resources */,
 				AED9E4CF16F798AF00EA71A7 /* MPBannerAdDetailViewController.xib in Resources */,
 				AE43414A16F9068000B73710 /* MPInterstitialAdDetailViewController.xib in Resources */,
-				AEEA5E7316F94102003D48F4 /* libGoogleAdMobAds.a in Resources */,
-				AEEA5E7616F94102003D48F4 /* libMMSDK_4.6.2.a in Resources */,
 				AE0021E91704C46400A220F0 /* MPManualAdViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1059,8 +1052,6 @@
 				AED9E46216F78D7300EA71A7 /* InfoPlist.strings in Resources */,
 				AED9E4D016F798AF00EA71A7 /* MPBannerAdDetailViewController.xib in Resources */,
 				AE43414B16F9068000B73710 /* MPInterstitialAdDetailViewController.xib in Resources */,
-				AEEA5E7416F94102003D48F4 /* libGoogleAdMobAds.a in Resources */,
-				AEEA5E7716F94102003D48F4 /* libMMSDK_4.6.2.a in Resources */,
 				AE0021EA1704C46400A220F0 /* MPManualAdViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
