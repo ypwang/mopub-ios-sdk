@@ -1,6 +1,10 @@
+require './Scripts/private/mopub_sdk_publisher.rb'
+
 def head(text)
   puts "\n########### #{text} ###########"
 end
+
+task :default => [:fix_copyright, :trim_whitespace, "mopubsdk:build", "mopubsdk:spec", "mopubsample:build", "mopubsample:spec", :integration_specs]
 
 task :integration_specs => ["mopubsample:bump_server", "mopubsample:kif"]
 
@@ -28,9 +32,10 @@ end
 
 desc "Publish the SDK to the public iOS repository"
 task :publish do
-
+  head "Publishing SDK"
+  publisher = MoPubSDKPublisher.new
+  publisher.publish!
 end
-
 
 desc "Copy and Verify code into the mopub client repo"
 task :mopub_client => ["mopub_client:copy", "mopub_client:verify"]

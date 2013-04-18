@@ -132,7 +132,7 @@ end
 
 desc "Build MoPubSDK on all SDKs
  then run tests"
-task :default => [:fix_copyright, :trim_whitespace, "mopubsdk:build", "mopubsdk:spec", "mopubsample:build", "mopubsample:spec", :integration_specs]
+task :default => [:trim_whitespace, "mopubsdk:build", "mopubsdk:spec", "mopubsample:build", "mopubsample:spec", :integration_specs]
 
 desc "Build MoPubSDK on all SDKs and run all unit tests"
 task :unit_specs => ["mopubsdk:build", "mopubsample:build", "mopubsdk:spec", "mopubsample:spec"]
