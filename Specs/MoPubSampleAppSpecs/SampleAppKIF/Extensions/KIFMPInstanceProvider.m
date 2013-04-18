@@ -6,7 +6,7 @@
 //
 
 #import "KIFMPInstanceProvider.h"
-#import "GSBAnnerAdView.h"
+#import "GSBannerAdView.h"
 #import "GSFullscreenAd.h"
 #import "GSAdDelegate.h"
 #import "IMAdInterstitial.h"

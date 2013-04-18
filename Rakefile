@@ -3,6 +3,11 @@ require 'pp'
 require 'fileutils'
 require './Scripts/screen_recorder'
 require './Scripts/network_testing'
+require './Scripts/sdk_downloader'
+
+if File.exists?('./Scripts/private/private.rb')
+  require './Scripts/private/private.rb'
+end
 
 CONFIGURATION = "Debug"
 SDK_VERSION = "6.1"
@@ -83,7 +88,7 @@ def run_in_simulator(options)
 
     if record_video
       video_path = screen_recorder.save_recording
-      puts "Saved video. On Jenkins: http://192.168.1.33:8080/job/MoPubIOSSDKIntegrations/ws/Scripts/#{video_path}"
+      puts "Saved video: #{video_path}"
     end
 
     exit(1)
@@ -127,18 +132,13 @@ end
 
 desc "Build MoPubSDK on all SDKs
  then run tests"
-task :default => [:fix_copyright, :trim_whitespace, "mopubsdk:build", "mopubsdk:spec", "mopubsample:build", "mopubsample:spec", "mopubsample:kif"]
+task :default => [:fix_copyright, :trim_whitespace, "mopubsdk:build", "mopubsdk:spec", "mopubsample:build", "mopubsample:spec", :integration_specs]
 
 desc "Build MoPubSDK on all SDKs and run all unit tests"
 task :unit_specs => ["mopubsdk:build", "mopubsample:build", "mopubsdk:spec", "mopubsample:spec"]
 
-desc "Run KIF integration tests (skip flaky tests)"
-task :integration_specs => ["mopubsample:bump_server", "mopubsample:kif"]
-
-desc "Run All KIF integration tests (including flaky tests)"
-task :flaky_integration_specs do
-  Rake.application.invoke_task("mopubsample:kif['flaky']")
-end
+desc "Run KIF integration tests"
+task :integration_specs => ["mopubsample:kif"]
 
 desc "Trim Whitespace"
 task :trim_whitespace do
@@ -147,18 +147,11 @@ task :trim_whitespace do
   system_or_exit(%Q[git status --short | awk '{if ($1 != "D" && $1 != "R") for (i=2; i<=NF; i++) printf("%s%s", $i, i<NF ? " " : ""); print ""}' | grep -e '.*.[mh]"*$' | xargs sed -i '' -e 's/	/    /g;s/ *$//g;'])
 end
 
-desc "Fix Up Copyright"
-task :fix_copyright do
-  head "Fixing Copyright"
-
-  `find . -name "*.[mh]" -print0 | xargs -0 grep -l "Created by pivotal" | xargs sed -i '' 's/\\/\\/  MoPubSampleApp/\\/\\/  MoPub/g'`
-  `find . -name "*.[mh]" -print0 | xargs -0 grep -l "Created by pivotal" | xargs sed -i '' 's/\\/\\/  MoPubSDK/\\/\\/  MoPub/g'`
-  `find . -name "*.[mh]" -print0 | xargs -0 grep -l "Created by pivotal" | xargs sed -i '' '/\\/\\/  Created by pivotal/d'`
-end
-
-desc "Upload Third Party Integrations to CI"
-task :upload_third_party_integrations do
-  `scp -r ./Externals/ThirdPartyNetworks pivotal@192.168.1.33:/Users/pivotal/workspace/ThirdPartyNetworks`
+desc "Download Ad Network SDKs"
+task :download_sdks do
+  head "Downloading Ad Network SDKs"
+  downloader = SDKDownloader.new
+  downloader.download!
 end
 
 namespace :mopubsdk do
@@ -202,59 +195,18 @@ namespace :mopubsample do
   end
 
   desc "Run MoPub Sample App Integration Specs"
-  task :kif, :flaky do |t, args|
+  task :kif do |t, args|
     head "Building KIF Integration Suite"
     build project: "MoPubSampleApp", target: "SampleAppKIF"
     head "Running KIF Integration Suite"
-
-    environment = { }
-    environment["KIF_FLAKY_TESTS"] = '1' if args.flaky == 'flaky'
 
     network_testing = NetworkTesting.new
 
     kif_log_file = nil
     network_testing.run_with_proxy do
-      kif_log_file = run_in_simulator(project: "MoPubSampleApp", target: "SampleAppKIF", environment:environment, success_condition: "TESTING FINISHED: 0 failures", record_video: ENV['IS_CI_BOX'])
+      kif_log_file = run_in_simulator(project: "MoPubSampleApp", target: "SampleAppKIF", success_condition: "TESTING FINISHED: 0 failures", record_video: ENV['IS_CI_BOX'])
     end
 
     network_testing.verify_kif_log_lines(File.readlines(kif_log_file))
-  end
-
-  desc "Bump Server Ad Units"
-  task :bump_server do
-    head "Bumping Server Ad Units"
-    system("./Scripts/bump_server.rb")
-  end
-end
-
-desc "Copy and Verify code into the mopub client repo"
-task :mopub_client => ["mopub_client:copy", "mopub_client:verify"]
-
-namespace :mopub_client do
-  desc "Copy SDK to Public/Private repo"
-  task :copy do
-    head "Copying SDK to Public/Private repo"
-    path_to_development_sdk = File.absolute_path(File.join(File.dirname(__FILE__), 'MoPubSDK'))
-    path_to_repo_sdk = File.absolute_path(File.join(File.dirname(__FILE__), '../mopub-client/MoPubiOS/MoPubSDK'))
-    `rm -rf #{path_to_repo_sdk}`
-    `cp -r #{path_to_development_sdk} #{path_to_repo_sdk}`
-
-    path_to_development_3rd = File.absolute_path(File.join(File.dirname(__FILE__), 'ThirdPartyIntegrations'))
-    path_to_repo_3rd = File.absolute_path(File.join(File.dirname(__FILE__), '../mopub-client/MoPubiOS/extras'))
-    `rm -rf #{path_to_repo_3rd}`
-    `cp -r #{path_to_development_3rd} #{path_to_repo_3rd}`
-  end
-
-  desc "Verify that the SimpleAds demo compiles"
-  task :verify do
-    project = File.absolute_path(File.join(File.dirname(__FILE__),'..','mopub-client', 'MoPubiOS', 'SimpleAdsDemo', 'SimpleAds'))
-    build(project: project, target: 'MoPub')
-  end
-end
-
-
-at_exit do
-  if ENV['IS_CI_BOX']
-    `osascript -e "tell application \\"Safari\\" to activate"`
   end
 end

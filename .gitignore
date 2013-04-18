@@ -17,6 +17,8 @@ profile
 DerivedData
 .idea/
 Temp
-ThirdPartyNetworks
 proxy.log
 Scripts/*.mov
+tmp_sdk
+AdNetworkSupport/**/SDK/*.h
+AdNetworkSupport/**/SDK/*.a

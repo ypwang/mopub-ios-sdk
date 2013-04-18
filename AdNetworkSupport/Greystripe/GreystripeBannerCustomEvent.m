@@ -26,7 +26,7 @@
 - (GSBannerAdView *)buildGreystripeBannerAdViewWithDelegate:(id<GSAdDelegate>)delegate GUID:(NSString *)GUID size:(CGSize)size
 {
     if (CGSizeEqualToSize(size, MOPUB_BANNER_SIZE)) {
-        return [[GSMobileBannerAdView alloc] initWithDelegate:delegate GUID:GUID autoload:NO];
+        return [[GSMobileBannerAdView alloc] initWithDelegate:delegate];// GUID:GUID autoload:NO];
     } else if (CGSizeEqualToSize(size, MOPUB_MEDIUM_RECT_SIZE)) {
         return [[GSMediumRectangleAdView alloc] initWithDelegate:delegate GUID:GUID autoload:NO];
     } else if (CGSizeEqualToSize(size, MOPUB_LEADERBOARD_SIZE)) {
@@ -42,6 +42,7 @@
 @interface GreystripeBannerCustomEvent ()
 
 @property (nonatomic, retain) GSBannerAdView *greystripeBanner;
+@property (nonatomic, assign) BOOL poop;
 
 @end
 
@@ -74,6 +75,14 @@
 
 #pragma mark - GSAdDelegate
 
+- (NSString *)greystripeGUID {
+    return @"51d7ee3c-95fd-48d5-b648-c915209a00a5";
+}
+
+- (BOOL)greystripeBannerAutoload {
+    return NO;
+}
+
 - (void)greystripeAdFetchSucceeded:(id<GSAd>)a_ad
 {
     [self.delegate bannerCustomEvent:self didLoadAd:self.greystripeBanner];
@@ -81,7 +90,12 @@
 
 - (void)greystripeAdFetchFailed:(id<GSAd>)a_ad withError:(GSAdError)a_error
 {
-    [self.delegate bannerCustomEvent:self didFailToLoadAdWithError:nil];
+//    if (a_error == kGSNoNetwork && self.poop == NO) {
+//        self.poop = YES;
+//        [self.greystripeBanner performSelector:@selector(fetch) withObject:nil afterDelay:0.1];
+//    } else {
+        [self.delegate bannerCustomEvent:self didFailToLoadAdWithError:nil];
+//    }
 }
 
 - (void)greystripeWillPresentModalViewController
