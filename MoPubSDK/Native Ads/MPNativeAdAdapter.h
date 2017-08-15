@@ -160,6 +160,17 @@
 - (void)willAttachToView:(UIView *)view;
 
 /**
+ * This method will be called when your ad's content is about to be loaded into a view with clickable views.
+ *
+ * @param view A view that will contain the ad content.
+ * @param clickableViews Array of views that contain clickable ad contents
+ 
+ * You should implement this method if the underlying third-party ad object needs to be informed
+ * of this event.
+ */
+- (void)willAttachToView:(UIView *)view withClickableViews:(NSArray *)clickableViews;
+
+/**
  * This method will be called if your implementation provides a DAA icon through the properties dictionary
  * and the user has tapped the icon.
  */

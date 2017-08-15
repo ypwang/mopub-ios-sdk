@@ -85,7 +85,7 @@
 
     if (adView) {
         if (!self.hasAttachedToView) {
-            [self willAttachToView:self.associatedView];
+            [self willAttachToView:self.associatedView withClickableViews:adView.subviews];
             self.hasAttachedToView = YES;
         }
 
@@ -154,6 +154,15 @@
 - (void)willAttachToView:(UIView *)view
 {
     if ([self.adAdapter respondsToSelector:@selector(willAttachToView:)]) {
+        [self.adAdapter willAttachToView:view];
+    }
+}
+
+- (void)willAttachToView:(UIView *)view withClickableViews:(NSArray *)clickableViews
+{
+    if ([self.adAdapter respondsToSelector:@selector(willAttachToView:withClickableViews:)]) {
+        [self.adAdapter willAttachToView:view withClickableViews:clickableViews];
+    } else {
         [self.adAdapter willAttachToView:view];
     }
 }

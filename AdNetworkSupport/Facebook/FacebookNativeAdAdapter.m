@@ -112,6 +112,10 @@ NSString *const kFBVideoAdsEnabledKey = @"video_enabled";
     [self.fbNativeAd registerViewForInteraction:view withViewController:[self.delegate viewControllerForPresentingModalView]];
 }
 
+- (void)willAttachToView:(UIView *)view withClickableViews:(NSArray *)clickableViews {
+    [self.fbNativeAd registerViewForInteraction:view withViewController:[self.delegate viewControllerForPresentingModalView] withClickableViews:clickableViews];
+}
+
 - (UIView *)privacyInformationIconView
 {
     return self.adChoicesView;
