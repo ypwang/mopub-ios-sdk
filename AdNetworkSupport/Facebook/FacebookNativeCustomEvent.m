@@ -43,6 +43,7 @@ static BOOL gVideoEnabled = NO;
     if (placementID) {
         _fbNativeAd = [[FBNativeAd alloc] initWithPlacementID:placementID];
         self.fbNativeAd.delegate = self;
+        [FBAdSettings setMediationService:[NSString stringWithFormat:@"MOPUB_%@", MP_SDK_VERSION]];
         [self.fbNativeAd loadAd];
     } else {
         [self.delegate nativeCustomEvent:self didFailToLoadAdWithError:MPNativeAdNSErrorForInvalidAdServerResponse(@"Invalid Facebook placement ID")];

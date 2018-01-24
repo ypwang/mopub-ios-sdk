@@ -97,6 +97,7 @@
     fbAdFrame.size = size;
     self.fbAdView.frame = fbAdFrame;
 
+    [FBAdSettings setMediationService:[NSString stringWithFormat:@"MOPUB_%@", MP_SDK_VERSION]];
     [self.fbAdView loadAd];
 }
 

@@ -57,6 +57,7 @@
     self.fbRewardedVideoAd =
     [[MPInstanceProvider sharedProvider] buildFBRewardedVideoAdWithPlacementID: [info objectForKey:@"placement_id"] delegate:self];
 
+    [FBAdSettings setMediationService:[NSString stringWithFormat:@"MOPUB_%@", MP_SDK_VERSION]];
     [self.fbRewardedVideoAd loadAd];
 }
 
